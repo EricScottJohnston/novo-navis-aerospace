@@ -111,7 +111,7 @@ export default function GridHome() {
                 borderRight: "60px solid transparent",
                 borderBottom: "104px solid #ff00ff",
                 filter: "drop-shadow(0 0 15px #ff00ff)",
-                animation: "pulse 2s ease-in-out infinite alternate"
+                animation: "pulse 2s ease-in-out infinite alternate, rotateZ 4s linear infinite"
               }} />
             </div>
             <h3 style={{
@@ -192,7 +192,7 @@ export default function GridHome() {
                 borderRadius: "50%",
                 filter: "drop-shadow(0 0 15px #00ff00)",
                 boxShadow: "inset -20px -20px 40px rgba(0, 0, 0, 0.3), inset 20px 20px 40px rgba(255, 255, 255, 0.1)",
-                animation: "rotateFlat 5s linear infinite"
+                animation: "rotateY 5s linear infinite"
               }} />
             </div>
             <h3 style={{
@@ -256,9 +256,14 @@ export default function GridHome() {
           100% { transform: translate(50px, 50px); }
         }
         
-        @keyframes rotateFlat {
+        @keyframes rotateZ {
           0% { transform: rotateZ(0deg); }
           100% { transform: rotateZ(360deg); }
+        }
+        
+        @keyframes rotateY {
+          0% { transform: rotateY(0deg); }
+          100% { transform: rotateY(360deg); }
         }
         
         @keyframes glow {
