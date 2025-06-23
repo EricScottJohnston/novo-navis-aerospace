@@ -5,7 +5,7 @@ export default function Home() {
     <div 
       style={{
         minHeight: '100vh',
-        backgroundImage: "url('/Public/Firefly_Old Sailing ship. 2-d drawing 87265')",
+        backgroundImage: "url('/firefly-ship.jpg')",
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
