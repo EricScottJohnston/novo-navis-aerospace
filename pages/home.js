@@ -99,37 +99,28 @@ export default function GridHome() {
             <div style={{
               width: "120px",
               height: "120px",
-              margin: "2rem",
-              perspective: "200px"
+              margin: "1rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
             }}>
               <div style={{
-                width: "100%",
-                height: "100%",
-                position: "relative",
-                transformStyle: "preserve-3d",
-                animation: "rotate3d 4s linear infinite"
-              }}>
-                <div style={{
-                  position: "absolute",
-                  width: 0,
-                  height: 0,
-                  borderLeft: "60px solid transparent",
-                  borderRight: "60px solid transparent",
-                  borderBottom: "104px solid #ff00ff",
-                  left: "50%",
-                  top: "50%",
-                  transform: "translate(-50%, -50%)",
-                  filter: "drop-shadow(0 0 15px #ff00ff)",
-                  animation: "pulse 2s ease-in-out infinite alternate"
-                }} />
-              </div>
+                width: 0,
+                height: 0,
+                borderLeft: "60px solid transparent",
+                borderRight: "60px solid transparent",
+                borderBottom: "104px solid #ff00ff",
+                filter: "drop-shadow(0 0 15px #ff00ff)",
+                animation: "pulse 2s ease-in-out infinite alternate"
+              }} />
             </div>
             <h3 style={{
               color: "#ff00ff",
               fontSize: "1.2rem",
               textAlign: "center",
               textShadow: "0 0 10px #ff00ff",
-              letterSpacing: "0.05em"
+              letterSpacing: "0.05em",
+              marginTop: "0.5rem"
             }}>
               AEROSPACE<br />OPERATIONS
             </h3>
@@ -149,21 +140,18 @@ export default function GridHome() {
             <div style={{
               width: "120px",
               height: "120px",
-              margin: "2rem",
-              perspective: "200px"
+              margin: "1rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
             }}>
               <div style={{
                 width: "80px",
                 height: "80px",
                 backgroundColor: "#ffff00",
-                position: "relative",
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-                transformStyle: "preserve-3d",
-                animation: "rotate3d 3s linear infinite",
                 filter: "drop-shadow(0 0 15px #ffff00)",
-                boxShadow: "inset 0 0 20px rgba(255, 255, 0, 0.5)"
+                boxShadow: "inset 0 0 20px rgba(255, 255, 0, 0.5)",
+                animation: "rotateFlat 3s linear infinite"
               }} />
             </div>
             <h3 style={{
@@ -171,7 +159,8 @@ export default function GridHome() {
               fontSize: "1.2rem",
               textAlign: "center",
               textShadow: "0 0 10px #ffff00",
-              letterSpacing: "0.05em"
+              letterSpacing: "0.05em",
+              marginTop: "0.5rem"
             }}>
               FIBER<br />DYNAMICS
             </h3>
@@ -191,21 +180,19 @@ export default function GridHome() {
             <div style={{
               width: "120px",
               height: "120px",
-              margin: "2rem",
-              perspective: "200px"
+              margin: "1rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
             }}>
               <div style={{
                 width: "80px",
                 height: "80px",
                 backgroundColor: "#00ff00",
                 borderRadius: "50%",
-                position: "relative",
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-                animation: "rotate3d 5s linear infinite",
                 filter: "drop-shadow(0 0 15px #00ff00)",
-                boxShadow: "inset -20px -20px 40px rgba(0, 0, 0, 0.3), inset 20px 20px 40px rgba(255, 255, 255, 0.1)"
+                boxShadow: "inset -20px -20px 40px rgba(0, 0, 0, 0.3), inset 20px 20px 40px rgba(255, 255, 255, 0.1)",
+                animation: "rotateFlat 5s linear infinite"
               }} />
             </div>
             <h3 style={{
@@ -213,7 +200,8 @@ export default function GridHome() {
               fontSize: "1.2rem",
               textAlign: "center",
               textShadow: "0 0 10px #00ff00",
-              letterSpacing: "0.05em"
+              letterSpacing: "0.05em",
+              marginTop: "0.5rem"
             }}>
               TRAC<br />LABS
             </h3>
@@ -233,21 +221,18 @@ export default function GridHome() {
             <div style={{
               width: "120px",
               height: "120px",
-              margin: "2rem",
-              perspective: "200px"
+              margin: "1rem",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
             }}>
               <div style={{
                 width: "12px",
                 height: "80px",
                 backgroundColor: "#ff4500",
-                position: "relative",
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-                transformStyle: "preserve-3d",
-                animation: "rotate3d 2s linear infinite",
                 filter: "drop-shadow(0 0 15px #ff4500)",
-                boxShadow: "inset 0 0 10px rgba(255, 69, 0, 0.5)"
+                boxShadow: "inset 0 0 10px rgba(255, 69, 0, 0.5)",
+                animation: "rotateFlat 2s linear infinite"
               }} />
             </div>
             <h3 style={{
@@ -255,7 +240,8 @@ export default function GridHome() {
               fontSize: "1.2rem",
               textAlign: "center",
               textShadow: "0 0 10px #ff4500",
-              letterSpacing: "0.05em"
+              letterSpacing: "0.05em",
+              marginTop: "0.5rem"
             }}>
               ALTER<br />PROJECT
             </h3>
@@ -270,12 +256,9 @@ export default function GridHome() {
           100% { transform: translate(50px, 50px); }
         }
         
-        @keyframes rotate3d {
-          0% { transform: translate(-50%, -50%) rotateY(0deg); }
-          25% { transform: translate(-50%, -50%) rotateY(90deg); }
-          50% { transform: translate(-50%, -50%) rotateY(180deg); }
-          75% { transform: translate(-50%, -50%) rotateY(270deg); }
-          100% { transform: translate(-50%, -50%) rotateY(360deg); }
+        @keyframes rotateFlat {
+          0% { transform: rotateZ(0deg); }
+          100% { transform: rotateZ(360deg); }
         }
         
         @keyframes glow {
