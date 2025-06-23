@@ -3,7 +3,7 @@ export default function Home() {
   return (
     <div 
       className="min-h-screen bg-cover bg-center bg-no-repeat relative"
-      style={{backgroundImage: "url('/Firefly_Old Sailing ship. 2-d drawing 87265')"}}
+      style={{backgroundImage: "url('/Public/Firefly_Old Sailing ship. 2-d drawing 87265')"}}
     >
       {/* Overlay for fading effect */}
       <div className="absolute inset-0 bg-white bg-opacity-70"></div>
