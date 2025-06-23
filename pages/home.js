@@ -111,7 +111,7 @@ export default function GridHome() {
                 borderRight: "60px solid transparent",
                 borderBottom: "104px solid #ff00ff",
                 filter: "drop-shadow(0 0 15px #ff00ff)",
-                animation: "pulse 2s ease-in-out infinite alternate, rotateZ 4s linear infinite"
+                animation: "pulse 2s ease-in-out infinite alternate, rotateZ 6s linear infinite"
               }} />
             </div>
             <h3 style={{
@@ -151,7 +151,7 @@ export default function GridHome() {
                 backgroundColor: "#ffff00",
                 filter: "drop-shadow(0 0 15px #ffff00)",
                 boxShadow: "inset 0 0 20px rgba(255, 255, 0, 0.5)",
-                animation: "rotateFlat 3s linear infinite"
+                animation: "rotateX 4s linear infinite"
               }} />
             </div>
             <h3 style={{
@@ -192,7 +192,7 @@ export default function GridHome() {
                 borderRadius: "50%",
                 filter: "drop-shadow(0 0 15px #00ff00)",
                 boxShadow: "inset -20px -20px 40px rgba(0, 0, 0, 0.3), inset 20px 20px 40px rgba(255, 255, 255, 0.1)",
-                animation: "rotateY 5s linear infinite"
+                animation: "rotateY 8s linear infinite"
               }} />
             </div>
             <h3 style={{
@@ -232,7 +232,7 @@ export default function GridHome() {
                 backgroundColor: "#ff4500",
                 filter: "drop-shadow(0 0 15px #ff4500)",
                 boxShadow: "inset 0 0 10px rgba(255, 69, 0, 0.5)",
-                animation: "rotateFlat 2s linear infinite"
+                animation: "rotateZ 1.5s linear infinite"
               }} />
             </div>
             <h3 style={{
@@ -259,6 +259,11 @@ export default function GridHome() {
         @keyframes rotateZ {
           0% { transform: rotateZ(0deg); }
           100% { transform: rotateZ(360deg); }
+        }
+        
+        @keyframes rotateX {
+          0% { transform: rotateX(0deg); }
+          100% { transform: rotateX(360deg); }
         }
         
         @keyframes rotateY {
