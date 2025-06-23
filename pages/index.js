@@ -69,74 +69,55 @@ export default function Home() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        minHeight: "100vh",
-        textAlign: "center"
+        alignItems: "center",
+        minHeight: "100vh"
       }}>
-        <h1 style={{
-          fontSize: "4rem",
-          fontWeight: "bold",
-          color: "white",
-          marginBottom: "1rem",
-          textShadow: "2px 2px 4px rgba(0,0,0,0.8)"
-        }}>
-          Welcome to My Site
-        </h1>
-        <p style={{
-          fontSize: "1.5rem",
-          color: "rgba(255,255,255,0.9)",
-          marginBottom: "2rem",
-          textShadow: "1px 1px 2px rgba(0,0,0,0.8)"
-        }}>
-          Sailing through the digital cosmos
-        </p>
+        {/* Main picture */}
+        <img 
+          src="/logo.jpg" 
+          alt="Main Image"
+          style={{
+            maxWidth: "500px",
+            width: "90%",
+            height: "auto",
+            borderRadius: "1rem",
+            boxShadow: "0 20px 40px rgba(0,0,0,0.6)",
+            marginBottom: "2rem",
+            border: "3px solid rgba(255,255,255,0.2)"
+          }}
+        />
         
-        <div style={{
-          display: "flex",
-          gap: "1rem",
-          justifyContent: "center",
-          flexWrap: "wrap"
-        }}>
-          <button style={{
-            padding: "1rem 2rem",
-            backgroundColor: "rgba(59, 130, 246, 0.8)",
-            color: "white",
-            fontWeight: "600",
-            borderRadius: "0.5rem",
-            border: "none",
-            cursor: "pointer",
-            fontSize: "1.1rem",
-            transition: "all 0.3s ease",
-            backdropFilter: "blur(10px)"
-          }}
-          onMouseOver={(e) => e.target.style.backgroundColor = "rgba(59, 130, 246, 1)"}
-          onMouseOut={(e) => e.target.style.backgroundColor = "rgba(59, 130, 246, 0.8)"}
-          >
-            Get Started
-          </button>
-          <button style={{
-            padding: "1rem 2rem",
-            backgroundColor: "transparent",
-            color: "white",
-            fontWeight: "600",
-            borderRadius: "0.5rem",
-            border: "2px solid rgba(255,255,255,0.5)",
-            cursor: "pointer",
-            fontSize: "1.1rem",
-            transition: "all 0.3s ease",
-            backdropFilter: "blur(10px)"
-          }}
-          onMouseOver={(e) => {
-            e.target.style.backgroundColor = "rgba(255,255,255,0.1)";
-            e.target.style.borderColor = "rgba(255,255,255,0.8)";
-          }}
-          onMouseOut={(e) => {
-            e.target.style.backgroundColor = "transparent";
-            e.target.style.borderColor = "rgba(255,255,255,0.5)";
-          }}
-          >
-            Learn More
-          </button>
-        </div>
+        {/* NOVO NAVIS Button */}
+        <button style={{
+          padding: "1.5rem 3rem",
+          backgroundColor: "rgba(255, 255, 255, 0.1)",
+          color: "white",
+          fontWeight: "700",
+          fontSize: "1.5rem",
+          letterSpacing: "0.1em",
+          borderRadius: "0.75rem",
+          border: "2px solid rgba(255,255,255,0.3)",
+          cursor: "pointer",
+          transition: "all 0.3s ease",
+          backdropFilter: "blur(15px)",
+          textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.3)"
+        }}
+        onMouseOver={(e) => {
+          e.target.style.backgroundColor = "rgba(255,255,255,0.2)";
+          e.target.style.borderColor = "rgba(255,255,255,0.6)";
+          e.target.style.transform = "translateY(-2px)";
+          e.target.style.boxShadow = "0 15px 40px rgba(0,0,0,0.4)";
+        }}
+        onMouseOut={(e) => {
+          e.target.style.backgroundColor = "rgba(255,255,255,0.1)";
+          e.target.style.borderColor = "rgba(255,255,255,0.3)";
+          e.target.style.transform = "translateY(0)";
+          e.target.style.boxShadow = "0 10px 30px rgba(0,0,0,0.3)";
+        }}
+        >
+          NOVO NAVIS
+        </button>
       </div>
 
       {/* CSS animations */}
