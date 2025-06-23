@@ -72,21 +72,6 @@ export default function Home() {
         alignItems: "center",
         minHeight: "100vh"
       }}>
-        {/* Main picture */}
-        <img 
-          src="/logo.jpg" 
-          alt="Main Image"
-          style={{
-            maxWidth: "500px",
-            width: "90%",
-            height: "auto",
-            borderRadius: "1rem",
-            boxShadow: "0 20px 40px rgba(0,0,0,0.6)",
-            marginBottom: "2rem",
-            border: "3px solid rgba(255,255,255,0.2)"
-          }}
-        />
-        
         {/* NOVO NAVIS Button */}
         <button style={{
           padding: "1.5rem 3rem",
