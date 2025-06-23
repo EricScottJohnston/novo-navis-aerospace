@@ -1,23 +1,24 @@
-export default function Page() {
+jsx
+export default function Home() {
   return (
-    <div style={{ 
-      minHeight: '100vh', 
-      background: '#1a1a2e',
-      color: 'white',
-      padding: '40px',
-      textAlign: 'center',
-      fontFamily: 'Arial'
-    }}>
-      <h1 style={{ color: '#00d4ff', fontSize: '3rem' }}>
-        Novo Navis Aerospace Operations
-      </h1>
-      <p style={{ fontSize: '1.5rem' }}>A Novo Navis Company</p>
-      <div style={{ marginTop: '40px' }}>
-        <h2>Our Divisions:</h2>
-        <p>• Aerospace Operations</p>
-        <p>• TRAC Labs (Threat Response and Control)</p>
-        <p>• Fiber Dynamics</p>
+    <div 
+      className="min-h-screen bg-cover bg-center bg-no-repeat relative"
+      style={{backgroundImage: "url('/your-image.jpg')"}}
+    >
+      {/* Overlay for fading effect */}
+      <div className="absolute inset-0 bg-white bg-opacity-70"></div>
+      
+      {/* Your content */}
+      <div className="relative z-10 p-8">
+        <h1 className="text-4xl font-bold">Welcome to My Site</h1>
+        <p>Your content here</p>
       </div>
     </div>
-  )
+  );
 }
+
+
+
+
+
+
