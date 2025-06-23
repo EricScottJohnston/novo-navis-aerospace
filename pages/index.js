@@ -16,20 +16,20 @@ export default function Home() {
         zIndex: 1
       }}>
         {/* Create multiple layers of stars */}
-        {[...Array(100)].map((_, i) => (
+        {[...Array(150)].map((_, i) => (
           <div
             key={i}
             style={{
               position: "absolute",
-              width: Math.random() * 3 + 1 + "px",
-              height: Math.random() * 3 + 1 + "px",
+              width: Math.random() * 4 + 2 + "px",
+              height: Math.random() * 4 + 2 + "px",
               backgroundColor: "white",
               borderRadius: "50%",
-              left: Math.random() * 100 + "%",
+              left: Math.random() * 120 + "%",
               top: Math.random() * 100 + "%",
-              animation: `starMove ${3 + Math.random() * 4}s linear infinite`,
-              opacity: 0.3 + Math.random() * 0.7,
-              boxShadow: "0 0 6px rgba(255,255,255,0.8)"
+              animation: `starMove ${2 + Math.random() * 3}s linear infinite`,
+              opacity: 0.7 + Math.random() * 0.3,
+              boxShadow: "0 0 10px rgba(255,255,255,1), 0 0 20px rgba(255,255,255,0.5)"
             }}
           />
         ))}
@@ -47,7 +47,7 @@ export default function Home() {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         zIndex: 2,
-        opacity: 0.8
+        opacity: 0.4
       }}></div>
 
       {/* Semi-transparent overlay */}
@@ -57,7 +57,7 @@ export default function Home() {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.3)",
+        backgroundColor: "rgba(0, 0, 0, 0.6)",
         zIndex: 3
       }}></div>
       
@@ -143,10 +143,10 @@ export default function Home() {
       <style jsx>{`
         @keyframes starMove {
           0% {
-            transform: translateX(-100vw) translateY(0);
+            transform: translateX(20vw) translateY(0);
           }
           100% {
-            transform: translateX(100vw) translateY(-50px);
+            transform: translateX(-120vw) translateY(10px);
           }
         }
         
