@@ -1,6 +1,11 @@
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gray-900 bg-cover bg-center bg-no-repeat relative">
+    <div 
+      className="min-h-screen bg-cover bg-center bg-no-repeat relative"
+      style={{
+        backgroundImage: "url('/ship.jpg')"
+      }}
+    >
       {/* Semi-transparent overlay */}
       <div className="absolute inset-0 bg-white bg-opacity-70 z-10" />
       
@@ -24,13 +29,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      
-      {/* Background styling fallback */}
-      <style jsx>{`
-        .bg-cover {
-          background-image: url('/ship.jpg');
-        }
-      `}</style>
     </div>
   );
 }
