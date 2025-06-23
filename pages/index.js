@@ -1,4 +1,10 @@
+import React from 'react';
+
 export default function Home() {
+  const handleNavigation = () => {
+    window.location.href = '/home';
+  };
+
   return (
     <div style={{
       minHeight: "100vh",
@@ -34,7 +40,6 @@ export default function Home() {
           />
         ))}
       </div>
-
       {/* Ship background image */}
       <div style={{
         position: "absolute",
@@ -49,7 +54,6 @@ export default function Home() {
         zIndex: 2,
         opacity: 0.4
       }}></div>
-
       {/* Semi-transparent overlay */}
       <div style={{
         position: "absolute",
@@ -73,39 +77,40 @@ export default function Home() {
         minHeight: "100vh"
       }}>
         {/* NOVO NAVIS Button */}
-        <button style={{
-          padding: "1.5rem 3rem",
-          backgroundColor: "rgba(255, 255, 255, 0.1)",
-          color: "white",
-          fontWeight: "700",
-          fontSize: "1.5rem",
-          letterSpacing: "0.1em",
-          borderRadius: "0.75rem",
-          border: "2px solid rgba(255,255,255,0.3)",
-          cursor: "pointer",
-          transition: "all 0.3s ease",
-          backdropFilter: "blur(15px)",
-          textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
-          marginTop: "144px"
-        }}
-        onMouseOver={(e) => {
-          e.target.style.backgroundColor = "rgba(255,255,255,0.2)";
-          e.target.style.borderColor = "rgba(255,255,255,0.6)";
-          e.target.style.transform = "translateY(-2px)";
-          e.target.style.boxShadow = "0 15px 40px rgba(0,0,0,0.4)";
-        }}
-        onMouseOut={(e) => {
-          e.target.style.backgroundColor = "rgba(255,255,255,0.1)";
-          e.target.style.borderColor = "rgba(255,255,255,0.3)";
-          e.target.style.transform = "translateY(0)";
-          e.target.style.boxShadow = "0 10px 30px rgba(0,0,0,0.3)";
-        }}
+        <button 
+          onClick={handleNavigation}
+          style={{
+            padding: "1.5rem 3rem",
+            backgroundColor: "rgba(255, 255, 255, 0.1)",
+            color: "white",
+            fontWeight: "700",
+            fontSize: "1.5rem",
+            letterSpacing: "0.1em",
+            borderRadius: "0.75rem",
+            border: "2px solid rgba(255,255,255,0.3)",
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            backdropFilter: "blur(15px)",
+            textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+            marginTop: "144px"
+          }}
+          onMouseOver={(e) => {
+            e.target.style.backgroundColor = "rgba(255,255,255,0.2)";
+            e.target.style.borderColor = "rgba(255,255,255,0.6)";
+            e.target.style.transform = "translateY(-2px)";
+            e.target.style.boxShadow = "0 15px 40px rgba(0,0,0,0.4)";
+          }}
+          onMouseOut={(e) => {
+            e.target.style.backgroundColor = "rgba(255,255,255,0.1)";
+            e.target.style.borderColor = "rgba(255,255,255,0.3)";
+            e.target.style.transform = "translateY(0)";
+            e.target.style.boxShadow = "0 10px 30px rgba(0,0,0,0.3)";
+          }}
         >
           NOVO NAVIS
         </button>
       </div>
-
       {/* CSS animations */}
       <style jsx>{`
         @keyframes starMove {
