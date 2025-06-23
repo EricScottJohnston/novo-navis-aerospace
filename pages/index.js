@@ -30,8 +30,8 @@ export default function Home() {
           padding: '2rem'
         }}
       >
-        <h1>Welcome to My Site</h1>
-        <p>Your content here</p>
+        <h1>NOVO NAVIS</h1>
+        <p>TRAC</p>
       </div>
     </div>
   );
