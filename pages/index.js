@@ -86,7 +86,8 @@ export default function Home() {
           transition: "all 0.3s ease",
           backdropFilter: "blur(15px)",
           textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
-          boxShadow: "0 10px 30px rgba(0,0,0,0.3)"
+          boxShadow: "0 10px 30px rgba(0,0,0,0.3)",
+          marginTop: "144px"
         }}
         onMouseOver={(e) => {
           e.target.style.backgroundColor = "rgba(255,255,255,0.2)";
