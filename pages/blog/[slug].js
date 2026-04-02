@@ -52,12 +52,10 @@ export default function Article({ post }) {
 
         <div className="article-body" style={{marginTop: '2rem'}}>
 
-          {/* First half of article */}
           {paragraphs.slice(0, midpoint).map((para, i) => (
             <p key={i}>{para}</p>
           ))}
 
-          {/* Mid-article CTA */}
           <div style={{
             background: '#0d1221',
             border: '1px solid #c8a96e',
@@ -77,14 +75,12 @@ export default function Article({ post }) {
             <Link href="/report" className="btn-primary">Get Your Custom Report — $29</Link>
           </div>
 
-          {/* Second half of article */}
           {paragraphs.slice(midpoint).map((para, i) => (
             <p key={i + midpoint}>{para}</p>
           ))}
 
         </div>
 
-        {/* End of article CTA */}
         <div style={{
           background: '#0d1221',
           border: '1px solid #1e2a45',
@@ -101,7 +97,7 @@ export default function Article({ post }) {
           </h3>
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
-            for your business — your workflows, your pain points, your industry.
+            for your business, your workflows, your pain points, your industry.
             Ten pages. Delivered in 24 hours. $29.
           </p>
           <Link href="/report" className="btn-primary">Get Your Custom Report</Link>
