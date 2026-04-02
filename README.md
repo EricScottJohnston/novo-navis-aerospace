@@ -1,1 +1,0 @@
-# novo-navis-aerospace
