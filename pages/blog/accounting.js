@@ -85,7 +85,7 @@ export default function AccountingArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your firm, your workflows, your pain points.
-            Ten pages. Delivered in 24 hours. $29.
+            Ten pages. Delivered in 24 hours. $29. Guaranteed.
           </p>
           <Link href="/report" className="btn-primary">Get Your Custom Report</Link>
         </div>
