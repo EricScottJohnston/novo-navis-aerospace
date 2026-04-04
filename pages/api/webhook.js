@@ -50,6 +50,7 @@ export default async function handler(req, res) {
     const businessName = meta.business_name || 'Unknown'
     const industry = meta.industry || 'Unknown'
     const employees = meta.employees || 'Unknown'
+    const businessDescription = meta.business_description || 'Not provided'
     const email = session.customer_email || 'Unknown'
     const process1 = meta.process1 || 'Not provided'
     const process2 = meta.process2 || 'Not provided'
@@ -73,6 +74,9 @@ export default async function handler(req, res) {
           <p><strong>Industry:</strong> ${industry}</p>
           <p><strong>Employees:</strong> ${employees}</p>
           <hr />
+          <h3>About Their Business</h3>
+          <p>${businessDescription}</p>
+          <hr />
           <h3>Their Pain Points</h3>
           <p><strong>Repetitive Task 1:</strong><br/>${process1}</p>
           <p><strong>Repetitive Task 2:</strong><br/>${process2}</p>
@@ -89,6 +93,8 @@ export default async function handler(req, res) {
     } catch (emailErr) {
       console.error('Email send error:', emailErr)
     }
+  } else {
+    console.log(`Unhandled event type: ${event.type}`)
   }
 
   res.status(200).json({ received: true })

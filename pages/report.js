@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 export default function Report() {
-  const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
@@ -11,6 +10,7 @@ export default function Report() {
     business: '',
     industry: '',
     employees: '',
+    businessDescription: '',
     process1: '',
     process2: '',
     process3: '',
@@ -73,7 +73,7 @@ export default function Report() {
 
         <div className="price-box">
           <div className="price">$29</div>
-          <div className="price-desc">One report. Your business. 24-hour delivery.</div>
+          <div className="price-desc">One report. Your business. 24-hour delivery. Money back guarantee.</div>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -154,6 +154,17 @@ export default function Report() {
             </select>
           </div>
 
+          <div className="form-group">
+            <label>Tell us about your business — what it does, who it serves, and anything you think we should know *</label>
+            <textarea
+              name="businessDescription"
+              required
+              value={formData.businessDescription}
+              onChange={handleChange}
+              placeholder="Example: We are a family owned plumbing company serving the Phoenix metro area. We have 3 trucks and handle both residential and commercial work. We do about 15 jobs per week and our busiest season is summer."
+            />
+          </div>
+
           <hr className="divider" />
 
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
@@ -214,6 +225,7 @@ export default function Report() {
 
           <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
             Secured by Stripe. Your report will be delivered to your email within 24 hours.
+            Not satisfied? Full refund, no questions asked.
           </p>
 
         </form>

@@ -1,6 +1,5 @@
 // pages/api/checkout.js
 // Handles Stripe payment session creation
-// Replace STRIPE_SECRET_KEY in your .env.local file when Stripe is ready
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
@@ -15,6 +14,7 @@ export default async function handler(req, res) {
     business,
     industry,
     employees,
+    businessDescription,
     process1,
     process2,
     process3,
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
               name: 'Custom AI Integration Report',
               description: `Business: ${business} | Industry: ${industry} | Delivered within 24 hours.`
             },
-            unit_amount: 2900 // $29.00 in cents
+            unit_amount: 2900
           },
           quantity: 1
         }
@@ -44,6 +44,7 @@ export default async function handler(req, res) {
         business_name: business,
         industry: industry,
         employees: employees,
+        business_description: businessDescription?.substring(0, 500),
         process1: process1?.substring(0, 500),
         process2: process2?.substring(0, 500),
         process3: process3?.substring(0, 500),
