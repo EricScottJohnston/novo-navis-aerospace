@@ -71,9 +71,25 @@ export default function Report() {
           within 24 hours.
         </p>
 
+        <div style={{
+          background: '#0d1221',
+          border: '1px solid #1e2a45',
+          borderRadius: '6px',
+          padding: '1rem 1.5rem',
+          margin: '1.5rem 0',
+          textAlign: 'center'
+        }}>
+          <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '0.5rem'}}>
+            Want to see what a real report looks like before you buy?
+          </p>
+          <Link href="/sample" style={{color: '#c8a96e', fontWeight: 'bold'}}>
+            Read a real report for a plumbing company →
+          </Link>
+        </div>
+
         <div className="price-box">
           <div className="price">$29</div>
-          <div className="price-desc">One report. Your business. 24-hour delivery. Money back guarantee.</div>
+          <div className="price-desc">One report. Your business. 24-hour delivery.</div>
         </div>
 
         <form onSubmit={handleSubmit}>
@@ -229,6 +245,21 @@ export default function Report() {
           </p>
 
         </form>
+
+        <hr className="divider" />
+
+        <div style={{textAlign: 'center', padding: '1rem 0'}}>
+          <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '0.5rem'}}>
+            Want to talk to a real person before you buy?
+          </p>
+          <p style={{color: '#ffffff', fontSize: '1rem', marginBottom: '0.3rem'}}>
+            Call us: <a href="tel:6234289308" style={{color: '#c8a96e', fontWeight: 'bold'}}>(623) 428-9308</a>
+          </p>
+          <p style={{color: '#8a95aa', fontSize: '0.85rem'}}>
+            Or email: <a href="mailto:support@novonavis.com" style={{color: '#c8a96e'}}>support@novonavis.com</a>
+          </p>
+        </div>
+
       </div>
 
       <footer>
