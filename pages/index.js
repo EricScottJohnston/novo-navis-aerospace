@@ -31,7 +31,7 @@ export default function Home() {
           built specifically for your business.
         </p>
         <div className="btn-group">
-          <Link href="/report" className="btn-primary">Get Your Report — $29</Link>
+          <Link href="/report" className="btn-primary">Get Your Report — $97</Link>
           <Link href="/blog" className="btn-secondary">Read the Blog</Link>
         </div>
       </div>
@@ -149,7 +149,7 @@ export default function Home() {
       <div className="section" style={{textAlign: 'center'}}>
         <div className="section-title">Ready to See What AI Can Do for Your Business?</div>
         <div className="section-sub">
-          One report. One roadmap. 24 hours. $29.
+          One report. One roadmap. 24 hours. $97.
         </div>
         <Link href="/report" className="btn-primary">Get Your Custom Report</Link>
       </div>
