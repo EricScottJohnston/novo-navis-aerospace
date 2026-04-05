@@ -26,10 +26,27 @@ export default function Success() {
           Thank you. Your custom AI integration report is being built now
           and will be delivered to your email within 24 hours.
         </p>
-        <p style={{color: '#8a95aa', marginTop: '1.5rem', fontSize: '0.95rem'}}>
-          If you have any questions, contact us at ericjohnston105@gmail.com
-        </p>
-        <div style={{marginTop: '2.5rem'}}>
+
+        <div style={{
+          background: '#0d1221',
+          border: '1px solid #1e2a45',
+          borderRadius: '6px',
+          padding: '1.5rem',
+          margin: '2rem auto',
+          maxWidth: '400px'
+        }}>
+          <p style={{color: '#8a95aa', marginBottom: '0.8rem', fontSize: '0.9rem'}}>
+            Questions about your order?
+          </p>
+          <p style={{color: '#ffffff', marginBottom: '0.4rem'}}>
+            Email: <a href="mailto:support@novonavis.com" style={{color: '#c8a96e'}}>support@novonavis.com</a>
+          </p>
+          <p style={{color: '#ffffff'}}>
+            Call: <a href="tel:6234289308" style={{color: '#c8a96e'}}>(623) 428-9308</a>
+          </p>
+        </div>
+
+        <div style={{marginTop: '2rem'}}>
           <Link href="/blog" className="btn-secondary">Read the Blog While You Wait</Link>
         </div>
       </div>
