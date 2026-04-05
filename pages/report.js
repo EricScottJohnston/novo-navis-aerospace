@@ -77,7 +77,7 @@ export default function Report() {
 <h1>Get Your Custom AI Integration Report</h1>
         <p className="lead">
           Tell us about your business. Our proprietary Small Psychological Model —
-          not a chatbot, not a template — will build a custom 10-page AI integration
+           will build a custom 10-page AI integration
           roadmap specific to your workflows and pain points. Delivered to your inbox
           within 24 hours.
         </p>
