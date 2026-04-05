@@ -88,7 +88,7 @@ export default function Report() {
         </div>
 
         <div className="price-box">
-          <div className="price">$29</div>
+          <div className="price">$97</div>
           <div className="price-desc">One report. Your business. 24-hour delivery.</div>
           <p style={{marginTop: '1rem', color: '#8a95aa', fontSize: '0.85rem'}}>
             Want to talk to a real person before you buy?{' '}
@@ -240,7 +240,7 @@ export default function Report() {
             style={{width: '100%', fontSize: '1.1rem', padding: '1rem'}}
             disabled={loading}
           >
-            {loading ? 'Redirecting to Payment...' : 'Continue to Payment — $29'}
+            {loading ? 'Redirecting to Payment...' : 'Continue to Payment — $97'}
           </button>
 
           <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
