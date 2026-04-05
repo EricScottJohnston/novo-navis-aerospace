@@ -32,7 +32,7 @@ export default async function handler(req, res) {
               name: 'Custom AI Integration Report',
               description: `Business: ${business} | Industry: ${industry} | Delivered within 24 hours.`
             },
-            unit_amount: 2900
+            unit_amount: 9700
           },
           quantity: 1
         }
