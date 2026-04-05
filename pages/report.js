@@ -47,13 +47,12 @@ export default function Report() {
   return (
     <>
       <Head>
-        <title>Get Your Custom AI Report | Novo Navis</title>
-        <meta name="description" content="Tell us about your business and receive a custom 10-page AI integration report built by our proprietary Small Psychological Model. Delivered in 24 hours." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <script>
         !function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js?pixel_id=a2_is5chzhhi73u",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','a2_is5chzhhi73u');rdt('track', 'PageVisit');
         </script>
-
+        <title>Get Your Custom AI Report | Novo Navis</title>
+        <meta name="description" content="Tell us about your business and receive a custom 10-page AI integration report built by our proprietary Small Psychological Model. Delivered in 24 hours." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
       <nav>
