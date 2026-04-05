@@ -90,6 +90,10 @@ export default function Report() {
         <div className="price-box">
           <div className="price">$29</div>
           <div className="price-desc">One report. Your business. 24-hour delivery.</div>
+          <p style={{marginTop: '1rem', color: '#8a95aa', fontSize: '0.85rem'}}>
+            Want to talk to a real person before you buy?{' '}
+            <a href="tel:6234289308" style={{color: '#c8a96e', fontWeight: 'bold'}}>(623) 428-9308</a>
+          </p>
         </div>
 
         <form onSubmit={handleSubmit}>
