@@ -63,16 +63,18 @@ export default function Report() {
       </nav>
 
       <div className="report-page">
-        <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        style={{width: '100%', borderRadius: '6px', marginBottom: "1.5rem'}}
-        >
-          <source src="/video.mp4" type="video/mp4" />
-        </video>
-        <h1>Get Your Custom AI Integration Report</h1>
+      <div style={{marginBottom: '1.5rem'}}>
+  <video 
+    autoPlay 
+    muted 
+    loop 
+    playsInline
+    style={{width: '100%', borderRadius: '6px'}}
+  >
+    <source src="/video.mp4" type="video/mp4" />
+  </video>
+</div>
+<h1>Get Your Custom AI Integration Report</h1>
         <p className="lead">
           Tell us about your business. Our proprietary Small Psychological Model —
           not a chatbot, not a template — will build a custom 10-page AI integration
