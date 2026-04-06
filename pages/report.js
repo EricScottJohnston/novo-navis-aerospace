@@ -70,7 +70,7 @@ export default function Report() {
       <div className="report-page">
       <div style={{marginBottom: '1.5rem'}}>
   <video 
-    autoPlay 
+    controls 
     loop 
     playsInline
     style={{width: '100%', maxWidth: '500px', display: 'block', margin: '0 auto',  borderRadius: '6px', marginBottom: '1.5rem'}}
