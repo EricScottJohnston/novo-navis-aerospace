@@ -76,7 +76,7 @@ export default function Report() {
     playsInline
     style={{width: '100%', borderRadius: '6px'}}
   >
-    <source src="/video.mp4" type="video/mp4" />
+    <source src="https://res.cloudinary.com/dqv9va6ta/video/upload/v1775436091/899_kwa6mq.mp4" type='video/mp4' />
   </video>
 </div>
 <h1>Get Your Custom AI Integration Report</h1>
