@@ -84,7 +84,7 @@ export default function Report() {
       })
     }
   }}
-  style={{width: '100%', maxWidth: '280px', display: 'block', margin: '0 auto', borderRadius: '6px', marginBottom: '1.5rem'}}
+  style={{width: '100%', maxWidth: '500px', display: 'block', margin: '0 auto', borderRadius: '6px', marginBottom: '1.5rem'}}
 >
     <source src="https://studio.creativefabrica.com/ai-video-generator/3BzfE1JaMCTFBqM5Dcqx9h9uTPE" type='video/mp4' />
   </video>
