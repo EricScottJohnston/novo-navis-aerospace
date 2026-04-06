@@ -38,7 +38,7 @@ export default async function handler(req, res) {
         }
       ],
       mode: 'payment',
-      allow_promotion_codes: true,
+      allow_promotion_codes: trueaftermode: 'payment',
       customer_email: email,
       metadata: {
         customer_name: name,
