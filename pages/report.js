@@ -70,7 +70,7 @@ export default function Report() {
       <div className="report-page">
       <div style={{marginBottom: '1.5rem'}}>
       <h2 style={{textAlign: 'center', color: '#c8a96e', fontSize: '1.3rem', marginBottom: '1rem', marginTop: '1rem'}}>
-  See exactly which AI tools will save your business 10+ hours per week
+  If You're Not Using AI Now, You're Already Behind
 </h2>  
 <video 
   controls
@@ -86,7 +86,7 @@ export default function Report() {
   }}
   style={{width: '100%', maxWidth: '280px', display: 'block', margin: '0 auto', borderRadius: '6px', marginBottom: '1.5rem'}}
 >
-    <source src="https://res.cloudinary.com/dqv9va6ta/video/upload/v1775436091/899_kwa6mq.mp4" type='video/mp4' />
+    <source src="https://studio.creativefabrica.com/ai-video-generator/3BzfE1JaMCTFBqM5Dcqx9h9uTPE" type='video/mp4' />
   </video>
 </div>
 <h1>Get Your Custom AI Integration Report</h1>
