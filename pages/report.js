@@ -69,12 +69,20 @@ export default function Report() {
 
       <div className="report-page">
       <div style={{marginBottom: '1.5rem'}}>
-  <video 
-    controls 
-    loop 
-    playsInline
-    style={{width: '100%', maxWidth: '280px', display: 'block', margin: '0 auto',  borderRadius: '6px', marginBottom: '1.5rem'}}
-  >
+<video 
+  controls
+  loop 
+  playsInline
+  onPlay={() => {
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'video_play', {
+        event_category: 'engagement',
+        event_label: 'report_page_video'
+      })
+    }
+  }}
+  style={{width: '100%', maxWidth: '280px', display: 'block', margin: '0 auto', borderRadius: '6px', marginBottom: '1.5rem'}}
+>
     <source src="https://res.cloudinary.com/dqv9va6ta/video/upload/v1775436091/899_kwa6mq.mp4" type='video/mp4' />
   </video>
 </div>
