@@ -69,6 +69,9 @@ export default function Report() {
 
       <div className="report-page">
       <div style={{marginBottom: '1.5rem'}}>
+      <h2 style={{textAlign: 'center', color: '#c8a96e', fontSize: '1.3rem', marginBottom: '1rem', marginTop: '1rem'}}>
+  See exactly which AI tools will save your business 10+ hours per week
+</h2>  
 <video 
   controls
   loop 
