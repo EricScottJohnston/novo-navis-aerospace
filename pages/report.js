@@ -71,10 +71,9 @@ export default function Report() {
       <div style={{marginBottom: '1.5rem'}}>
   <video 
     autoPlay 
-    muted 
     loop 
     playsInline
-    style={{width: '100%', borderRadius: '6px'}}
+    style={{width: '100%', maxWidth: '500px', display: 'block', margin: '0 auto',  borderRadius: '6px', marginBottom: '1.5rem'}}
   >
     <source src="https://res.cloudinary.com/dqv9va6ta/video/upload/v1775436091/899_kwa6mq.mp4" type='video/mp4' />
   </video>
