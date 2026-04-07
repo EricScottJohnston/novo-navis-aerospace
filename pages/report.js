@@ -158,7 +158,7 @@ export default function Report() {
             TPREVIEW
           </p>
           <p style={{color: '#8a95aa', fontSize: '0.8rem'}}>
-            Spots remaining: <strong style={{color: '#ffffff'}}>25 of 25</strong> — First come, first served.
+            Spots remaining: <strong style={{color: '#ffffff'}}>14 of 25</strong> — First come, first served.
           </p>
         </div>
 
