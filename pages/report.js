@@ -171,7 +171,10 @@ export default function Report() {
             <a href="tel:6234289308" style={{color: '#c8a96e', fontWeight: 'bold'}}>(623) 428-9308</a>
           </p>
         </div>
-
+          <p style={{color: '#8a95aa', fontSize: '0.8rem', textAlign: 'center', marginBottom: '1rem'}}>
+  Your business information is never shared with third parties.{' '}
+  <Link href="/privacy-policy" style={{color: '#c8a96e'}}>Read our Privacy Policy →</Link>
+</p>
         <form onSubmit={handleSubmit}>
 
           <div className="form-group">
