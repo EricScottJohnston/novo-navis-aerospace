@@ -7,13 +7,6 @@ export default function Success() {
       <Head>
         <title>Payment Successful | Novo Navis</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!-- Google tag (gtag.js) event -->
-<script>
-  gtag('event', 'conversion_event_purchase', {
-    // <event_parameters>
-  });
-</script>
-
       </Head>
 
       <nav>
