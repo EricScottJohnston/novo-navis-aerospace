@@ -173,7 +173,7 @@ export default function Report() {
         </div>
           <p style={{color: '#8a95aa', fontSize: '0.8rem', textAlign: 'center', marginBottom: '1rem'}}>
   Novo Navis will never sell or share your information.{' '}
-  <Link href="/privacy-policy" style={{color: '#c8a96e'}}>Read our Privacy Policy →</Link>
+  <Link href="/privacypolicy" style={{color: '#c8a96e'}}>Read our Privacy Policy →</Link>
 </p>
         <form onSubmit={handleSubmit}>
 
