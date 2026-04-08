@@ -21,13 +21,13 @@ export default async function handler(req, res) {
               name: 'Custom AI Integration Report',
               description: `Business: ${business} | Delivered within 24 hours.`
             },
-            unit_amount: 9700
+            unit_amount: 7700
           },
           quantity: 1
         }
       ],
       mode: 'payment',
-      allow_promotion_codes: true,
+      allow_promotion_codes: false,
       customer_email: email,
       metadata: {
         customer_name: name,

@@ -53,7 +53,7 @@ export default async function handler(req, res) {
     // Payment confirmed — intake form submission will trigger the full report brief email
     try {
       await resend.emails.send({
-        from: 'Novo Navis <onboarding@resend.dev>',
+        from: 'Novo Navis <noreply@novonavis.com>',
         to: 'ericjohnston105@gmail.com',
         subject: `Payment Received — ${businessName} — Awaiting Intake`,
         html: `

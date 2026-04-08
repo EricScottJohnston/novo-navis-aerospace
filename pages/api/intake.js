@@ -42,7 +42,7 @@ export default async function handler(req, res) {
 
   try {
     await resend.emails.send({
-      from: 'Novo Navis <onboarding@resend.dev>',
+      from: 'Novo Navis <noreply@novonavis.com>',
       to: 'ericjohnston105@gmail.com',
       subject: `Intake Ready — ${businessName} — ${industry}`,
       html: `

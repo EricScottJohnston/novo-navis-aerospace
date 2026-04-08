@@ -199,7 +199,7 @@ export default function Report() {
           </Link>
         </div>
 
-        {/* PROMOTIONAL OFFER BOX */}
+        {/* LIMITED TIME PRICE BOX */}
         <div style={{
           background: '#0d1a0d',
           border: '2px solid #4caf50',
@@ -209,44 +209,23 @@ export default function Report() {
           textAlign: 'center'
         }}>
           <p style={{color: '#4caf50', fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem', fontWeight: 'bold'}}>
-            Limited Promotional Offer
+            Launch Pricing — Ends April 30, 2026
           </p>
-          <p style={{color: '#ffffff', fontSize: '1.1rem', marginBottom: '0.75rem'}}>
-            We are giving away <strong>25 free reports</strong> as part of our launch promotion.
-          </p>
-          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem'}}>
+          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem'}}>
             <span style={{color: '#8a95aa', fontSize: '1.5rem', textDecoration: 'line-through'}}>$97</span>
-            <span style={{color: '#4caf50', fontSize: '2rem', fontWeight: 'bold'}}>FREE</span>
+            <span style={{color: '#4caf50', fontSize: '2.5rem', fontWeight: 'bold'}}>$77</span>
           </div>
-          <p style={{color: '#8a95aa', fontSize: '0.85rem', marginBottom: '0.5rem'}}>
-            Use promo code at checkout:
-          </p>
-          <p style={{
-            background: '#1a2a1a',
-            border: '1px solid #4caf50',
-            borderRadius: '4px',
-            padding: '0.5rem 1rem',
-            color: '#4caf50',
-            fontFamily: 'monospace',
-            fontSize: '1.2rem',
-            fontWeight: 'bold',
-            display: 'inline-block',
-            marginBottom: '0.75rem',
-            letterSpacing: '0.1em'
-          }}>
-            TPREVIEW
-          </p>
-          <p style={{color: '#8a95aa', fontSize: '0.8rem'}}>
-            Spots remaining: <strong style={{color: '#ffffff'}}>14 of 25</strong> — First come, first served.
+          <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: 0}}>
+            One report. Your business. 24-hour delivery.
           </p>
         </div>
 
         <div className="price-box">
           <div style={{textDecoration: 'line-through', color: '#8a95aa', fontSize: '1.5rem', marginBottom: '0.25rem'}}>$97</div>
-          <div className="price" style={{color: '#4caf50'}}>FREE with code TPREVIEW</div>
+          <div className="price" style={{color: '#4caf50'}}>$77 — through April 30</div>
           <div className="price-desc">One report. Your business. 24-hour delivery.</div>
           <p style={{marginTop: '1rem', color: '#8a95aa', fontSize: '0.85rem'}}>
-            Want to talk to a real person before you claim your report?{' '}
+            Want to talk to a real person before you order?{' '}
             <a href="tel:6234289308" style={{color: '#c8a96e', fontWeight: 'bold'}}>(623) 428-9308</a>
           </p>
         </div>
@@ -354,11 +333,11 @@ export default function Report() {
             }}
             disabled={loading || !agreedTerms}
           >
-            {loading ? 'Redirecting to Checkout...' : 'Claim My Free Report — Use Code TPREVIEW at Checkout'}
+            {loading ? 'Redirecting to Checkout...' : 'Get My Report — $77'}
           </button>
 
           <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
-            Secured by Stripe. Enter promo code TPREVIEW at checkout for free access.
+            Secured by Stripe. $77 launch pricing through April 30, 2026.
             Your report will be delivered to your email within 24 hours.
             Not satisfied? We'll refund you in full — no questions asked.
           </p>
