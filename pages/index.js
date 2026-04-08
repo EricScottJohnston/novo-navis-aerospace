@@ -31,7 +31,7 @@ export default function Home() {
           built specifically for your business.
         </p>
         <div className="btn-group">
-          <Link href="/report" className="btn-primary">Get Your Report — $97</Link>
+          <Link href="/report" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>⚡ Start Here →</Link>
           <Link href="/blog" className="btn-secondary">Read the Blog</Link>
         </div>
       </div>
@@ -151,7 +151,7 @@ export default function Home() {
         <div className="section-sub">
           One report. One roadmap. 24 hours. $97.
         </div>
-        <Link href="/report" className="btn-primary">Get Your Custom Report</Link>
+        <Link href="/report" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>⚡ Start Here →</Link>
       </div>
 
       {/* FOOTER */}
