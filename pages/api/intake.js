@@ -13,6 +13,7 @@ export default async function handler(req, res) {
     sessionId,
     industry,
     employees,
+    budget,
     businessDescription,
     process1,
     process2,
@@ -55,6 +56,7 @@ export default async function handler(req, res) {
         <p><strong>Business:</strong> ${businessName}</p>
         <p><strong>Industry:</strong> ${industry}</p>
         <p><strong>Employees:</strong> ${employees || 'Not provided'}</p>
+        <p><strong>Monthly Software Budget:</strong> ${budget || 'Not provided'}</p>
         <hr />
         <h3>About Their Business</h3>
         <p>${businessDescription}</p>
@@ -65,8 +67,20 @@ export default async function handler(req, res) {
         <p><strong>Repetitive Task 3:</strong><br/>${process3 || 'Not provided'}</p>
         <p><strong>Biggest Operational Problem:</strong><br/>${goal}</p>
         <hr />
+        <hr />
+        <h3 style="color: #333;">order.txt — paste this into David</h3>
+        <pre style="background: #f5f5f5; padding: 1rem; font-size: 13px; line-height: 1.6;">Name: ${customerName}
+Business: ${businessName}
+Industry: ${industry}
+Employees: ${employees || 'Not provided'}
+Budget: ${budget || 'Not provided'}
+About: ${businessDescription}
+Task 1: ${process1}
+Task 2: ${process2 || 'Not provided'}
+Task 3: ${process3 || 'Not provided'}
+Problem: ${goal}</pre>
         <p style="color: #888; font-size: 12px;">
-          Run David with this information and email the PDF report to ${customerEmail} within 24 hours.
+          Copy the block above into order.txt, run David, then email the report to ${customerEmail} within 24 hours.
         </p>
       `
     })

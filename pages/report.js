@@ -156,9 +156,10 @@ export default function Report() {
             How it works
           </p>
           <p style={{color: '#8a95aa', fontSize: '0.9rem', lineHeight: '1.7', margin: 0}}>
-            Our Small Psychological Model (SPM) was developed from analysis of workflows across
-            12 industries. It identifies patterns in manual, repetitive tasks that match known AI
-            automation profiles, then ranks them by estimated time savings and implementation complexity.
+            Our Small Psychological Model (SPM) analyzes your specific workflows against known AI
+            automation profiles across industries including trades, professional services, retail,
+            healthcare, and construction. It ranks automatable tasks by estimated time savings and
+            implementation complexity, then builds a roadmap specific to your business.
             Every report is reviewed by a human AI consultant before it reaches your inbox.
           </p>
         </div>

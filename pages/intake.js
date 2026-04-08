@@ -13,6 +13,7 @@ export default function Intake() {
   const [formData, setFormData] = useState({
     industry: '',
     employees: '',
+    budget: '',
     businessDescription: '',
     process1: '',
     process2: '',
@@ -154,6 +155,23 @@ export default function Intake() {
                     <option value="6-15">6 to 15</option>
                     <option value="16-50">16 to 50</option>
                     <option value="50+">50 or more</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>Monthly budget for new software tools *</label>
+                  <select
+                    name="budget"
+                    required
+                    value={formData.budget}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select your budget</option>
+                    <option value="Under $50/month">Under $50 / month</option>
+                    <option value="$50–$200/month">$50 – $200 / month</option>
+                    <option value="$200–$500/month">$200 – $500 / month</option>
+                    <option value="$500+/month">$500+ / month</option>
+                    <option value="Not sure yet">Not sure yet</option>
                   </select>
                 </div>
 
