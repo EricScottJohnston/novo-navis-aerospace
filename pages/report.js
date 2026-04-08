@@ -4,7 +4,6 @@ import { useState } from 'react'
 
 export default function Report() {
   const [loading, setLoading] = useState(false)
-  const [agreed, setAgreed] = useState(false)
   const [agreedTerms, setAgreedTerms] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
@@ -25,10 +24,6 @@ export default function Report() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!agreed) {
-      alert('You must agree to leave a Trustpilot review to claim your free report.')
-      return
-    }
     if (!agreedTerms) {
       alert('You must agree to the Terms and Conditions to continue.')
       return
@@ -53,8 +48,6 @@ export default function Report() {
       setLoading(false)
     }
   }
-
-  const bothAgreed = agreed && agreedTerms
 
   return (
     <>
@@ -127,7 +120,7 @@ export default function Report() {
           </Link>
         </div>
 
-        {/* LIMITED FREE OFFER BOX */}
+        {/* PROMOTIONAL OFFER BOX */}
         <div style={{
           background: '#0d1a0d',
           border: '2px solid #4caf50',
@@ -137,10 +130,10 @@ export default function Report() {
           textAlign: 'center'
         }}>
           <p style={{color: '#4caf50', fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem', fontWeight: 'bold'}}>
-            Limited Time — Free Report Offer
+            Limited Promotional Offer
           </p>
           <p style={{color: '#ffffff', fontSize: '1.1rem', marginBottom: '0.75rem'}}>
-            We are giving away <strong>25 free reports</strong> in exchange for an honest Trustpilot review.
+            We are giving away <strong>25 free reports</strong> as part of our launch promotion.
           </p>
           <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '0.75rem'}}>
             <span style={{color: '#8a95aa', fontSize: '1.5rem', textDecoration: 'line-through'}}>$97</span>
@@ -322,34 +315,13 @@ export default function Report() {
             />
           </div>
 
-          {/* TRUSTPILOT AGREEMENT CHECKBOX */}
-          <div style={{
-            background: '#0d1221',
-            border: '1px solid #4caf50',
-            borderRadius: '6px',
-            padding: '1rem 1.5rem',
-            margin: '1.5rem 0'
-          }}>
-            <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer'}}>
-              <input
-                type="checkbox"
-                checked={agreed}
-                onChange={(e) => setAgreed(e.target.checked)}
-                style={{marginTop: '3px', width: '18px', height: '18px', flexShrink: 0, cursor: 'pointer'}}
-              />
-              <span style={{color: '#ffffff', fontSize: '0.9rem', lineHeight: '1.5'}}>
-                I agree to leave an honest review on Trustpilot after receiving my report. I understand that promo code <strong style={{color: '#4caf50'}}>TPREVIEW</strong> gives me a $97 report at no cost in exchange for this review.
-              </span>
-            </label>
-          </div>
-
           {/* TERMS AND CONDITIONS CHECKBOX */}
           <div style={{
             background: '#0d1221',
             border: '1px solid #1e2a45',
             borderRadius: '6px',
             padding: '1rem 1.5rem',
-            margin: '1rem 0'
+            margin: '1.5rem 0'
           }}>
             <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer'}}>
               <input
@@ -373,10 +345,10 @@ export default function Report() {
               width: '100%',
               fontSize: '1.1rem',
               padding: '1rem',
-              opacity: bothAgreed ? 1 : 0.5,
-              cursor: bothAgreed ? 'pointer' : 'not-allowed'
+              opacity: agreedTerms ? 1 : 0.5,
+              cursor: agreedTerms ? 'pointer' : 'not-allowed'
             }}
-            disabled={loading || !bothAgreed}
+            disabled={loading || !agreedTerms}
           >
             {loading ? 'Redirecting to Checkout...' : 'Claim My Free Report — Use Code TPREVIEW at Checkout'}
           </button>
