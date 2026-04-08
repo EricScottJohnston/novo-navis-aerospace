@@ -5,6 +5,7 @@ import { useState } from 'react'
 export default function Report() {
   const [loading, setLoading] = useState(false)
   const [agreed, setAgreed] = useState(false)
+  const [agreedTerms, setAgreedTerms] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,6 +29,10 @@ export default function Report() {
       alert('You must agree to leave a Trustpilot review to claim your free report.')
       return
     }
+    if (!agreedTerms) {
+      alert('You must agree to the Terms and Conditions to continue.')
+      return
+    }
     setLoading(true)
 
     try {
@@ -48,6 +53,8 @@ export default function Report() {
       setLoading(false)
     }
   }
+
+  const bothAgreed = agreed && agreedTerms
 
   return (
     <>
@@ -171,10 +178,12 @@ export default function Report() {
             <a href="tel:6234289308" style={{color: '#c8a96e', fontWeight: 'bold'}}>(623) 428-9308</a>
           </p>
         </div>
-          <p style={{color: '#8a95aa', fontSize: '0.8rem', textAlign: 'center', marginBottom: '1rem'}}>
-  Novo Navis will never sell or share your information.{' '}
-  <Link href="/privacy" style={{color: '#c8a96e'}}>Read our Privacy Policy →</Link>
-</p>
+
+        <p style={{color: '#8a95aa', fontSize: '0.8rem', textAlign: 'center', marginBottom: '1rem'}}>
+          Novo Navis will never sell or share your information.{' '}
+          <Link href="/privacy" style={{color: '#c8a96e'}}>Read our Privacy Policy →</Link>
+        </p>
+
         <form onSubmit={handleSubmit}>
 
           <div className="form-group">
@@ -329,7 +338,30 @@ export default function Report() {
                 style={{marginTop: '3px', width: '18px', height: '18px', flexShrink: 0, cursor: 'pointer'}}
               />
               <span style={{color: '#ffffff', fontSize: '0.9rem', lineHeight: '1.5'}}>
-                I agree to leave an honest review on Trustpilot after receiving my report. I understand that promo code <strong style={{color: '#4caf50'}}>TPREVIEW</strong> gives me a $97 report at no cost in exchange for this review. This button will not work unless I check this box.
+                I agree to leave an honest review on Trustpilot after receiving my report. I understand that promo code <strong style={{color: '#4caf50'}}>TPREVIEW</strong> gives me a $97 report at no cost in exchange for this review.
+              </span>
+            </label>
+          </div>
+
+          {/* TERMS AND CONDITIONS CHECKBOX */}
+          <div style={{
+            background: '#0d1221',
+            border: '1px solid #1e2a45',
+            borderRadius: '6px',
+            padding: '1rem 1.5rem',
+            margin: '1rem 0'
+          }}>
+            <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer'}}>
+              <input
+                type="checkbox"
+                checked={agreedTerms}
+                onChange={(e) => setAgreedTerms(e.target.checked)}
+                style={{marginTop: '3px', width: '18px', height: '18px', flexShrink: 0, cursor: 'pointer'}}
+              />
+              <span style={{color: '#ffffff', fontSize: '0.9rem', lineHeight: '1.5'}}>
+                I agree to the{' '}
+                <Link href="/terms" style={{color: '#c8a96e'}}>Terms and Conditions</Link>
+                {' '}and understand this report is provided for informational purposes only. Novo Navis is not liable for any business decisions made based on this report.
               </span>
             </label>
           </div>
@@ -341,10 +373,10 @@ export default function Report() {
               width: '100%',
               fontSize: '1.1rem',
               padding: '1rem',
-              opacity: agreed ? 1 : 0.5,
-              cursor: agreed ? 'pointer' : 'not-allowed'
+              opacity: bothAgreed ? 1 : 0.5,
+              cursor: bothAgreed ? 'pointer' : 'not-allowed'
             }}
-            disabled={loading || !agreed}
+            disabled={loading || !bothAgreed}
           >
             {loading ? 'Redirecting to Checkout...' : 'Claim My Free Report — Use Code TPREVIEW at Checkout'}
           </button>
@@ -377,7 +409,9 @@ export default function Report() {
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
           <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
-          <Link href="/about">About</Link>
+          <Link href="/about">About</Link> &nbsp;·&nbsp;
+          <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
+          <Link href="/terms">Terms and Conditions</Link>
         </p>
       </footer>
     </>
