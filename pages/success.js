@@ -21,10 +21,10 @@ export default function Success() {
 
       <div className="report-page" style={{textAlign: 'center', paddingTop: '5rem'}}>
         <div style={{fontSize: '3rem', marginBottom: '1rem'}}>✓</div>
-        <h1 style={{marginBottom: '1rem'}}>Payment Received</h1>
+        <h1 style={{marginBottom: '1rem'}}>You're all set.</h1>
         <p className="lead">
-          Thank you. Your custom AI integration report is being built now
-          and will be delivered to your email within 24 hours.
+          Your intake has been received. Eric will review your business details,
+          run your report, and deliver it to your inbox within 24 hours.
         </p>
 
         <div style={{

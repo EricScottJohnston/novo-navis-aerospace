@@ -8,18 +8,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const {
-    name,
-    email,
-    business,
-    industry,
-    employees,
-    businessDescription,
-    process1,
-    process2,
-    process3,
-    goal
-  } = req.body
+  const { name, email, business } = req.body
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -30,7 +19,7 @@ export default async function handler(req, res) {
             currency: 'usd',
             product_data: {
               name: 'Custom AI Integration Report',
-              description: `Business: ${business} | Industry: ${industry} | Delivered within 24 hours.`
+              description: `Business: ${business} | Delivered within 24 hours.`
             },
             unit_amount: 9700
           },
@@ -42,16 +31,9 @@ export default async function handler(req, res) {
       customer_email: email,
       metadata: {
         customer_name: name,
-        business_name: business,
-        industry: industry,
-        employees: employees,
-        business_description: businessDescription?.substring(0, 500),
-        process1: process1?.substring(0, 500),
-        process2: process2?.substring(0, 500),
-        process3: process3?.substring(0, 500),
-        goal: goal?.substring(0, 500)
+        business_name: business
       },
-      success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${req.headers.origin}/intake?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.origin}/report`
     })
 

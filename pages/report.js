@@ -8,14 +8,7 @@ export default function Report() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    business: '',
-    industry: '',
-    employees: '',
-    businessDescription: '',
-    process1: '',
-    process2: '',
-    process3: '',
-    goal: ''
+    business: ''
   })
 
   const handleChange = (e) => {
@@ -301,105 +294,10 @@ export default function Report() {
             />
           </div>
 
-          <div className="form-group">
-            <label>Industry *</label>
-            <select
-              name="industry"
-              required
-              value={formData.industry}
-              onChange={handleChange}
-            >
-              <option value="">Select your industry</option>
-              <option value="HVAC / Plumbing / Electrical">HVAC / Plumbing / Electrical</option>
-              <option value="Landscaping / Field Services">Landscaping / Field Services</option>
-              <option value="Legal Services">Legal Services</option>
-              <option value="Accounting / Finance">Accounting / Finance</option>
-              <option value="Dental / Chiropractic / Healthcare">Dental / Chiropractic / Healthcare</option>
-              <option value="Real Estate">Real Estate</option>
-              <option value="Property Management">Property Management</option>
-              <option value="Retail / E-commerce">Retail / E-commerce</option>
-              <option value="Restaurant / Hospitality">Restaurant / Hospitality</option>
-              <option value="Consulting">Consulting</option>
-              <option value="Construction">Construction</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Number of Employees</label>
-            <select
-              name="employees"
-              value={formData.employees}
-              onChange={handleChange}
-            >
-              <option value="">Select range</option>
-              <option value="Just me">Just me</option>
-              <option value="2-5">2 to 5</option>
-              <option value="6-15">6 to 15</option>
-              <option value="16-50">16 to 50</option>
-              <option value="50+">50 or more</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label>Tell us about your business — what it does, who it serves, and anything you think we should know *</label>
-            <textarea
-              name="businessDescription"
-              required
-              value={formData.businessDescription}
-              onChange={handleChange}
-              placeholder="Example: We are a family owned plumbing company serving the Phoenix metro area. We have 3 trucks and handle both residential and commercial work. We do about 15 jobs per week and our busiest season is summer."
-            />
-          </div>
-
-          <hr className="divider" />
-
-          <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
-            Now tell us about your biggest operational pain points.
-            The more specific you are, the more valuable your report will be.
+          <p style={{color: '#8a95aa', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1.5rem'}}>
+            After checkout you'll complete a short intake form with your business details.
+            Your report is built from that — so the more specific you are there, the better your report.
           </p>
-
-          <div className="form-group">
-            <label>Most Repetitive Task #1 — What is it and how long does it take per week? *</label>
-            <textarea
-              name="process1"
-              required
-              value={formData.process1}
-              onChange={handleChange}
-              placeholder="Example: Our office manager manually enters every job request into a spreadsheet, then texts the crew lead to check availability. Takes about 2 hours a day."
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Most Repetitive Task #2 — What is it and how long does it take per week?</label>
-            <textarea
-              name="process2"
-              value={formData.process2}
-              onChange={handleChange}
-              placeholder="Example: We create invoices manually in Word at the end of every job. Takes 20-30 minutes per invoice."
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Most Repetitive Task #3 — What is it and how long does it take per week?</label>
-            <textarea
-              name="process3"
-              value={formData.process3}
-              onChange={handleChange}
-              placeholder="Example: Following up with leads who haven't responded. We do this manually by email and it often falls through the cracks."
-            />
-          </div>
-
-          <div className="form-group">
-            <label>What is the single biggest operational problem in your business right now? *</label>
-            <textarea
-              name="goal"
-              required
-              value={formData.goal}
-              onChange={handleChange}
-              placeholder="Example: We're losing jobs because we're too slow to respond to new inquiries. By the time we follow up, they've already hired someone else."
-            />
-          </div>
 
           {/* TERMS AND CONDITIONS CHECKBOX */}
           <div style={{

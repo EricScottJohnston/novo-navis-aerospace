@@ -45,51 +45,32 @@ export default async function handler(req, res) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object
     const meta = session.metadata || {}
-
     const customerName = meta.customer_name || 'Unknown'
     const businessName = meta.business_name || 'Unknown'
-    const industry = meta.industry || 'Unknown'
-    const employees = meta.employees || 'Unknown'
-    const businessDescription = meta.business_description || 'Not provided'
     const email = session.customer_email || 'Unknown'
-    const process1 = meta.process1 || 'Not provided'
-    const process2 = meta.process2 || 'Not provided'
-    const process3 = meta.process3 || 'Not provided'
-    const goal = meta.goal || 'Not provided'
     const amountPaid = `$${(session.amount_total / 100).toFixed(2)}`
 
+    // Payment confirmed — intake form submission will trigger the full report brief email
     try {
       await resend.emails.send({
         from: 'Novo Navis <onboarding@resend.dev>',
         to: 'ericjohnston105@gmail.com',
-        subject: `New Report Order — ${businessName} — ${industry}`,
+        subject: `Payment Received — ${businessName} — Awaiting Intake`,
         html: `
-          <h2>New Report Order Received</h2>
-          <p><strong>Amount Paid:</strong> ${amountPaid}</p>
-          <hr />
-          <h3>Customer Information</h3>
+          <h2>Payment Received</h2>
+          <p><strong>Amount:</strong> ${amountPaid}</p>
           <p><strong>Name:</strong> ${customerName}</p>
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Business:</strong> ${businessName}</p>
-          <p><strong>Industry:</strong> ${industry}</p>
-          <p><strong>Employees:</strong> ${employees}</p>
-          <hr />
-          <h3>About Their Business</h3>
-          <p>${businessDescription}</p>
-          <hr />
-          <h3>Their Pain Points</h3>
-          <p><strong>Repetitive Task 1:</strong><br/>${process1}</p>
-          <p><strong>Repetitive Task 2:</strong><br/>${process2}</p>
-          <p><strong>Repetitive Task 3:</strong><br/>${process3}</p>
-          <p><strong>Biggest Operational Problem:</strong><br/>${goal}</p>
           <hr />
           <p style="color: #888; font-size: 12px;">
-            Run David with this information and email the PDF report to ${email} within 24 hours.
+            Customer has been redirected to the intake form. You will receive a second email
+            with full report details once they complete it.
           </p>
         `
       })
 
-      console.log('Email sent successfully for order from:', businessName)
+      console.log('Payment notification sent for:', businessName)
     } catch (emailErr) {
       console.error('Email send error:', emailErr)
     }
