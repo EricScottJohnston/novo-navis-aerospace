@@ -159,8 +159,8 @@ export default function Home() {
         </div>
 
         <div style={{
-          background: '#0d1221',
-          border: '1px solid #1e2a45',
+          background: '#0d1a0d',
+          border: '2px solid #4caf50',
           borderRadius: '6px',
           padding: '1rem 1.5rem',
           margin: '1.5rem 0',
@@ -169,7 +169,7 @@ export default function Home() {
           <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '0.5rem'}}>
             Want to see what a real report looks like before you buy?
           </p>
-          <Link href="/sample" style={{color: '#c8a96e', fontWeight: 'bold'}}>
+          <Link href="/sample" style={{color: '#4caf50', fontWeight: 'bold'}}>
             Read a real report for a plumbing company →
           </Link>
           <p style={{marginTop: '0.75rem', marginBottom: 0}}>
@@ -181,30 +181,21 @@ export default function Home() {
 
         {/* PRICE BOX */}
         <div style={{
-          background: '#0d1a0d',
-          border: '2px solid #4caf50',
+          background: '#0f0d00',
+          border: '2px solid #c8a96e',
           borderRadius: '8px',
           padding: '1.5rem',
           margin: '1.5rem 0',
           textAlign: 'center'
         }}>
-          <p style={{color: '#4caf50', fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem', fontWeight: 'bold'}}>
+          <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem', fontWeight: 'bold'}}>
             Full 10-Page Custom Report
           </p>
           <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem'}}>
-            <span style={{color: '#4caf50', fontSize: '2.5rem', fontWeight: 'bold'}}>$288</span>
+            <span style={{color: '#c8a96e', fontSize: '2.5rem', fontWeight: 'bold'}}>$288</span>
           </div>
           <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: 0}}>
             One report. Your business. 24-hour delivery.
-          </p>
-        </div>
-
-        <div className="price-box">
-          <div className="price" style={{color: '#4caf50'}}>$288</div>
-          <div className="price-desc">One report. Your business. 24-hour delivery.</div>
-          <p style={{marginTop: '1rem', color: '#8a95aa', fontSize: '0.85rem'}}>
-            Want to talk to a real person before you order?{' '}
-            <a href="tel:6234289308" style={{color: '#c8a96e', fontWeight: 'bold'}}>(623) 428-9308</a>
           </p>
         </div>
 
