@@ -1,6 +1,7 @@
 // pages/api/sample.js
 // Receives free sample form submission, calls Claude Haiku for a single-workflow
-// analysis, and schedules a 24-hour Resend follow-up email.
+// analysis, and emails Eric with the submission details.
+// Rate limited to one analysis per user per 24 hours via cookie.
 
 import Anthropic from '@anthropic-ai/sdk'
 import { Resend } from 'resend'
@@ -11,9 +12,14 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
-  const { name, email, workflow } = req.body
+  // Rate limit check — one analysis per 24 hours per browser
+  if (req.cookies['nn_sample_used']) {
+    return res.status(429).json({ error: 'rate_limited' })
+  }
 
-  if (!name || !email || !workflow) {
+  const { name, email, businessType, workflow } = req.body
+
+  if (!name || !email || !businessType || !workflow) {
     return res.status(400).json({ error: 'Missing required fields' })
   }
 
@@ -33,9 +39,10 @@ export default async function handler(req, res) {
           role: 'user',
           content: `You are an AI integration consultant for small businesses. A business owner has described one of their workflow problems. Analyze it and provide a specific, practical AI integration recommendation.
 
+Business type: ${businessType}
 Workflow problem: ${workflow}
 
-Write 2-3 focused paragraphs. Be specific — name actual AI tools (e.g. Zapier, Make.com, ChatGPT, Claude, Calendly, Jobber, etc.) and give a realistic time savings estimate. Do not use bullet points. Write in plain prose. Be direct and practical, not salesy. End by noting that a full 10-page report would analyze all their workflows and deliver a complete 90-day implementation roadmap.`
+Write 2-3 focused paragraphs tailored specifically to this type of business. Be specific — name actual AI tools (e.g. Zapier, Make.com, ChatGPT, Claude, Calendly, Jobber, ServiceTitan, etc.) that are relevant to this industry, and give a realistic time savings estimate. Do not use bullet points. Write in plain prose. Be direct and practical, not salesy. End by noting that a full 10-page report would analyze all their workflows and deliver a complete 90-day implementation roadmap.`
         }
       ]
     })
@@ -46,16 +53,20 @@ Write 2-3 focused paragraphs. Be specific — name actual AI tools (e.g. Zapier,
     return res.status(500).json({ error: 'Analysis failed. Please try again.' })
   }
 
+  // Set 24-hour rate limit cookie
+  res.setHeader('Set-Cookie', 'nn_sample_used=1; Max-Age=86400; Path=/; HttpOnly; SameSite=Strict')
+
   // Send immediate notification to Eric
   try {
     await resend.emails.send({
       from: 'Novo Navis <noreply@novonavis.com>',
       to: 'ericjohnston105@gmail.com',
-      subject: `Free Sample Submitted — ${name}`,
+      subject: `Free Sample Submitted — ${name} (${businessType})`,
       html: `
         <h2>Free Sample Analysis Submitted</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Business Type:</strong> ${businessType}</p>
         <hr />
         <h3>Their Workflow Problem</h3>
         <p>${workflow}</p>

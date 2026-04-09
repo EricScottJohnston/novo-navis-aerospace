@@ -9,6 +9,7 @@ export default function SampleAnalysis() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    businessType: '',
     workflow: ''
   })
 
@@ -27,6 +28,11 @@ export default function SampleAnalysis() {
         body: JSON.stringify(formData)
       })
       const data = await res.json()
+      if (res.status === 429 || data.error === 'rate_limited') {
+        alert('You\'ve already used your free analysis today. Come back tomorrow for another one, or get the full 10-page report below.')
+        setLoading(false)
+        return
+      }
       if (data.analysis) {
         // Store result in sessionStorage and redirect to results page
         sessionStorage.setItem('sampleAnalysis', data.analysis)
@@ -126,6 +132,18 @@ export default function SampleAnalysis() {
               value={formData.email}
               onChange={handleChange}
               placeholder="john@yourbusiness.com"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>What type of business do you run? *</label>
+            <input
+              type="text"
+              name="businessType"
+              required
+              value={formData.businessType}
+              onChange={handleChange}
+              placeholder="e.g. HVAC company, dental practice, property management, law firm"
             />
           </div>
 
