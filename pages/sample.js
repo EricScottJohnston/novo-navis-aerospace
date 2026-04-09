@@ -15,7 +15,7 @@ export default function SampleReport() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/report">Get Your Report</Link></li>
+          <li><Link href="/sample-analysis">Try It Free</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -128,9 +128,9 @@ export default function SampleReport() {
             This report was built specifically for a plumbing company. Yours will be built specifically for your business.
           </h3>
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
-            Same rigorous analysis. Same specific tools and pricing. Same ROI calculations. Built for your workflows, your industry, your pain points. Ten pages. Delivered in 24 hours. $29.
+            Same rigorous analysis. Same specific tools and pricing. Same ROI calculations. Built for your workflows, your industry, your pain points. Ten pages. Delivered in 24 hours. $288.
           </p>
-          <Link href="/report" className="btn-primary">Get Your Custom Report — $29</Link>
+          <Link href="/#order-form" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>⚡ Get Your Custom Report — $288 →</Link>
         </div>
 
       </div>
@@ -139,7 +139,9 @@ export default function SampleReport() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/sample-analysis">Try It Free</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>
