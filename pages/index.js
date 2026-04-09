@@ -70,25 +70,28 @@ export default function Home() {
         <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Your competitors are integrating AI. Find out exactly where you're falling behind.</h1>
 
         {/* PRIMARY FREE CTA */}
-        <div style={{
-          background: '#0d1a0d',
-          border: '2px solid #4caf50',
-          borderRadius: '6px',
-          padding: '0.75rem 1.5rem',
-          margin: '1.5rem 0',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          gap: '0.5rem'
-        }}>
-          <p style={{color: '#d0d8e8', fontSize: '0.95rem', margin: 0}}>
-            <span style={{color: '#4caf50', fontWeight: 'bold'}}>Try a free single-workflow analysis.</span> No credit card. Instant results.
-          </p>
-          <Link href="/sample-analysis" style={{color: '#4caf50', fontWeight: 'bold', fontSize: '0.95rem', whiteSpace: 'nowrap'}}>
-            ⚡ Try It Free →
-          </Link>
-        </div>
+        <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block'}}>
+          <div style={{
+            background: '#0d1a0d',
+            border: '2px solid #4caf50',
+            borderRadius: '6px',
+            padding: '0.75rem 1.5rem',
+            margin: '1.5rem 0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '0.5rem',
+            cursor: 'pointer'
+          }}>
+            <p style={{color: '#d0d8e8', fontSize: '0.95rem', margin: 0}}>
+              <span style={{color: '#4caf50', fontWeight: 'bold'}}>Try a free single-workflow analysis.</span> No credit card. Instant results.
+            </p>
+            <span style={{color: '#4caf50', fontWeight: 'bold', fontSize: '0.95rem', whiteSpace: 'nowrap'}}>
+              ⚡ Try It Free →
+            </span>
+          </div>
+        </Link>
 
         <p className="lead">
           Tell us about your business. Our proprietary Small Psychological Model
