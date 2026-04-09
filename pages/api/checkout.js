@@ -19,9 +19,9 @@ export default async function handler(req, res) {
             currency: 'usd',
             product_data: {
               name: 'Custom AI Integration Report',
-              description: `Business: ${business} | Delivered within 24 hours.`
+              description: `Custom 10-page AI integration report for ${business}. Delivered within 24 hours.`
             },
-            unit_amount: 7700
+            unit_amount: 28800
           },
           quantity: 1
         }

@@ -157,7 +157,24 @@ export default function Home() {
           </p>
         </div>
 
-        {/* LIMITED TIME PRICE BOX */}
+        {/* FREE SAMPLE TEASER */}
+        <div style={{
+          background: '#0a0f1a',
+          border: '1px solid #1e2a45',
+          borderRadius: '6px',
+          padding: '1rem 1.5rem',
+          margin: '1.5rem 0',
+          textAlign: 'center'
+        }}>
+          <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '0.5rem'}}>
+            Not sure yet? Try before you buy.
+          </p>
+          <Link href="/sample-analysis" style={{color: '#c8a96e', fontWeight: 'bold'}}>
+            Get a free single-workflow AI analysis first →
+          </Link>
+        </div>
+
+        {/* PRICE BOX */}
         <div style={{
           background: '#0d1a0d',
           border: '2px solid #4caf50',
@@ -167,11 +184,10 @@ export default function Home() {
           textAlign: 'center'
         }}>
           <p style={{color: '#4caf50', fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem', fontWeight: 'bold'}}>
-            Launch Pricing — Ends April 30, 2026
+            Full 10-Page Custom Report
           </p>
           <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem'}}>
-            <span style={{color: '#8a95aa', fontSize: '1.5rem', textDecoration: 'line-through'}}>$97</span>
-            <span style={{color: '#4caf50', fontSize: '2.5rem', fontWeight: 'bold'}}>$77</span>
+            <span style={{color: '#4caf50', fontSize: '2.5rem', fontWeight: 'bold'}}>$288</span>
           </div>
           <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: 0}}>
             One report. Your business. 24-hour delivery.
@@ -179,8 +195,7 @@ export default function Home() {
         </div>
 
         <div className="price-box">
-          <div style={{textDecoration: 'line-through', color: '#8a95aa', fontSize: '1.5rem', marginBottom: '0.25rem'}}>$97</div>
-          <div className="price" style={{color: '#4caf50'}}>$77 — through April 30</div>
+          <div className="price" style={{color: '#4caf50'}}>$288</div>
           <div className="price-desc">One report. Your business. 24-hour delivery.</div>
           <p style={{marginTop: '1rem', color: '#8a95aa', fontSize: '0.85rem'}}>
             Want to talk to a real person before you order?{' '}
@@ -319,12 +334,12 @@ export default function Home() {
             }}
             disabled={loading || !agreedTerms}
           >
-            {loading ? 'Redirecting to Checkout...' : 'Get My Report — $77'}
+            {loading ? 'Redirecting to Checkout...' : 'Get My Report — $288'}
           </button>
 
           <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
-            Secured by Stripe. $77 launch pricing through April 30, 2026.
-            Your report will be delivered to your email within 24 hours.
+            Secured by Stripe. $288 — full 10-page custom report.
+            Delivered to your email within 24 hours.
             Not satisfied? We'll refund you in full — no questions asked.
           </p>
 
