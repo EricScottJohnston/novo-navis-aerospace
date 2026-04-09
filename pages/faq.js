@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: "What if I'm not satisfied with the report?",
-    a: "Full refund, no questions asked. If you read your report and don't find it useful, email support@novonavis.com and we'll refund you in full. We'd rather lose the $77 than send a report that doesn't deliver value."
+    a: "Full refund, no questions asked. If you read your report and don't find it useful, email support@novonavis.com and we'll refund you in full. We'd rather lose the $288 than send a report that doesn't deliver value."
   },
   {
     q: "Do I need to be tech-savvy to use the tools you recommend?",
@@ -58,7 +58,7 @@ export default function FAQ() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/report">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your Report</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -105,7 +105,7 @@ export default function FAQ() {
           <p style={{marginBottom: '1.25rem'}}>
             <a href="mailto:support@novonavis.com" style={{color: '#c8a96e'}}>support@novonavis.com</a>
           </p>
-          <Link href="/report" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>
+          <Link href="/#order-form" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>
             ⚡ Start Here →
           </Link>
         </div>
@@ -116,7 +116,7 @@ export default function FAQ() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
           <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link> &nbsp;·&nbsp;
           <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;

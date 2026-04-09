@@ -15,7 +15,7 @@ export default function RestaurantArticle() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/report">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your Report</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -55,7 +55,7 @@ export default function RestaurantArticle() {
               Our proprietary Small Psychological Model builds a custom 10-page
               AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
-            <Link href="/report" className="btn-primary">Get Your Custom Report — $29</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $29</Link>
           </div>
 
           <p>The tools that handle this for independent restaurants include MarketMan, BlueCart, and Restaurant365. These platforms integrate with your POS system to pull sales data automatically, track inventory levels in real time as items are sold, and generate purchase orders based on par levels and forecasted demand. The initial setup requires entering your recipes and ingredient quantities — a one-time investment of several hours that pays dividends in perpetuity.</p>
@@ -85,9 +85,9 @@ export default function RestaurantArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your restaurant, your menu, your workflows.
-            Ten pages. Delivered in 24 hours. $29.
+            Ten pages. Delivered in 24 hours. $288.
           </p>
-          <Link href="/report" className="btn-primary">Get Your Custom Report</Link>
+          <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
         </div>
 
         <div style={{textAlign: 'center', marginTop: '2rem'}}>
@@ -100,7 +100,7 @@ export default function RestaurantArticle() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>

@@ -15,7 +15,7 @@ export default function PropertyManagementArticle() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/report">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your Report</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -55,7 +55,7 @@ export default function PropertyManagementArticle() {
               Our proprietary Small Psychological Model builds a custom 10-page
               AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
-            <Link href="/report" className="btn-primary">Get Your Custom Report — $29</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $29</Link>
           </div>
 
           <p>Tenant communication automation handles the second major time drain in property management. A significant percentage of tenant inquiries are repetitive — rent payment questions, lease renewal timelines, parking policy, guest policy, utility responsibility, move-out procedures. An AI-powered communication system can answer these questions automatically 24 hours a day using information from your lease documents and property policies. The tenant gets an immediate, accurate answer. The property manager is not interrupted by a question that has been answered in the lease 50 times already.</p>
@@ -85,9 +85,9 @@ export default function PropertyManagementArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your business, your portfolio, your workflows.
-            Ten pages. Delivered in 24 hours. $29.
+            Ten pages. Delivered in 24 hours. $288.
           </p>
-          <Link href="/report" className="btn-primary">Get Your Custom Report</Link>
+          <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
         </div>
 
         <div style={{textAlign: 'center', marginTop: '2rem'}}>
@@ -100,7 +100,7 @@ export default function PropertyManagementArticle() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>
