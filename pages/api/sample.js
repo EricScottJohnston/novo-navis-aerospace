@@ -57,8 +57,9 @@ Write 2-3 focused paragraphs tailored specifically to this type of business. Be 
   res.setHeader('Set-Cookie', 'nn_sample_used=1; Max-Age=86400; Path=/; HttpOnly; SameSite=Strict')
 
   // Send immediate notification to Eric
+  let emailError = null
   try {
-    await resend.emails.send({
+    const emailResult = await resend.emails.send({
       from: 'Novo Navis <noreply@novonavis.com>',
       to: 'ericjohnston105@gmail.com',
       subject: `Free Sample Submitted — ${name} (${businessType})`,
@@ -75,10 +76,14 @@ Write 2-3 focused paragraphs tailored specifically to this type of business. Be 
         <p>${analysis.replace(/\n/g, '<br/>')}</p>
       `
     })
+    if (emailResult.error) {
+      emailError = emailResult.error
+      console.error('Resend error:', emailResult.error)
+    }
   } catch (err) {
-    // Non-fatal — don't fail the request if Eric's notification fails
+    emailError = err.message
     console.error('Eric notification error:', err)
   }
 
-  return res.status(200).json({ analysis, name })
+  return res.status(200).json({ analysis, name, emailError })
 }
