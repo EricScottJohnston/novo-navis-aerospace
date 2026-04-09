@@ -198,6 +198,11 @@ export default function Report() {
           <Link href="/sample" style={{color: '#c8a96e', fontWeight: 'bold'}}>
             Read a real report for a plumbing company →
           </Link>
+          <p style={{marginTop: '0.75rem', marginBottom: 0}}>
+            <Link href="/faq" style={{color: '#8a95aa', fontSize: '0.85rem'}}>
+              Have questions? Read the FAQ →
+            </Link>
+          </p>
         </div>
 
         {/* LIMITED TIME PRICE BOX */}
@@ -367,6 +372,7 @@ export default function Report() {
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
           <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link> &nbsp;·&nbsp;
+          <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
           <Link href="/terms">Terms and Conditions</Link>
         </p>
