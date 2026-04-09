@@ -67,7 +67,7 @@ export default function Home() {
 
       <div className="report-page">
 
-        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Your competitors are integrating AI. Find out exactly where you're falling behind — in 24 hours.</h1>
+        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Your competitors are integrating AI. Find out exactly where you're falling behind.</h1>
 
         {/* PRIMARY FREE CTA */}
         <div style={{
@@ -83,7 +83,7 @@ export default function Home() {
           gap: '0.5rem'
         }}>
           <p style={{color: '#d0d8e8', fontSize: '0.95rem', margin: 0}}>
-            Not sure yet? <span style={{color: '#4caf50', fontWeight: 'bold'}}>Try a free single-workflow analysis first.</span> No credit card. Instant results.
+            <span style={{color: '#4caf50', fontWeight: 'bold'}}>Try a free single-workflow analysis.</span> No credit card. Instant results.
           </p>
           <Link href="/sample-analysis" style={{color: '#4caf50', fontWeight: 'bold', fontSize: '0.95rem', whiteSpace: 'nowrap'}}>
             ⚡ Try It Free →
