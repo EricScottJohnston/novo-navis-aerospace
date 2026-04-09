@@ -42,7 +42,11 @@ export default async function handler(req, res) {
 Business type: ${businessType}
 Workflow problem: ${workflow}
 
-Write 2-3 focused paragraphs tailored specifically to this type of business. Be specific — name actual AI tools (e.g. Zapier, Make.com, ChatGPT, Claude, Calendly, Jobber, ServiceTitan, etc.) that are relevant to this industry, and give a realistic time savings estimate. Do not use bullet points. Write in plain prose. Be direct and practical, not salesy. End by noting that a full 10-page report would analyze all their workflows and deliver a complete 90-day implementation roadmap.`
+Write 2-3 focused paragraphs tailored specifically to this type of business. Be specific — name actual AI tools (e.g. Zapier, Make.com, ChatGPT, Claude, Calendly, Jobber, ServiceTitan, etc.) that are relevant to this industry, and give a realistic time savings estimate. Do not use bullet points. Write in plain prose. Be direct and practical, not salesy.
+
+After the analysis, add exactly this closing paragraph word for word:
+
+"This analysis looked at one workflow. The full Novo Navis report runs your entire business through a Small Psychological Model — a proprietary system of seven specialized reasoning instances that analyze your operations from different angles simultaneously. One instance builds foundational knowledge about your industry. A second identifies the contextual factors most analysis misses. A third applies domain analysis to your specific situation. A fourth challenges every finding adversarially, looking for weak assumptions and false conclusions. A fifth extrapolates causal chains invisible to conventional analysis. A sixth hunts for outliers and edge cases where normal rules break down. All findings pass through a Causal Reasoning Framework that filters out correlation mistaken for causation — the most common failure mode in AI-generated business advice. What reaches the final report has been stress-tested at every stage. That is what makes it different from asking ChatGPT."
         }
       ]
     })
