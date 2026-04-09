@@ -67,7 +67,7 @@ export default function Home() {
 
       <div className="report-page">
 
-        <h1 style={{color: '#cc0000'}}>Your competitors are integrating AI. Find out exactly where you're falling behind — in 24 hours.</h1>
+        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Your competitors are integrating AI. Find out exactly where you're falling behind — in 24 hours.</h1>
         <p className="lead">
           Tell us about your business. Our proprietary Small Psychological Model
           analyzes your specific workflows to identify, on average, <strong style={{color: '#c8a96e'}}>8–12 hours per week
