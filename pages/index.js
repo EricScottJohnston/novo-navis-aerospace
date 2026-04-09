@@ -67,29 +67,6 @@ export default function Home() {
 
       <div className="report-page">
 
-        <div style={{marginBottom: '1.5rem'}}>
-          <h2 style={{textAlign: 'center', color: '#c8a96e', fontSize: '1.3rem', marginBottom: '1rem', marginTop: '1rem'}}>
-            If You're Not Using AI Now, You're Already Behind
-          </h2>
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            onPlay={() => {
-              if (typeof window !== 'undefined' && window.gtag) {
-                window.gtag('event', 'video_play', {
-                  event_category: 'engagement',
-                  event_label: 'report_page_video'
-                })
-              }
-            }}
-            style={{width: '100%', maxWidth: '500px', display: 'block', margin: '0 auto', borderRadius: '6px', marginBottom: '1.5rem'}}
-          >
-            <source src="https://res.cloudinary.com/dqv9va6ta/video/upload/v1775703487/video_10_ks8uq8.mp4" type="video/mp4" />
-          </video>
-        </div>
-
         {/* FOUNDER CREDENTIAL */}
         <div style={{
           background: '#0a0f1a',
@@ -116,7 +93,7 @@ export default function Home() {
           </div>
         </div>
 
-        <h1>Get Your Custom AI Integration Report</h1>
+        <h1>Your competitors are integrating AI. Find out exactly where you're falling behind — in 24 hours.</h1>
         <p className="lead">
           Tell us about your business. Our proprietary Small Psychological Model
           analyzes your specific workflows to identify, on average, <strong style={{color: '#c8a96e'}}>8–12 hours per week
