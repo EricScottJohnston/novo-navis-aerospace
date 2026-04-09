@@ -1,11 +1,13 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 
 export default function SampleAnalysis() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [listeningField, setListeningField] = useState(null)
+  const recognitionRef = useRef(null)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,6 +17,74 @@ export default function SampleAnalysis() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const startVoice = (fieldName) => {
+    if (typeof window === 'undefined') return
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!SpeechRecognition) {
+      alert('Voice input is not supported in this browser. Please use Chrome.')
+      return
+    }
+
+    // Toggle off if already listening to this field
+    if (listeningField === fieldName) {
+      recognitionRef.current?.stop()
+      setListeningField(null)
+      return
+    }
+
+    // Stop any existing session
+    recognitionRef.current?.stop()
+
+    const recognition = new SpeechRecognition()
+    recognition.continuous = false
+    recognition.interimResults = false
+    recognition.lang = 'en-US'
+
+    recognition.onresult = (e) => {
+      const transcript = e.results[0][0].transcript
+      setFormData(prev => ({
+        ...prev,
+        [fieldName]: prev[fieldName] ? prev[fieldName] + ' ' + transcript : transcript
+      }))
+    }
+
+    recognition.onend = () => setListeningField(null)
+    recognition.onerror = () => setListeningField(null)
+
+    recognitionRef.current = recognition
+    recognition.start()
+    setListeningField(fieldName)
+  }
+
+  const MicButton = ({ fieldName }) => {
+    const active = listeningField === fieldName
+    return (
+      <button
+        type="button"
+        onClick={() => startVoice(fieldName)}
+        title={active ? 'Stop listening' : 'Tap to speak'}
+        style={{
+          flexShrink: 0,
+          width: '36px',
+          height: '36px',
+          borderRadius: '50%',
+          border: active ? '2px solid #e53935' : '2px solid #1e2a45',
+          background: active ? '#1a0000' : '#0d1221',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '1rem',
+          padding: 0,
+          animation: active ? 'micPulse 1s ease-in-out infinite' : 'none',
+          transition: 'border-color 0.2s'
+        }}
+      >
+        {active ? '🔴' : '🎤'}
+      </button>
+    )
   }
 
   const handleSubmit = async (e) => {
@@ -34,7 +104,6 @@ export default function SampleAnalysis() {
         return
       }
       if (data.analysis) {
-        // Store result in sessionStorage and redirect to results page
         sessionStorage.setItem('sampleAnalysis', data.analysis)
         sessionStorage.setItem('sampleName', data.name)
         if (data.emailError) {
@@ -57,6 +126,13 @@ export default function SampleAnalysis() {
         <title>Free AI Workflow Analysis | Novo Navis</title>
         <meta name="description" content="Describe one workflow problem in your business and get a free AI integration recommendation from Novo Navis. No credit card required." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>{`
+          @keyframes micPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.6); }
+            70%  { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
+          }
+        `}</style>
       </Head>
 
       <nav>
@@ -112,59 +188,85 @@ export default function SampleAnalysis() {
           </ul>
         </div>
 
+        <p style={{color: '#8a95aa', fontSize: '0.85rem', marginBottom: '1rem'}}>
+          🎤 Tap the microphone next to any field to speak your answer.
+        </p>
+
         <form onSubmit={handleSubmit}>
 
           <div className="form-group">
             <label>Your First Name *</label>
-            <input
-              type="text"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="John"
-            />
+            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+              <input
+                type="text"
+                name="name"
+                required
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="John"
+                style={{flex: 1}}
+              />
+              <MicButton fieldName="name" />
+            </div>
           </div>
 
           <div className="form-group">
             <label>Your Email Address * (results delivered here)</label>
-            <input
-              type="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="john@yourbusiness.com"
-            />
+            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+              <input
+                type="email"
+                name="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="john@yourbusiness.com"
+                style={{flex: 1}}
+              />
+              <MicButton fieldName="email" />
+            </div>
           </div>
 
           <div className="form-group">
             <label>What type of business do you run? *</label>
-            <input
-              type="text"
-              name="businessType"
-              required
-              value={formData.businessType}
-              onChange={handleChange}
-              placeholder="e.g. HVAC company, dental practice, property management, law firm"
-            />
+            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+              <input
+                type="text"
+                name="businessType"
+                required
+                value={formData.businessType}
+                onChange={handleChange}
+                placeholder="e.g. HVAC company, dental practice, property management, law firm"
+                style={{flex: 1}}
+              />
+              <MicButton fieldName="businessType" />
+            </div>
           </div>
 
           <div className="form-group">
             <label>Describe your biggest workflow problem *</label>
-            <textarea
-              name="workflow"
-              required
-              value={formData.workflow}
-              onChange={handleChange}
-              rows={5}
-              placeholder="Example: Every morning I spend 90 minutes manually entering the previous day's job tickets into our billing system. We do about 15 jobs a day and each ticket has to be copied from our scheduling app into QuickBooks one by one."
-            />
+            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
+              <textarea
+                name="workflow"
+                required
+                value={formData.workflow}
+                onChange={handleChange}
+                rows={5}
+                placeholder="Example: Every morning I spend 90 minutes manually entering the previous day's job tickets into our billing system. We do about 15 jobs a day and each ticket has to be copied from our scheduling app into QuickBooks one by one."
+                style={{flex: 1}}
+              />
+              <MicButton fieldName="workflow" />
+            </div>
           </div>
 
           <p style={{color: '#8a95aa', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1.5rem'}}>
             The more specific you are, the more useful your analysis will be.
           </p>
+
+          {listeningField && (
+            <p style={{color: '#e53935', fontSize: '0.85rem', textAlign: 'center', marginBottom: '1rem', fontWeight: 'bold'}}>
+              🔴 Listening... speak now. Tap the mic again to stop.
+            </p>
+          )}
 
           <button
             type="submit"
