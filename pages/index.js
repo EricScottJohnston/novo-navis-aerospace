@@ -72,7 +72,8 @@ export default function Home() {
             If You're Not Using AI Now, You're Already Behind
           </h2>
           <video
-            controls
+            autoPlay
+            muted
             loop
             playsInline
             onPlay={() => {
