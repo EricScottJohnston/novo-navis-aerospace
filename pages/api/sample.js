@@ -28,27 +28,22 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid email address' })
   }
 
+  const closingParagraph = 'This analysis looked at one workflow. The full Novo Navis report runs your entire business through a Small Psychological Model -- a proprietary system of seven specialized reasoning instances that analyze your operations from different angles simultaneously. One instance builds foundational knowledge about your industry. A second identifies the contextual factors most analysis misses. A third applies domain analysis to your specific situation. A fourth challenges every finding adversarially, looking for weak assumptions and false conclusions. A fifth extrapolates causal chains invisible to conventional analysis. A sixth hunts for outliers and edge cases where normal rules break down. All findings pass through a Causal Reasoning Framework that filters out correlation mistaken for causation -- the most common failure mode in AI-generated business advice. What reaches the final report has been stress-tested at every stage. That is what makes it different from asking ChatGPT.'
+
+  const prompt = 'You are an AI integration consultant for small businesses. A business owner has described one of their workflow problems. Analyze it and provide a specific, practical AI integration recommendation.\n\n'
+    + 'Business type: ' + businessType + '\n'
+    + 'Workflow problem: ' + workflow + '\n\n'
+    + 'Write 2-3 focused paragraphs tailored specifically to this type of business. Be specific -- name actual AI tools (e.g. Zapier, Make.com, ChatGPT, Claude, Calendly, Jobber, ServiceTitan, etc.) that are relevant to this industry, and give a realistic time savings estimate. Do not use bullet points. Write in plain prose. Be direct and practical, not salesy.\n\n'
+    + 'After your analysis, close with exactly this paragraph:\n\n'
+    + closingParagraph
+
   let analysis = ''
 
   try {
     const message = await anthropic.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 1024,
-      messages: [
-        {
-          role: 'user',
-          content: `You are an AI integration consultant for small businesses. A business owner has described one of their workflow problems. Analyze it and provide a specific, practical AI integration recommendation.
-
-Business type: ${businessType}
-Workflow problem: ${workflow}
-
-Write 2-3 focused paragraphs tailored specifically to this type of business. Be specific — name actual AI tools (e.g. Zapier, Make.com, ChatGPT, Claude, Calendly, Jobber, ServiceTitan, etc.) that are relevant to this industry, and give a realistic time savings estimate. Do not use bullet points. Write in plain prose. Be direct and practical, not salesy.
-
-After the analysis, add exactly this closing paragraph word for word:
-
-"This analysis looked at one workflow. The full Novo Navis report runs your entire business through a Small Psychological Model — a proprietary system of seven specialized reasoning instances that analyze your operations from different angles simultaneously. One instance builds foundational knowledge about your industry. A second identifies the contextual factors most analysis misses. A third applies domain analysis to your specific situation. A fourth challenges every finding adversarially, looking for weak assumptions and false conclusions. A fifth extrapolates causal chains invisible to conventional analysis. A sixth hunts for outliers and edge cases where normal rules break down. All findings pass through a Causal Reasoning Framework that filters out correlation mistaken for causation — the most common failure mode in AI-generated business advice. What reaches the final report has been stress-tested at every stage. That is what makes it different from asking ChatGPT."
-        }
-      ]
+      messages: [{ role: 'user', content: prompt }]
     })
 
     analysis = message.content[0].text
