@@ -108,7 +108,6 @@ export default function Results() {
             gap: '1rem',
             marginBottom: '1rem'
           }}>
-            <span style={{color: '#8a95aa', fontSize: '1.2rem', textDecoration: 'line-through'}}>$97</span>
             <span style={{color: '#4caf50', fontSize: '2rem', fontWeight: 'bold'}}>$288</span>
           </div>
 
