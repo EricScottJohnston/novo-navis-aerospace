@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 
 export default function Intake() {
@@ -10,6 +10,8 @@ export default function Intake() {
   const [sessionData, setSessionData] = useState(null)
   const [sessionError, setSessionError] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [listeningField, setListeningField] = useState(null)
+  const recognitionRef = useRef(null)
   const [formData, setFormData] = useState({
     industry: '',
     employees: '',
@@ -37,6 +39,72 @@ export default function Intake() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const startVoice = (fieldName) => {
+    if (typeof window === 'undefined') return
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!SpeechRecognition) {
+      alert('Voice input is not supported in this browser. Please use Chrome.')
+      return
+    }
+
+    if (listeningField === fieldName) {
+      recognitionRef.current?.stop()
+      setListeningField(null)
+      return
+    }
+
+    recognitionRef.current?.stop()
+
+    const recognition = new SpeechRecognition()
+    recognition.continuous = false
+    recognition.interimResults = false
+    recognition.lang = 'en-US'
+
+    recognition.onresult = (e) => {
+      const transcript = e.results[0][0].transcript
+      setFormData(prev => ({
+        ...prev,
+        [fieldName]: prev[fieldName] ? prev[fieldName] + ' ' + transcript : transcript
+      }))
+    }
+
+    recognition.onend = () => setListeningField(null)
+    recognition.onerror = () => setListeningField(null)
+
+    recognitionRef.current = recognition
+    recognition.start()
+    setListeningField(fieldName)
+  }
+
+  const MicButton = ({ fieldName }) => {
+    const active = listeningField === fieldName
+    return (
+      <button
+        type="button"
+        onClick={() => startVoice(fieldName)}
+        title={active ? 'Stop listening' : 'Tap to speak'}
+        style={{
+          flexShrink: 0,
+          width: '36px',
+          height: '36px',
+          borderRadius: '50%',
+          border: active ? '2px solid #e53935' : '2px solid #1e2a45',
+          background: active ? '#1a0000' : '#0d1221',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '1rem',
+          padding: 0,
+          animation: active ? 'micPulse 1s ease-in-out infinite' : 'none',
+          transition: 'border-color 0.2s'
+        }}
+      >
+        {active ? '🔴' : '🎤'}
+      </button>
+    )
   }
 
   const handleSubmit = async (e) => {
@@ -70,6 +138,13 @@ export default function Intake() {
       <Head>
         <title>Complete Your Intake | Novo Navis</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>{`
+          @keyframes micPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.6); }
+            70%  { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
+          }
+        `}</style>
       </Head>
 
       <nav>
@@ -77,7 +152,7 @@ export default function Intake() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/report">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your Report</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -177,13 +252,17 @@ export default function Intake() {
 
                 <div className="form-group">
                   <label>Tell us about your business — what it does, who it serves, and anything you think we should know *</label>
-                  <textarea
-                    name="businessDescription"
-                    required
-                    value={formData.businessDescription}
-                    onChange={handleChange}
-                    placeholder="Example: We are a family owned plumbing company serving the Phoenix metro area. We have 3 trucks and handle both residential and commercial work. We do about 15 jobs per week and our busiest season is summer."
-                  />
+                  <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
+                    <textarea
+                      name="businessDescription"
+                      required
+                      value={formData.businessDescription}
+                      onChange={handleChange}
+                      placeholder="Example: We are a family owned plumbing company serving the Phoenix metro area. We have 3 trucks and handle both residential and commercial work. We do about 15 jobs per week and our busiest season is summer."
+                      style={{flex: 1}}
+                    />
+                    <MicButton fieldName="businessDescription" />
+                  </div>
                 </div>
 
                 <hr className="divider" />
@@ -194,45 +273,71 @@ export default function Intake() {
 
                 <div className="form-group">
                   <label>Most Repetitive Task #1 — What is it and how long does it take per week? *</label>
-                  <textarea
-                    name="process1"
-                    required
-                    value={formData.process1}
-                    onChange={handleChange}
-                    placeholder="Example: Our office manager manually enters every job request into a spreadsheet, then texts the crew lead to check availability. Takes about 2 hours a day."
-                  />
+                  <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
+                    <textarea
+                      name="process1"
+                      required
+                      value={formData.process1}
+                      onChange={handleChange}
+                      placeholder="Example: Our office manager manually enters every job request into a spreadsheet, then texts the crew lead to check availability. Takes about 2 hours a day."
+                      style={{flex: 1}}
+                    />
+                    <MicButton fieldName="process1" />
+                  </div>
                 </div>
 
                 <div className="form-group">
                   <label>Most Repetitive Task #2 — What is it and how long does it take per week?</label>
-                  <textarea
-                    name="process2"
-                    value={formData.process2}
-                    onChange={handleChange}
-                    placeholder="Example: We create invoices manually in Word at the end of every job. Takes 20-30 minutes per invoice."
-                  />
+                  <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
+                    <textarea
+                      name="process2"
+                      value={formData.process2}
+                      onChange={handleChange}
+                      placeholder="Example: We create invoices manually in Word at the end of every job. Takes 20-30 minutes per invoice."
+                      style={{flex: 1}}
+                    />
+                    <MicButton fieldName="process2" />
+                  </div>
                 </div>
 
                 <div className="form-group">
                   <label>Most Repetitive Task #3 — What is it and how long does it take per week?</label>
-                  <textarea
-                    name="process3"
-                    value={formData.process3}
-                    onChange={handleChange}
-                    placeholder="Example: Following up with leads who haven't responded. We do this manually by email and it often falls through the cracks."
-                  />
+                  <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
+                    <textarea
+                      name="process3"
+                      value={formData.process3}
+                      onChange={handleChange}
+                      placeholder="Example: Following up with leads who haven't responded. We do this manually by email and it often falls through the cracks."
+                      style={{flex: 1}}
+                    />
+                    <MicButton fieldName="process3" />
+                  </div>
                 </div>
 
                 <div className="form-group">
                   <label>What is the single biggest operational problem in your business right now? *</label>
-                  <textarea
-                    name="goal"
-                    required
-                    value={formData.goal}
-                    onChange={handleChange}
-                    placeholder="Example: We're losing jobs because we're too slow to respond to new inquiries. By the time we follow up, they've already hired someone else."
-                  />
+                  <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
+                    <textarea
+                      name="goal"
+                      required
+                      value={formData.goal}
+                      onChange={handleChange}
+                      placeholder="Example: We're losing jobs because we're too slow to respond to new inquiries. By the time we follow up, they've already hired someone else."
+                      style={{flex: 1}}
+                    />
+                    <MicButton fieldName="goal" />
+                  </div>
                 </div>
+
+                <p style={{color: '#8a95aa', fontSize: '0.85rem', marginBottom: '1rem'}}>
+                  🎤 Tap the microphone next to any field to speak your answer.
+                </p>
+
+                {listeningField && (
+                  <p style={{color: '#e53935', fontSize: '0.85rem', textAlign: 'center', marginBottom: '1rem', fontWeight: 'bold'}}>
+                    🔴 Listening... speak now. Tap the mic again to stop.
+                  </p>
+                )}
 
                 <button
                   type="submit"
