@@ -37,6 +37,9 @@ export default function SampleAnalysis() {
         // Store result in sessionStorage and redirect to results page
         sessionStorage.setItem('sampleAnalysis', data.analysis)
         sessionStorage.setItem('sampleName', data.name)
+        if (data.emailError) {
+          console.warn('Notification email failed:', data.emailError)
+        }
         router.push('/results')
       } else {
         alert(data.error || 'Something went wrong. Please try again.')
