@@ -14,7 +14,7 @@ export default function Success() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/report">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your Report</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>

@@ -15,7 +15,7 @@ export default function AccountingArticle() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/report">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your Report</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -55,7 +55,7 @@ export default function AccountingArticle() {
               Our proprietary Small Psychological Model builds a custom 10-page
               AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
-            <Link href="/report" className="btn-primary">Get Your Custom Report — $29</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $29</Link>
           </div>
 
           <p>The tools that handle this most effectively for accounting firms are Canopy, TaxDome, or Karbon — practice management platforms built specifically for accounting firms that include client portals, document management, and workflow automation. If you are already using one of these platforms, you likely have automation capabilities you are not fully utilizing. If you are collecting documents via email and organizing them manually in a shared drive, moving to a purpose-built platform is the foundational step before any automation layer makes sense.</p>
@@ -85,9 +85,9 @@ export default function AccountingArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your firm, your workflows, your pain points.
-            Ten pages. Delivered in 24 hours. $29. Guaranteed.
+            Ten pages. Delivered in 24 hours. $288. Guaranteed.
           </p>
-          <Link href="/report" className="btn-primary">Get Your Custom Report</Link>
+          <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
         </div>
 
         <div style={{textAlign: 'center', marginTop: '2rem'}}>
@@ -100,7 +100,7 @@ export default function AccountingArticle() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>

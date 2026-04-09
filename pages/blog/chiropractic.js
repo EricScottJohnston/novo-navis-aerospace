@@ -15,7 +15,7 @@ export default function ChiropracticArticle() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/report">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your Report</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -55,7 +55,7 @@ export default function ChiropracticArticle() {
               Our proprietary Small Psychological Model builds a custom 10-page
               AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
-            <Link href="/report" className="btn-primary">Get Your Custom Report — $29</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $29</Link>
           </div>
 
           <p>Care plan compliance tracking is the third high-value automation target for chiropractic practices. Patients who drop off their care plan before completion represent lost revenue and, more importantly, patients who did not receive the full benefit of treatment. An automated system tracks each patient's care plan progress and sends a personalized outreach when a patient misses an appointment or falls behind their prescribed schedule. The message is warm and patient-focused, not administrative. It is also automatic — it happens without anyone on your staff having to manually track which patients are behind and reach out individually.</p>
@@ -85,9 +85,9 @@ export default function ChiropracticArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your practice, your workflows, your pain points.
-            Ten pages. Delivered in 24 hours. $29.
+            Ten pages. Delivered in 24 hours. $288.
           </p>
-          <Link href="/report" className="btn-primary">Get Your Custom Report</Link>
+          <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
         </div>
 
         <div style={{textAlign: 'center', marginTop: '2rem'}}>
@@ -100,7 +100,7 @@ export default function ChiropracticArticle() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>
