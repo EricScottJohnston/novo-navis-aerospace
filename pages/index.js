@@ -1,10 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
   const [agreedTerms, setAgreedTerms] = useState(false)
+  const [listeningField, setListeningField] = useState(null)
+  const recognitionRef = useRef(null)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -13,6 +15,72 @@ export default function Home() {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const startVoice = (fieldName) => {
+    if (typeof window === 'undefined') return
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!SpeechRecognition) {
+      alert('Voice input is not supported in this browser. Please use Chrome.')
+      return
+    }
+
+    if (listeningField === fieldName) {
+      recognitionRef.current?.stop()
+      setListeningField(null)
+      return
+    }
+
+    recognitionRef.current?.stop()
+
+    const recognition = new SpeechRecognition()
+    recognition.continuous = false
+    recognition.interimResults = false
+    recognition.lang = 'en-US'
+
+    recognition.onresult = (e) => {
+      const transcript = e.results[0][0].transcript
+      setFormData(prev => ({
+        ...prev,
+        [fieldName]: prev[fieldName] ? prev[fieldName] + ' ' + transcript : transcript
+      }))
+    }
+
+    recognition.onend = () => setListeningField(null)
+    recognition.onerror = () => setListeningField(null)
+
+    recognitionRef.current = recognition
+    recognition.start()
+    setListeningField(fieldName)
+  }
+
+  const MicButton = ({ fieldName }) => {
+    const active = listeningField === fieldName
+    return (
+      <button
+        type="button"
+        onClick={() => startVoice(fieldName)}
+        title={active ? 'Stop listening' : 'Tap to speak'}
+        style={{
+          flexShrink: 0,
+          width: '36px',
+          height: '36px',
+          borderRadius: '50%',
+          border: active ? '2px solid #e53935' : '2px solid #1e2a45',
+          background: active ? '#1a0000' : '#0d1221',
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '1rem',
+          padding: 0,
+          animation: active ? 'micPulse 1s ease-in-out infinite' : 'none',
+          transition: 'border-color 0.2s'
+        }}
+      >
+        {active ? '🔴' : '🎤'}
+      </button>
+    )
   }
 
   const handleSubmit = async (e) => {
@@ -50,6 +118,13 @@ export default function Home() {
             __html: `!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js?pixel_id=a2_is5chzhhi73u",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','a2_is5chzhhi73u');rdt('track', 'PageVisit');`
           }}
         />
+        <style>{`
+          @keyframes micPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.6); }
+            70%  { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
+          }
+        `}</style>
         <title>Novo Navis | Custom AI Integration Reports for Small Business</title>
         <meta name="description" content="Tell us about your business and receive a custom 10-page AI integration report built by our proprietary Small Psychological Model. Delivered in 24 hours." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -88,7 +163,7 @@ export default function Home() {
               <span style={{color: '#4caf50', fontWeight: 'bold'}}>Try a free single-workflow analysis.</span> No credit card. Instant results.
             </p>
             <span style={{color: '#4caf50', fontWeight: 'bold', fontSize: '0.95rem', whiteSpace: 'nowrap'}}>
-              ⚡ Try It Free →
+              ⚡ Try It Free → 🎤 Voice Input Available
             </span>
           </div>
         </Link>
@@ -237,44 +312,66 @@ export default function Home() {
 
           <div className="form-group">
             <label>Your Full Name *</label>
-            <input
-              type="text"
-              name="name"
-              required
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="John Smith"
-            />
+            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+              <input
+                type="text"
+                name="name"
+                required
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="John Smith"
+                style={{flex: 1}}
+              />
+              <MicButton fieldName="name" />
+            </div>
           </div>
 
           <div className="form-group">
             <label>Your Email Address * (report delivered here)</label>
-            <input
-              type="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="john@yourbusiness.com"
-            />
+            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+              <input
+                type="email"
+                name="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="john@yourbusiness.com"
+                style={{flex: 1}}
+              />
+              <MicButton fieldName="email" />
+            </div>
           </div>
 
           <div className="form-group">
             <label>Business Name *</label>
-            <input
-              type="text"
-              name="business"
-              required
-              value={formData.business}
-              onChange={handleChange}
-              placeholder="Smith Plumbing LLC"
-            />
+            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+              <input
+                type="text"
+                name="business"
+                required
+                value={formData.business}
+                onChange={handleChange}
+                placeholder="Smith Plumbing LLC"
+                style={{flex: 1}}
+              />
+              <MicButton fieldName="business" />
+            </div>
           </div>
 
           <p style={{color: '#8a95aa', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1.5rem'}}>
             After checkout you'll complete a short intake form with your business details.
             Your report is built from that — so the more specific you are there, the better your report.
           </p>
+
+          <p style={{color: '#8a95aa', fontSize: '0.85rem', marginBottom: '1rem'}}>
+            🎤 Tap the microphone next to any field to speak your answer.
+          </p>
+
+          {listeningField && (
+            <p style={{color: '#e53935', fontSize: '0.85rem', textAlign: 'center', marginBottom: '1rem', fontWeight: 'bold'}}>
+              🔴 Listening... speak now. Tap the mic again to stop.
+            </p>
+          )}
 
           {/* TERMS AND CONDITIONS CHECKBOX */}
           <div style={{
