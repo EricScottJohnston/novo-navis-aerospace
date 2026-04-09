@@ -85,7 +85,7 @@ export default function Home() {
             }}
             style={{width: '100%', maxWidth: '500px', display: 'block', margin: '0 auto', borderRadius: '6px', marginBottom: '1.5rem'}}
           >
-            <source src="https://res.cloudinary.com/dqv9va6ta/video/upload/v1775695544/video_9_rhnj7b.mp4" type="video/mp4" />
+            <source src="https://res.cloudinary.com/dqv9va6ta/video/upload/v1775703487/video_10_ks8uq8.mp4" type="video/mp4" />
           </video>
         </div>
 
