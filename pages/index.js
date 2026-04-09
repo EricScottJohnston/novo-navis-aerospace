@@ -142,7 +142,7 @@ export default function Home() {
 
       <div className="report-page">
 
-        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Your competitors are integrating AI. Find out exactly where you're falling behind.</h1>
+        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Most small businesses waste 11 hours a week on work AI could do. Is yours one of them?</h1>
 
         {/* PRIMARY FREE CTA */}
         <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block'}}>
