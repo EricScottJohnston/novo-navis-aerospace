@@ -60,7 +60,7 @@ export default function Home() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your Report</Link></li>
+          <li><Link href="/sample-analysis">Try It Free</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -68,6 +68,28 @@ export default function Home() {
       <div className="report-page">
 
         <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Your competitors are integrating AI. Find out exactly where you're falling behind — in 24 hours.</h1>
+
+        {/* PRIMARY FREE CTA */}
+        <div style={{textAlign: 'center', margin: '2rem 0'}}>
+          <Link
+            href="/sample-analysis"
+            className="btn-primary"
+            style={{
+              display: 'inline-block',
+              background: '#4caf50',
+              borderColor: '#4caf50',
+              fontSize: '1.2rem',
+              padding: '1.1rem 2.5rem',
+              marginBottom: '0.75rem'
+            }}
+          >
+            ⚡ Get a Free AI Analysis of Your Business →
+          </Link>
+          <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: 0}}>
+            Free. No credit card. Instant results.
+          </p>
+        </div>
+
         <p className="lead">
           Tell us about your business. Our proprietary Small Psychological Model
           analyzes your specific workflows to identify, on average, <strong style={{color: '#c8a96e'}}>8–12 hours per week
@@ -155,23 +177,6 @@ export default function Home() {
               Have questions? Read the FAQ →
             </Link>
           </p>
-        </div>
-
-        {/* FREE SAMPLE TEASER */}
-        <div style={{
-          background: '#0a0f1a',
-          border: '1px solid #1e2a45',
-          borderRadius: '6px',
-          padding: '1rem 1.5rem',
-          margin: '1.5rem 0',
-          textAlign: 'center'
-        }}>
-          <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '0.5rem'}}>
-            Not sure yet? Try before you buy.
-          </p>
-          <Link href="/sample-analysis" style={{color: '#c8a96e', fontWeight: 'bold'}}>
-            Get a free single-workflow AI analysis first →
-          </Link>
         </div>
 
         {/* PRICE BOX */}
@@ -365,6 +370,7 @@ export default function Home() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
+          <Link href="/sample-analysis">Try It Free</Link> &nbsp;·&nbsp;
           <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
           <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link> &nbsp;·&nbsp;
