@@ -15,7 +15,7 @@ export default function About() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/report">Get Your Report</Link></li>
+          <li><Link href="/sample-analysis">Try It Free</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -67,7 +67,7 @@ export default function About() {
           <p style={{color: '#8a95aa', marginBottom: '1.5rem'}}>
             One custom report. Built for your business. Delivered in 24 hours.
           </p>
-          <Link href="/report" className="btn-primary">Get Your Custom Report — $29</Link>
+          <Link href="/sample-analysis" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>⚡ Start Here — Try It Free →</Link>
         </div>
 
       </div>
@@ -76,7 +76,9 @@ export default function About() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/sample-analysis">Try It Free</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>
