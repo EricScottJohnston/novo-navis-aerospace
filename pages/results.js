@@ -95,7 +95,7 @@ export default function Results() {
             Most businesses have 8–12 hours per week of automatable work across 3–5 workflows.
           </h2>
           <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', marginBottom: '1.5rem'}}>
-            The full Novo Navis report analyzes your entire operation. You'll receive a 10-page
+            The full Novo Navis report analyzes your entire operation. You'll receive a up to 25-page
             custom report with specific AI tools matched to your budget, a prioritized
             90-day implementation roadmap, and an honest ROI estimate — reviewed by a human
             AI consultant and delivered to your inbox within 24 hours.
@@ -123,7 +123,7 @@ export default function Results() {
               marginBottom: '1rem'
             }}
           >
-            ⚡ Want this for your entire business? Get the full 10-page report — $288 →
+            ⚡ Want this for your entire business? Get the full up to 25-page report — $288 →
           </Link>
 
           <p style={{color: '#4a5568', fontSize: '0.85rem', margin: 0}}>
@@ -138,7 +138,7 @@ export default function Results() {
           justifyContent: 'center',
           marginBottom: '2rem'
         }}>
-          {['10-page custom report', '90-day roadmap', '24-hour delivery', '100% satisfaction guarantee'].map(label => (
+          {['up to 25 pages', '90-day roadmap', '24-hour delivery', '100% satisfaction guarantee'].map(label => (
             <span key={label} style={{
               background: '#0d1221',
               border: '1px solid #1e2a45',

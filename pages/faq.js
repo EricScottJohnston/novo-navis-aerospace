@@ -4,7 +4,7 @@ import Link from 'next/link'
 const faqs = [
   {
     q: "What exactly is in the report?",
-    a: "You receive a 10-page document built around your specific business. It covers your top 3–5 automatable workflows ranked by estimated time savings, specific AI tools matched to each workflow and your budget, a prioritized 90-day implementation roadmap broken into three phases, an honest ROI estimate for your business size and industry, and a risks section that tells you what can go wrong and how to prevent it. Every report is reviewed by a human AI consultant before it's sent."
+    a: "You receive a up to 25-page document built around your specific business. It covers your top 3–5 automatable workflows ranked by estimated time savings, specific AI tools matched to each workflow and your budget, a prioritized 90-day implementation roadmap broken into three phases, an honest ROI estimate for your business size and industry, and a risks section that tells you what can go wrong and how to prevent it. Every report is reviewed by a human AI consultant before it's sent."
   },
   {
     q: "How is this different from just asking ChatGPT?",
