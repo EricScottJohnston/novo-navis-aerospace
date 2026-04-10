@@ -54,7 +54,7 @@ export default function RealEstateArticle() {
               Want this analysis done for your specific real estate business?
             </p>
             <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '1rem'}}>
-              Our proprietary Small Psychological Model builds a custom 10-page
+              Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
             <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $29</Link>
@@ -89,7 +89,7 @@ export default function RealEstateArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your business, your workflows, your pain points.
-            Ten pages. Delivered in 24 hours. $288.
+            Up to 25 pages. Delivered in 24 hours. $288.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
         </div>

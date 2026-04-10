@@ -99,7 +99,7 @@ export default function SampleAnalysis() {
       })
       const data = await res.json()
       if (res.status === 429 || data.error === 'rate_limited') {
-        alert('You\'ve already used your free analysis today. Come back tomorrow for another one, or get the full 10-page report below.')
+        alert('You\'ve already used your free analysis today. Come back tomorrow for another one, or get the full up to 25-page report below.')
         setLoading(false)
         return
       }
@@ -301,7 +301,7 @@ export default function SampleAnalysis() {
             Ready for the full report?
           </p>
           <Link href="/#order-form" style={{color: '#c8a96e', fontWeight: 'bold'}}>
-            Get the complete 10-page AI integration report — $288 →
+            Get the complete up to 25-page AI integration report — $288 →
           </Link>
         </div>
 

@@ -126,7 +126,7 @@ export default function Home() {
           }
         `}</style>
         <title>Novo Navis | Custom AI Integration Reports for Small Business</title>
-        <meta name="description" content="Tell us about your business and receive a custom 10-page AI integration report built by our proprietary Small Psychological Model. Delivered in 24 hours." />
+        <meta name="description" content="Tell us about your business and receive a custom AI integration report — up to 25 pages — built by our proprietary Small Psychological Model. Delivered in 24 hours." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -268,7 +268,7 @@ export default function Home() {
           textAlign: 'center'
         }}>
           <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem', fontWeight: 'bold'}}>
-            Full 10-Page Custom Report
+            Full Custom Report — Up to 25 Pages
           </p>
           <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem'}}>
             <span style={{color: '#c8a96e', fontSize: '2.5rem', fontWeight: 'bold'}}>$288</span>
@@ -435,7 +435,7 @@ export default function Home() {
           </button>
 
           <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
-            Secured by Stripe. $288 — full 10-page custom report.
+            Secured by Stripe. $288 — custom report, up to 25 pages.
             Delivered to your email within 24 hours.
             Not satisfied? We'll refund you in full — no questions asked.
           </p>
