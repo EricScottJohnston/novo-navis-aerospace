@@ -164,6 +164,10 @@ export default function SampleAnalysis() {
           Get a Free AI Analysis of Your Biggest Workflow Problem
         </h1>
 
+        <p style={{color: '#4caf50', fontWeight: 'bold', fontSize: '1.1rem', margin: '-0.5rem 0 1.5rem 0'}}>
+          60 seconds here returns 60 minutes of your time tomorrow.
+        </p>
+
         <p className="lead">
           Describe one repetitive process that's eating your time. Our AI will analyze it
           and tell you exactly which tools can automate it — and how much time you'll get back.
