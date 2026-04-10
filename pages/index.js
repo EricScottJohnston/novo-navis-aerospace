@@ -142,7 +142,7 @@ export default function Home() {
 
       <div className="report-page">
 
-        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>What could you do with 11 extra hours per week?</h1>
+        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>There are over 16,000 AI tools. We'll show you which ones fit your workflow.</h1>
 
         {/* PRIMARY FREE CTA */}
         <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block'}}>
