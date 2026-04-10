@@ -169,9 +169,12 @@ export default function Home() {
         </Link>
 
         <p className="lead">
-          Every week you run manual processes, you're paying your team to do work that software
-          would do for free. <strong style={{color: '#c8a96e'}}>The average small business loses 11 hours a week this way.</strong> Your
-          report shows you exactly where — and exactly how to stop it.
+          Today you're paying your team for work AI does free. <strong style={{color: '#c8a96e'}}>The average small business
+          loses 11 hours a week this way.</strong> Your report shows you exactly where — and exactly
+          how to stop it. What will you do with your 11 reclaimed hours?
+        </p>
+        <p style={{color: '#8a95aa', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1rem'}}>
+          U.S. &amp; Canadian customers only.
         </p>
 
         {/* WHAT YOU'LL DISCOVER */}
