@@ -171,7 +171,7 @@ export default function SampleAnalysis() {
         <p className="lead">
           Describe one repetitive process that's eating your time. Our AI will analyze it
           and tell you exactly which tools can automate it — and how much time you'll get back.
-          Takes 30 seconds. Results delivered instantly.
+          Takes 60 seconds. Results delivered instantly.
         </p>
 
         <div style={{
