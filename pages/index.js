@@ -163,7 +163,7 @@ export default function Home() {
               <span style={{color: '#4caf50', fontWeight: 'bold'}}>Try a free single-workflow analysis.</span> No credit card. Instant results.
             </p>
             <span style={{color: '#4caf50', fontWeight: 'bold', fontSize: '0.95rem', whiteSpace: 'nowrap'}}>
-              ⚡ Try It Free → 🎤 Voice Input Available
+              ⚡ Try It Free → 🎤 Voice Input
             </span>
           </div>
         </Link>
