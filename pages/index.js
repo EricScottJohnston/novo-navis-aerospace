@@ -169,11 +169,9 @@ export default function Home() {
         </Link>
 
         <p className="lead">
-          Tell us about your business. Our proprietary Small Psychological Model
-          analyzes your specific workflows to identify, on average, <strong style={{color: '#c8a96e'}}>8–12 hours per week
-          of manual work that can be automated</strong>. You'll receive a 10-page report showing
-          exactly which processes to automate, which AI tools fit your budget and tech stack,
-          and a prioritized 90-day implementation roadmap — delivered to your inbox within 24 hours.
+          Every week you run manual processes, you're paying your team to do work that software
+          would do for free. <strong style={{color: '#c8a96e'}}>The average small business loses 11 hours a week this way.</strong> Your
+          report shows you exactly where — and exactly how to stop it.
         </p>
 
         {/* WHAT YOU'LL DISCOVER */}
