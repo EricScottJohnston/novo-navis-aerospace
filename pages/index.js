@@ -168,6 +168,12 @@ export default function Home() {
           </div>
         </Link>
 
+        <p style={{textAlign: 'center', margin: '-0.25rem 0 1.5rem 0'}}>
+          <Link href="/david" style={{color: '#5a6a7a', fontSize: '0.8rem', borderBottom: '1px solid #2a3a55', paddingBottom: '1px'}}>
+            Curious how the analysis works? See David's reasoning process →
+          </Link>
+        </p>
+
         <p className="lead">
           Today you're paying your team for work AI does free. <strong style={{color: '#c8a96e'}}>The average small business
           loses 11 hours a week this way.</strong> Your report shows you exactly where — and exactly
