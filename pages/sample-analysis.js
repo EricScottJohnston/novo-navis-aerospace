@@ -164,8 +164,14 @@ export default function SampleAnalysis() {
           Get a Free AI Analysis of Your Biggest Workflow Problem
         </h1>
 
-        <p style={{color: '#4caf50', fontWeight: 'bold', fontSize: '1.1rem', margin: '-0.5rem 0 1.5rem 0'}}>
+        <p style={{color: '#4caf50', fontWeight: 'bold', fontSize: '1.1rem', margin: '-0.5rem 0 0.75rem 0'}}>
           60 seconds here returns 60 minutes of your time tomorrow.
+        </p>
+
+        <p style={{textAlign: 'center', marginBottom: '1.5rem'}}>
+          <Link href="/david" style={{color: '#8a95aa', fontSize: '0.85rem', borderBottom: '1px solid #2a3a55', paddingBottom: '1px'}}>
+            Curious how the analysis works? See David's reasoning process →
+          </Link>
         </p>
 
         <p className="lead">
