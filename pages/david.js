@@ -527,7 +527,8 @@ export default function DavidDemo() {
           <p className="david-eyebrow">David v2.5 — Small Psychological Model</p>
           <h1>See How David Thinks Before It Writes</h1>
           <p>
-            Every report starts with 8+ web searches, a causal reasoning filter, and independent SPM verification.
+            Every report begins with first-principles knowledge building against domain-specific expertise — David interrogates your problem from the ground up before it touches a single recommendation.
+            Then every finding is run through a causal reasoning filter and independent SPM verification.
             This is what that looks like in real time — reasoning on the left, final output on the right.
           </p>
           <div className="david-tabs">
