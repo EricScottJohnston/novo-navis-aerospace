@@ -142,7 +142,7 @@ export default function Home() {
 
       <div className="report-page">
 
-        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>You're paying your team to do work AI does for free. We'll show you exactly where.</h1>
+        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Find out which AI tools fit your business. Free analysis. 60 seconds.</h1>
 
         <p className="lead">
           The average small business loses <strong style={{color: '#c8a96e'}}>11 hours a week</strong> to
