@@ -142,46 +142,34 @@ export default function Home() {
 
       <div className="report-page">
 
-        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>There are over 16,000 AI tools. We'll show you which ones fit your workflow.</h1>
-
-        {/* PRIMARY FREE CTA */}
-        <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block'}}>
-          <div style={{
-            background: '#0d1a0d',
-            border: '2px solid #4caf50',
-            borderRadius: '6px',
-            padding: '0.75rem 1.5rem',
-            margin: '1.5rem 0',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '0.5rem',
-            cursor: 'pointer'
-          }}>
-            <p style={{color: '#d0d8e8', fontSize: '0.95rem', margin: 0}}>
-              <span style={{color: '#4caf50', fontWeight: 'bold'}}>Try a free single-workflow analysis.</span> No credit card. Instant results.
-            </p>
-            <span style={{color: '#4caf50', fontWeight: 'bold', fontSize: '0.95rem', whiteSpace: 'nowrap'}}>
-              ⚡ Try It Free → 🎤 Voice Input
-            </span>
-          </div>
-        </Link>
-
-        <p style={{textAlign: 'center', margin: '-0.25rem 0 1.5rem 0'}}>
-          <Link href="/david" style={{color: '#5a6a7a', fontSize: '0.8rem', borderBottom: '1px solid #2a3a55', paddingBottom: '1px'}}>
-            Curious how the analysis works? See David's reasoning process →
-          </Link>
-        </p>
+        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>You're paying your team to do work AI does for free. We'll show you exactly where.</h1>
 
         <p className="lead">
-          Today you're paying your team for work AI does free. <strong style={{color: '#c8a96e'}}>The average small business
-          loses 11 hours a week this way.</strong> Your report shows you exactly where — and exactly
-          how to stop it. What will you do with your 11 reclaimed hours?
+          The average small business loses <strong style={{color: '#c8a96e'}}>11 hours a week</strong> to
+          repetitive tasks AI handles automatically. Your report shows you exactly which ones —
+          and exactly what to do about it.
         </p>
-        <p style={{color: '#8a95aa', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1rem'}}>
+        <p style={{color: '#8a95aa', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1.5rem'}}>
           U.S. &amp; Canadian customers only.
         </p>
+
+        {/* PRIMARY FREE CTA */}
+        <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block', margin: '1.5rem 0'}}>
+          <div style={{
+            background: '#4caf50',
+            borderRadius: '6px',
+            padding: '1rem 1.5rem',
+            textAlign: 'center',
+            cursor: 'pointer'
+          }}>
+            <span style={{color: '#fff', fontSize: '1.15rem', fontWeight: 'bold'}}>
+              Get My Free Analysis →
+            </span>
+          </div>
+          <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0.5rem 0 0 0', textAlign: 'center'}}>
+            No credit card · 2 fields · Instant results
+          </p>
+        </Link>
 
         {/* WHAT YOU'LL DISCOVER */}
         <div style={{
@@ -284,8 +272,11 @@ export default function Home() {
           <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem'}}>
             <span style={{color: '#c8a96e', fontSize: '2.5rem', fontWeight: 'bold'}}>$288</span>
           </div>
-          <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: 0}}>
+          <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0 0 0.4rem 0'}}>
             One report. Your business. 24-hour delivery.
+          </p>
+          <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: 0}}>
+            Most AI consultants charge $300–$500 per hour. This report is $288 and yours to keep.
           </p>
         </div>
 
