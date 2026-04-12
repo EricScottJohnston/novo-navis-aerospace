@@ -223,15 +223,15 @@ export default function Home() {
             cursor: 'pointer'
           }}>
             <p style={{color: '#8a95aa', fontSize: '0.8rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem'}}>
-              How the analysis thinks
+              How the analysis works
             </p>
             <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', margin: '0 0 0.5rem 0'}}>
-              David doesn't just ask ChatGPT for advice. He runs your workflow through seven specialized
-              reasoning instances simultaneously — each one checking the others' work — before a single
-              recommendation reaches you.
+              Our Small Psychological Model draws upon the same resources and tools enterprise-level
+              business consultants use — live market data, industry benchmarks, causal reasoning
+              frameworks — at micro business prices.
             </p>
             <span style={{color: '#c8a96e', fontSize: '0.9rem', fontWeight: 'bold'}}>
-              See David's full reasoning process →
+              See how it works →
             </span>
           </div>
         </Link>
