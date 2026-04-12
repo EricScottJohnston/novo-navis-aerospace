@@ -55,7 +55,7 @@ export default function LawFirmArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $29</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $288</Link>
           </div>
 
           <p>Contract review automation is a more nuanced application but one where AI is delivering genuine value for small firms handling high volumes of routine contracts. AI document review tools — Harvey, Ironclad, and Spellbook are the current leaders — can read a contract and flag non-standard clauses, missing provisions, and potential issues in minutes rather than hours. For a small firm handling commercial leases, employment agreements, or vendor contracts routinely, this does not replace attorney review. It accelerates it. The attorney reviews the AI's flagged issues rather than reading every clause from scratch.</p>

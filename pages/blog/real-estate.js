@@ -57,7 +57,7 @@ export default function RealEstateArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $29</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $288</Link>
           </div>
 
           <p>Beyond initial follow-up, AI handles the longer nurture sequences for leads that are not ready to buy or sell immediately. A prospect who says they are thinking about selling in six months gets added to an automated sequence that sends them relevant market updates, neighborhood data, and helpful content over the next six months — keeping you top of mind without requiring you to manually reach out every few weeks. When they are ready to move, you are the agent they already have a relationship with.</p>

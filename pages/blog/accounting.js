@@ -55,7 +55,7 @@ export default function AccountingArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $29</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $288</Link>
           </div>
 
           <p>The tools that handle this most effectively for accounting firms are Canopy, TaxDome, or Karbon — practice management platforms built specifically for accounting firms that include client portals, document management, and workflow automation. If you are already using one of these platforms, you likely have automation capabilities you are not fully utilizing. If you are collecting documents via email and organizing them manually in a shared drive, moving to a purpose-built platform is the foundational step before any automation layer makes sense.</p>

@@ -55,7 +55,7 @@ export default function RestaurantArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $29</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $288</Link>
           </div>
 
           <p>The tools that handle this for independent restaurants include MarketMan, BlueCart, and Restaurant365. These platforms integrate with your POS system to pull sales data automatically, track inventory levels in real time as items are sold, and generate purchase orders based on par levels and forecasted demand. The initial setup requires entering your recipes and ingredient quantities — a one-time investment of several hours that pays dividends in perpetuity.</p>

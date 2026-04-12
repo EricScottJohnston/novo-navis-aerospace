@@ -57,7 +57,7 @@ export default function HvacArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $29</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $288</Link>
           </div>
 
           <p>After the job is complete and the technician marks it done in the app, the automation pulls the job details, generates a draft invoice in your accounting software, and emails it to the customer with a payment link. The office manager reviews it before it goes out, but she is reviewing a finished draft rather than building it from scratch.</p>

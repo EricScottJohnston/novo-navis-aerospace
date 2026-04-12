@@ -124,7 +124,7 @@ export default function BlogIndex() {
           These articles cover general strategies. Our reports are built specifically
           for your business, your workflows, and your industry.
         </div>
-        <Link href="/report" className="btn-primary">Get Your Custom Report — $29</Link>
+        <Link href="/report" className="btn-primary">Get Your Custom Report — $288</Link>
       </div>
 
       <footer>
