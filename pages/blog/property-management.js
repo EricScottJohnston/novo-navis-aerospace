@@ -55,7 +55,7 @@ export default function PropertyManagementArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $29</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $288</Link>
           </div>
 
           <p>Tenant communication automation handles the second major time drain in property management. A significant percentage of tenant inquiries are repetitive — rent payment questions, lease renewal timelines, parking policy, guest policy, utility responsibility, move-out procedures. An AI-powered communication system can answer these questions automatically 24 hours a day using information from your lease documents and property policies. The tenant gets an immediate, accurate answer. The property manager is not interrupted by a question that has been answered in the lease 50 times already.</p>
