@@ -33,7 +33,7 @@ export default async function handler(req, res) {
   const prompt = 'You are an AI integration consultant for small businesses. A business owner has described one of their workflow problems. Analyze it and provide a specific, practical AI integration recommendation.\n\n'
     + (businessType ? 'Business type: ' + businessType + '\n' : '')
     + 'Workflow problem: ' + workflow + '\n\n'
-    + 'Write 2-3 focused paragraphs tailored specifically to this type of business. Be specific -- name actual AI tools (e.g. Zapier, Make.com, ChatGPT, Claude, Calendly, Jobber, ServiceTitan, etc.) that are relevant to this industry, and give a realistic time savings estimate. Do not use bullet points. Write in plain prose. Be direct and practical, not salesy.\n\n'
+    + 'Write 2-3 focused paragraphs tailored specifically to this type of business. Assume the reader has no technical background — define every tool or term in plain English the first time you use it (for example: "Zapier, a tool that connects two apps so they pass information to each other automatically"). Name actual AI tools relevant to this industry (e.g. Zapier, Make.com, ChatGPT, Claude, Calendly, Jobber, ServiceTitan, etc.), give a realistic time savings estimate, and end with one concrete first step the owner could take this week without any technical help. Do not use bullet points. Write in plain prose. Be direct and practical, not salesy.\n\n'
     + 'After your analysis, close with exactly this paragraph:\n\n'
     + closingParagraph
 
