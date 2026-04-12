@@ -223,25 +223,30 @@ export default function Home() {
           </p>
         </div>
 
-        {/* SPECIFIC CUSTOMER RESULT */}
-        <div style={{
-          background: '#0d1221',
-          border: '1px solid #1e2a45',
-          borderLeft: '3px solid #c8a96e',
-          borderRadius: '6px',
-          padding: '1.25rem 1.5rem',
-          margin: '1.5rem 0'
-        }}>
-          <p style={{color: '#8a95aa', fontSize: '0.8rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem'}}>
-            Example outcome
-          </p>
-          <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', margin: 0}}>
-            A Phoenix-area HVAC company with 8 employees identified <strong>14 hours per week</strong> of
-            automatable scheduling and follow-up work — time their office manager could redirect to
-            customer relationships and upsells. Implementation cost: $0. Tools used: free tiers of
-            two existing platforms they already paid for.
-          </p>
-        </div>
+        {/* SEE HOW IT THINKS */}
+        <Link href="/david" style={{textDecoration: 'none', display: 'block'}}>
+          <div style={{
+            background: '#0d1221',
+            border: '1px solid #1e2a45',
+            borderLeft: '3px solid #c8a96e',
+            borderRadius: '6px',
+            padding: '1.25rem 1.5rem',
+            margin: '1.5rem 0',
+            cursor: 'pointer'
+          }}>
+            <p style={{color: '#8a95aa', fontSize: '0.8rem', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.5rem'}}>
+              How the analysis thinks
+            </p>
+            <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', margin: '0 0 0.5rem 0'}}>
+              David doesn't just ask ChatGPT for advice. He runs your workflow through seven specialized
+              reasoning instances simultaneously — each one checking the others' work — before a single
+              recommendation reaches you.
+            </p>
+            <span style={{color: '#c8a96e', fontSize: '0.9rem', fontWeight: 'bold'}}>
+              See David's full reasoning process →
+            </span>
+          </div>
+        </Link>
 
         <div style={{
           background: '#0d1a0d',

@@ -9,9 +9,7 @@ export default function SampleAnalysis() {
   const [listeningField, setListeningField] = useState(null)
   const recognitionRef = useRef(null)
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
-    businessType: '',
     workflow: ''
   })
 
@@ -205,22 +203,6 @@ export default function SampleAnalysis() {
         <form onSubmit={handleSubmit}>
 
           <div className="form-group">
-            <label>Your First Name *</label>
-            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
-              <input
-                type="text"
-                name="name"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="John"
-                style={{flex: 1}}
-              />
-              <MicButton fieldName="name" />
-            </div>
-          </div>
-
-          <div className="form-group">
             <label>Your Email Address * (results delivered here)</label>
             <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
               <input
@@ -233,22 +215,6 @@ export default function SampleAnalysis() {
                 style={{flex: 1}}
               />
               <MicButton fieldName="email" />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label>What type of business do you run? *</label>
-            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
-              <input
-                type="text"
-                name="businessType"
-                required
-                value={formData.businessType}
-                onChange={handleChange}
-                placeholder="e.g. HVAC company, dental practice, property management, law firm"
-                style={{flex: 1}}
-              />
-              <MicButton fieldName="businessType" />
             </div>
           </div>
 
@@ -293,9 +259,12 @@ export default function SampleAnalysis() {
             {loading ? 'Analyzing your workflow...' : 'Get My Free Analysis →'}
           </button>
 
-          <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
+          <p style={{textAlign: 'center', color: '#8a95aa', fontSize: '0.85rem', marginTop: '1rem'}}>
             Free. No credit card. No obligation.
-            Your email will never be sold or shared.
+          </p>
+          <p style={{textAlign: 'center', color: '#8a95aa', fontSize: '0.85rem', marginTop: '0.25rem'}}>
+            We will never sell or share your information.{' '}
+            <Link href="/privacy" style={{color: '#c8a96e'}}>Read our Privacy Policy →</Link>
           </p>
 
         </form>
