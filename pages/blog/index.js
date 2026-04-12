@@ -88,7 +88,7 @@ export default function BlogIndex() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/report">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your Report</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -124,14 +124,16 @@ export default function BlogIndex() {
           These articles cover general strategies. Our reports are built specifically
           for your business, your workflows, and your industry.
         </div>
-        <Link href="/report" className="btn-primary">Get Your Custom Report — $288</Link>
+        <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $288</Link>
       </div>
 
       <footer>
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/sample-analysis">Try It Free</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>
