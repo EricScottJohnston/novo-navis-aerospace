@@ -192,6 +192,25 @@ export default function Home() {
         </div>
 
 
+        {/* NOT A TECH PERSON */}
+        <div style={{
+          background: '#0d1221',
+          border: '1px solid #1e2a45',
+          borderLeft: '3px solid #4caf50',
+          borderRadius: '6px',
+          padding: '1.25rem 1.5rem',
+          margin: '1.5rem 0'
+        }}>
+          <p style={{color: '#4caf50', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 'bold', marginBottom: '0.5rem'}}>
+            You don't need to be a tech person
+          </p>
+          <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', margin: 0}}>
+            Every recommendation in your report comes with plain-English implementation steps,
+            approximate costs, and a realistic estimate of how long setup takes.
+            If you can send an email, you can implement what we recommend.
+          </p>
+        </div>
+
         {/* SEE HOW IT THINKS */}
         <Link href="/david" style={{textDecoration: 'none', display: 'block'}}>
           <div style={{
