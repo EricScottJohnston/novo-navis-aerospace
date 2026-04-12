@@ -191,25 +191,6 @@ export default function Home() {
           </ul>
         </div>
 
-        {/* METHODOLOGY */}
-        <div style={{
-          background: '#0a0f1a',
-          border: '1px solid #1e2a45',
-          borderRadius: '6px',
-          padding: '1.25rem 1.5rem',
-          margin: '1.5rem 0'
-        }}>
-          <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 'bold', marginBottom: '0.5rem'}}>
-            How it works
-          </p>
-          <p style={{color: '#8a95aa', fontSize: '0.9rem', lineHeight: '1.7', margin: 0}}>
-            Our Small Psychological Model (SPM) analyzes your specific workflows against known AI
-            automation profiles across industries including trades, professional services, retail,
-            healthcare, and construction. It ranks automatable tasks by estimated time savings and
-            implementation complexity, then builds a roadmap specific to your business.
-            Every report is reviewed by a human AI consultant before it reaches your inbox.
-          </p>
-        </div>
 
         {/* SEE HOW IT THINKS */}
         <Link href="/david" style={{textDecoration: 'none', display: 'block'}}>
