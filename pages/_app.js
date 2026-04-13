@@ -42,7 +42,7 @@ export default function App({ Component, pageProps }) {
           gtag('config', 'G-G3X6LMB2HE');
 
           (function() {
-            var depths = [25, 50, 90];
+            var depths = [25];
             var fired = {};
             function getScrollPercent() {
               var scrollTop = window.scrollY || window.pageYOffset || 0;
