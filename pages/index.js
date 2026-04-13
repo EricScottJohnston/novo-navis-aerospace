@@ -150,6 +150,7 @@ export default function Home() {
           height={700}
           priority
           sizes="(max-width: 600px) 609px, 609px"
+          quality={60}
           style={{width: '100%', height: 'auto', borderRadius: '8px', marginBottom: '1.5rem'}}
         />
 
