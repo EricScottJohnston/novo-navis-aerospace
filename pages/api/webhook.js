@@ -45,35 +45,66 @@ export default async function handler(req, res) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object
     const meta = session.metadata || {}
-    const customerName = meta.customer_name || 'Unknown'
-    const businessName = meta.business_name || 'Unknown'
     const email = session.customer_email || 'Unknown'
     const amountPaid = `$${(session.amount_total / 100).toFixed(2)}`
 
-    // Payment confirmed — intake form submission will trigger the full report brief email
-    try {
-      await resend.emails.send({
-        from: 'Novo Navis <noreply@novonavis.com>',
-        to: 'ericjohnston105@gmail.com',
-        subject: `Payment Received — ${businessName} — Awaiting Intake`,
-        html: `
-          <h2>Payment Received</h2>
-          <p><strong>Amount:</strong> ${amountPaid}</p>
-          <p><strong>Name:</strong> ${customerName}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Business:</strong> ${businessName}</p>
-          <hr />
-          <p style="color: #888; font-size: 12px;">
-            Customer has been redirected to the intake form. You will receive a second email
-            with full report details once they complete it.
-          </p>
-        `
-      })
+    // Tool registration payment
+    if (meta.tool_name) {
+      const developerName = meta.developer_name || 'Unknown'
+      const toolName = meta.tool_name || 'Unknown'
 
-      console.log('Payment notification sent for:', businessName)
-    } catch (emailErr) {
-      console.error('Email send error:', emailErr)
+      try {
+        await resend.emails.send({
+          from: 'Novo Navis <noreply@novonavis.com>',
+          to: 'ericjohnston105@gmail.com',
+          subject: `Tool Registration Payment — ${toolName} — ${developerName}`,
+          html: `
+            <h2>New AI Tool Registration</h2>
+            <p><strong>Amount:</strong> ${amountPaid}</p>
+            <p><strong>Developer:</strong> ${developerName}</p>
+            <p><strong>Tool Name:</strong> ${toolName}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <hr />
+            <p style="color: #888; font-size: 12px;">
+              Registration is valid for 3 months. Review the submitted tool details
+              and add the tool to the recommendation spreadsheet.
+            </p>
+          `
+        })
+        console.log('Tool registration notification sent for:', toolName)
+      } catch (emailErr) {
+        console.error('Email send error:', emailErr)
+      }
+
+    // Report order payment
+    } else {
+      const customerName = meta.customer_name || 'Unknown'
+      const businessName = meta.business_name || 'Unknown'
+
+      try {
+        await resend.emails.send({
+          from: 'Novo Navis <noreply@novonavis.com>',
+          to: 'ericjohnston105@gmail.com',
+          subject: `Payment Received — ${businessName} — Awaiting Intake`,
+          html: `
+            <h2>Payment Received</h2>
+            <p><strong>Amount:</strong> ${amountPaid}</p>
+            <p><strong>Name:</strong> ${customerName}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Business:</strong> ${businessName}</p>
+            <hr />
+            <p style="color: #888; font-size: 12px;">
+              Customer has been redirected to the intake form. You will receive a second email
+              with full report details once they complete it.
+            </p>
+          `
+        })
+        console.log('Payment notification sent for:', businessName)
+      } catch (emailErr) {
+        console.error('Email send error:', emailErr)
+      }
     }
+
   } else {
     console.log(`Unhandled event type: ${event.type}`)
   }
