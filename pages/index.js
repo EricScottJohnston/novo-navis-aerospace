@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useRef } from 'react'
 
 export default function Home() {
@@ -142,13 +143,13 @@ export default function Home() {
 
       <div className="report-page">
 
-        <img
+        <Image
           src="/Drowning.jpg"
           alt="Business owner overwhelmed by AI tools"
           width={700}
           height={700}
+          priority
           style={{width: '100%', height: 'auto', borderRadius: '8px', marginBottom: '1.5rem'}}
-          loading="eager"
         />
 
         <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Find out which AI tools fit your business. Free analysis. 60 seconds.</h1>
