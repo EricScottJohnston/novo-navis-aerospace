@@ -714,7 +714,7 @@ export default function DavidDemo() {
         <div className="cta-strip">
           <h3>Get a Report Built for Your Business</h3>
           <p>David runs this same process on your specific operations — custom tools, real pricing, and an honest ROI case.</p>
-          <Link href="/#order-form" className="cta-btn">Get My Report — $288</Link>
+          <Link href="/#order-form" className="cta-btn">Get My Report — $49</Link>
         </div>
 
       </div>
