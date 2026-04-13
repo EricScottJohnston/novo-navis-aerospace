@@ -174,23 +174,6 @@ export default function Home() {
           U.S. &amp; Canadian customers only.
         </p>
 
-        {/* PRIMARY FREE CTA */}
-        <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block', margin: '1.5rem 0'}}>
-          <div style={{
-            background: '#4caf50',
-            borderRadius: '6px',
-            padding: '1rem 1.5rem',
-            textAlign: 'center',
-            cursor: 'pointer'
-          }}>
-            <span style={{color: '#fff', fontSize: '1.15rem', fontWeight: 'bold'}}>
-              Get My Free Analysis →
-            </span>
-          </div>
-          <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0.5rem 0 0 0', textAlign: 'center'}}>
-            No credit card · 2 fields · Instant results
-          </p>
-        </Link>
 
         {/* WHAT YOU'LL DISCOVER */}
         <div style={{
@@ -257,26 +240,25 @@ export default function Home() {
           </div>
         </Link>
 
-        <div style={{
-          background: '#0d1a0d',
-          border: '2px solid #4caf50',
-          borderRadius: '6px',
-          padding: '1rem 1.5rem',
-          margin: '1.5rem 0',
-          textAlign: 'center'
-        }}>
-          <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '0.5rem'}}>
-            Want to see what a real report looks like before you buy?
-          </p>
-          <Link href="/sample" style={{color: '#4caf50', fontWeight: 'bold'}}>
-            Read a real report for a plumbing company →
-          </Link>
-          <p style={{marginTop: '0.75rem', marginBottom: 0}}>
-            <Link href="/faq" style={{color: '#8a95aa', fontSize: '0.85rem'}}>
-              Have questions? Read the FAQ →
-            </Link>
-          </p>
-        </div>
+        {/* FREE SAMPLE CTA */}
+        <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block'}}>
+          <div style={{
+            background: '#0d1a0d',
+            border: '2px solid #4caf50',
+            borderRadius: '6px',
+            padding: '1.25rem 1.5rem',
+            margin: '1.5rem 0',
+            textAlign: 'center',
+            cursor: 'pointer'
+          }}>
+            <p style={{color: '#d0d8e8', fontSize: '1rem', marginBottom: '0.5rem', fontWeight: 'bold'}}>
+              Want to see it in action before you buy?
+            </p>
+            <span style={{color: '#4caf50', fontWeight: 'bold', fontSize: '0.95rem'}}>
+              Try it here — free, no credit card →
+            </span>
+          </div>
+        </Link>
 
         {/* PRICE BOX */}
         <div style={{
