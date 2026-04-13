@@ -128,7 +128,7 @@ export default function SampleReport() {
             This report was built specifically for a plumbing company. Yours will be built specifically for your business.
           </h3>
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
-            Same rigorous analysis. Same specific tools and pricing. Same ROI calculations. Built for your workflows, your industry, your pain points. Up to 25 pages. Delivered in 24 hours. $49.
+            Same rigorous analysis. Same specific tools and pricing. Same ROI calculations. Built for your workflows, your industry, your pain points. Up to 25 pages. Delivered within 1 hour during business hours. $49.
           </p>
           <Link href="/#order-form" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>⚡ Get Your Custom Report — $49 →</Link>
         </div>
