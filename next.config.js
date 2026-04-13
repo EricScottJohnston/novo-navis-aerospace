@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */ // build: 2
 const nextConfig = {
   // Cache headers for static assets
   async headers() {
