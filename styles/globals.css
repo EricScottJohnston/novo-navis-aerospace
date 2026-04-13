@@ -17,8 +17,13 @@ body {
 
 a {
   color: #c8a96e;
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   transition: color 0.2s;
+}
+
+main {
+  display: block;
 }
 
 a:hover {
@@ -341,7 +346,7 @@ footer {
   text-align: center;
   padding: 2rem;
   border-top: 1px solid #1e2a45;
-  color: #4a5568;
+  color: #8a95aa;
   font-size: 0.85rem;
   margin-top: 4rem;
 }

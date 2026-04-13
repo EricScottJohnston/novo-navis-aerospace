@@ -60,7 +60,9 @@ export default function App({ Component, pageProps }) {
           })();
         `}
       </Script>
-      <Component {...pageProps} />
+      <main>
+        <Component {...pageProps} />
+      </main>
     </>
   )
 }
