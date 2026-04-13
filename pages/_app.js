@@ -38,18 +38,23 @@ export default function App({ Component, pageProps }) {
           (function() {
             var depths = [25];
             var fired = {};
-            function getScrollPercent() {
-              var scrollTop = window.scrollY || window.pageYOffset || 0;
-              var docHeight = Math.max(
+            var docHeight = 0;
+            var winHeight = 0;
+
+            function updateDimensions() {
+              docHeight = Math.max(
                 document.body.scrollHeight, document.documentElement.scrollHeight,
                 document.body.offsetHeight, document.documentElement.offsetHeight
               );
-              var winHeight = window.innerHeight || document.documentElement.clientHeight;
-              if (docHeight - winHeight <= 0) return 0;
-              return Math.round(scrollTop / (docHeight - winHeight) * 100);
+              winHeight = window.innerHeight || document.documentElement.clientHeight;
             }
+
+            updateDimensions();
+            window.addEventListener('resize', updateDimensions, { passive: true });
+
             window.addEventListener('scroll', function() {
-              var pct = getScrollPercent();
+              if (docHeight - winHeight <= 0) return;
+              var pct = Math.round((window.scrollY || 0) / (docHeight - winHeight) * 100);
               depths.forEach(function(d) {
                 if (!fired[d] && pct >= d) {
                   fired[d] = true;
