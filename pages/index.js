@@ -142,6 +142,12 @@ export default function Home() {
 
       <div className="report-page">
 
+        <img
+          src="https://res.cloudinary.com/dqv9va6ta/image/upload/v1776038819/cf-flow-3CHNibbNyl18v0PcstFpMrCouC9_pzcyjo.png"
+          alt="Novo Navis AI workflow analysis"
+          style={{width: '100%', borderRadius: '8px', marginBottom: '1.5rem'}}
+        />
+
         <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Find out which AI tools fit your business. Free analysis. 60 seconds.</h1>
 
         <p className="lead">
