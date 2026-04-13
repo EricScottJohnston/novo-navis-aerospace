@@ -276,13 +276,13 @@ export default function Home() {
             Full Custom Report — Up to 25 Pages
           </p>
           <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem'}}>
-            <span style={{color: '#c8a96e', fontSize: '2.5rem', fontWeight: 'bold'}}>$288</span>
+            <span style={{color: '#c8a96e', fontSize: '2.5rem', fontWeight: 'bold'}}>$49</span>
           </div>
           <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0 0 0.4rem 0'}}>
             One report. Your business. 24-hour delivery.
           </p>
           <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: 0}}>
-            Most AI consultants charge $300–$500 per hour. This report is $288 and yours to keep.
+            Most AI consultants charge $300–$500 per hour. This report is $49 and yours to keep.
           </p>
         </div>
 
@@ -439,11 +439,11 @@ export default function Home() {
             }}
             disabled={loading || !agreedTerms}
           >
-            {loading ? 'Redirecting to Checkout...' : 'Get My Report — $288'}
+            {loading ? 'Redirecting to Checkout...' : 'Get My Report — $49'}
           </button>
 
           <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
-            Secured by Stripe. $288 — custom report, up to 25 pages.
+            Secured by Stripe. $49 — custom report, up to 25 pages.
             Delivered to your email within 24 hours.
             Not satisfied? We'll refund you in full — no questions asked.
           </p>

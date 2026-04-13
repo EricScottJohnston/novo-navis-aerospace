@@ -16,7 +16,7 @@ const faqs = [
   },
   {
     q: "What if I'm not satisfied with the report?",
-    a: "Full refund, no questions asked. If you read your report and don't find it useful, email support@novonavis.com and we'll refund you in full. We'd rather lose the $288 than send a report that doesn't deliver value."
+    a: "Full refund, no questions asked. If you read your report and don't find it useful, email support@novonavis.com and we'll refund you in full. We'd rather lose the $49 than send a report that doesn't deliver value."
   },
   {
     q: "Do I need to be tech-savvy to use the tools you recommend?",
