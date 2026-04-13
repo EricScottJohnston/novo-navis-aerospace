@@ -53,7 +53,7 @@ export default function AccountingArticle() {
             </p>
             <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '1rem'}}>
               Our proprietary Small Psychological Model builds a custom up to 25-page
-              AI integration report tailored to your workflows. Delivered in 24 hours.
+              AI integration report tailored to your workflows. Delivered within 1 hour during business hours.
             </p>
             <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $49</Link>
           </div>
@@ -85,7 +85,7 @@ export default function AccountingArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your firm, your workflows, your pain points.
-            Up to 25 pages. Delivered in 24 hours. $49. Guaranteed.
+            Up to 25 pages. Delivered within 1 hour during business hours. $49. Guaranteed.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
         </div>

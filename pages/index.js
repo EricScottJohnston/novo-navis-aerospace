@@ -126,7 +126,7 @@ export default function Home() {
           }
         `}</style>
         <title>Novo Navis | Custom AI Integration Reports for Small Business</title>
-        <meta name="description" content="Tell us about your business and receive a custom AI integration report — up to 25 pages — built by our proprietary Small Psychological Model. Delivered in 24 hours." />
+        <meta name="description" content="Tell us about your business and receive a custom AI integration report — up to 25 pages — built by our proprietary Small Psychological Model. Delivered within 1 hour during business hours." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -276,7 +276,7 @@ export default function Home() {
             <span style={{color: '#c8a96e', fontSize: '2.5rem', fontWeight: 'bold'}}>$49</span>
           </div>
           <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0 0 0.4rem 0'}}>
-            One report. Your business. 24-hour delivery.
+            One report. Your business. 1-hour delivery.
           </p>
           <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: 0}}>
             Most AI consultants charge $300–$500 per hour. This report is $49 and yours to keep.
@@ -441,7 +441,7 @@ export default function Home() {
 
           <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
             Secured by Stripe. $49 — custom report, up to 25 pages.
-            Delivered to your email within 24 hours.
+            Delivered to your email within 1 hour during business hours.
             Not satisfied? We'll refund you in full — no questions asked.
           </p>
 

@@ -112,7 +112,7 @@ export default function About() {
         <div style={{textAlign: 'center', padding: '2rem 0'}}>
           <div className="section-title" style={{marginBottom: '0.8rem'}}>Ready to See What AI Can Do for Your Business?</div>
           <p style={{color: '#8a95aa', marginBottom: '1.5rem'}}>
-            One custom report. Built for your business. Delivered in 24 hours.
+            One custom report. Built for your business. Delivered within 1 hour during business hours.
           </p>
           <Link href="/sample-analysis" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>⚡ Start Here — Try It Free →</Link>
         </div>

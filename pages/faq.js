@@ -11,8 +11,8 @@ const faqs = [
     a: "ChatGPT gives generic answers. Your report is built from the specific details you provide about your business — your workflows, your employee count, your budget, your biggest operational problem. The Small Psychological Model runs seven specialized analytical passes on your intake data, and the output is reviewed by Eric Johnston, a Principal Investigator on active U.S. Department of Defense AI research projects. You get a structured, prioritized plan — not a list of ideas."
   },
   {
-    q: "How does the 24-hour delivery work?",
-    a: "After checkout, you'll complete a short intake form with details about your business and workflows. That intake is sent directly to Eric. He runs your data through the Small Psychological Model, reviews the output, and emails your finished report within 24 hours. Most reports arrive sooner. If there's any delay, you'll hear from us before the 24-hour window closes."
+    q: "How does the 1-hour delivery work?",
+    a: "After checkout, you'll complete a short intake form with details about your business and workflows. That intake is sent directly to Eric. He runs your data through the Small Psychological Model, reviews the output, and emails your finished report within 1 hour during business hours. Most reports arrive sooner. If there's any delay, you'll hear from us before the 1-hour window closes."
   },
   {
     q: "What if I'm not satisfied with the report?",
