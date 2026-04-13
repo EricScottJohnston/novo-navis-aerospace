@@ -1,4 +1,4 @@
-/** @type {import('next').NextConfig} */ // build: 2
+/** @type {import('next').NextConfig} */ // build: 3
 const nextConfig = {
   // Cache headers for static assets
   async headers() {
@@ -37,6 +37,8 @@ const nextConfig = {
   images: {
     formats: ['image/webp'],
     minimumCacheTTL: 31536000,
+    deviceSizes: [640, 750, 828, 1080, 1200],
+    imageSizes: [609],
   },
 }
 
