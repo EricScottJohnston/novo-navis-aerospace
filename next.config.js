@@ -1,10 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Serve modern JS only — reduces legacy polyfill bundle size
-  experimental: {
-    legacyBrowsers: false,
-  },
-
   // Cache headers for static assets
   async headers() {
     return [
@@ -42,7 +37,6 @@ const nextConfig = {
   images: {
     formats: ['image/webp'],
     minimumCacheTTL: 31536000,
-    quality: 60,
   },
 }
 
