@@ -148,7 +148,7 @@ export default function Home() {
           style={{width: '100%', borderRadius: '8px', marginBottom: '1.5rem'}}
         />
 
-        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Find out which AI tools fit your business. Free analysis. 60 seconds.</h1>
+        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>AI is supposed to help you, not drown you. We'll sort it out.</h1>
 
         <p className="lead">
           The average small business loses <strong style={{color: '#c8a96e'}}>11 hours a week</strong> to
