@@ -42,6 +42,7 @@ const nextConfig = {
   images: {
     formats: ['image/webp'],
     minimumCacheTTL: 31536000,
+    quality: 60,
   },
 }
 
