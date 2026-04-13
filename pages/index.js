@@ -143,7 +143,7 @@ export default function Home() {
       <div className="report-page">
 
         <img
-          src="/cf-flow-3CHNibbNyl18v0PcstFpMrCouC9.png"
+          src="https://res.cloudinary.com/dqv9va6ta/image/upload/v1776038819/cf-flow-3CHNibbNyl18v0PcstFpMrCouC9_pzcyjo.png"
           alt="Novo Navis AI workflow analysis"
           style={{width: '100%', borderRadius: '8px', marginBottom: '1.5rem'}}
         />
