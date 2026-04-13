@@ -143,18 +143,11 @@ export default function Home() {
 
       <div className="report-page">
 
-        <Image
-          src="/Drowning.jpg"
-          alt="Business owner overwhelmed by AI tools"
-          width={700}
-          height={700}
-          priority
-          sizes="609px"
-          quality={60}
-          style={{width: '100%', height: 'auto', borderRadius: '8px', marginBottom: '1.5rem'}}
-        />
-
         <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Find out which AI tools fit your business. Free analysis. 60 seconds.</h1>
+
+        <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.7', margin: '1rem 0'}}>
+          Every week you don't know is another week your competitors might.
+        </p>
 
         {/* PRIMARY FREE CTA */}
         <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block', margin: '1.5rem 0'}}>
@@ -166,13 +159,24 @@ export default function Home() {
             cursor: 'pointer'
           }}>
             <span style={{color: '#fff', fontSize: '1.15rem', fontWeight: 'bold'}}>
-              Get My Free Analysis →
+              Find My AI Tools — It's Free
             </span>
           </div>
           <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0.5rem 0 0 0', textAlign: 'center'}}>
             No credit card · 2 fields · Instant results
           </p>
         </Link>
+
+        <Image
+          src="/Drowning.jpg"
+          alt="Business owner overwhelmed by AI tools"
+          width={700}
+          height={700}
+          priority
+          sizes="609px"
+          quality={60}
+          style={{width: '100%', height: 'auto', borderRadius: '8px', margin: '1.5rem 0'}}
+        />
 
         <div style={{
           background: '#0d1221',
