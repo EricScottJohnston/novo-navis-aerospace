@@ -148,7 +148,25 @@ export default function Home() {
           style={{width: '100%', borderRadius: '8px', marginBottom: '1.5rem'}}
         />
 
-        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>AI is supposed to help you, not drown you. We'll sort it out.</h1>
+        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Find out which AI tools fit your business. Free analysis. 60 seconds.</h1>
+
+        {/* PRIMARY FREE CTA */}
+        <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block', margin: '1.5rem 0'}}>
+          <div style={{
+            background: '#4caf50',
+            borderRadius: '6px',
+            padding: '1rem 1.5rem',
+            textAlign: 'center',
+            cursor: 'pointer'
+          }}>
+            <span style={{color: '#fff', fontSize: '1.15rem', fontWeight: 'bold'}}>
+              Get My Free Analysis →
+            </span>
+          </div>
+          <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0.5rem 0 0 0', textAlign: 'center'}}>
+            No credit card · 2 fields · Instant results
+          </p>
+        </Link>
 
         <div style={{
           background: '#0d1221',
