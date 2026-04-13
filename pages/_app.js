@@ -42,31 +42,6 @@ export default function App({ Component, pageProps }) {
           gtag('config', 'G-G3X6LMB2HE');
         `}
       </Script>
-      <Script id="scroll-depth" strategy="afterInteractive">
-        {`
-          (function() {
-            var depths = [25, 50, 90];
-            var fired = {};
-            function getScrollPercent() {
-              var el = document.documentElement;
-              return Math.round((el.scrollTop || document.body.scrollTop) / ((el.scrollHeight || document.body.scrollHeight) - el.clientHeight) * 100);
-            }
-            window.addEventListener('scroll', function() {
-              var pct = getScrollPercent();
-              depths.forEach(function(d) {
-                if (!fired[d] && pct >= d) {
-                  fired[d] = true;
-                  window.dataLayer = window.dataLayer || [];
-                  window.dataLayer.push({
-                    event: 'scroll_depth',
-                    percent_scrolled: d
-                  });
-                }
-              });
-            }, { passive: true });
-          })();
-        `}
-      </Script>
       <Component {...pageProps} />
     </>
   )
