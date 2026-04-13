@@ -40,6 +40,30 @@ export default function App({ Component, pageProps }) {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-G3X6LMB2HE');
+
+          (function() {
+            var depths = [25, 50, 90];
+            var fired = {};
+            function getScrollPercent() {
+              var scrollTop = window.scrollY || window.pageYOffset || 0;
+              var docHeight = Math.max(
+                document.body.scrollHeight, document.documentElement.scrollHeight,
+                document.body.offsetHeight, document.documentElement.offsetHeight
+              );
+              var winHeight = window.innerHeight || document.documentElement.clientHeight;
+              if (docHeight - winHeight <= 0) return 0;
+              return Math.round(scrollTop / (docHeight - winHeight) * 100);
+            }
+            window.addEventListener('scroll', function() {
+              var pct = getScrollPercent();
+              depths.forEach(function(d) {
+                if (!fired[d] && pct >= d) {
+                  fired[d] = true;
+                  gtag('event', 'scroll_depth', { percent_scrolled: d });
+                }
+              });
+            }, { passive: true });
+          })();
         `}
       </Script>
       <Component {...pageProps} />
