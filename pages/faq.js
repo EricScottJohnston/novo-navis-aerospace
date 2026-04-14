@@ -4,7 +4,7 @@ import Link from 'next/link'
 const faqs = [
   {
     q: "What exactly is in the report?",
-    a: "You receive a up to 25-page document built around your specific business. It covers your top 3–5 automatable workflows ranked by estimated time savings, specific AI tools matched to each workflow and your budget, a prioritized 90-day implementation roadmap broken into three phases, an honest ROI estimate for your business size and industry, and a risks section that tells you what can go wrong and how to prevent it. Every report is reviewed by a human AI consultant before it's sent."
+    a: "You receive a up to 25-page document built around your specific business. It covers your top 3–5 automatable workflows ranked by estimated time savings, specific AI tools matched to each workflow and your budget, a fast action implementation plan, an honest ROI estimate for your business size and industry, and a risks section that tells you what can go wrong and how to prevent it. Every report is reviewed by a human AI consultant before it's sent."
   },
   {
     q: "How is this different from just asking ChatGPT?",
@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     q: "Do I need to be tech-savvy to use the tools you recommend?",
-    a: "No. The report is built for business owners, not developers. Every tool recommendation includes what it does, what it costs, how long setup takes, and what could go wrong. The 90-day roadmap is designed so that Phase 1 starts with the lowest-friction, highest-impact changes — things you or your office manager can implement without technical help. If something in the report is unclear, you can call or email us and we'll walk you through it."
+    a: "No. The report is built for business owners, not developers. Every tool recommendation includes what it does, what it costs, how long setup takes, and what could go wrong. The implementation plan is designed so that Phase 1 starts with the lowest-friction, highest-impact changes — things you or your office manager can implement without technical help. If something in the report is unclear, you can call or email us and we'll walk you through it."
   },
   {
     q: "What industries do you serve?",
@@ -40,7 +40,7 @@ const faqs = [
   },
   {
     q: "I'm not ready to buy yet. How do I know the report is worth it?",
-    a: "Read the sample report for a real plumbing company before you decide. It shows you exactly what you'll receive — the format, the depth, the specific tool recommendations, and the 90-day roadmap structure. If after reading it you still have questions, call us at (623) 428-9308 or email support@novonavis.com. We'd rather answer your questions now than have you buy something you're uncertain about."
+    a: "Read the sample report for a real plumbing company before you decide. It shows you exactly what you'll receive — the format, the depth, the specific tool recommendations, and the implementation plan structure. If after reading it you still have questions, call us at (623) 428-9308 or email support@novonavis.com. We'd rather answer your questions now than have you buy something you're uncertain about."
   }
 ]
 

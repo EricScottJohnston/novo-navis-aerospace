@@ -644,7 +644,7 @@ export default function DavidDemo() {
                 </div>
 
                 <div className="report-section">
-                  <h2>90-Day Implementation Roadmap</h2>
+                  <h2>Fast Action Implementation Plan</h2>
 
                   <div className="report-phase">
                     <div className="report-phase-title">Phase 1 — Days 1–30: Cloud PMS Foundation</div>
