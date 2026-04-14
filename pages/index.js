@@ -221,7 +221,7 @@ export default function Home() {
           <ul style={{listStyle: 'none', padding: 0, margin: 0, color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.8'}}>
             <li>✓ &nbsp;Your top 3–5 automatable workflows, ranked by estimated time savings</li>
             <li>✓ &nbsp;Specific AI tools matched to each workflow and your budget</li>
-            <li>✓ &nbsp;A prioritized 90-day implementation roadmap</li>
+            <li>✓ &nbsp;A fast action implementation plan</li>
             <li>✓ &nbsp;An honest ROI estimate for your specific business size and industry</li>
             <li>✓ &nbsp;Human review by an AI consultant before delivery</li>
           </ul>
