@@ -58,9 +58,19 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState([OPENING_MESSAGE])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [listening, setListening] = useState(false)
   const bottomRef = useRef(null)
   const inputRef = useRef(null)
   const hasOpened = useRef(false)
+  const recognitionRef = useRef(null)
+  const logTimer = useRef(null)
+  const logSent = useRef(false)
+  const messagesRef = useRef(messages)
+
+  // Keep ref in sync so the timer closure always sees current messages
+  useEffect(() => {
+    messagesRef.current = messages
+  }, [messages])
 
   // Scroll to bottom when messages update
   useEffect(() => {
@@ -74,6 +84,53 @@ export default function ChatWidget() {
       setTimeout(() => inputRef.current?.focus(), 100)
     }
   }, [open])
+
+  const toggleVoice = () => {
+    if (typeof window === 'undefined') return
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+    if (!SpeechRecognition) {
+      alert('Voice input is not supported in this browser. Please use Chrome.')
+      return
+    }
+
+    if (listening) {
+      recognitionRef.current?.stop()
+      setListening(false)
+      return
+    }
+
+    const recognition = new SpeechRecognition()
+    recognition.continuous = false
+    recognition.interimResults = false
+    recognition.lang = 'en-US'
+
+    recognition.onresult = (e) => {
+      const transcript = e.results[0][0].transcript
+      setInput(prev => prev ? prev + ' ' + transcript : transcript)
+    }
+
+    recognition.onend = () => setListening(false)
+    recognition.onerror = () => setListening(false)
+
+    recognitionRef.current = recognition
+    recognition.start()
+    setListening(true)
+  }
+
+  const resetLogTimer = () => {
+    if (logSent.current) return
+    clearTimeout(logTimer.current)
+    logTimer.current = setTimeout(() => {
+      if (!logSent.current) {
+        logSent.current = true
+        fetch('/api/chat-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messages: messagesRef.current })
+        }).catch(() => {})
+      }
+    }, 10 * 60 * 1000) // 10 minutes
+  }
 
   const sendMessage = async () => {
     const text = input.trim()
@@ -150,6 +207,7 @@ export default function ChatWidget() {
     }
 
     setLoading(false)
+    resetLogTimer()
   }
 
   const handleKeyDown = (e) => {
@@ -296,20 +354,46 @@ export default function ChatWidget() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask me anything..."
+              placeholder={listening ? 'Listening...' : 'Ask me anything...'}
               disabled={loading}
               style={{
                 flex: 1,
                 background: '#0a0f1a',
-                border: '1px solid #1e2a45',
+                border: `1px solid ${listening ? '#e53935' : '#1e2a45'}`,
                 borderRadius: '6px',
                 padding: '0.5rem 0.75rem',
                 color: '#d0d8e8',
                 fontSize: '0.9rem',
                 outline: 'none',
-                opacity: loading ? 0.6 : 1
+                opacity: loading ? 0.6 : 1,
+                transition: 'border-color 0.2s'
               }}
             />
+            <button
+              type="button"
+              onClick={toggleVoice}
+              disabled={loading}
+              title={listening ? 'Stop listening' : 'Tap to speak'}
+              style={{
+                width: '36px',
+                height: '36px',
+                borderRadius: '50%',
+                border: listening ? '2px solid #e53935' : '2px solid #1e2a45',
+                background: listening ? '#1a0000' : '#0d1221',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '1rem',
+                padding: 0,
+                flexShrink: 0,
+                animation: listening ? 'micPulse 1s ease-in-out infinite' : 'none',
+                transition: 'border-color 0.2s',
+                opacity: loading ? 0.4 : 1
+              }}
+            >
+              {listening ? '🔴' : '🎤'}
+            </button>
             <button
               onClick={sendMessage}
               disabled={loading || !input.trim()}
@@ -370,6 +454,11 @@ export default function ChatWidget() {
         @keyframes chatDot {
           0%, 80%, 100% { opacity: 0.2; }
           40% { opacity: 1; }
+        }
+        @keyframes micPulse {
+          0%   { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.6); }
+          70%  { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
         }
       `}</style>
     </>
