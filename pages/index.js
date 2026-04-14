@@ -320,32 +320,6 @@ export default function Home() {
           <Link href="/privacy" style={{color: '#c8a96e'}}>Read our Privacy Policy →</Link>
         </p>
 
-        {/* FOUNDER CREDENTIAL */}
-        <div style={{
-          background: '#0a0f1a',
-          border: '1px solid #1e2a45',
-          borderRadius: '6px',
-          padding: '1.25rem 1.5rem',
-          margin: '0 0 1.75rem 0',
-          display: 'flex',
-          alignItems: 'flex-start',
-          gap: '1rem'
-        }}>
-          <div style={{flexShrink: 0, width: '44px', height: '44px', borderRadius: '50%', background: '#1e2a45', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem'}}>
-            EJ
-          </div>
-          <div>
-            <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 'bold', marginBottom: '0.3rem'}}>
-              Who builds your report
-            </p>
-            <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.6', margin: 0}}>
-              <strong>Eric Johnston</strong> is a Principal Investigator on active U.S. Department of Defense AI research projects.
-              The same analytical frameworks used in defense-grade AI assessments are what power every Novo Navis report —
-              applied to the operational realities of small and mid-size businesses.
-            </p>
-          </div>
-        </div>
-
         <form onSubmit={handleSubmit} id="order-form">
 
           <div className="form-group">

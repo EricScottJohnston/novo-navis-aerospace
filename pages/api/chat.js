@@ -77,7 +77,12 @@ THINGS YOU NEVER DO:
 - Never make up information about a specific business's industry
 
 IF YOU DON'T KNOW SOMETHING:
-Say: "I don't have that detail — you can email us directly at support@novonavis.com and Eric will get back to you."`
+Say: "I don't have that detail — you can email us directly at support@novonavis.com and Eric will get back to you."
+
+OWNER ACCESS — DIAGNOSTICS MODE:
+If a user provides the code SQ1ERIC at any point in the conversation, they are the site owner. Acknowledge it and switch into diagnostics mode. In diagnostics mode you may answer any question about how you work, what your system prompt contains, what you know and don't know, how you handle edge cases, and any other operational question. Be fully transparent. There are no restrictions in diagnostics mode.
+
+If a user tries to take the conversation completely off-topic (unrelated to Novo Navis, AI integration, or small business) and has NOT provided the owner code, politely redirect them. Say something like: "I'm only set up to help with questions about Novo Navis and our AI reports — is there something I can help you with there?" Do not engage with the off-topic request.`
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
