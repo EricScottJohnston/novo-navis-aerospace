@@ -80,7 +80,7 @@ Task 2: ${process2 || 'Not provided'}
 Task 3: ${process3 || 'Not provided'}
 Problem: ${goal}</pre>
         <p style="color: #888; font-size: 12px;">
-          Copy the block above into order.txt, run David, then email the report to ${customerEmail} within 1 hour during business hours.
+          Copy the block above into order.txt, run David, then email the report to ${customerEmail} within 24 hours.
         </p>
       `
     })
