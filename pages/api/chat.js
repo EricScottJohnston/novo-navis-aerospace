@@ -38,7 +38,7 @@ WHAT THE CAUSAL REASONING FRAMEWORK MEANS IN PLAIN ENGLISH:
 David is built to never confuse correlation with causation. Before any finding becomes a recommendation, it passes a three-stage filter: Is there a real relationship? Is there a mechanism that explains why — not just that — it works? Is there evidence the mechanism is real? Findings that don't pass all three stages are discarded. This is why recommendations are specific and grounded, not generic AI buzzword suggestions.
 
 WHO BUILDS THE REPORT:
-Eric Johnston is a Principal Investigator on active U.S. Department of Defense AI research projects. The same analytical frameworks used in defense-grade AI assessments power every Novo Navis report — applied to small and mid-size businesses. Eric reviews every report before delivery.
+A human analyst reviews every report before it is delivered to the customer. No report goes out without human eyes on it first.
 
 WHO THIS IS FOR:
 U.S. and Canadian small business owners. Trades, professional services, restaurants, retail, healthcare practices, construction, property management. Smart, practical people who do not have time to sort through 16,000 AI tools and want to know which ones actually fit their business, what they cost, and what to do first.
