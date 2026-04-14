@@ -117,19 +117,46 @@ export default function ChatWidget() {
     setListening(true)
   }
 
+  const sendLog = () => {
+    if (logSent.current) return
+    const msgs = messagesRef.current
+    if (!msgs || msgs.length < 2) return
+    if (!msgs.some((m, i) => i > 0 && m.role === 'user')) return
+
+    logSent.current = true
+    clearTimeout(logTimer.current)
+
+    const data = JSON.stringify({ messages: msgs })
+    if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
+      const blob = new Blob([data], { type: 'application/json' })
+      navigator.sendBeacon('/api/chat-log', blob)
+    } else {
+      fetch('/api/chat-log', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: data,
+        keepalive: true
+      }).catch(() => {})
+    }
+  }
+
+  // Send log when user leaves the page (tab close, navigate away, etc.)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') sendLog()
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    window.addEventListener('beforeunload', sendLog)
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+      window.removeEventListener('beforeunload', sendLog)
+    }
+  }, [])
+
   const resetLogTimer = () => {
     if (logSent.current) return
     clearTimeout(logTimer.current)
-    logTimer.current = setTimeout(() => {
-      if (!logSent.current) {
-        logSent.current = true
-        fetch('/api/chat-log', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ messages: messagesRef.current })
-        }).catch(() => {})
-      }
-    }, 10 * 60 * 1000) // 10 minutes
+    logTimer.current = setTimeout(sendLog, 10 * 60 * 1000) // 10 min inactivity fallback
   }
 
   const sendMessage = async () => {
