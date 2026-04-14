@@ -1,6 +1,7 @@
 import '../styles/globals.css'
 import Script from 'next/script'
 import Head from 'next/head'
+import ChatWidget from '../components/ChatWidget'
 
 export default function App({ Component, pageProps }) {
   return (
@@ -68,6 +69,7 @@ export default function App({ Component, pageProps }) {
       <main>
         <Component {...pageProps} />
       </main>
+      <ChatWidget />
     </>
   )
 }
