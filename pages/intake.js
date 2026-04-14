@@ -350,7 +350,7 @@ export default function Intake() {
                 </button>
 
                 <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
-                  Your report will be delivered to your email within 1 hour during business hours.
+                  Your report will be delivered to your email within 24 hours.
                 </p>
 
               </form>
