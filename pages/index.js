@@ -1,11 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
   const [agreedTerms, setAgreedTerms] = useState(false)
+  const [showStickyBar, setShowStickyBar] = useState(false)
   const [listeningField, setListeningField] = useState(null)
   const recognitionRef = useRef(null)
   const [formData, setFormData] = useState({
@@ -84,6 +85,28 @@ export default function Home() {
     )
   }
 
+  // Sticky bar — show after scrolling past the hero
+  useEffect(() => {
+    const onScroll = () => setShowStickyBar(window.scrollY > 480)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Fade-in on scroll via IntersectionObserver
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in-visible')
+          observer.unobserve(entry.target)
+        }
+      }),
+      { threshold: 0.08 }
+    )
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el))
+    return () => observer.disconnect()
+  }, [])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!agreedTerms) {
@@ -125,11 +148,69 @@ export default function Home() {
             70%  { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
             100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
           }
+          @keyframes stickySlideUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+          }
+          .fade-in {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+          }
+          .fade-in-visible {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          .card-hover {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+          }
+          .card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.45);
+          }
         `}</style>
         <title>Novo Navis | Custom AI Integration Reports for Small Business</title>
         <meta name="description" content="Tell us about your business and receive a custom AI integration report — up to 25 pages — built by our proprietary Small Psychological Model. Delivered within 24 hours." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+
+      {showStickyBar && (
+        <div style={{
+          position: 'fixed',
+          bottom: '88px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 999,
+          display: 'flex',
+          gap: '0.5rem',
+          background: '#0a0f1a',
+          border: '1px solid #2a3a5a',
+          borderRadius: '40px',
+          padding: '0.45rem 0.6rem',
+          boxShadow: '0 4px 28px rgba(0,0,0,0.65)',
+          animation: 'stickySlideUp 0.3s ease',
+          whiteSpace: 'nowrap'
+        }}>
+          <Link href="/sample-analysis" style={{
+            background: '#4caf50',
+            color: '#fff',
+            borderRadius: '20px',
+            padding: '0.4rem 1.1rem',
+            fontSize: '0.85rem',
+            fontWeight: 'bold',
+            textDecoration: 'none'
+          }}>Try It Free →</Link>
+          <Link href="/#order-form" style={{
+            background: '#c8a96e',
+            color: '#0a0f1a',
+            borderRadius: '20px',
+            padding: '0.4rem 1.1rem',
+            fontSize: '0.85rem',
+            fontWeight: 'bold',
+            textDecoration: 'none'
+          }}>Get My Report — $49</Link>
+        </div>
+      )}
 
       <nav>
         <Link href="/" className="nav-logo">NOVO NAVIS</Link>
@@ -178,7 +259,7 @@ export default function Home() {
           style={{width: '100%', height: 'auto', borderRadius: '8px', margin: '1.5rem 0'}}
         />
 
-        <div style={{
+        <div className="fade-in card-hover" style={{
           background: '#0d1221',
           border: '1px solid #1e2a45',
           borderRadius: '6px',
@@ -205,7 +286,7 @@ export default function Home() {
 
 
         {/* WHAT YOU'LL DISCOVER */}
-        <div style={{
+        <div className="fade-in card-hover" style={{
           background: '#0d1221',
           border: '1px solid #1e2a45',
           borderRadius: '6px',
@@ -226,7 +307,7 @@ export default function Home() {
 
 
         {/* NOT A TECH PERSON */}
-        <div style={{
+        <div className="fade-in card-hover" style={{
           background: '#0d1221',
           border: '1px solid #1e2a45',
           borderLeft: '3px solid #4caf50',
@@ -246,7 +327,7 @@ export default function Home() {
 
         {/* SEE HOW IT THINKS */}
         <Link href="/david" style={{textDecoration: 'none', display: 'block'}}>
-          <div style={{
+          <div className="fade-in card-hover" style={{
             background: '#0d1221',
             border: '1px solid #1e2a45',
             borderLeft: '3px solid #c8a96e',
@@ -271,7 +352,7 @@ export default function Home() {
 
         {/* FREE SAMPLE CTA */}
         <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block'}}>
-          <div style={{
+          <div className="fade-in card-hover" style={{
             background: '#0d1a0d',
             border: '2px solid #4caf50',
             borderRadius: '6px',
@@ -290,7 +371,7 @@ export default function Home() {
         </Link>
 
         {/* PRICE BOX */}
-        <div style={{
+        <div className="fade-in card-hover" style={{
           background: '#0f0d00',
           border: '2px solid #c8a96e',
           borderRadius: '8px',
@@ -317,7 +398,7 @@ export default function Home() {
           <Link href="/privacy" style={{color: '#c8a96e'}}>Read our Privacy Policy →</Link>
         </p>
 
-        <form onSubmit={handleSubmit} id="order-form">
+        <form className="fade-in" onSubmit={handleSubmit} id="order-form">
 
           <div className="form-group">
             <label>Your Full Name *</label>
