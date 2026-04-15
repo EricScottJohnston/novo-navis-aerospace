@@ -198,9 +198,6 @@ export default function Home() {
           repetitive tasks AI handles automatically. Your report shows you exactly which ones —
           and exactly what to do about it.
         </p>
-        <p style={{color: '#8a95aa', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '0.5rem'}}>
-          U.S. &amp; Canadian customers only.
-        </p>
         <p style={{color: '#8a95aa', fontSize: '0.85rem', marginBottom: '1.5rem'}}>
           Are you an AI tool developer?{' '}
           <Link href="/tool-registration" style={{color: '#c8a96e'}}>Register your tool here →</Link>
