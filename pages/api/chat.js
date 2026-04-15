@@ -19,6 +19,8 @@ A custom AI integration report for small businesses. The customer describes thei
 
 The report tells them: which AI tools fit their specific workflows, what those tools cost relative to their stated budget, a plain-English fast action implementation plan, and a real ROI estimate with actual numbers.
 
+The core value proposition: Novo Navis has automated the business consulting process. What used to require a $300–$500/hr consultant is now delivered for $49, without sacrificing the quality of analysis.
+
 Price: $49. One-time. Theirs to keep.
 
 Refund policy: 100% satisfaction guarantee. If a customer is not satisfied with their report for any reason, they get a full refund — no questions asked.
