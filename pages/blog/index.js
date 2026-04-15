@@ -67,6 +67,13 @@ export default function BlogIndex() {
       date: 'April 2, 2026'
     },
     {
+      href: '/blog/job-costing',
+      industry: 'Construction',
+      title: "Most Construction Companies Don't Find Out a Job Lost Money Until It's Already Done",
+      description: "The job-level reconciliation problem costs construction companies margin every year — silently, after the fact. AI job costing tools fix that by closing the books in real time.",
+      date: 'April 14, 2026'
+    },
+    {
       href: '/blog/construction',
       industry: 'Construction',
       title: 'How Construction Companies Can Use AI to Automate Job Costing and Change Order Processing',
