@@ -303,10 +303,10 @@ export default function Home() {
 
         <h1 style={{fontWeight: 'bold'}}>
           <span style={{color: '#c8a96e', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)', display: 'block'}}>
-            We automated the consultant.
+            We've automated business consulting.
           </span>
           <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
-            Top-tier AI integration diagnostics. Micro-business prices.
+            Let's get you automated too.
           </span>
         </h1>
 
