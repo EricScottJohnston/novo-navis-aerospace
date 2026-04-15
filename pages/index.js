@@ -310,6 +310,22 @@ export default function Home() {
           </span>
         </h1>
 
+        <div className="fade-in" style={{
+          background: '#0d1221',
+          border: '1px solid #1e2a45',
+          borderLeft: '3px solid #c8a96e',
+          borderRadius: '6px',
+          padding: '1.25rem 1.5rem',
+          margin: '1.25rem 0'
+        }}>
+          <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.75', margin: '0 0 0.75rem 0'}}>
+            Are you a contractor who needs to automate job costing? A dental practice losing patients to scheduling gaps? A property manager drowning in maintenance requests?
+          </p>
+          <p style={{color: '#c8a96e', fontSize: '0.95rem', fontWeight: 'bold', margin: 0}}>
+            If you have a workflow, we know the tool that automates it.
+          </p>
+        </div>
+
         <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.7', margin: '1rem 0'}}>
           Every week you don't know is another week your competitors might.
         </p>
