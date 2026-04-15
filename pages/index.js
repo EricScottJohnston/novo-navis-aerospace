@@ -7,6 +7,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [agreedTerms, setAgreedTerms] = useState(false)
   const [showStickyBar, setShowStickyBar] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(null)
   const [listeningField, setListeningField] = useState(null)
   const recognitionRef = useRef(null)
   const [formData, setFormData] = useState({
@@ -84,6 +85,34 @@ export default function Home() {
       </button>
     )
   }
+
+  // Countdown timer — persists across refreshes via localStorage
+  useEffect(() => {
+    const KEY = 'nn_price_deadline'
+    const DURATION = (0 * 86400 + 2 * 3600 + 34 * 60 + 15) * 1000
+    let deadline = parseInt(localStorage.getItem(KEY) || '0', 10)
+    if (!deadline || deadline <= Date.now()) {
+      deadline = Date.now() + DURATION
+      localStorage.setItem(KEY, String(deadline))
+    }
+    const tick = () => {
+      const rem = deadline - Date.now()
+      if (rem <= 0) {
+        setTimeLeft({ d: 0, h: 0, m: 0, s: 0 })
+        clearInterval(id)
+        return
+      }
+      setTimeLeft({
+        d: Math.floor(rem / 86400000),
+        h: Math.floor((rem % 86400000) / 3600000),
+        m: Math.floor((rem % 3600000) / 60000),
+        s: Math.floor((rem % 60000) / 1000)
+      })
+    }
+    tick()
+    const id = setInterval(tick, 1000)
+    return () => clearInterval(id)
+  }, [])
 
   // Sticky bar — show after scrolling past the hero
   useEffect(() => {
@@ -223,6 +252,54 @@ export default function Home() {
       </nav>
 
       <div className="report-page">
+
+        {timeLeft !== null && (
+          <div style={{
+            background: 'linear-gradient(135deg, #1a0800, #220e00)',
+            border: '1px solid #c0440a',
+            borderRadius: '8px',
+            padding: '1rem 1.25rem',
+            margin: '0 0 1.5rem 0',
+            textAlign: 'center'
+          }}>
+            <p style={{color: '#e8622a', fontSize: '0.72rem', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 'bold', margin: '0 0 0.4rem 0'}}>
+              ⚠ Price Increase Notice
+            </p>
+            <p style={{color: '#d0d8e8', fontSize: '0.92rem', margin: '0 0 0.75rem 0'}}>
+              Current price of <strong style={{color: '#4caf50'}}>$49</strong> increases to <strong style={{color: '#e8622a'}}>$288</strong> when this timer expires
+            </p>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: '0.4rem'}}>
+              {[
+                [timeLeft.d, 'Days'],
+                [timeLeft.h, 'Hrs'],
+                [timeLeft.m, 'Min'],
+                [timeLeft.s, 'Sec'],
+              ].map(([val, label], i) => (
+                <div key={label} style={{display: 'flex', alignItems: 'flex-start', gap: '0.4rem'}}>
+                  <div style={{textAlign: 'center'}}>
+                    <div style={{
+                      background: '#0a0f1a',
+                      border: '1px solid #c0440a',
+                      borderRadius: '6px',
+                      padding: '0.35rem 0.6rem',
+                      minWidth: '42px'
+                    }}>
+                      <span style={{color: '#e8622a', fontSize: '1.4rem', fontWeight: 'bold', fontFamily: 'monospace', letterSpacing: '0.05em'}}>
+                        {String(val).padStart(2, '0')}
+                      </span>
+                    </div>
+                    <span style={{color: '#7a8599', fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.1em'}}>
+                      {label}
+                    </span>
+                  </div>
+                  {i < 3 && (
+                    <span style={{color: '#c0440a', fontSize: '1.4rem', fontWeight: 'bold', paddingTop: '0.25rem', lineHeight: 1}}>:</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Find out which AI tools fit your business. Free analysis. 60 seconds.</h1>
 
