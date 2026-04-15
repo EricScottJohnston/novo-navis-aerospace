@@ -301,7 +301,14 @@ export default function Home() {
           </div>
         )}
 
-        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>Find out which AI tools fit your business. Free analysis. 60 seconds.</h1>
+        <h1 style={{fontWeight: 'bold'}}>
+          <span style={{color: '#c8a96e', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)', display: 'block'}}>
+            We automated the consultant.
+          </span>
+          <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
+            Top-tier AI integration diagnostics. Micro-business prices.
+          </span>
+        </h1>
 
         <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.7', margin: '1rem 0'}}>
           Every week you don't know is another week your competitors might.
