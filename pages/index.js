@@ -237,7 +237,7 @@ export default function Home() {
             fontSize: '0.85rem',
             fontWeight: 'bold',
             textDecoration: 'none'
-          }}>Get My Report — $49</Link>
+          }}>Get My Report — $499</Link>
         </div>
       )}
 
@@ -266,7 +266,7 @@ export default function Home() {
               ⚠ Price Increase Notice
             </p>
             <p style={{color: '#d0d8e8', fontSize: '0.92rem', margin: '0 0 0.75rem 0'}}>
-              Current price of <strong style={{color: '#4caf50'}}>$49</strong> increases to <strong style={{color: '#e8622a'}}>$288</strong> when this timer expires
+              Current price of <strong style={{color: '#4caf50'}}>$499</strong> increases to <strong style={{color: '#e8622a'}}>$899</strong> when this timer expires
             </p>
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: '0.4rem'}}>
               {[
@@ -367,7 +367,7 @@ export default function Home() {
           margin: '1.5rem 0'
         }}>
           <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.8', margin: 0}}>
-            There are over <strong style={{color: '#c8a96e'}}>16,000 AI tools</strong> out there. Nobody has time to sort through that — and honestly, you shouldn't have to. Some of the tools that would actually help your business are ones you've never heard of. Some are ones you already pay for but aren't using right. Figuring out which is which takes serious research. We've already done it. For $49, we'll tell you exactly what applies to your specific situation — nothing more, nothing less.
+            There are over <strong style={{color: '#c8a96e'}}>16,000 AI tools</strong> out there. Nobody has time to sort through that — and honestly, you shouldn't have to. Some of the tools that would actually help your business are ones you've never heard of. Some are ones you already pay for but aren't using right. Figuring out which is which takes serious research. We've already done it. For $499, we'll tell you exactly what applies to your specific situation — nothing more, nothing less.
           </p>
           <p style={{color: '#8a95aa', fontSize: '0.9rem', fontStyle: 'italic', margin: '1rem 0 0 0'}}>
             That's what we're selling.
@@ -483,13 +483,13 @@ export default function Home() {
             Full Custom Report — Up to 25 Pages
           </p>
           <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem'}}>
-            <span style={{color: '#c8a96e', fontSize: '2.5rem', fontWeight: 'bold'}}>$49</span>
+            <span style={{color: '#c8a96e', fontSize: '2.5rem', fontWeight: 'bold'}}>$499</span>
           </div>
           <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0 0 0.4rem 0'}}>
             One report. Your business. 24-hour delivery.
           </p>
           <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: 0}}>
-            Most AI consultants charge $300–$500 per hour. This report is $49 and yours to keep.
+            Most AI consultants charge $300–$500 per hour. This report is $499 and yours to keep.
           </p>
         </div>
 
@@ -620,11 +620,11 @@ export default function Home() {
             }}
             disabled={loading || !agreedTerms}
           >
-            {loading ? 'Redirecting to Checkout...' : 'Get My Report — $49'}
+            {loading ? 'Redirecting to Checkout...' : 'Get My Report — $499'}
           </button>
 
           <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
-            Secured by Stripe. $49 — custom report, up to 25 pages.
+            Secured by Stripe. $499 — custom report, up to 25 pages.
             Delivered to your email within 24 hours.
             Not satisfied? We'll refund you in full — no questions asked.
           </p>
