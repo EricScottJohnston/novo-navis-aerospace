@@ -34,13 +34,17 @@ export default function About() {
 
           <p>Novo Navis Aerospace Operations LLC is an aerospace research and development company specializing in the design and fabrication of customized three-dimensional carbon fiber composite materials for government and civilian applications.</p>
 
+          <p>One of our core research areas is AI for air traffic control — a domain where standard AI simply is not good enough. When safety depends on it, you need AI that understands cause and effect, not just pattern matching. That requirement forced us to develop something different from the ground up: causal AI.</p>
+
+          <p>Most AI tools — including large language models — are correlative. They find patterns in data and make predictions based on what has happened before. Causal AI goes further. It reasons about why things happen, identifies the actual mechanisms driving outcomes, and produces recommendations grounded in cause and effect rather than statistical association. In air traffic control, that distinction matters enormously. In business operations, it turns out it matters just as much.</p>
+
           <p>As we scaled our own operations, we encountered a problem familiar to many advanced manufacturers — integrating AI into complex, highly specialized workflows. No existing tool understood our processes. So we built our own.</p>
 
-          <p>The result was David — a proprietary Small Psychological Model that analyzes business workflows with the same rigor we apply to aerospace engineering. David doesn't generate generic advice. He reasons through your specific operational reality and identifies exactly where AI can reduce manual work, cut costs, and improve efficiency.</p>
+          <p>The result was David — a proprietary Small Psychological Model that applies causal reasoning to business workflow analysis. David does not generate generic advice. He reasons through your specific operational reality, identifies the actual causes of your inefficiencies, and tells you exactly where AI can reduce manual work, cut costs, and improve efficiency.</p>
 
-          <p>At Novo Navis, the technologies we develop for our own operations don't stay in-house. We make them available to other businesses because it funds our advanced research and brings enterprise-grade tools to small business owners at a price point that has never existed before.</p>
+          <p>That is a fundamentally different kind of analysis than what you get from standard AI tools. And it is available to small business owners at a price point that has never existed before.</p>
 
-          <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1.05rem'}}>David was built for us. Now he works for you.</p>
+          <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1.05rem'}}>David was built for aerospace. Now he works for you.</p>
 
           <div style={{
             background: '#0d1221',
@@ -72,12 +76,10 @@ export default function About() {
             </div>
             <div>
               <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 'bold', marginBottom: '0.3rem'}}>
-                Who builds your report
+                Who Built the System
               </p>
               <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.6', margin: 0}}>
-                <strong>Eric Johnston</strong> is a Principal Investigator on active U.S. Department of Defense AI research projects.
-                The same analytical frameworks used in defense-grade AI assessments are what power every Novo Navis report —
-                applied to the operational realities of small and mid-size businesses.
+                Eric Johnston is a Principal Investigator on active U.S. Department of Defense AI research projects. The causal AI frameworks developed for defense-grade applications power every Novo Navis report — applied to the operational realities of small and mid-size businesses.
               </p>
             </div>
           </div>
