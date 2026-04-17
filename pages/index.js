@@ -311,7 +311,6 @@ export default function Home() {
         </h1>
 
         <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '-0.25rem 0 1.25rem 0'}}>
-          Built by a federal defense contractor and DoD Principal Investigator.{' '}
           <Link href="/about" style={{color: '#c8a96e'}}>Read our story →</Link>
         </p>
 
