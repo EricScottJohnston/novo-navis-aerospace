@@ -310,6 +310,11 @@ export default function Home() {
           </span>
         </h1>
 
+        <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '-0.25rem 0 1.25rem 0'}}>
+          Built by a federal defense contractor and DoD Principal Investigator.{' '}
+          <Link href="/about" style={{color: '#c8a96e'}}>Read our story →</Link>
+        </p>
+
         <div className="fade-in" style={{
           background: '#0d1221',
           border: '1px solid #1e2a45',
