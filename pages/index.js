@@ -364,6 +364,21 @@ export default function Home() {
           style={{width: '100%', height: 'auto', borderRadius: '8px', margin: '1.5rem 0'}}
         />
 
+        <div className="fade-in" style={{display: 'flex', flexDirection: 'column', gap: '0.75rem', margin: '1.5rem 0'}}>
+          <div style={{background: '#0d1221', border: '1px solid #1e2a45', borderRadius: '6px', padding: '1.25rem 1.5rem'}}>
+            <p style={{color: '#c8a96e', fontSize: '1rem', marginBottom: '0.5rem'}}>★★★★★ — Brian T.</p>
+            <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', margin: 0}}>
+              When it comes to AI, there is no best technology, there is just best for you. I literally scoured the internet for weeks and never came close to getting the answer my company needed to integrate AI. Novo Navis gave us the entire answer in less than a day.
+            </p>
+          </div>
+          <div style={{background: '#0d1221', border: '1px solid #1e2a45', borderRadius: '6px', padding: '1.25rem 1.5rem'}}>
+            <p style={{color: '#c8a96e', fontSize: '1rem', marginBottom: '0.5rem'}}>★★★★ — Kay W.</p>
+            <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', margin: 0}}>
+              I run a small property management company that handles online rentals. I couldn't find a cost effective solution or product for my budget. Novo Navis uncovered AI tools for me that I never would have found on my own.
+            </p>
+          </div>
+        </div>
+
         <div className="fade-in card-hover" style={{
           background: '#0d1221',
           border: '1px solid #1e2a45',
