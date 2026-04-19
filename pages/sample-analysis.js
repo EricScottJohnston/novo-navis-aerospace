@@ -9,7 +9,6 @@ export default function SampleAnalysis() {
   const [listeningField, setListeningField] = useState(null)
   const recognitionRef = useRef(null)
   const [formData, setFormData] = useState({
-    email: '',
     workflow: ''
   })
 
@@ -203,22 +202,6 @@ export default function SampleAnalysis() {
         <form onSubmit={handleSubmit}>
 
           <div className="form-group">
-            <label>Your Email Address * (results delivered here)</label>
-            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
-              <input
-                type="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="john@yourbusiness.com"
-                style={{flex: 1}}
-              />
-              <MicButton fieldName="email" />
-            </div>
-          </div>
-
-          <div className="form-group">
             <label>Describe your biggest workflow problem *</label>
             <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
               <textarea
@@ -260,11 +243,7 @@ export default function SampleAnalysis() {
           </button>
 
           <p style={{textAlign: 'center', color: '#8a95aa', fontSize: '0.85rem', marginTop: '1rem'}}>
-            Free. No credit card. No obligation.
-          </p>
-          <p style={{textAlign: 'center', color: '#8a95aa', fontSize: '0.85rem', marginTop: '0.25rem'}}>
-            We will never sell or share your information.{' '}
-            <Link href="/privacy" style={{color: '#c8a96e'}}>Read our Privacy Policy →</Link>
+            Free. No credit card. No email required. Instant results.
           </p>
 
         </form>
