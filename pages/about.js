@@ -55,9 +55,30 @@ export default function About() {
           }}>
             <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '0.5rem'}}>Company Details</p>
             <p style={{color: '#b0b8cc', marginBottom: '0.4rem'}}>Legal Name: Novo Navis Aerospace Operations LLC</p>
-            <p style={{color: '#b0b8cc', marginBottom: '0.4rem'}}>CAGE Code: 8GN22</p>
+            <p style={{color: '#b0b8cc', marginBottom: '0.4rem'}}>
+              CAGE Code:{' '}
+              <a
+                href="https://www.dla.mil/LandandMaritime/Business/Selling/Vendor-Registration/CAGE-Code-Look-up/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{color: '#c8a96e'}}
+              >
+                8GN22
+              </a>
+            </p>
             <p style={{color: '#b0b8cc', marginBottom: '0.4rem'}}>Location: Phoenix, Arizona Area</p>
-            <p style={{color: '#b0b8cc'}}>Registration: Federal Defense Contractor</p>
+            <p style={{color: '#b0b8cc', marginBottom: '1rem'}}>Registration: Registered Federal Contractor with the U.S. Government</p>
+            <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: 0}}>
+              Novo Navis is a registered federal contractor with the U.S. government. Our CAGE Code (8GN22) can be verified directly through the{' '}
+              <a
+                href="https://www.dla.mil/LandandMaritime/Business/Selling/Vendor-Registration/CAGE-Code-Look-up/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{color: '#c8a96e'}}
+              >
+                Defense Logistics Agency CAGE Code lookup service →
+              </a>
+            </p>
           </div>
 
           {/* ERIC JOHNSTON CREDENTIALS */}
