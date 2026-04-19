@@ -317,7 +317,7 @@ export default function Home() {
         </div>
 
         <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.7', margin: '1rem 0'}}>
-          Every week you don't know is another week your competitors might.
+          The answer exists. You just haven't had anyone find it for you yet.
         </p>
 
         {/* PRIMARY FREE CTA */}
@@ -350,8 +350,8 @@ export default function Home() {
         />
 
         <p className="lead">
-          The average small business loses <strong style={{color: '#c8a96e'}}>11 hours a week</strong> to
-          repetitive tasks AI handles automatically. Your report shows you exactly which ones —
+          Most small business owners are losing about <strong style={{color: '#c8a96e'}}>11 hours every week</strong> to
+          stuff AI could just handle for them. Your report tells you exactly which tasks those are —
           and exactly what to do about it.
         </p>
         <p style={{color: '#8a95aa', fontSize: '0.85rem', marginBottom: '1.5rem'}}>
@@ -372,10 +372,10 @@ export default function Home() {
             What your report includes
           </p>
           <ul style={{listStyle: 'none', padding: 0, margin: 0, color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.8'}}>
-            <li>✓ &nbsp;Your top 3–5 automatable workflows, ranked by estimated time savings</li>
-            <li>✓ &nbsp;Specific AI tools matched to each workflow and your budget</li>
+            <li>✓ &nbsp;The 3–5 tasks eating your time that AI can handle automatically</li>
+            <li>✓ &nbsp;Specific AI tools matched to each one — and your budget</li>
             <li>✓ &nbsp;A fast action implementation plan</li>
-            <li>✓ &nbsp;An honest ROI estimate for your specific business size and industry</li>
+            <li>✓ &nbsp;A straight answer on whether this will actually save you money</li>
             <li>✓ &nbsp;Human review by an AI consultant before delivery</li>
           </ul>
         </div>
