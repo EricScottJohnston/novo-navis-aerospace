@@ -55,7 +55,7 @@ export default function ConstructionArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered within 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $49</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $199</Link>
           </div>
 
           <p>Change order processing is the second high-value automation target for construction companies. Change orders are inevitable on almost every project, but the administrative process of documenting the change, pricing it, getting client approval, and updating the contract and budget is slow and error-prone when done manually. Delays in change order processing create disputes at project completion when clients do not remember approving work that was done months ago. Errors in change order pricing erode margin on work that should be profitable. An automated change order system generates a written change order document immediately when a scope change is identified, routes it to the client for digital approval, and updates the project budget and contract automatically upon approval. The process that used to take days of back-and-forth happens in hours.</p>
@@ -85,7 +85,7 @@ export default function ConstructionArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your business, your project types, your workflows.
-            Up to 25 pages. Delivered within 24 hours. $49.
+            Up to 25 pages. Delivered within 24 hours. $199.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
         </div>

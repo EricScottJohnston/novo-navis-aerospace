@@ -190,7 +190,7 @@ export default function ToolRegistration() {
               value={formData.pricing}
               onChange={handleChange}
               rows={3}
-              placeholder="e.g. Free tier available. Starter plan $19/month. Professional $49/month. Enterprise pricing on request."
+              placeholder="e.g. Free tier available. Starter plan $19/month. Professional $199/month. Enterprise pricing on request."
             />
           </div>
 

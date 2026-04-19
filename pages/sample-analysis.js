@@ -276,7 +276,7 @@ export default function SampleAnalysis() {
             Ready for the full report?
           </p>
           <Link href="/#order-form" style={{color: '#c8a96e', fontWeight: 'bold'}}>
-            Get the complete up to 25-page AI integration report — $49 →
+            Get the complete up to 25-page AI integration report — $199 →
           </Link>
         </div>
 

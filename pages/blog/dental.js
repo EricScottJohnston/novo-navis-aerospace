@@ -55,7 +55,7 @@ export default function DentalArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered within 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $49</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $199</Link>
           </div>
 
           <p>During business hours, the same system handles the routine calls that do not require your front desk's judgment. Appointment confirmations, directions to the office, basic insurance questions, prescription refill requests routed to the appropriate dentist. Your front desk handles the calls that actually need a human. Complex insurance questions, anxious new patients, treatment plan discussions. The calls where your team's judgment and warmth genuinely matter.</p>
@@ -89,7 +89,7 @@ export default function DentalArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your practice, your workflows, your pain points.
-            Up to 25 pages. Delivered within 24 hours. $49.
+            Up to 25 pages. Delivered within 24 hours. $199.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
         </div>
