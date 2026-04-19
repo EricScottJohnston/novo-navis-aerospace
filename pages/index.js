@@ -230,8 +230,8 @@ export default function Home() {
             textDecoration: 'none'
           }}>Try It Free →</Link>
           <Link href="/#order-form" style={{
-            background: '#c8a96e',
-            color: '#0a0f1a',
+            background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
+            color: '#111111',
             borderRadius: '20px',
             padding: '0.4rem 1.1rem',
             fontSize: '0.85rem',
@@ -576,8 +576,9 @@ export default function Home() {
               padding: '1rem',
               opacity: agreedTerms ? 1 : 0.5,
               cursor: agreedTerms ? 'pointer' : 'not-allowed',
-              background: '#4caf50',
-              borderColor: '#4caf50'
+              background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
+              borderColor: '#e8a000',
+              color: '#111111'
             }}
             disabled={loading || !agreedTerms}
           >

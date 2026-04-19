@@ -104,8 +104,8 @@ nav {
 /* ─── BUTTONS ─── */
 .btn-primary {
   display: inline-block;
-  background-color: #c8a96e;
-  color: #0a0e1a;
+  background: linear-gradient(to bottom, #FFD814, #FFA41C);
+  color: #111111;
   font-weight: bold;
   padding: 0.85rem 2.2rem;
   border-radius: 4px;
@@ -117,8 +117,8 @@ nav {
 }
 
 .btn-primary:hover {
-  background-color: #e8c98e;
-  color: #0a0e1a;
+  background: linear-gradient(to bottom, #ffe44d, #FFB830);
+  color: #111111;
 }
 
 .btn-secondary {
