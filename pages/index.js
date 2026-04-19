@@ -288,9 +288,6 @@ export default function Home() {
           <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.8', margin: 0}}>
             There are over <strong style={{color: '#c8a96e'}}>16,000 AI tools</strong> out there. Nobody has time to sort through that — and honestly, you shouldn't have to. Some of the tools that would actually help your business are ones you've never heard of. Some are ones you already pay for but aren't using right. Figuring out which is which takes serious research. We've automated that research. For $199, we'll tell you exactly what applies to your specific situation — nothing more, nothing less.
           </p>
-          <p style={{color: '#8a95aa', fontSize: '0.9rem', fontStyle: 'italic', margin: '1rem 0 0 0'}}>
-            That's what we're selling.
-          </p>
         </div>
 
         <div className="fade-in" style={{display: 'flex', flexDirection: 'column', gap: '0.75rem', margin: '1.5rem 0'}}>
