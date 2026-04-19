@@ -92,8 +92,8 @@ export default function About() {
             alignItems: 'flex-start',
             gap: '1rem'
           }}>
-            <div style={{flexShrink: 0, width: '44px', height: '44px', borderRadius: '50%', background: '#1e2a45', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem'}}>
-              EJ
+            <div style={{flexShrink: 0, width: 'clamp(80px, 20vw, 120px)', height: 'clamp(80px, 20vw, 120px)', borderRadius: '50%', overflow: 'hidden', border: '2px solid #1e2a45'}}>
+              <img src="/headshot.png" alt="Eric Johnston" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
             </div>
             <div>
               <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 'bold', marginBottom: '0.3rem'}}>
