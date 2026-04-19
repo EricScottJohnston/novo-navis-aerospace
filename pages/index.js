@@ -453,29 +453,6 @@ export default function Home() {
           </div>
         </Link>
 
-        {/* PRICE BOX */}
-        <div className="fade-in card-hover" style={{
-          background: '#0f0d00',
-          border: '2px solid #c8a96e',
-          borderRadius: '8px',
-          padding: '1.5rem',
-          margin: '1.5rem 0',
-          textAlign: 'center'
-        }}>
-          <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem', fontWeight: 'bold'}}>
-            Full Custom Report — Up to 25 Pages
-          </p>
-          <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem'}}>
-            <span style={{color: '#c8a96e', fontSize: '2.5rem', fontWeight: 'bold'}}>$199</span>
-          </div>
-          <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0 0 0.4rem 0'}}>
-            One report. Your business. 24-hour delivery.
-          </p>
-          <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: 0}}>
-            Most AI consultants charge $300–$500 per hour. Your AI Blueprint is $199 and yours to keep.
-          </p>
-        </div>
-
         <p style={{color: '#c8a96e', fontSize: '1rem', fontStyle: 'italic', textAlign: 'center', margin: '1.5rem 0'}}>
           You wouldn't build a house without a blueprint. Don't implement AI without yours.
         </p>
