@@ -300,6 +300,14 @@ export default function Home() {
           </div>
         </div>
 
+        <Image
+          src="/flow.png"
+          alt="From manual to AI-automated workflow — 3 step process"
+          width={600}
+          height={900}
+          style={{width: '100%', height: 'auto', borderRadius: '8px', margin: '1.5rem 0'}}
+        />
+
         <div className="fade-in" style={{
           background: '#0d1221',
           border: '1px solid #1e2a45',
