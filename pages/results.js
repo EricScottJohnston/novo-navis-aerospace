@@ -50,9 +50,22 @@ export default function Results() {
           <h1 style={{marginBottom: '0.5rem'}}>
             {name ? `Here's your analysis, ${name.split(' ')[0]}.` : 'Your analysis is ready.'}
           </h1>
-          <p className="lead" style={{marginBottom: 0}}>
+          <p className="lead" style={{marginBottom: '1.5rem'}}>
             This is a single-workflow analysis. Scroll to the bottom to see what a full report would look like for your entire business.
           </p>
+          <Link
+            href="/#order-form"
+            className="btn-primary"
+            style={{
+              display: 'inline-block',
+              background: '#4caf50',
+              borderColor: '#4caf50',
+              fontSize: '1rem',
+              padding: '0.85rem 1.75rem'
+            }}
+          >
+            ⚡ Get the Full Report for Your Entire Business — $199 →
+          </Link>
         </div>
 
         {/* ANALYSIS RESULT */}
