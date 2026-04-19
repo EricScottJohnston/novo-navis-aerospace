@@ -253,54 +253,6 @@ export default function Home() {
 
       <div className="report-page">
 
-        {timeLeft !== null && (
-          <div style={{
-            background: 'linear-gradient(135deg, #00081a, #000e22)',
-            border: '1px solid #1a6abd',
-            borderRadius: '8px',
-            padding: '1rem 1.25rem',
-            margin: '0 0 1.5rem 0',
-            textAlign: 'center'
-          }}>
-            <p style={{color: '#4a9af0', fontSize: '0.72rem', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 'bold', margin: '0 0 0.4rem 0'}}>
-              ⚠ Price Increase Notice
-            </p>
-            <p style={{color: '#d0d8e8', fontSize: '0.92rem', margin: '0 0 0.75rem 0'}}>
-              Current price of <strong style={{color: '#4caf50'}}>$199</strong> increases to <strong style={{color: '#4a9af0'}}>$499</strong> when this timer expires
-            </p>
-            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: '0.4rem'}}>
-              {[
-                [timeLeft.d, 'Days'],
-                [timeLeft.h, 'Hrs'],
-                [timeLeft.m, 'Min'],
-                [timeLeft.s, 'Sec'],
-              ].map(([val, label], i) => (
-                <div key={label} style={{display: 'flex', alignItems: 'flex-start', gap: '0.4rem'}}>
-                  <div style={{textAlign: 'center'}}>
-                    <div style={{
-                      background: '#0a0f1a',
-                      border: '1px solid #1a6abd',
-                      borderRadius: '6px',
-                      padding: '0.35rem 0.6rem',
-                      minWidth: '42px'
-                    }}>
-                      <span style={{color: '#4a9af0', fontSize: '1.4rem', fontWeight: 'bold', fontFamily: 'monospace', letterSpacing: '0.05em'}}>
-                        {String(val).padStart(2, '0')}
-                      </span>
-                    </div>
-                    <span style={{color: '#7a8599', fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.1em'}}>
-                      {label}
-                    </span>
-                  </div>
-                  {i < 3 && (
-                    <span style={{color: '#1a6abd', fontSize: '1.4rem', fontWeight: 'bold', paddingTop: '0.25rem', lineHeight: 1}}>:</span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
         <h1 style={{fontWeight: 'bold'}}>
           <span style={{color: '#c8a96e', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)', display: 'block'}}>
             We've automated AI consulting.
@@ -313,6 +265,36 @@ export default function Home() {
         <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '-0.25rem 0 1.25rem 0'}}>
           <Link href="/about" style={{color: '#c8a96e'}}>Read our story →</Link>
         </p>
+
+        <div className="fade-in card-hover" style={{
+          background: '#0d1221',
+          border: '1px solid #1e2a45',
+          borderRadius: '6px',
+          padding: '1.25rem 1.5rem',
+          margin: '1.25rem 0'
+        }}>
+          <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.8', margin: 0}}>
+            There are over <strong style={{color: '#c8a96e'}}>16,000 AI tools</strong> out there. Nobody has time to sort through that — and honestly, you shouldn't have to. Some of the tools that would actually help your business are ones you've never heard of. Some are ones you already pay for but aren't using right. Figuring out which is which takes serious research. We've already done it. For $199, we'll tell you exactly what applies to your specific situation — nothing more, nothing less.
+          </p>
+          <p style={{color: '#8a95aa', fontSize: '0.9rem', fontStyle: 'italic', margin: '1rem 0 0 0'}}>
+            That's what we're selling.
+          </p>
+        </div>
+
+        <div className="fade-in" style={{display: 'flex', flexDirection: 'column', gap: '0.75rem', margin: '1.5rem 0'}}>
+          <div style={{background: '#0d1221', border: '1px solid #1e2a45', borderRadius: '6px', padding: '1.25rem 1.5rem'}}>
+            <p style={{color: '#c8a96e', fontSize: '1rem', marginBottom: '0.5rem'}}>★★★★★ — Brian T.</p>
+            <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', margin: 0}}>
+              When it comes to AI, there is no best technology, there is just best for you. I literally scoured the internet for weeks and never came close to getting the answer my company needed to integrate AI. Novo Navis gave us the entire answer in less than a day.
+            </p>
+          </div>
+          <div style={{background: '#0d1221', border: '1px solid #1e2a45', borderRadius: '6px', padding: '1.25rem 1.5rem'}}>
+            <p style={{color: '#c8a96e', fontSize: '1rem', marginBottom: '0.5rem'}}>★★★★ — Kay W.</p>
+            <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', margin: 0}}>
+              I run a small property management company that handles online rentals. I couldn't find a cost effective solution or product for my budget. Novo Navis uncovered AI tools for me that I never would have found on my own.
+            </p>
+          </div>
+        </div>
 
         <div className="fade-in" style={{
           background: '#0d1221',
@@ -362,36 +344,6 @@ export default function Home() {
           quality={60}
           style={{width: '100%', height: 'auto', borderRadius: '8px', margin: '1.5rem 0'}}
         />
-
-        <div className="fade-in" style={{display: 'flex', flexDirection: 'column', gap: '0.75rem', margin: '1.5rem 0'}}>
-          <div style={{background: '#0d1221', border: '1px solid #1e2a45', borderRadius: '6px', padding: '1.25rem 1.5rem'}}>
-            <p style={{color: '#c8a96e', fontSize: '1rem', marginBottom: '0.5rem'}}>★★★★★ — Brian T.</p>
-            <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', margin: 0}}>
-              When it comes to AI, there is no best technology, there is just best for you. I literally scoured the internet for weeks and never came close to getting the answer my company needed to integrate AI. Novo Navis gave us the entire answer in less than a day.
-            </p>
-          </div>
-          <div style={{background: '#0d1221', border: '1px solid #1e2a45', borderRadius: '6px', padding: '1.25rem 1.5rem'}}>
-            <p style={{color: '#c8a96e', fontSize: '1rem', marginBottom: '0.5rem'}}>★★★★ — Kay W.</p>
-            <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', margin: 0}}>
-              I run a small property management company that handles online rentals. I couldn't find a cost effective solution or product for my budget. Novo Navis uncovered AI tools for me that I never would have found on my own.
-            </p>
-          </div>
-        </div>
-
-        <div className="fade-in card-hover" style={{
-          background: '#0d1221',
-          border: '1px solid #1e2a45',
-          borderRadius: '6px',
-          padding: '1.25rem 1.5rem',
-          margin: '1.5rem 0'
-        }}>
-          <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.8', margin: 0}}>
-            There are over <strong style={{color: '#c8a96e'}}>16,000 AI tools</strong> out there. Nobody has time to sort through that — and honestly, you shouldn't have to. Some of the tools that would actually help your business are ones you've never heard of. Some are ones you already pay for but aren't using right. Figuring out which is which takes serious research. We've already done it. For $199, we'll tell you exactly what applies to your specific situation — nothing more, nothing less.
-          </p>
-          <p style={{color: '#8a95aa', fontSize: '0.9rem', fontStyle: 'italic', margin: '1rem 0 0 0'}}>
-            That's what we're selling.
-          </p>
-        </div>
 
         <p className="lead">
           The average small business loses <strong style={{color: '#c8a96e'}}>11 hours a week</strong> to
@@ -647,6 +599,54 @@ export default function Home() {
             Delivered to your email within 24 hours.
             Not satisfied? We'll refund you in full — no questions asked.
           </p>
+
+          {timeLeft !== null && (
+            <div style={{
+              background: 'linear-gradient(135deg, #00081a, #000e22)',
+              border: '1px solid #1a6abd',
+              borderRadius: '8px',
+              padding: '1rem 1.25rem',
+              margin: '1.5rem 0 0 0',
+              textAlign: 'center'
+            }}>
+              <p style={{color: '#4a9af0', fontSize: '0.72rem', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 'bold', margin: '0 0 0.4rem 0'}}>
+                ⚠ Price Increase Notice
+              </p>
+              <p style={{color: '#d0d8e8', fontSize: '0.92rem', margin: '0 0 0.75rem 0'}}>
+                Current price of <strong style={{color: '#4caf50'}}>$199</strong> increases to <strong style={{color: '#4a9af0'}}>$499</strong> when this timer expires
+              </p>
+              <div style={{display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: '0.4rem'}}>
+                {[
+                  [timeLeft.d, 'Days'],
+                  [timeLeft.h, 'Hrs'],
+                  [timeLeft.m, 'Min'],
+                  [timeLeft.s, 'Sec'],
+                ].map(([val, label], i) => (
+                  <div key={label} style={{display: 'flex', alignItems: 'flex-start', gap: '0.4rem'}}>
+                    <div style={{textAlign: 'center'}}>
+                      <div style={{
+                        background: '#0a0f1a',
+                        border: '1px solid #1a6abd',
+                        borderRadius: '6px',
+                        padding: '0.35rem 0.6rem',
+                        minWidth: '42px'
+                      }}>
+                        <span style={{color: '#4a9af0', fontSize: '1.4rem', fontWeight: 'bold', fontFamily: 'monospace', letterSpacing: '0.05em'}}>
+                          {String(val).padStart(2, '0')}
+                        </span>
+                      </div>
+                      <span style={{color: '#7a8599', fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.1em'}}>
+                        {label}
+                      </span>
+                    </div>
+                    {i < 3 && (
+                      <span style={{color: '#1a6abd', fontSize: '1.4rem', fontWeight: 'bold', paddingTop: '0.25rem', lineHeight: 1}}>:</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
         </form>
 
