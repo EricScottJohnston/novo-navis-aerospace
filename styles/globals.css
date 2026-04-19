@@ -6,13 +6,16 @@
 
 html {
   scroll-behavior: smooth;
+  min-height: 100%;
+  background: linear-gradient(to bottom, #0a0e1a 0%, #0a1a3e 40%, #0d3872 75%, #1056a0 100%);
 }
 
 body {
   font-family: 'Georgia', serif;
-  background-color: #0a0e1a;
+  background: transparent;
   color: #e8e8e8;
   line-height: 1.7;
+  min-height: 100%;
 }
 
 a {
