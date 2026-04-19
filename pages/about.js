@@ -49,6 +49,8 @@ export default function About() {
 
           <p>Most AI tools — including large language models — are correlative. They find patterns in data and make predictions based on what has happened before. Causal AI goes further. It reasons about why things happen, identifies the actual mechanisms driving outcomes, and produces recommendations grounded in cause and effect rather than statistical association. In air traffic control, that distinction matters enormously. In business operations, it turns out it matters just as much.</p>
 
+          <p>Aerospace research moves slowly and costs a lot. To fund it, we needed a way to commercialize what we had built. The causal reasoning engine we developed for air traffic control turned out to be applicable to any domain where decisions have consequences — including business operations. David is that engine, applied to a different problem. Every AI Blueprint we deliver furthers the research and development of causal AI.</p>
+
           <p>As we scaled our own operations, we encountered a problem familiar to many advanced manufacturers — integrating AI into complex, highly specialized workflows. No existing tool understood our processes. So we built our own.</p>
 
           <p>The result was David — a proprietary Small Psychological Model that applies causal reasoning to business workflow analysis. David does not generate generic advice. He reasons through your specific operational reality, identifies the actual causes of your inefficiencies, and tells you exactly where AI can reduce manual work, cut costs, and improve efficiency.</p>
