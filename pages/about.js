@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function About() {
   return (
@@ -33,10 +34,12 @@ export default function About() {
         <div className="article-body" style={{marginTop: '2rem'}}>
 
           <figure style={{float: 'right', margin: '0 0 1.5rem 2rem', textAlign: 'center', maxWidth: '180px'}}>
-            <img
+            <Image
               src="/headshot.jpg"
               alt="Eric Johnston"
-              style={{width: '100%', borderRadius: '8px', display: 'block', border: '2px solid #1e2a45'}}
+              width={180}
+              height={220}
+              style={{borderRadius: '8px', border: '2px solid #1e2a45', width: '100%', height: 'auto'}}
             />
             <figcaption style={{color: '#8a95aa', fontSize: '0.78rem', marginTop: '0.5rem', lineHeight: '1.4'}}>
               Eric Johnston<br />Founder / CEO
