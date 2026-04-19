@@ -221,6 +221,10 @@ export default function SampleAnalysis() {
             The more specific you are, the more useful your analysis will be.
           </p>
 
+          <p style={{color: '#5a6a7a', fontSize: '0.8rem', marginBottom: '1.5rem', borderLeft: '2px solid #1e2a45', paddingLeft: '0.75rem'}}>
+            Note: Ad blockers may interfere with the free analysis. If you get an error, try disabling your ad blocker for this page and reloading.
+          </p>
+
           {listeningField && (
             <p style={{color: '#e53935', fontSize: '0.85rem', textAlign: 'center', marginBottom: '1rem', fontWeight: 'bold'}}>
               🔴 Listening... speak now. Tap the mic again to stop.
