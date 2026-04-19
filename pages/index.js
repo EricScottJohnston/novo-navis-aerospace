@@ -468,6 +468,10 @@ export default function Home() {
           </p>
         </div>
 
+        <p style={{color: '#c8a96e', fontSize: '1rem', fontStyle: 'italic', textAlign: 'center', margin: '1.5rem 0'}}>
+          You wouldn't build a house without a blueprint. Don't implement AI without yours.
+        </p>
+
         <p style={{color: '#8a95aa', fontSize: '0.8rem', textAlign: 'center', marginBottom: '1rem'}}>
           Novo Navis will never sell or share your information.{' '}
           <Link href="/privacy" style={{color: '#c8a96e'}}>Read our Privacy Policy →</Link>

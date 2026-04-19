@@ -62,6 +62,25 @@ export default function About() {
 
           <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1.05rem'}}>David was built for aerospace. Now he works for you.</p>
 
+          <Link href="/david" style={{textDecoration: 'none', display: 'block'}}>
+            <div style={{
+              background: '#0d1221',
+              border: '1px solid #1e2a45',
+              borderLeft: '3px solid #c8a96e',
+              borderRadius: '6px',
+              padding: '1.25rem 1.5rem',
+              margin: '1.5rem 0',
+              cursor: 'pointer'
+            }}>
+              <p style={{color: '#d0d8e8', fontSize: '1rem', fontStyle: 'italic', margin: '0 0 0.75rem 0'}}>
+                You wouldn't build a house without a blueprint. Don't implement AI without yours.
+              </p>
+              <span style={{color: '#c8a96e', fontSize: '0.9rem', fontWeight: 'bold'}}>
+                See how David builds it →
+              </span>
+            </div>
+          </Link>
+
           <div style={{
             background: '#0d1221',
             border: '1px solid #1e2a45',
