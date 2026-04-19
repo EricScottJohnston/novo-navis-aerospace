@@ -255,14 +255,18 @@ export default function Home() {
 
         <h1 style={{fontWeight: 'bold'}}>
           <span style={{color: '#c8a96e', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)', display: 'block'}}>
-            We've automated AI consulting.
+            You've spent hours trying to figure out which AI tools work for your business.
           </span>
           <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
-            Let's get you AI automated too.
+            We'll tell you in 24 hours.
           </span>
         </h1>
 
-        <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '-0.25rem 0 1.25rem 0'}}>
+        <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.7', margin: '0.75rem 0 1.25rem 0'}}>
+          No guessing. No googling. Just the specific tools that fit your workflows, your budget, and your industry.
+        </p>
+
+        <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0 0 1.25rem 0'}}>
           <Link href="/about" style={{color: '#c8a96e'}}>Read our story →</Link>
         </p>
 
@@ -274,7 +278,7 @@ export default function Home() {
           margin: '1.25rem 0'
         }}>
           <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.8', margin: 0}}>
-            There are over <strong style={{color: '#c8a96e'}}>16,000 AI tools</strong> out there. Nobody has time to sort through that — and honestly, you shouldn't have to. Some of the tools that would actually help your business are ones you've never heard of. Some are ones you already pay for but aren't using right. Figuring out which is which takes serious research. We've already done it. For $199, we'll tell you exactly what applies to your specific situation — nothing more, nothing less.
+            There are over <strong style={{color: '#c8a96e'}}>16,000 AI tools</strong> out there. Nobody has time to sort through that — and honestly, you shouldn't have to. Some of the tools that would actually help your business are ones you've never heard of. Some are ones you already pay for but aren't using right. Figuring out which is which takes serious research. We've automated that research. For $199, we'll tell you exactly what applies to your specific situation — nothing more, nothing less.
           </p>
           <p style={{color: '#8a95aa', fontSize: '0.9rem', fontStyle: 'italic', margin: '1rem 0 0 0'}}>
             That's what we're selling.
