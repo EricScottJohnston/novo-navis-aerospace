@@ -55,7 +55,7 @@ export default function PlumbingArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered within 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $49</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $199</Link>
           </div>
 
           <p>The invoicing piece is where plumbing companies consistently leave money on the table. The average time between job completion and invoice delivery in a manually operated plumbing company is 3 to 7 days. Every day that invoice sits unsent is a day your cash flow is compressed. With automation, when a technician marks a job complete in the mobile app, a draft invoice is generated automatically using the job details, parts used, and labor time logged. The office manager reviews and sends it within minutes, not days. Some companies with standardized pricing skip the review step entirely for routine jobs and let the invoice go out automatically upon job completion.</p>
@@ -87,7 +87,7 @@ export default function PlumbingArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your business, your workflows, your pain points.
-            Up to 25 pages. Delivered within 24 hours. $49.
+            Up to 25 pages. Delivered within 24 hours. $199.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
         </div>

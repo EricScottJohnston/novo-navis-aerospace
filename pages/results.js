@@ -109,7 +109,7 @@ export default function Results() {
             gap: '1rem',
             marginBottom: '1rem'
           }}>
-            <span style={{color: '#4caf50', fontSize: '2rem', fontWeight: 'bold'}}>$49</span>
+            <span style={{color: '#4caf50', fontSize: '2rem', fontWeight: 'bold'}}>$199</span>
           </div>
 
           <Link
@@ -124,7 +124,7 @@ export default function Results() {
               marginBottom: '1rem'
             }}
           >
-            ⚡ Want this for your entire business? Get the full up to 25-page report — $49 →
+            ⚡ Want this for your entire business? Get the full up to 25-page report — $199 →
           </Link>
 
           <p style={{color: '#4a5568', fontSize: '0.85rem', margin: 0}}>

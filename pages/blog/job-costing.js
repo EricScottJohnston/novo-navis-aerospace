@@ -55,7 +55,7 @@ export default function JobCostingArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered within 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $49</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $199</Link>
           </div>
 
           <p>For companies running multiple jobs at once, this is especially powerful. Instead of juggling spreadsheets across five active sites, you get a single live view of where every job stands against budget — right now.</p>
@@ -84,7 +84,7 @@ export default function JobCostingArticle() {
             This article covers the problem. Your report maps the solution —
             specific tools, real pricing, and a fast action implementation plan built
             for your workflows and your software stack.
-            Up to 25 pages. Delivered within 24 hours. $49.
+            Up to 25 pages. Delivered within 24 hours. $199.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
         </div>

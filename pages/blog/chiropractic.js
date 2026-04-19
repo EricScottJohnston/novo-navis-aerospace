@@ -55,7 +55,7 @@ export default function ChiropracticArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered within 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $49</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $199</Link>
           </div>
 
           <p>Care plan compliance tracking is the third high-value automation target for chiropractic practices. Patients who drop off their care plan before completion represent lost revenue and, more importantly, patients who did not receive the full benefit of treatment. An automated system tracks each patient's care plan progress and sends a personalized outreach when a patient misses an appointment or falls behind their prescribed schedule. The message is warm and patient-focused, not administrative. It is also automatic — it happens without anyone on your staff having to manually track which patients are behind and reach out individually.</p>
@@ -85,7 +85,7 @@ export default function ChiropracticArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your practice, your workflows, your pain points.
-            Up to 25 pages. Delivered within 24 hours. $49.
+            Up to 25 pages. Delivered within 24 hours. $199.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
         </div>
