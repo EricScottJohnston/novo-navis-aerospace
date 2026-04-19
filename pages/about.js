@@ -164,7 +164,7 @@ export default function About() {
           <p style={{color: '#8a95aa', marginBottom: '1.5rem'}}>
             One custom report. Built for your business. Delivered within 24 hours.
           </p>
-          <Link href="/sample-analysis" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>⚡ Start Here — Try It Free →</Link>
+          <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint — $199 →</Link>
         </div>
 
       </div>
