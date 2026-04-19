@@ -32,6 +32,17 @@ export default function About() {
 
         <div className="article-body" style={{marginTop: '2rem'}}>
 
+          <figure style={{float: 'right', margin: '0 0 1.5rem 2rem', textAlign: 'center', maxWidth: '180px'}}>
+            <img
+              src="/headshot.png"
+              alt="Eric Johnston"
+              style={{width: '100%', borderRadius: '8px', display: 'block', border: '2px solid #1e2a45'}}
+            />
+            <figcaption style={{color: '#8a95aa', fontSize: '0.78rem', marginTop: '0.5rem', lineHeight: '1.4'}}>
+              Eric Johnston<br />Founder / CEO
+            </figcaption>
+          </figure>
+
           <p>Novo Navis Aerospace Operations LLC is an aerospace research and development company specializing in the design and fabrication of customized three-dimensional carbon fiber composite materials for government and civilian applications.</p>
 
           <p>One of our core research areas is AI for air traffic control — a domain where standard AI simply is not good enough. When safety depends on it, you need AI that understands cause and effect, not just pattern matching. That requirement forced us to develop something different from the ground up: causal AI.</p>
@@ -87,22 +98,14 @@ export default function About() {
             border: '1px solid #1e2a45',
             borderRadius: '6px',
             padding: '1.25rem 1.5rem',
-            margin: '0 0 1.75rem 0',
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: '1rem'
+            margin: '0 0 1.75rem 0'
           }}>
-            <div style={{flexShrink: 0, width: 'clamp(80px, 20vw, 120px)', height: 'clamp(80px, 20vw, 120px)', borderRadius: '50%', overflow: 'hidden', border: '2px solid #1e2a45'}}>
-              <img src="/headshot.png" alt="Eric Johnston" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
-            </div>
-            <div>
-              <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 'bold', marginBottom: '0.3rem'}}>
-                Who Built the System
-              </p>
-              <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.6', margin: 0}}>
-                Eric Johnston is a Principal Investigator on active U.S. Department of Defense AI research projects. The causal AI frameworks developed for defense-grade applications power every Novo Navis report — applied to the operational realities of small and mid-size businesses.
-              </p>
-            </div>
+            <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 'bold', marginBottom: '0.3rem'}}>
+              Who Built the System
+            </p>
+            <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.6', margin: 0}}>
+              Eric Johnston is a Principal Investigator on active U.S. Department of Defense AI research projects. The causal AI frameworks developed for defense-grade applications power every Novo Navis report — applied to the operational realities of small and mid-size businesses.
+            </p>
           </div>
 
           {/* CONTACT */}
