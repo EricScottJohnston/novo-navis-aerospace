@@ -17,15 +17,10 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: 'rate_limited' })
   }
 
-  const { name, email, businessType, workflow } = req.body
+  const { name, businessType, workflow } = req.body
 
-  if (!email || !workflow) {
+  if (!workflow) {
     return res.status(400).json({ error: 'Missing required fields' })
-  }
-
-  // Basic email validation
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return res.status(400).json({ error: 'Invalid email address' })
   }
 
   const closingParagraph = 'This analysis looked at one workflow. The full Novo Navis report runs your entire business through a Small Psychological Model -- a proprietary system of seven specialized reasoning instances that analyze your operations from different angles simultaneously. One instance builds foundational knowledge about your industry. A second identifies the contextual factors most analysis misses. A third applies domain analysis to your specific situation. A fourth challenges every finding adversarially, looking for weak assumptions and false conclusions. A fifth extrapolates causal chains invisible to conventional analysis. A sixth hunts for outliers and edge cases where normal rules break down. All findings pass through a Causal Reasoning Framework that filters out correlation mistaken for causation -- the most common failure mode in AI-generated business advice. What reaches the final report has been stress-tested at every stage. That is what makes it different from asking ChatGPT.'
@@ -61,12 +56,11 @@ export default async function handler(req, res) {
     const emailResult = await resend.emails.send({
       from: 'Novo Navis <noreply@novonavis.com>',
       to: 'ericjohnston105@gmail.com',
-      subject: `Free Sample Submitted — ${name || email}${businessType ? ' (' + businessType + ')' : ''}`,
+      subject: `Free Sample Submitted — ${name || 'Anonymous'}${businessType ? ' (' + businessType + ')' : ''}`,
       html: `
         <h2>Free Sample Analysis Submitted</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Business Type:</strong> ${businessType}</p>
+        <p><strong>Name:</strong> ${name || 'Not provided'}</p>
+        <p><strong>Business Type:</strong> ${businessType || 'Not provided'}</p>
         <hr />
         <h3>Their Workflow Problem</h3>
         <p>${workflow}</p>
