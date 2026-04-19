@@ -258,7 +258,7 @@ export default function Home() {
             You've spent hours trying to figure out which AI tools work for your business.
           </span>
           <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
-            We'll tell you in 24 hours.
+            We'll tell you in one day.
           </span>
         </h1>
 
