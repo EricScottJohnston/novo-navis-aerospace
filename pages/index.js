@@ -584,7 +584,7 @@ export default function Home() {
             {loading ? 'Redirecting to Checkout...' : 'Get My AI Blueprint — $199'}
           </button>
 
-          <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
+          <p style={{textAlign: 'center', color: '#a0aec0', fontSize: '0.85rem', marginTop: '1rem'}}>
             Secured by Stripe. $199 — custom report, up to 25 pages.
             Delivered to your email within 24 hours.
             Not satisfied? We'll refund you in full — no questions asked.
