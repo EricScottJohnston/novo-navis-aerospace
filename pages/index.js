@@ -237,7 +237,7 @@ export default function Home() {
             fontSize: '0.85rem',
             fontWeight: 'bold',
             textDecoration: 'none'
-          }}>Get My Report — $199</Link>
+          }}>Get My AI Blueprint — $199</Link>
         </div>
       )}
 
@@ -351,7 +351,7 @@ export default function Home() {
 
         <p className="lead">
           Most small business owners are losing about <strong style={{color: '#c8a96e'}}>11 hours every week</strong> to
-          stuff AI could just handle for them. Your report tells you exactly which tasks those are —
+          stuff AI could just handle for them. Your AI Blueprint tells you exactly which tasks those are —
           and exactly what to do about it.
         </p>
         <p style={{color: '#8a95aa', fontSize: '0.85rem', marginBottom: '1.5rem'}}>
@@ -369,7 +369,7 @@ export default function Home() {
           margin: '1.5rem 0'
         }}>
           <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 'bold', marginBottom: '0.75rem'}}>
-            What your report includes
+            What your AI Blueprint includes
           </p>
           <ul style={{listStyle: 'none', padding: 0, margin: 0, color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.8'}}>
             <li>✓ &nbsp;The 3–5 tasks eating your time that AI can handle automatically</li>
@@ -394,7 +394,7 @@ export default function Home() {
             You don't need to be a tech person
           </p>
           <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', margin: 0}}>
-            Every recommendation in your report comes with plain-English implementation steps,
+            Every recommendation in your AI Blueprint comes with plain-English implementation steps,
             approximate costs, and a realistic estimate of how long setup takes.
             If you can send an email, you can implement what we recommend.
           </p>
@@ -464,7 +464,7 @@ export default function Home() {
             One report. Your business. 24-hour delivery.
           </p>
           <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: 0}}>
-            Most AI consultants charge $300–$500 per hour. This report is $199 and yours to keep.
+            Most AI consultants charge $300–$500 per hour. Your AI Blueprint is $199 and yours to keep.
           </p>
         </div>
 
@@ -525,7 +525,7 @@ export default function Home() {
 
           <p style={{color: '#8a95aa', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1.5rem'}}>
             After checkout you'll complete a short intake form with your business details.
-            Your report is built from that — so the more specific you are there, the better your report.
+            Your AI Blueprint is built from that — so the more specific you are there, the better your AI Blueprint.
           </p>
 
           <p style={{color: '#8a95aa', fontSize: '0.85rem', marginBottom: '1rem'}}>
@@ -595,7 +595,7 @@ export default function Home() {
             }}
             disabled={loading || !agreedTerms}
           >
-            {loading ? 'Redirecting to Checkout...' : 'Get My Report — $199'}
+            {loading ? 'Redirecting to Checkout...' : 'Get My AI Blueprint — $199'}
           </button>
 
           <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
@@ -658,7 +658,7 @@ export default function Home() {
 
         <div style={{textAlign: 'center', padding: '1rem 0'}}>
           <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '0.5rem'}}>
-            Want to talk to a real person before you claim your report?
+            Want to talk to a real person before you claim your AI Blueprint?
           </p>
           <p style={{color: '#ffffff', fontSize: '1rem', marginBottom: '0.3rem'}}>
             Call us: <a href="tel:6234289308" style={{color: '#c8a96e', fontWeight: 'bold'}}>(623) 428-9308</a>
@@ -675,7 +675,7 @@ export default function Home() {
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
           <Link href="/sample-analysis">Try It Free</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link> &nbsp;·&nbsp;
           <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;

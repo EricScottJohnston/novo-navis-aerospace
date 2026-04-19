@@ -15,7 +15,7 @@ export default function JobCostingArticle() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -55,7 +55,7 @@ export default function JobCostingArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered within 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $199</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint — $199</Link>
           </div>
 
           <p>For companies running multiple jobs at once, this is especially powerful. Instead of juggling spreadsheets across five active sites, you get a single live view of where every job stands against budget — right now.</p>
@@ -78,15 +78,15 @@ export default function JobCostingArticle() {
             Ready to Take Action?
           </p>
           <h3 style={{color: '#ffffff', fontSize: '1.3rem', marginBottom: '0.8rem'}}>
-            Get a Custom Report Built for Your Construction Business
+            Get Your AI Blueprint for Your Construction Business
           </h3>
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
-            This article covers the problem. Your report maps the solution —
+            This article covers the problem. Your AI Blueprint maps the solution —
             specific tools, real pricing, and a fast action implementation plan built
             for your workflows and your software stack.
             Up to 25 pages. Delivered within 24 hours. $199.
           </p>
-          <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
+          <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint</Link>
         </div>
 
         <div style={{textAlign: 'center', marginTop: '2rem'}}>
@@ -99,7 +99,7 @@ export default function JobCostingArticle() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>

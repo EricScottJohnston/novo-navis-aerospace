@@ -23,7 +23,7 @@ export default function SampleReport() {
       <div className="article-page">
 
         <div className="article-meta">
-          <Link href="/report" style={{color: '#c8a96e'}}>← Get Your Own Report</Link>
+          <Link href="/report" style={{color: '#c8a96e'}}>← Get Your AI Blueprint</Link>
         </div>
 
         <h1>Real Report Example — Phoenix Area Plumbing Company</h1>
@@ -57,14 +57,14 @@ export default function SampleReport() {
           <p>Your office handles roughly 40 to 60 jobs per month. Each job creates three manual tasks: scheduling it, invoicing after completion, and chasing payment. If your team spends 8 to 12 hours weekly on these three processes across dispatching, invoicing, and payment follow-up, AI automation can recover 4 to 7 of those hours weekly while simultaneously reducing the time customers wait for job confirmation and improving payment collection speed.</p>
           <p>This roadmap recommends a five-phase implementation starting with Phase 0 constraint analysis to identify which bottleneck is actually limiting your growth. Then it implements scheduling automation via Fieldproxy or a comparable field service platform, integrates that system to automatically trigger invoicing and payment reminders through Zapier, and adds specialized invoice and payment automation tools.</p>
           <p>The core investment is approximately $1,200 to $2,400 in year-one software costs plus 60 to 80 hours of setup and staff training time. Assuming your office manager earns $25 per hour loaded cost, the time investment represents roughly $1,500 to $2,000 in labor. The total first-year cost lands in the $2,700 to $4,400 range. Expected recovery of lost administrative time is 4 to 7 hours weekly, worth $5,200 to $9,100 annually at that loaded rate. Net year-one value approaches $700 to $6,400 depending on actual time recovery and implementation complexity.</p>
-          <p>The single most critical step before buying any tool is identifying which process — scheduling, invoicing, or payment collection — is actually constraining your job throughput. Automating the wrong one wastes implementation effort. This report walks you through that analysis, then the implementation sequence that produces the fastest payback.</p>
+          <p>The single most critical step before buying any tool is identifying which process — scheduling, invoicing, or payment collection — is actually constraining your job throughput. Automating the wrong one wastes implementation effort. Your AI Blueprint walks you through that analysis, then the implementation sequence that produces the fastest payback.</p>
 
           <h2 style={{fontSize: '1.2rem', color: '#c8a96e', marginTop: '2rem', marginBottom: '0.8rem'}}>The Opportunity</h2>
           <p>Plumbing companies with 6 to 15 people typically operate under one of three constraints: dispatch scheduling, invoice generation speed, or payment collection timing. Whichever one is slowest becomes the reason you cannot take more jobs, not technician capacity.</p>
           <p>If your scheduling is manual — dispatchers answering phone calls, updating spreadsheets, texting technicians — you lose 2 to 4 hours weekly coordinating jobs. Each job sits unconfirmed 30 minutes to 2 hours longer than necessary. Customers get frustrated by vague arrival windows. Technicians show up at the office before heading out, wasting 15 to 30 minutes per day. Every hiring challenge you face stems partly from this friction.</p>
           <p>If your invoicing is manual — completing job tickets in the field, typing them into Word or email, hand-entering into QuickBooks — you spend 2 to 3 hours per week on data entry and rework. Invoices reach customers 2 to 4 days later than they could. Faster invoice delivery correlates with faster payment; a two-day delay in receiving an invoice typically extends payment by 5 to 7 days downstream.</p>
           <p>If your payment follow-up is manual — reminder calls, repeat emails, spreadsheet tracking of who paid and who did not — you tie up 2 to 4 hours weekly on collection activity. Worst case, your Days Sales Outstanding sits at 35 to 50 days when industry standard for small service businesses is 20 to 28 days. If your monthly revenue is $80,000, a 15-day improvement in payment collection timing frees $40,000 in working capital.</p>
-          <p>Before you invest in any tool, you need two to three hours to map how long each process actually takes today. This report shows you how to do that in Phase 0, which runs parallel with your initial tool evaluation but before you commit to full implementation.</p>
+          <p>Before you invest in any tool, you need two to three hours to map how long each process actually takes today. Your AI Blueprint shows you how to do that in Phase 0, which runs parallel with your initial tool evaluation but before you commit to full implementation.</p>
 
           <h2 style={{fontSize: '1.2rem', color: '#c8a96e', marginTop: '2rem', marginBottom: '0.8rem'}}>How They Handle This Today</h2>
           <p>Your schedule lives in your dispatcher's head, email threads, and text messages. When a customer calls requesting Thursday afternoon, the dispatcher checks the mental model of what technicians are booked, who has availability, who is closest to that address, and who gets along with that customer. Sometimes that mental model is correct. Sometimes a technician is finishing early, or there is a traffic incident, and the optimistic arrival window is wrong.</p>
@@ -122,15 +122,15 @@ export default function SampleReport() {
           textAlign: 'center'
         }}>
           <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.8rem'}}>
-            Ready to Get Your Own Report?
+            Ready to Get Your AI Blueprint?
           </p>
           <h3 style={{color: '#ffffff', fontSize: '1.3rem', marginBottom: '0.8rem'}}>
-            This report was built specifically for a plumbing company. Yours will be built specifically for your business.
+            This AI Blueprint was built specifically for a plumbing company. Yours will be built specifically for your business.
           </h3>
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             Same rigorous analysis. Same specific tools and pricing. Same ROI calculations. Built for your workflows, your industry, your pain points. Up to 25 pages. Delivered within 24 hours. $199.
           </p>
-          <Link href="/#order-form" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>⚡ Get Your Custom Report — $199 →</Link>
+          <Link href="/#order-form" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>⚡ Get Your AI Blueprint — $199 →</Link>
         </div>
 
       </div>
@@ -140,7 +140,7 @@ export default function SampleReport() {
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
           <Link href="/sample-analysis">Try It Free</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>

@@ -153,7 +153,7 @@ export default function Intake() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -180,8 +180,8 @@ export default function Intake() {
                 {sessionData?.name ? `, ${sessionData.name.split(' ')[0]}` : ''}.
               </h1>
               <p className="lead" style={{marginBottom: '0'}}>
-                Now tell us about {sessionData?.business || 'your business'} so we can build your report.
-                The more specific you are, the more valuable your report will be.
+                Now tell us about {sessionData?.business || 'your business'} so we can build your AI Blueprint.
+                The more specific you are, the more valuable Your AI Blueprint will be.
               </p>
             </div>
 
@@ -350,7 +350,7 @@ export default function Intake() {
                 </button>
 
                 <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
-                  Your report will be delivered to your email within 24 hours.
+                  Your AI Blueprint will be delivered to your email within 24 hours.
                 </p>
 
               </form>

@@ -14,7 +14,7 @@ export default function Success() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -24,7 +24,7 @@ export default function Success() {
         <h1 style={{marginBottom: '1rem'}}>You're all set.</h1>
         <p className="lead">
           Your intake has been received. Eric will review your business details,
-          run your report, and deliver it to your inbox within 24 hours.
+          run your AI Blueprint, and deliver it to your inbox within 24 hours.
         </p>
 
         <div style={{

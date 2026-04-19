@@ -15,7 +15,7 @@ export default function Terms() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/report">Get Your Report</Link></li>
+          <li><Link href="/report">Get Your AI Blueprint</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -82,7 +82,7 @@ export default function Terms() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/report">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link> &nbsp;·&nbsp;
           <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
           <Link href="/terms">Terms and Conditions</Link>

@@ -38,7 +38,7 @@ export default function Results() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -64,7 +64,7 @@ export default function Results() {
               padding: '0.85rem 1.75rem'
             }}
           >
-            ⚡ Get the Full Report for Your Entire Business — $199 →
+            ⚡ Get Your AI Blueprint — $199 →
           </Link>
         </div>
 
@@ -137,7 +137,7 @@ export default function Results() {
               marginBottom: '1rem'
             }}
           >
-            ⚡ Want this for your entire business? Get the full up to 25-page report — $199 →
+            ⚡ Get Your AI Blueprint — $199 →
           </Link>
 
           <p style={{color: '#4a5568', fontSize: '0.85rem', margin: 0}}>
@@ -182,7 +182,7 @@ export default function Results() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link> &nbsp;·&nbsp;
           <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;

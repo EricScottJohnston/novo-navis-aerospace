@@ -15,7 +15,7 @@ export default function RealEstateArticle() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -57,7 +57,7 @@ export default function RealEstateArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered within 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $199</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint — $199</Link>
           </div>
 
           <p>Beyond initial follow-up, AI handles the longer nurture sequences for leads that are not ready to buy or sell immediately. A prospect who says they are thinking about selling in six months gets added to an automated sequence that sends them relevant market updates, neighborhood data, and helpful content over the next six months — keeping you top of mind without requiring you to manually reach out every few weeks. When they are ready to move, you are the agent they already have a relationship with.</p>
@@ -84,14 +84,14 @@ export default function RealEstateArticle() {
             Ready to Take Action?
           </p>
           <h3 style={{color: '#ffffff', fontSize: '1.3rem', marginBottom: '0.8rem'}}>
-            Get a Custom Report Built for Your Real Estate Business
+            Get Your AI Blueprint for Your Real Estate Business
           </h3>
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
-            This article covers general strategies. Your report is built specifically
+            This article covers general strategies. Your AI Blueprint is built specifically
             for your business, your workflows, your pain points.
             Up to 25 pages. Delivered within 24 hours. $199.
           </p>
-          <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
+          <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint</Link>
         </div>
 
         <div style={{textAlign: 'center', marginTop: '2rem'}}>
@@ -104,7 +104,7 @@ export default function RealEstateArticle() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>
