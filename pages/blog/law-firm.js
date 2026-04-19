@@ -15,7 +15,7 @@ export default function LawFirmArticle() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -55,7 +55,7 @@ export default function LawFirmArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered within 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $199</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint — $199</Link>
           </div>
 
           <p>Contract review automation is a more nuanced application but one where AI is delivering genuine value for small firms handling high volumes of routine contracts. AI document review tools — Harvey, Ironclad, and Spellbook are the current leaders — can read a contract and flag non-standard clauses, missing provisions, and potential issues in minutes rather than hours. For a small firm handling commercial leases, employment agreements, or vendor contracts routinely, this does not replace attorney review. It accelerates it. The attorney reviews the AI's flagged issues rather than reading every clause from scratch.</p>
@@ -80,14 +80,14 @@ export default function LawFirmArticle() {
             Ready to Take Action?
           </p>
           <h3 style={{color: '#ffffff', fontSize: '1.3rem', marginBottom: '0.8rem'}}>
-            Get a Custom Report Built for Your Law Firm
+            Get Your AI Blueprint for Your Law Firm
           </h3>
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
-            This article covers general strategies. Your report is built specifically
+            This article covers general strategies. Your AI Blueprint is built specifically
             for your firm, your practice areas, your workflows.
             Up to 25 pages. Delivered within 24 hours. $199.
           </p>
-          <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
+          <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint</Link>
         </div>
 
         <div style={{textAlign: 'center', marginTop: '2rem'}}>
@@ -100,7 +100,7 @@ export default function LawFirmArticle() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>

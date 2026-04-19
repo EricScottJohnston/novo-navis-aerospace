@@ -96,7 +96,7 @@ export default function SampleAnalysis() {
       })
       const data = await res.json()
       if (res.status === 429 || data.error === 'rate_limited') {
-        alert('You\'ve already used your free analysis today. Come back tomorrow for another one, or get the full up to 25-page report below.')
+        alert('You\'ve already used your free analysis today. Come back tomorrow for another one, or get your AI Blueprint below.')
         setLoading(false)
         return
       }
@@ -137,7 +137,7 @@ export default function SampleAnalysis() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -255,7 +255,7 @@ export default function SampleAnalysis() {
             Ready for the full report?
           </p>
           <Link href="/#order-form" style={{color: '#c8a96e', fontWeight: 'bold'}}>
-            Get the complete up to 25-page AI integration report — $199 →
+            Get Your AI Blueprint — $199 →
           </Link>
         </div>
 
@@ -265,7 +265,7 @@ export default function SampleAnalysis() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link> &nbsp;·&nbsp;
           <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;

@@ -3,24 +3,24 @@ import Link from 'next/link'
 
 const faqs = [
   {
-    q: "What exactly is in the report?",
+    q: "What exactly is in the AI Blueprint?",
     a: "You receive a up to 25-page document built around your specific business. It covers your top 3–5 automatable workflows ranked by estimated time savings, specific AI tools matched to each workflow and your budget, a fast action implementation plan, an honest ROI estimate for your business size and industry, and a risks section that tells you what can go wrong and how to prevent it. Every report is reviewed by a human AI consultant before it's sent."
   },
   {
     q: "How is this different from just asking ChatGPT?",
-    a: "ChatGPT gives generic answers. Your report is built from the specific details you provide about your business — your workflows, your employee count, your budget, your biggest operational problem. The Small Psychological Model runs seven specialized analytical passes on your intake data, and the output is reviewed by Eric Johnston, a Principal Investigator on active U.S. Department of Defense AI research projects. You get a structured, prioritized plan — not a list of ideas."
+    a: "ChatGPT gives generic answers. Your AI Blueprint is built from the specific details you provide about your business — your workflows, your employee count, your budget, your biggest operational problem. The Small Psychological Model runs seven specialized analytical passes on your intake data, and the output is reviewed by Eric Johnston, a Principal Investigator on active U.S. Department of Defense AI research projects. You get a structured, prioritized plan — not a list of ideas."
   },
   {
     q: "How does the 24-hour delivery work?",
     a: "After checkout, you'll complete a short intake form with details about your business and workflows. That intake is sent directly to Eric. He runs your data through the Small Psychological Model, reviews the output, and emails your finished report within 24 hours. If there's any delay, you'll hear from us."
   },
   {
-    q: "What if I'm not satisfied with the report?",
-    a: "Full refund, no questions asked. If you read your report and don't find it useful, email support@novonavis.com and we'll refund you in full. We'd rather lose the $199 than send a report that doesn't deliver value."
+    q: "What if I'm not satisfied with the AI Blueprint?",
+    a: "Full refund, no questions asked. If you read your AI Blueprint and don't find it useful, email support@novonavis.com and we'll refund you in full. We'd rather lose the $199 than send a report that doesn't deliver value."
   },
   {
     q: "Do I need to be tech-savvy to use the tools you recommend?",
-    a: "No. The report is built for business owners, not developers. Every tool recommendation includes what it does, what it costs, how long setup takes, and what could go wrong. The implementation plan is designed so that Phase 1 starts with the lowest-friction, highest-impact changes — things you or your office manager can implement without technical help. If something in the report is unclear, you can call or email us and we'll walk you through it."
+    a: "No. The AI Blueprint is built for business owners, not developers. Every tool recommendation includes what it does, what it costs, how long setup takes, and what could go wrong. The implementation plan is designed so that Phase 1 starts with the lowest-friction, highest-impact changes — things you or your office manager can implement without technical help. If something in the AI Blueprint is unclear, you can call or email us and we'll walk you through it."
   },
   {
     q: "What industries do you serve?",
@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     q: "Will the AI tools you recommend be too expensive for my business?",
-    a: "No. Budget-matching is built into the report. You tell us your monthly software budget during the intake, and every tool we recommend fits within that range. If you're on a tight budget, we focus on free tiers and freemium tools. If you have room to invest, we show you the full recommended stack and the ROI that justifies it. We'll never recommend a $500/month platform to a business that told us their budget is under $50."
+    a: "No. Budget-matching is built into your AI Blueprint. You tell us your monthly software budget during the intake, and every tool we recommend fits within that range. If you're on a tight budget, we focus on free tiers and freemium tools. If you have room to invest, we show you the full recommended stack and the ROI that justifies it. We'll never recommend a $500/month platform to a business that told us their budget is under $50."
   },
   {
     q: "What is the Small Psychological Model?",
@@ -36,10 +36,10 @@ const faqs = [
   },
   {
     q: "How is my business information handled?",
-    a: "Your intake data is used solely to build your report. It is never sold, shared with third parties, or used for marketing. Payment is processed by Stripe — Novo Navis never sees your card number. Your report is delivered by email and is not stored on a public server. You can read our full Privacy Policy for details."
+    a: "Your intake data is used solely to build your AI Blueprint. It is never sold, shared with third parties, or used for marketing. Payment is processed by Stripe — Novo Navis never sees your card number. Your AI Blueprint is delivered by email and is not stored on a public server. You can read our full Privacy Policy for details."
   },
   {
-    q: "I'm not ready to buy yet. How do I know the report is worth it?",
+    q: "I'm not ready to buy yet. How do I know the AI Blueprint is worth it?",
     a: "Read the sample report for a real plumbing company before you decide. It shows you exactly what you'll receive — the format, the depth, the specific tool recommendations, and the implementation plan structure. If after reading it you still have questions, call us at (623) 428-9308 or email support@novonavis.com. We'd rather answer your questions now than have you buy something you're uncertain about."
   }
 ]
@@ -58,7 +58,7 @@ export default function FAQ() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -67,7 +67,7 @@ export default function FAQ() {
 
         <h1 style={{marginBottom: '0.5rem'}}>Frequently Asked Questions</h1>
         <p className="lead" style={{marginBottom: '2.5rem'}}>
-          Everything you need to know about the report, the process, and what happens after you order.
+          Everything you need to know about the AI Blueprint, the process, and what happens after you order.
         </p>
 
         <div style={{display: 'flex', flexDirection: 'column', gap: '1.25rem'}}>
@@ -116,7 +116,7 @@ export default function FAQ() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link> &nbsp;·&nbsp;
           <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;

@@ -15,7 +15,7 @@ export default function AccountingArticle() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your Report</Link></li>
+          <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -55,7 +55,7 @@ export default function AccountingArticle() {
               Our proprietary Small Psychological Model builds a custom up to 25-page
               AI integration report tailored to your workflows. Delivered within 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your Custom Report — $199</Link>
+            <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint — $199</Link>
           </div>
 
           <p>The tools that handle this most effectively for accounting firms are Canopy, TaxDome, or Karbon — practice management platforms built specifically for accounting firms that include client portals, document management, and workflow automation. If you are already using one of these platforms, you likely have automation capabilities you are not fully utilizing. If you are collecting documents via email and organizing them manually in a shared drive, moving to a purpose-built platform is the foundational step before any automation layer makes sense.</p>
@@ -80,14 +80,14 @@ export default function AccountingArticle() {
             Ready to Take Action?
           </p>
           <h3 style={{color: '#ffffff', fontSize: '1.3rem', marginBottom: '0.8rem'}}>
-            Get a Custom Report Built for Your Accounting Firm
+            Get Your AI Blueprint for Your Accounting Firm
           </h3>
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
-            This article covers general strategies. Your report is built specifically
+            This article covers general strategies. Your AI Blueprint is built specifically
             for your firm, your workflows, your pain points.
             Up to 25 pages. Delivered within 24 hours. $199. Guaranteed.
           </p>
-          <Link href="/#order-form" className="btn-primary">Get Your Custom Report</Link>
+          <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint</Link>
         </div>
 
         <div style={{textAlign: 'center', marginTop: '2rem'}}>
@@ -100,7 +100,7 @@ export default function AccountingArticle() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your Report</Link> &nbsp;·&nbsp;
+          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>
