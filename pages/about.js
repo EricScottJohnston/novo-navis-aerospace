@@ -34,7 +34,7 @@ export default function About() {
 
           <figure style={{float: 'right', margin: '0 0 1.5rem 2rem', textAlign: 'center', maxWidth: '180px'}}>
             <img
-              src="/headshot.png"
+              src="/headshot.jpg"
               alt="Eric Johnston"
               style={{width: '100%', borderRadius: '8px', display: 'block', border: '2px solid #1e2a45'}}
             />
