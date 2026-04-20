@@ -17,6 +17,7 @@ export default function Intake() {
     employees: '',
     budget: '',
     businessDescription: '',
+    currentTools: '',
     process1: '',
     process2: '',
     process3: '',
@@ -263,6 +264,20 @@ export default function Intake() {
                       style={{flex: 1}}
                     />
                     <MicButton fieldName="businessDescription" />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>What software tools do you currently use in your business?</label>
+                  <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
+                    <textarea
+                      name="currentTools"
+                      value={formData.currentTools}
+                      onChange={handleChange}
+                      placeholder="Example: QuickBooks, Google Workspace, Jobber, Microsoft 365, Slack, etc. List anything you use regularly — even basic tools like Excel or Gmail."
+                      style={{flex: 1}}
+                    />
+                    <MicButton fieldName="currentTools" />
                   </div>
                 </div>
 

@@ -15,6 +15,7 @@ export default async function handler(req, res) {
     employees,
     budget,
     businessDescription,
+    currentTools,
     process1,
     process2,
     process3,
@@ -60,6 +61,7 @@ export default async function handler(req, res) {
         <hr />
         <h3>About Their Business</h3>
         <p>${businessDescription}</p>
+        <p><strong>Current Software Tools:</strong> ${currentTools || 'Not provided'}</p>
         <hr />
         <h3>Pain Points</h3>
         <p><strong>Repetitive Task 1:</strong><br/>${process1}</p>
@@ -75,6 +77,7 @@ Industry: ${industry}
 Employees: ${employees || 'Not provided'}
 Budget: ${budget || 'Not provided'}
 About: ${businessDescription}
+Current Tools: ${currentTools || 'Not provided'}
 Task 1: ${process1}
 Task 2: ${process2 || 'Not provided'}
 Task 3: ${process3 || 'Not provided'}
