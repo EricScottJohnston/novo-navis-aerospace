@@ -129,6 +129,10 @@ export default function SampleAnalysis() {
             70%  { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
             100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
           }
+          @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(8px); }
+          }
         `}</style>
       </Head>
 
@@ -144,17 +148,16 @@ export default function SampleAnalysis() {
 
       <div className="report-page">
 
-        <div style={{
-          background: '#0d1a0d',
-          border: '2px solid #4caf50',
-          borderRadius: '8px',
-          padding: '1rem 1.5rem',
-          margin: '0 0 1.5rem 0',
-          textAlign: 'center'
-        }}>
+        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0 0 1.5rem 0'}}>
+          <button onClick={() => window.scrollBy({top: 300, behavior: 'smooth'})} style={{background: 'none', border: 'none', cursor: 'pointer', padding: '0.5rem', animation: 'bounce 1.4s ease-in-out infinite'}}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4caf50" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+          </button>
           <p style={{color: '#4caf50', fontSize: '0.8rem', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 'bold', margin: 0}}>
             Free — No Credit Card Required
           </p>
+          <button onClick={() => window.scrollBy({top: 300, behavior: 'smooth'})} style={{background: 'none', border: 'none', cursor: 'pointer', padding: '0.5rem', animation: 'bounce 1.4s ease-in-out infinite'}}>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4caf50" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+          </button>
         </div>
 
         <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>
