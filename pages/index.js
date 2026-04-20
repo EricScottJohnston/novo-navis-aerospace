@@ -230,6 +230,116 @@ export default function Home() {
           </div>
         </div>
 
+        {/* SAMPLE REPORT PREVIEW */}
+        <div style={{margin: '2rem 0'}}>
+          <p style={{color: '#c8a96e', fontSize: '0.75rem', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 'bold', marginBottom: '0.4rem'}}>
+            Sample Report
+          </p>
+          <p style={{color: '#8a95aa', fontSize: '0.88rem', marginBottom: '0.75rem'}}>
+            This is what you'll receive — scroll to read through it.
+          </p>
+          <div style={{position: 'relative'}}>
+            <div style={{
+              height: '420px',
+              overflowY: 'scroll',
+              background: '#060a12',
+              border: '1px solid #1e2a45',
+              borderRadius: '8px',
+              padding: '1.5rem',
+              WebkitOverflowScrolling: 'touch'
+            }}>
+
+              <p style={{color: '#ffffff', fontSize: '1.05rem', fontWeight: 'bold', lineHeight: '1.3', marginBottom: '0.25rem'}}>
+                AI Integration Roadmap for Dental Practice Optimization
+              </p>
+              <p style={{color: '#5a6a7a', fontSize: '0.78rem', marginBottom: '1.5rem'}}>
+                Novo Navis Cortex Report · April 2026 · Client: Jacquelyn Hurt, Wichita KS
+              </p>
+
+              <div style={{display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '0.6rem', marginBottom: '1.5rem'}}>
+                {[['15–25%','No-Show Reduction'],['8–12 hrs','Admin Time / Week'],['$28K–$55K','Est. Annual Value']].map(([val, lbl]) => (
+                  <div key={lbl} style={{background: '#0d1221', border: '1px solid #1e2a45', borderRadius: '4px', padding: '0.75rem', textAlign: 'center'}}>
+                    <span style={{display: 'block', fontSize: '1.1rem', fontWeight: 'bold', color: '#c8a96e'}}>{val}</span>
+                    <span style={{fontSize: '0.65rem', color: '#5a6a7a', textTransform: 'uppercase', letterSpacing: '0.06em'}}>{lbl}</span>
+                  </div>
+                ))}
+              </div>
+
+              <p style={{color: '#c8a96e', fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase', borderBottom: '1px solid #1e2a45', paddingBottom: '0.4rem', marginBottom: '0.75rem'}}>Executive Summary</p>
+              <p style={{color: '#b0b8cc', fontSize: '0.88rem', lineHeight: '1.75', marginBottom: '0.8rem'}}>
+                This report identifies a focused, three-phase AI integration strategy designed to reduce appointment no-shows by 15–25%, recover 8–12 hours of administrative time per week, and generate an estimated $28,000 to $55,000 in net annual value after accounting for implementation costs.
+              </p>
+              <p style={{color: '#b0b8cc', fontSize: '0.88rem', lineHeight: '1.75', marginBottom: '1rem'}}>
+                The opportunity centers on three validated interventions: SMS-based appointment reminders (which engage 98% of patients within three minutes versus 20% for email), cloud-based practice management system migration, and AI-assisted scheduling optimization (which typically reduces manual scheduling overhead by 40–60%).
+              </p>
+              <div style={{background: '#0d1221', border: '1px solid #1e2a45', borderLeft: '3px solid #c8a96e', padding: '0.9rem 1.1rem', borderRadius: '4px', marginBottom: '1.5rem'}}>
+                <p style={{color: '#b0b8cc', fontSize: '0.85rem', margin: 0}}><strong style={{color: '#c8a96e'}}>Caution flag:</strong> Implementation will occur across 90 days in three distinct phases. Total estimated investment is $8,600–$18,000 for the first year.</p>
+              </div>
+
+              <p style={{color: '#c8a96e', fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase', borderBottom: '1px solid #1e2a45', paddingBottom: '0.4rem', marginBottom: '0.75rem'}}>The AI Tools That Solve This</p>
+              {[
+                ['SMS Reminder Automation — Reminder Media / Weave / Native PMS Module', 'Reminder Media sends appointment reminders via SMS at 48h, 24h, and 4h intervals with one-tap rescheduling links. Pricing: $400–$800/month. If your cloud PMS includes native SMS (CareStack does), this cost is $0.'],
+                ['Cloud Practice Management — Open Dental / CareStack / Curve Dental', 'Cloud PMS is the prerequisite enabling all downstream AI integrations. One-time migration: $8,000–$18,000. Monthly: $300–$700.'],
+                ['AI Scheduling Optimization — SimplePractice / CareStack Integrated', 'Reduces manual scheduling overhead by 40–60%. Expected combined no-show reduction (with SMS): 15–35%.'],
+                ['Insurance Claims Automation — DEFERRED', 'No quantified ROI data exists yet. Revisit at the 12-month mark if your rejection rate exceeds 12%.'],
+              ].map(([title, body]) => (
+                <div key={title} style={{background: '#0a0f1a', border: '1px solid #1e2a45', borderRadius: '4px', padding: '0.9rem 1.1rem', marginBottom: '0.75rem'}}>
+                  <p style={{color: '#c8a96e', fontSize: '0.8rem', fontWeight: 'bold', marginBottom: '0.35rem'}}>{title}</p>
+                  <p style={{color: '#8a95aa', fontSize: '0.83rem', lineHeight: '1.6', margin: 0}}>{body}</p>
+                </div>
+              ))}
+
+              <p style={{color: '#c8a96e', fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase', borderBottom: '1px solid #1e2a45', paddingBottom: '0.4rem', marginBottom: '0.75rem', marginTop: '1.25rem'}}>Fast Action Implementation Plan</p>
+              {[
+                ['Phase 1 — Days 1–30: Cloud PMS Foundation', 'Select vendor, conduct 30-min discovery call, request references from 3 similar-sized practices. Do NOT sign a multi-year contract until migration succeeds.'],
+                ['Phase 2 — Days 31–60: SMS Communication Automation', 'Activate native SMS module or deploy Reminder Media. Configure 48h / 24h / 4h reminder cadence. Monitor opt-out rates weekly — above 8% indicates messaging problems.'],
+                ['Phase 3 — Days 61–90: Scheduling Optimization', 'Configure high-risk slot identification. Set overbooking at 10% for slots with >20% historical no-show rates. Expected staff time recovery: 6–10 hrs/week.'],
+              ].map(([title, body]) => (
+                <div key={title} style={{background: '#0a0f1a', border: '1px solid #1e2a45', borderRadius: '4px', padding: '0.9rem 1.1rem', marginBottom: '0.75rem'}}>
+                  <p style={{color: '#c8a96e', fontSize: '0.8rem', fontWeight: 'bold', marginBottom: '0.35rem'}}>{title}</p>
+                  <p style={{color: '#8a95aa', fontSize: '0.83rem', lineHeight: '1.6', margin: 0}}>{body}</p>
+                </div>
+              ))}
+
+              <p style={{color: '#c8a96e', fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase', borderBottom: '1px solid #1e2a45', paddingBottom: '0.4rem', marginBottom: '0.75rem', marginTop: '1.25rem'}}>Financial ROI</p>
+              <div style={{background: '#0d1221', border: '1px solid #1e2a45', borderLeft: '3px solid #c8a96e', padding: '0.9rem 1.1rem', borderRadius: '4px', marginBottom: '0.75rem'}}>
+                <p style={{color: '#ffffff', fontSize: '0.88rem', margin: 0}}><strong>Year 1 Net ROI: $12,400–$84,000</strong> (30–210% depending on baseline metrics and vendor selection)</p>
+              </div>
+              <p style={{color: '#b0b8cc', fontSize: '0.88rem', lineHeight: '1.75', marginBottom: '0.75rem'}}>
+                No-show reduction: A practice with 70 weekly appointments and $200 average appointment value recovering 4–9 appointments per week = $41,600–$93,600 annually. Staff time recovery: 8 hours/week at $25/hr = $10,400 annually.
+              </p>
+              <p style={{color: '#5a6a7a', fontSize: '0.8rem', fontStyle: 'italic'}}>
+                Note: Overall confidence in this roadmap is 72%. Figures assume a single-provider practice with 70 weekly appointments.
+              </p>
+
+            </div>
+
+            {/* Fade overlay */}
+            <div style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: '80px',
+              background: 'linear-gradient(to bottom, transparent, #060a12)',
+              borderRadius: '0 0 8px 8px',
+              pointerEvents: 'none',
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              paddingBottom: '0.6rem'
+            }}>
+              <span style={{color: '#c8a96e', fontSize: '0.78rem', fontWeight: 'bold', letterSpacing: '0.1em'}}>↕ scroll inside to read</span>
+            </div>
+          </div>
+
+          <p style={{textAlign: 'center', marginTop: '0.75rem'}}>
+            <Link href="/david" style={{color: '#8a95aa', fontSize: '0.82rem', borderBottom: '1px solid #2a3a55', paddingBottom: '1px'}}>
+              See David's full reasoning process behind this report →
+            </Link>
+          </p>
+        </div>
+
         <div className="fade-in" style={{
           background: '#0d1221',
           border: '1px solid #1e2a45',
