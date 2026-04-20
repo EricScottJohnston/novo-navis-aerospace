@@ -8,8 +8,6 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { name, email, business } = req.body
-
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
@@ -18,8 +16,8 @@ export default async function handler(req, res) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'Custom AI Integration Report',
-              description: `Custom up-to-25-page AI integration report for ${business}. Delivered within 24 hours.`
+              name: 'AI Blueprint — Novo Navis',
+              description: 'Custom up-to-25-page AI integration report for your business. Delivered within 24 hours.'
             },
             unit_amount: 19900
           },
@@ -28,13 +26,8 @@ export default async function handler(req, res) {
       ],
       mode: 'payment',
       allow_promotion_codes: false,
-      customer_email: email,
-      metadata: {
-        customer_name: name,
-        business_name: business
-      },
       success_url: `${req.headers.origin}/intake?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.origin}/report`
+      cancel_url: `${req.headers.origin}/#order-form`
     })
 
     res.status(200).json({ url: session.url })

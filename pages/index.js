@@ -1,90 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
-  const [agreedTerms, setAgreedTerms] = useState(false)
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [timeLeft, setTimeLeft] = useState(null)
-  const [listeningField, setListeningField] = useState(null)
-  const recognitionRef = useRef(null)
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    business: ''
-  })
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
-
-  const startVoice = (fieldName) => {
-    if (typeof window === 'undefined') return
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-    if (!SpeechRecognition) {
-      alert('Voice input is not supported in this browser. Please use Chrome.')
-      return
-    }
-
-    if (listeningField === fieldName) {
-      recognitionRef.current?.stop()
-      setListeningField(null)
-      return
-    }
-
-    recognitionRef.current?.stop()
-
-    const recognition = new SpeechRecognition()
-    recognition.continuous = false
-    recognition.interimResults = false
-    recognition.lang = 'en-US'
-
-    recognition.onresult = (e) => {
-      const transcript = e.results[0][0].transcript
-      setFormData(prev => ({
-        ...prev,
-        [fieldName]: prev[fieldName] ? prev[fieldName] + ' ' + transcript : transcript
-      }))
-    }
-
-    recognition.onend = () => setListeningField(null)
-    recognition.onerror = () => setListeningField(null)
-
-    recognitionRef.current = recognition
-    recognition.start()
-    setListeningField(fieldName)
-  }
-
-  const MicButton = ({ fieldName }) => {
-    const active = listeningField === fieldName
-    return (
-      <button
-        type="button"
-        onClick={() => startVoice(fieldName)}
-        title={active ? 'Stop listening' : 'Tap to speak'}
-        style={{
-          flexShrink: 0,
-          width: '36px',
-          height: '36px',
-          borderRadius: '50%',
-          border: active ? '2px solid #e53935' : '2px solid #1e2a45',
-          background: active ? '#1a0000' : '#0d1221',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '1rem',
-          padding: 0,
-          animation: active ? 'micPulse 1s ease-in-out infinite' : 'none',
-          transition: 'border-color 0.2s'
-        }}
-      >
-        {active ? '🔴' : '🎤'}
-      </button>
-    )
-  }
 
   // Countdown timer — persists across refreshes via localStorage
   useEffect(() => {
@@ -138,17 +60,13 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!agreedTerms) {
-      alert('You must agree to the Terms and Conditions to continue.')
-      return
-    }
     setLoading(true)
 
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({})
       })
       const data = await res.json()
       if (data.url) {
@@ -331,23 +249,6 @@ export default function Home() {
           The answer exists. You just haven't had anyone find it for you yet.
         </p>
 
-        {/* PRIMARY FREE CTA */}
-        <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block', margin: '1.5rem 0'}}>
-          <div style={{
-            background: '#4caf50',
-            borderRadius: '6px',
-            padding: '1rem 1.5rem',
-            textAlign: 'center',
-            cursor: 'pointer'
-          }}>
-            <span style={{color: '#fff', fontSize: '1.15rem', fontWeight: 'bold'}}>
-              Find My AI Tools — It's Free
-            </span>
-          </div>
-          <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0.5rem 0 0 0', textAlign: 'center'}}>
-            No credit card · 2 fields · Instant results
-          </p>
-        </Link>
 
         <Image
           src="/Drowning.jpg"
@@ -460,100 +361,26 @@ export default function Home() {
           You wouldn't build a house without a blueprint. Don't implement AI without yours.
         </p>
 
-        <p style={{color: '#8a95aa', fontSize: '0.8rem', textAlign: 'center', marginBottom: '1rem'}}>
-          Novo Navis will never sell or share your information.{' '}
-          <Link href="/privacy" style={{color: '#c8a96e'}}>Read our Privacy Policy →</Link>
-        </p>
-
         <form className="fade-in" onSubmit={handleSubmit} id="order-form">
 
-          <div className="form-group">
-            <label>Your Full Name *</label>
-            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
-              <input
-                type="text"
-                name="name"
-                required
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="John Smith"
-                style={{flex: 1}}
-              />
-              <MicButton fieldName="name" />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label>Your Email Address * (report delivered here)</label>
-            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
-              <input
-                type="email"
-                name="email"
-                required
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="john@yourbusiness.com"
-                style={{flex: 1}}
-              />
-              <MicButton fieldName="email" />
-            </div>
-          </div>
-
-          <div className="form-group">
-            <label>Business Name *</label>
-            <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
-              <input
-                type="text"
-                name="business"
-                required
-                value={formData.business}
-                onChange={handleChange}
-                placeholder="Smith Plumbing LLC"
-                style={{flex: 1}}
-              />
-              <MicButton fieldName="business" />
-            </div>
-          </div>
-
-          <p style={{color: '#8a95aa', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1.5rem'}}>
-            After checkout you'll complete a short intake form with your business details.
-            Your AI Blueprint is built from that — so the more specific you are there, the better your AI Blueprint.
-          </p>
-
-          <p style={{color: '#8a95aa', fontSize: '0.85rem', marginBottom: '1rem'}}>
-            🎤 Tap the microphone next to any field to speak your answer.
-          </p>
-
-          {listeningField && (
-            <p style={{color: '#e53935', fontSize: '0.85rem', textAlign: 'center', marginBottom: '1rem', fontWeight: 'bold'}}>
-              🔴 Listening... speak now. Tap the mic again to stop.
-            </p>
-          )}
-
-          {/* TERMS AND CONDITIONS CHECKBOX */}
+          {/* MONEY BACK GUARANTEE */}
           <div style={{
-            background: '#0d1221',
-            border: '1px solid #1e2a45',
-            borderRadius: '6px',
+            background: '#0a1a0a',
+            border: '2px solid #4caf50',
+            borderRadius: '8px',
             padding: '1rem 1.5rem',
-            margin: '1.5rem 0'
+            margin: '0 0 1.25rem 0',
+            textAlign: 'center'
           }}>
-            <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer'}}>
-              <input
-                type="checkbox"
-                checked={agreedTerms}
-                onChange={(e) => setAgreedTerms(e.target.checked)}
-                style={{marginTop: '3px', width: '18px', height: '18px', flexShrink: 0, cursor: 'pointer'}}
-              />
-              <span style={{color: '#ffffff', fontSize: '0.9rem', lineHeight: '1.5'}}>
-                I agree to the{' '}
-                <Link href="/terms" style={{color: '#c8a96e'}}>Terms and Conditions</Link>
-                {' '}and understand this report is provided for informational purposes only. Novo Navis is not liable for any business decisions made based on this report.
-              </span>
-            </label>
+            <p style={{color: '#4caf50', fontSize: '1rem', fontWeight: 'bold', margin: '0 0 0.25rem 0'}}>
+              ✓ 100% Money-Back Guarantee
+            </p>
+            <p style={{color: '#a0c8a0', fontSize: '0.88rem', margin: 0}}>
+              Not satisfied with your AI Blueprint? We'll refund you in full — no questions asked.
+            </p>
           </div>
 
-          {/* TRUST SIGNALS ABOVE SUBMIT */}
+          {/* TRUST SIGNALS */}
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
@@ -561,7 +388,7 @@ export default function Home() {
             justifyContent: 'center',
             marginBottom: '1rem'
           }}>
-            {['🔒 TLS encrypted', '🚫 Never sold or shared', '✅ 100% satisfaction guarantee'].map(label => (
+            {['🔒 Secured by Stripe', '📬 Delivered within 24 hours', '🚫 Never sold or shared'].map(label => (
               <span key={label} style={{
                 background: '#0d1221',
                 border: '1px solid #1e2a45',
@@ -580,22 +407,14 @@ export default function Home() {
               width: '100%',
               fontSize: '1.1rem',
               padding: '1rem',
-              opacity: agreedTerms ? 1 : 0.5,
-              cursor: agreedTerms ? 'pointer' : 'not-allowed',
               background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
               borderColor: '#e8a000',
               color: '#111111'
             }}
-            disabled={loading || !agreedTerms}
+            disabled={loading}
           >
             {loading ? 'Redirecting to Checkout...' : 'Get My AI Blueprint — $199'}
           </button>
-
-          <p style={{textAlign: 'center', color: '#a0aec0', fontSize: '0.85rem', marginTop: '1rem'}}>
-            Secured by Stripe. $199 — custom report, up to 25 pages.
-            Delivered to your email within 24 hours.
-            Not satisfied? We'll refund you in full — no questions asked.
-          </p>
 
           {timeLeft !== null && (
             <div style={{
@@ -644,6 +463,30 @@ export default function Home() {
               </div>
             </div>
           )}
+
+          {/* FREE TRIAL CTA — after buy button */}
+          <div style={{margin: '1.5rem 0 0 0', textAlign: 'center'}}>
+            <p style={{color: '#8a95aa', fontSize: '0.88rem', marginBottom: '0.6rem'}}>
+              Not ready to commit? Try it free first.
+            </p>
+            <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block'}}>
+              <div style={{
+                background: '#0d1a0d',
+                border: '1px solid #4caf50',
+                borderRadius: '6px',
+                padding: '0.85rem 1.5rem',
+                textAlign: 'center',
+                cursor: 'pointer'
+              }}>
+                <span style={{color: '#4caf50', fontSize: '1rem', fontWeight: 'bold'}}>
+                  Find My AI Tools — It's Free →
+                </span>
+              </div>
+              <p style={{color: '#5a6a7a', fontSize: '0.82rem', margin: '0.4rem 0 0 0', textAlign: 'center'}}>
+                No credit card · instant results
+              </p>
+            </Link>
+          </div>
 
         </form>
 

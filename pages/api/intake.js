@@ -11,6 +11,8 @@ export default async function handler(req, res) {
 
   const {
     sessionId,
+    name: bodyName,
+    business: bodyBusiness,
     industry,
     employees,
     budget,
@@ -33,9 +35,9 @@ export default async function handler(req, res) {
     if (session.payment_status !== 'paid') {
       return res.status(402).json({ error: 'Payment not verified' })
     }
-    customerName = session.metadata?.customer_name || 'Unknown'
+    customerName = bodyName || session.metadata?.customer_name || 'Unknown'
     customerEmail = session.customer_email || 'Unknown'
-    businessName = session.metadata?.business_name || 'Unknown'
+    businessName = bodyBusiness || session.metadata?.business_name || 'Unknown'
     amountPaid = `$${(session.amount_total / 100).toFixed(2)}`
   } catch (err) {
     console.error('Stripe session error:', err)

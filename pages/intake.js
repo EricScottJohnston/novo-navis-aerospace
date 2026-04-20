@@ -13,6 +13,8 @@ export default function Intake() {
   const [listeningField, setListeningField] = useState(null)
   const recognitionRef = useRef(null)
   const [formData, setFormData] = useState({
+    name: '',
+    business: '',
     industry: '',
     employees: '',
     budget: '',
@@ -194,6 +196,38 @@ export default function Intake() {
 
             {(sessionData || !session_id) && (
               <form onSubmit={handleSubmit}>
+
+                <div className="form-group">
+                  <label>Your Full Name *</label>
+                  <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="John Smith"
+                      style={{flex: 1}}
+                    />
+                    <MicButton fieldName="name" />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Business Name *</label>
+                  <div style={{display: 'flex', gap: '0.5rem', alignItems: 'center'}}>
+                    <input
+                      type="text"
+                      name="business"
+                      required
+                      value={formData.business}
+                      onChange={handleChange}
+                      placeholder="Smith Plumbing LLC"
+                      style={{flex: 1}}
+                    />
+                    <MicButton fieldName="business" />
+                  </div>
+                </div>
 
                 <div className="form-group">
                   <label>Industry *</label>
