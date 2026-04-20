@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       html: `
         <p>Here's the link you requested — open it on your desktop to get your AI Blueprint.</p>
         <p style="margin: 1.5rem 0;">
-          <a href="https://novonavis.com/api/checkout-redirect" style="background: #FFD814; color: #111; font-weight: bold; padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none;">
+          <a href="https://novonavis.com" style="background: #FFD814; color: #111; font-weight: bold; padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none;">
             Get My AI Blueprint — $199
           </a>
         </p>
