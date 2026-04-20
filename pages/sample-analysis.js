@@ -205,7 +205,7 @@ export default function SampleAnalysis() {
         <form onSubmit={handleSubmit}>
 
           <div className="form-group">
-            <label>Describe your biggest workflow problem *</label>
+            <label>What's the most ANNOYING thing you have to do manually in your business? *</label>
             <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
               <textarea
                 name="workflow"
@@ -213,7 +213,7 @@ export default function SampleAnalysis() {
                 value={formData.workflow}
                 onChange={handleChange}
                 rows={5}
-                placeholder="Example: Every morning I spend 90 minutes manually entering the previous day's job tickets into our billing system. We do about 15 jobs a day and each ticket has to be copied from our scheduling app into QuickBooks one by one."
+                placeholder="Example: Every time we finish a job I have to manually type it into QuickBooks. It's tedious and I hate it."
                 style={{flex: 1}}
               />
               <MicButton fieldName="workflow" />
