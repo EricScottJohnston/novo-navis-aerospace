@@ -278,6 +278,12 @@ export default function Home() {
           style={{width: '100%', height: 'auto', borderRadius: '8px', margin: '0 0 1.5rem 0'}}
         />
 
+        <p style={{textAlign: 'center', marginBottom: '1.5rem'}}>
+          <Link href="/diy-guide" style={{color: '#8a95aa', fontSize: '0.85rem', borderBottom: '1px solid #2a3a55', paddingBottom: '1px'}}>
+            DIY: Want to find AI tools yourself? Here's how →
+          </Link>
+        </p>
+
         <div className="fade-in card-hover" style={{
           background: '#0d1221',
           border: '1px solid #1e2a45',
