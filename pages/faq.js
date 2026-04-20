@@ -40,7 +40,7 @@ const faqs = [
   },
   {
     q: "I'm not ready to buy yet. How do I know the AI Blueprint is worth it?",
-    a: "Read the sample report for a real plumbing company before you decide. It shows you exactly what you'll receive — the format, the depth, the specific tool recommendations, and the implementation plan structure. If after reading it you still have questions, call us at (623) 428-9308 or email support@novonavis.com. We'd rather answer your questions now than have you buy something you're uncertain about."
+    a: <><Link href="/david" style={{color: '#c8a96e'}}>See how David thinks</Link> before you decide. It walks you through exactly how the analysis works — the reasoning process, the depth, and what makes it different from generic AI advice. If after reading it you still have questions, call us at (623) 428-9308 or email support@novonavis.com. We'd rather answer your questions now than have you buy something you're uncertain about.</>
   }
 ]
 
