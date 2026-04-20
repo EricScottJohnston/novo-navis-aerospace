@@ -3,62 +3,6 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
-function SendToDesktop() {
-  const [dtEmail, setDtEmail] = useState('')
-  const [dtSent, setDtSent] = useState(false)
-  const [dtLoading, setDtLoading] = useState(false)
-
-  const handleSend = async (e) => {
-    e.preventDefault()
-    if (!dtEmail) return
-    setDtLoading(true)
-    try {
-      await fetch('/api/send-to-desktop', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: dtEmail })
-      })
-      setDtSent(true)
-    } catch {
-      setDtSent(true)
-    }
-    setDtLoading(false)
-  }
-
-  if (dtSent) return (
-    <p style={{textAlign: 'center', color: '#8a95aa', fontSize: '0.82rem', margin: '0 0 1.25rem 0'}}>
-      Sent — check your inbox.
-    </p>
-  )
-
-  return (
-    <form onSubmit={handleSend} style={{display: 'flex', gap: '0.5rem', alignItems: 'center', margin: '0 0 1.25rem 0'}}>
-      <input
-        type="email"
-        value={dtEmail}
-        onChange={e => setDtEmail(e.target.value)}
-        placeholder="your@email.com"
-        style={{flex: 1, fontSize: '0.85rem', padding: '0.5rem 0.75rem', background: '#0d1221', border: '1px solid #1e2a45', borderRadius: '4px', color: '#d0d8e8'}}
-      />
-      <button
-        type="submit"
-        disabled={dtLoading}
-        style={{
-          background: 'none',
-          border: '1px solid #2a3a55',
-          borderRadius: '4px',
-          color: '#8a95aa',
-          fontSize: '0.82rem',
-          padding: '0.5rem 0.85rem',
-          cursor: 'pointer',
-          whiteSpace: 'nowrap'
-        }}
-      >
-        {dtLoading ? '...' : 'Send to Desktop'}
-      </button>
-    </form>
-  )
-}
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
@@ -509,9 +453,6 @@ export default function Home() {
         <p style={{color: '#c8a96e', fontSize: '1rem', fontStyle: 'italic', textAlign: 'center', margin: '1.5rem 0'}}>
           You wouldn't build a house without a blueprint. Don't implement AI without yours.
         </p>
-
-        {/* SEND TO DESKTOP */}
-        <SendToDesktop />
 
         <form className="fade-in" onSubmit={handleSubmit} id="order-form">
 
