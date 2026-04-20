@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
+  const [agreedTerms, setAgreedTerms] = useState(false)
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [timeLeft, setTimeLeft] = useState(null)
 
@@ -337,25 +338,6 @@ export default function Home() {
           </div>
         </Link>
 
-        {/* FREE SAMPLE CTA */}
-        <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block'}}>
-          <div className="fade-in card-hover" style={{
-            background: '#0d1a0d',
-            border: '2px solid #4caf50',
-            borderRadius: '6px',
-            padding: '1.25rem 1.5rem',
-            margin: '1.5rem 0',
-            textAlign: 'center',
-            cursor: 'pointer'
-          }}>
-            <p style={{color: '#d0d8e8', fontSize: '1rem', marginBottom: '0.5rem', fontWeight: 'bold'}}>
-              Want to see it in action before you buy?
-            </p>
-            <span style={{color: '#4caf50', fontWeight: 'bold', fontSize: '0.95rem'}}>
-              Try it here — free, no credit card →
-            </span>
-          </div>
-        </Link>
 
         <p style={{color: '#c8a96e', fontSize: '1rem', fontStyle: 'italic', textAlign: 'center', margin: '1.5rem 0'}}>
           You wouldn't build a house without a blueprint. Don't implement AI without yours.
@@ -378,6 +360,28 @@ export default function Home() {
             <p style={{color: '#a0c8a0', fontSize: '0.88rem', margin: 0}}>
               Not satisfied with your AI Blueprint? We'll refund you in full — no questions asked.
             </p>
+          </div>
+
+          {/* TERMS CHECKBOX */}
+          <div style={{
+            background: '#0d1221',
+            border: '1px solid #1e2a45',
+            borderRadius: '6px',
+            padding: '1rem 1.5rem',
+            margin: '0 0 1rem 0'
+          }}>
+            <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer'}}>
+              <input
+                type="checkbox"
+                checked={agreedTerms}
+                onChange={(e) => setAgreedTerms(e.target.checked)}
+                style={{marginTop: '3px', width: '18px', height: '18px', flexShrink: 0, cursor: 'pointer'}}
+              />
+              <span style={{color: '#d0d8e8', fontSize: '0.9rem', lineHeight: '1.5'}}>
+                I agree to the{' '}
+                <Link href="/terms" style={{color: '#c8a96e'}}>Terms and Conditions</Link>
+              </span>
+            </label>
           </div>
 
           {/* TRUST SIGNALS */}
@@ -409,9 +413,11 @@ export default function Home() {
               padding: '1rem',
               background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
               borderColor: '#e8a000',
-              color: '#111111'
+              color: '#111111',
+              opacity: agreedTerms ? 1 : 0.5,
+              cursor: agreedTerms ? 'pointer' : 'not-allowed'
             }}
-            disabled={loading}
+            disabled={loading || !agreedTerms}
           >
             {loading ? 'Redirecting to Checkout...' : 'Get My AI Blueprint — $199'}
           </button>
