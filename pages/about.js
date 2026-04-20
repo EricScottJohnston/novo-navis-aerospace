@@ -132,6 +132,34 @@ export default function About() {
             </p>
           </div>
 
+          {/* REDDIT */}
+          <div style={{
+            background: '#0a0f1a',
+            border: '1px solid #1e2a45',
+            borderRadius: '6px',
+            padding: '1.25rem 1.5rem',
+            margin: '0 0 1.75rem 0'
+          }}>
+            <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 'bold', marginBottom: '0.75rem'}}>
+              Find Us on Reddit
+            </p>
+            <p style={{color: '#8a95aa', fontSize: '0.88rem', marginBottom: '0.75rem'}}>
+              We're active in the AI for Small Business community. Come see what we're talking about.
+            </p>
+            <ul style={{listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.5rem'}}>
+              <li>
+                <a href="https://www.reddit.com/r/AiForSmallBusiness/comments/1snruki/i_built_a_causal_ai_system_for_small_businesses/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e', fontSize: '0.92rem'}}>
+                  I built a causal AI system for small businesses →
+                </a>
+              </li>
+              <li>
+                <a href="https://www.reddit.com/r/AiForSmallBusiness/comments/1shq87i/ai_got_gimmecky_real_fast/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e', fontSize: '0.92rem'}}>
+                  AI got gimmicky real fast →
+                </a>
+              </li>
+            </ul>
+          </div>
+
           {/* CONTACT */}
           <div style={{
             background: '#0d1221',

@@ -3,12 +3,32 @@ import Link from 'next/link'
 
 const faqs = [
   {
-    q: "What exactly is in the AI Blueprint?",
-    a: "You receive a up to 25-page document built around your specific business. It covers your top 3–5 automatable workflows ranked by estimated time savings, specific AI tools matched to each workflow and your budget, a fast action implementation plan, an honest ROI estimate for your business size and industry, and a risks section that tells you what can go wrong and how to prevent it. Every report is reviewed by a human AI consultant before it's sent."
+    q: "Who is Novo Navis?",
+    a: <>Novo Navis Aerospace Operations LLC is a registered U.S. federal contractor and aerospace research and development company that built a causal AI system for air traffic control — and made it available to small businesses. You can read what we&apos;re talking about in the AI for Small Business community on Reddit:{' '}
+      <a href="https://www.reddit.com/r/AiForSmallBusiness/comments/1snruki/i_built_a_causal_ai_system_for_small_businesses/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e'}}>I built a causal AI system for small businesses →</a>
+      {' '}and{' '}
+      <a href="https://www.reddit.com/r/AiForSmallBusiness/comments/1shq87i/ai_got_gimmecky_real_fast/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e'}}>AI got gimmicky real fast →</a>
+    </>
   },
   {
     q: "How is this different from just asking ChatGPT?",
     a: "ChatGPT gives generic answers. Your AI Blueprint is built from the specific details you provide about your business — your workflows, your employee count, your budget, your biggest operational problem. The Small Psychological Model runs seven specialized analytical passes on your intake data, and the output is reviewed by Eric Johnston, a Principal Investigator on active U.S. Department of Defense AI research projects. You get a structured, prioritized plan — not a list of ideas."
+  },
+  {
+    q: "What exactly is in the AI Blueprint?",
+    a: "You receive a up to 25-page document built around your specific business. It covers your top 3–5 automatable workflows ranked by estimated time savings, specific AI tools matched to each workflow and your budget, a fast action implementation plan, an honest ROI estimate for your business size and industry, and a risks section that tells you what can go wrong and how to prevent it. Every report is reviewed by a human AI consultant before it's sent."
+  },
+  {
+    q: "Do I need to be tech-savvy to use the tools you recommend?",
+    a: "No. The AI Blueprint is built for business owners, not developers. Every tool recommendation includes what it does, what it costs, how long setup takes, and what could go wrong. The implementation plan is designed so that Phase 1 starts with the lowest-friction, highest-impact changes — things you or your office manager can implement without technical help. If something in the AI Blueprint is unclear, you can call or email us and we'll walk you through it."
+  },
+  {
+    q: "Will the AI tools you recommend be too expensive for my business?",
+    a: "No. Budget-matching is built into your AI Blueprint. You tell us your monthly software budget during the intake, and every tool we recommend fits within that range. If you're on a tight budget, we focus on free tiers and freemium tools. If you have room to invest, we show you the full recommended stack and the ROI that justifies it. We'll never recommend a $500/month platform to a business that told us their budget is under $50."
+  },
+  {
+    q: "What industries do you serve?",
+    a: "The Small Psychological Model is trained on automation profiles across trades (HVAC, plumbing, electrical, landscaping), professional services (legal, accounting, consulting), healthcare (dental, chiropractic), real estate and property management, retail, e-commerce, restaurant and hospitality, and construction. If your industry isn't listed, select 'Other' in the intake form and describe your business — the model handles it."
   },
   {
     q: "How does the 24-hour delivery work?",
@@ -19,28 +39,12 @@ const faqs = [
     a: "Full refund, no questions asked. If you read your AI Blueprint and don't find it useful, email support@novonavis.com and we'll refund you in full. We'd rather lose the $199 than send a report that doesn't deliver value."
   },
   {
-    q: "Do I need to be tech-savvy to use the tools you recommend?",
-    a: "No. The AI Blueprint is built for business owners, not developers. Every tool recommendation includes what it does, what it costs, how long setup takes, and what could go wrong. The implementation plan is designed so that Phase 1 starts with the lowest-friction, highest-impact changes — things you or your office manager can implement without technical help. If something in the AI Blueprint is unclear, you can call or email us and we'll walk you through it."
-  },
-  {
-    q: "What industries do you serve?",
-    a: "The Small Psychological Model is trained on automation profiles across trades (HVAC, plumbing, electrical, landscaping), professional services (legal, accounting, consulting), healthcare (dental, chiropractic), real estate and property management, retail, e-commerce, restaurant and hospitality, and construction. If your industry isn't listed, select 'Other' in the intake form and describe your business — the model handles it."
+    q: "How is my business information handled?",
+    a: "Your intake data is used solely to build your AI Blueprint. It is never sold, shared with third parties, or used for marketing. Payment is processed by Stripe — Novo Navis never sees your card number. Your AI Blueprint is delivered by email and is not stored on a public server. You can read our full Privacy Policy for details."
   },
   {
     q: "Are there any businesses you don't serve?",
     a: "Yes. Novo Navis does not provide services to cannabis or marijuana dispensary operations. As a registered U.S. federal contractor, we are prohibited from conducting business with entities engaged in activities that remain illegal under federal law, regardless of state-level legalization. We also do not serve businesses whose operations conflict with U.S. national security interests. As a defense contractor and Principal Investigator on active Department of Defense research projects, we have an obligation to decline any engagement that could present a conflict with those responsibilities. Beyond these specific exclusions, Novo Navis reserves the right to decline service to any business we determine, at our sole discretion, may be in conflict with local, state, federal, or international law. If we decline your order for any reason, you will receive a full refund."
-  },
-  {
-    q: "Will the AI tools you recommend be too expensive for my business?",
-    a: "No. Budget-matching is built into your AI Blueprint. You tell us your monthly software budget during the intake, and every tool we recommend fits within that range. If you're on a tight budget, we focus on free tiers and freemium tools. If you have room to invest, we show you the full recommended stack and the ROI that justifies it. We'll never recommend a $500/month platform to a business that told us their budget is under $50."
-  },
-  {
-    q: "What is the Small Psychological Model?",
-    a: "The Small Psychological Model (SPM) is a proprietary multi-pass analytical system built by Novo Navis. It runs your intake data through seven specialized analytical instances — each focused on a different dimension of your business — before assembling the final report. The same analytical frameworks used in defense-grade AI assessments underlie its design. It is not a chatbot, and it does not produce template responses. Every report is unique to the business that ordered it."
-  },
-  {
-    q: "How is my business information handled?",
-    a: "Your intake data is used solely to build your AI Blueprint. It is never sold, shared with third parties, or used for marketing. Payment is processed by Stripe — Novo Navis never sees your card number. Your AI Blueprint is delivered by email and is not stored on a public server. You can read our full Privacy Policy for details."
   },
   {
     q: "I'm not ready to buy yet. How do I know the AI Blueprint is worth it?",
@@ -93,8 +97,8 @@ export default function FAQ() {
         </div>
 
         <div style={{
-          background: '#0d1a0d',
-          border: '2px solid #4caf50',
+          background: '#0d1221',
+          border: '1px solid #1e2a45',
           borderRadius: '8px',
           padding: '1.5rem',
           margin: '2.5rem 0',
@@ -109,8 +113,8 @@ export default function FAQ() {
           <p style={{marginBottom: '1.25rem'}}>
             <a href="mailto:support@novonavis.com" style={{color: '#c8a96e'}}>support@novonavis.com</a>
           </p>
-          <Link href="/#order-form" className="btn-primary" style={{background: '#4caf50', borderColor: '#4caf50'}}>
-            ⚡ Start Here →
+          <Link href="/#order-form" className="btn-primary">
+            Get My AI Blueprint — $199 →
           </Link>
         </div>
 
