@@ -58,8 +58,9 @@ export default function Results() {
             className="btn-primary"
             style={{
               display: 'inline-block',
-              background: '#4caf50',
-              borderColor: '#4caf50',
+              background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
+              borderColor: '#e8a000',
+              color: '#111111',
               fontSize: '1rem',
               padding: '0.85rem 1.75rem'
             }}
@@ -130,8 +131,9 @@ export default function Results() {
             className="btn-primary"
             style={{
               display: 'inline-block',
-              background: '#4caf50',
-              borderColor: '#4caf50',
+              background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
+              borderColor: '#e8a000',
+              color: '#111111',
               fontSize: '1.1rem',
               padding: '1rem 2rem',
               marginBottom: '1rem'
