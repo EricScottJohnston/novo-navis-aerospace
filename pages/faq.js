@@ -27,6 +27,10 @@ const faqs = [
     a: "The Small Psychological Model is trained on automation profiles across trades (HVAC, plumbing, electrical, landscaping), professional services (legal, accounting, consulting), healthcare (dental, chiropractic), real estate and property management, retail, e-commerce, restaurant and hospitality, and construction. If your industry isn't listed, select 'Other' in the intake form and describe your business — the model handles it."
   },
   {
+    q: "Are there any businesses you don't serve?",
+    a: "Yes. Novo Navis does not provide services to cannabis or marijuana dispensary operations. As a registered U.S. federal contractor, we are prohibited from conducting business with entities engaged in activities that remain illegal under federal law, regardless of state-level legalization. We also do not serve businesses whose operations conflict with U.S. national security interests. As a defense contractor and Principal Investigator on active Department of Defense research projects, we have an obligation to decline any engagement that could present a conflict with those responsibilities. Beyond these specific exclusions, Novo Navis reserves the right to decline service to any business we determine, at our sole discretion, may be in conflict with local, state, federal, or international law. If we decline your order for any reason, you will receive a full refund."
+  },
+  {
     q: "Will the AI tools you recommend be too expensive for my business?",
     a: "No. Budget-matching is built into your AI Blueprint. You tell us your monthly software budget during the intake, and every tool we recommend fits within that range. If you're on a tight budget, we focus on free tiers and freemium tools. If you have room to invest, we show you the full recommended stack and the ROI that justifies it. We'll never recommend a $500/month platform to a business that told us their budget is under $50."
   },
