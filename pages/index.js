@@ -279,7 +279,7 @@ export default function Home() {
         />
 
         <p style={{textAlign: 'center', marginBottom: '1.5rem'}}>
-          <Link href="/diy-guide" style={{color: '#8a95aa', fontSize: '0.85rem', borderBottom: '1px solid #2a3a55', paddingBottom: '1px'}}>
+          <Link href="/diy-guide" style={{color: '#c8a96e', fontSize: '0.95rem', fontWeight: 'bold', borderBottom: '1px solid #c8a96e', paddingBottom: '1px'}}>
             DIY: Want to find AI tools yourself? Here's how →
           </Link>
         </p>
