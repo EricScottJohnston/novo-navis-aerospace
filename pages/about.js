@@ -7,7 +7,7 @@ export default function About() {
     <>
       <Head>
         <title>About | Novo Navis Aerospace Operations LLC</title>
-        <meta name="description" content="Novo Navis Aerospace Operations LLC is an aerospace R&D company specializing in carbon fiber composite materials. We built David — a proprietary AI workflow analysis model — for our own operations. Now it works for yours." />
+        <meta name="description" content="Novo Navis Aerospace Operations LLC is a registered, active U.S. Defense Contractor (CAGE 8GN22). We deliver the same trusted AI solutions to small businesses that we deliver to our defense customers." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -46,21 +46,15 @@ export default function About() {
             </figcaption>
           </figure>
 
-          <p>Novo Navis Aerospace Operations LLC is an aerospace research and development company specializing in the design and fabrication of customized three-dimensional carbon fiber composite materials for government and civilian applications.</p>
+          <p>Novo Navis Aerospace Operations LLC is a registered, active U.S. Defense Contractor. CAGE Code <a href="https://www.dla.mil/LandandMaritime/Business/Selling/Vendor-Registration/CAGE-Code-Look-up/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e'}}>8GN22</a> — you can verify that right now through the Defense Logistics Agency. That is not a marketing claim. It is a federal registration you can look up in thirty seconds.</p>
 
-          <p>One of our core research areas is AI for air traffic control — a domain where standard AI simply is not good enough. When safety depends on it, you need AI that understands cause and effect, not just pattern matching. That requirement forced us to develop something different from the ground up: causal AI.</p>
+          <p>Operating as a defense contractor means our internal AI work is held to a standard that most commercial tools never have to meet. It has to be right. It has to reason from cause to effect, not just find patterns and make predictions. That requirement shaped how we build AI — and it is the foundation of everything we do.</p>
 
-          <p>Most AI tools — including large language models — are correlative. They find patterns in data and make predictions based on what has happened before. Causal AI goes further. It reasons about why things happen, identifies the actual mechanisms driving outcomes, and produces recommendations grounded in cause and effect rather than statistical association. In air traffic control, that distinction matters enormously. In business operations, it turns out it matters just as much.</p>
+          <p>The AI frameworks we developed for our own operations do not stay inside defense work. We apply that same rigor to small business analysis. When you get an AI Blueprint from Novo Navis, the methodology behind it was built under the same standard we hold ourselves to as a registered defense contractor — not adapted from a consumer chatbot.</p>
 
-          <p>Aerospace research moves slowly and costs a lot. To fund it, we needed a way to commercialize what we had built. The causal reasoning engine we developed for air traffic control turned out to be applicable to any domain where decisions have consequences — including business operations. David is that engine, applied to a different problem. Every AI Blueprint we deliver furthers the research and development of causal AI.</p>
+          <p>The tool that runs that analysis is David — a proprietary Small Psychological Model built for our own operations and applied to small business workflow problems. David does not generate generic advice. He reasons through your specific operational reality, identifies the actual causes of your inefficiencies, and tells you exactly where AI can reduce manual work, cut costs, and improve efficiency.</p>
 
-          <p>As we scaled our own operations, we encountered a problem familiar to many advanced manufacturers — integrating AI into complex, highly specialized workflows. No existing tool understood our processes. So we built our own.</p>
-
-          <p>The result was David — a proprietary Small Psychological Model that applies causal reasoning to business workflow analysis. David does not generate generic advice. He reasons through your specific operational reality, identifies the actual causes of your inefficiencies, and tells you exactly where AI can reduce manual work, cut costs, and improve efficiency.</p>
-
-          <p>That is a fundamentally different kind of analysis than what you get from standard AI tools. And it is available to small business owners at a price point that has never existed before.</p>
-
-          <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1.05rem'}}>David was built for aerospace. Now he works for you.</p>
+          <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1.05rem'}}>Defense-grade rigor. Small business price point. That is what makes us different.</p>
 
           <Link href="/david" style={{textDecoration: 'none', display: 'block'}}>
             <div style={{
