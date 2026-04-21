@@ -13,6 +13,7 @@ const sqs = new SQSClient({ region: process.env.AWS_REGION || 'us-east-1' })
 const TIER_MAP = {
   4900:  'starter',   // $49
   19900: 'blueprint', // $199
+  49900: 'consult',   // $499
 }
 
 export default async function handler(req, res) {

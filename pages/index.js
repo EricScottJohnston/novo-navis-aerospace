@@ -543,6 +543,47 @@ export default function Home() {
               </button>
             </div>
 
+            {/* BLUEPRINT + CONSULT */}
+            <div style={{
+              background: '#0d1221',
+              border: '1px solid #1e2a45',
+              borderRadius: '8px',
+              padding: '1.25rem 1.5rem',
+            }}>
+              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem'}}>
+                <div>
+                  <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1rem', margin: 0}}>Blueprint + Consult</p>
+                  <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: '0.15rem 0 0 0'}}>Report plus 2-hour Zoom session</p>
+                </div>
+                <p style={{color: '#d0d8e8', fontWeight: 'bold', fontSize: '1.4rem', margin: 0}}>$499</p>
+              </div>
+              <ul style={{listStyle: 'none', padding: 0, margin: '0 0 1rem 0', color: '#8a95aa', fontSize: '0.85rem', lineHeight: '1.8'}}>
+                <li>✓ &nbsp;Up to 25-page report</li>
+                <li>✓ &nbsp;Identifies AI tools and workflows</li>
+                <li>✓ &nbsp;Implementation guidance</li>
+                <li>✓ &nbsp;ROI estimates</li>
+                <li>✓ &nbsp;Built in real time</li>
+                <li>✓ &nbsp;2-hour Zoom with Eric Johnston</li>
+              </ul>
+              <button
+                onClick={() => handleCheckout('consult')}
+                disabled={!agreedTerms || loadingTier !== null}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  background: agreedTerms ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : '#2a3a55',
+                  border: 'none',
+                  borderRadius: '6px',
+                  color: agreedTerms ? '#111111' : '#8a95aa',
+                  fontWeight: 'bold',
+                  fontSize: '0.95rem',
+                  cursor: agreedTerms ? 'pointer' : 'not-allowed'
+                }}
+              >
+                {loadingTier === 'consult' ? 'Redirecting...' : 'Get Blueprint + Consult — $499'}
+              </button>
+            </div>
+
             {/* BLUEPRINT — RECOMMENDED */}
             <div style={{
               background: '#0a1221',
