@@ -520,8 +520,8 @@ export default function Home() {
               <ul style={{listStyle: 'none', padding: 0, margin: '0 0 1rem 0', color: '#8a95aa', fontSize: '0.85rem', lineHeight: '1.8'}}>
                 <li>✓ &nbsp;5-page report</li>
                 <li>✓ &nbsp;Identifies AI tools and workflows</li>
+                <li>✓ &nbsp;Built in real time</li>
                 <li>✗ &nbsp;No implementation guidance</li>
-                <li>✗ &nbsp;No ROI estimates</li>
               </ul>
               <button
                 onClick={() => handleCheckout('starter')}
