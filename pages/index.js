@@ -521,7 +521,8 @@ export default function Home() {
                 <li>✓ &nbsp;5-page report</li>
                 <li>✓ &nbsp;Identifies AI tools and workflows</li>
                 <li>✓ &nbsp;Built in real time</li>
-                <li>✗ &nbsp;No implementation guidance</li>
+                <li>✓ &nbsp;Implementation guidance</li>
+                <li>✗ &nbsp;No ROI estimates</li>
               </ul>
               <button
                 onClick={() => handleCheckout('starter')}
