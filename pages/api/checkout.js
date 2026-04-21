@@ -4,6 +4,11 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 const TIERS = {
+  test: {
+    name: 'Test — Novo Navis',
+    description: 'Internal end-to-end smoke test. Do not use in production.',
+    unit_amount: 100
+  },
   starter: {
     name: 'Starter — Novo Navis',
     description: '5-page AI workflow analysis. Identifies the right tools and workflows for your business.',

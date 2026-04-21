@@ -588,6 +588,30 @@ export default function Home() {
               </button>
             </div>
 
+            {/* TEST TIER — REMOVE AFTER TESTING */}
+            <div style={{
+              background: '#1a0a0a',
+              border: '1px dashed #e57373',
+              borderRadius: '6px', padding: '1.25rem'
+            }}>
+              <p style={{color: '#e57373', fontSize: '0.75rem', marginBottom: '0.5rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em'}}>
+                Internal test — remove before launch
+              </p>
+              <button
+                onClick={() => handleCheckout('test')}
+                disabled={loadingTier !== null}
+                style={{
+                  width: '100%', padding: '0.6rem',
+                  background: '#2a0a0a', border: '1px solid #e57373',
+                  borderRadius: '4px', color: '#e57373',
+                  fontWeight: 'bold', fontSize: '0.85rem',
+                  cursor: 'pointer'
+                }}
+              >
+                {loadingTier === 'test' ? 'Redirecting...' : 'Run $1 End-to-End Test'}
+              </button>
+            </div>
+
           </div>
 
           {/* TRUST SIGNALS */}
