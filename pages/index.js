@@ -175,10 +175,10 @@ export default function Home() {
 
         <h1 style={{fontWeight: 'bold'}}>
           <span style={{color: '#c8a96e', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)', display: 'block'}}>
-            That annoying manual task you do every day?
+            If you already know which AI tools your business needs, you don't need us.
           </span>
           <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
-            We'll find the AI tool that makes it go away.
+            If you don't — you're in the right spot.
           </span>
         </h1>
 
