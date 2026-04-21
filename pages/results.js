@@ -112,8 +112,7 @@ export default function Results() {
           <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.7', marginBottom: '1.5rem'}}>
             The full Novo Navis report analyzes your entire operation. You'll receive a up to 25-page
             custom report with specific AI tools matched to your budget, a prioritized
-            fast action implementation plan, and an honest ROI estimate — reviewed by a human
-            AI consultant and built and delivered to your inbox in real time.
+            fast action implementation plan, and an honest ROI estimate — built and delivered to your inbox in real time.
           </p>
 
           <div style={{

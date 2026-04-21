@@ -101,7 +101,7 @@ const REASONING = [
   { type: 'log', label: 'Overall confidence', val: '72%' },
   { type: 'divider' },
   { type: 'boot', text: 'Report saved to cortex_reports/' },
-  { type: 'boot', text: 'Ready for delivery after human review.' },
+  { type: 'boot', text: 'Ready for delivery. Sending to customer now.' },
 ]
 
 function ReasoningLine({ item }) {

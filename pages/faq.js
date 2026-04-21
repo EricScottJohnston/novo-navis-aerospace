@@ -12,11 +12,11 @@ const faqs = [
   },
   {
     q: "How is this different from just asking ChatGPT?",
-    a: "ChatGPT gives generic answers. Your AI Blueprint is built from the specific details you provide about your business — your workflows, your employee count, your budget, your biggest operational problem. The Small Psychological Model runs seven specialized analytical passes on your intake data, and the output is reviewed by Eric Johnston, a Principal Investigator on active U.S. Department of Defense AI research projects. You get a structured, prioritized plan — not a list of ideas."
+    a: "ChatGPT gives generic answers. Your AI Blueprint is built from the specific details you provide about your business — your workflows, your employee count, your budget, your biggest operational problem. The Small Psychological Model runs seven specialized analytical passes on your intake data using live market data, industry benchmarks, and a causal reasoning framework developed for defense-grade AI applications. You get a structured, prioritized plan — not a list of ideas."
   },
   {
     q: "What exactly is in the AI Blueprint?",
-    a: "You receive a up to 25-page document built around your specific business. It covers your top 3–5 automatable workflows ranked by estimated time savings, specific AI tools matched to each workflow and your budget, a fast action implementation plan, an honest ROI estimate for your business size and industry, and a risks section that tells you what can go wrong and how to prevent it. Every report is reviewed by a human AI consultant before it's sent."
+    a: "You receive a up to 25-page document built around your specific business. It covers your top 3–5 automatable workflows ranked by estimated time savings, specific AI tools matched to each workflow and your budget, a fast action implementation plan, an honest ROI estimate for your business size and industry, and a risks section that tells you what can go wrong and how to prevent it. The entire report is built and delivered automatically — no human delay."
   },
   {
     q: "Do I need to be tech-savvy to use the tools you recommend?",

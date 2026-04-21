@@ -399,7 +399,7 @@ export default function Home() {
             <li>✓ &nbsp;Specific AI tools matched to each one — and your budget</li>
             <li>✓ &nbsp;A fast action implementation plan</li>
             <li>✓ &nbsp;A straight answer on whether this will actually save you money</li>
-            <li>✓ &nbsp;Human review by an AI consultant before delivery</li>
+            <li>✓ &nbsp;Fully automated — no human delay</li>
           </ul>
         </div>
 

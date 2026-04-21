@@ -23,8 +23,7 @@ export default function Success() {
         <div style={{fontSize: '3rem', marginBottom: '1rem'}}>✓</div>
         <h1 style={{marginBottom: '1rem'}}>You're all set.</h1>
         <p className="lead">
-          Your intake has been received. Eric will review your business details,
-          run your AI Blueprint, and deliver it to your inbox in real time.
+          Your intake has been received. David is building your report now and will deliver it to your inbox shortly.
         </p>
 
         <div style={{
