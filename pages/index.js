@@ -175,10 +175,10 @@ export default function Home() {
 
         <h1 style={{fontWeight: 'bold'}}>
           <span style={{color: '#c8a96e', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)', display: 'block'}}>
-            If you already know which AI tools your business needs, you don't need us.
+            That thing you do manually every day that drives you crazy?
           </span>
           <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
-            If you don't — you're in the right spot.
+            There's an AI tool that makes it go away. We'll find it for you.
           </span>
         </h1>
 
@@ -198,11 +198,6 @@ export default function Home() {
           style={{width: '100%', height: 'auto', borderRadius: '8px', margin: '0 0 1.5rem 0'}}
         />
 
-        <p style={{textAlign: 'center', marginBottom: '1.5rem'}}>
-          <Link href="/diy-guide" style={{color: '#c8a96e', fontSize: '0.95rem', fontWeight: 'bold', borderBottom: '1px solid #c8a96e', paddingBottom: '1px'}}>
-            DIY: Want to find AI tools yourself? Here's how →
-          </Link>
-        </p>
 
         <div className="fade-in card-hover" style={{
           background: '#0d1221',
@@ -452,6 +447,12 @@ export default function Home() {
 
         <p style={{color: '#c8a96e', fontSize: '1rem', fontStyle: 'italic', textAlign: 'center', margin: '1.5rem 0'}}>
           You wouldn't build a house without a blueprint. Don't implement AI without yours.
+        </p>
+
+        <p style={{textAlign: 'center', marginBottom: '1.25rem'}}>
+          <Link href="/diy-guide" style={{color: '#8a95aa', fontSize: '0.88rem', borderBottom: '1px solid #2a3a55', paddingBottom: '1px'}}>
+            Can we offer you some free integration tips before you leave? →
+          </Link>
         </p>
 
         <form className="fade-in" onSubmit={handleSubmit} id="order-form">
