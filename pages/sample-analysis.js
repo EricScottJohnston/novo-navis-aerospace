@@ -120,8 +120,8 @@ export default function SampleAnalysis() {
   return (
     <>
       <Head>
-        <title>Free AI Workflow Analysis | Novo Navis</title>
-        <meta name="description" content="Describe one workflow problem in your business and get a free AI integration recommendation from Novo Navis. No credit card required." />
+        <title>Fix Your Most Annoying Manual Task — Free | Novo Navis</title>
+        <meta name="description" content="Tell us the most annoying thing you have to do manually and we'll tell you exactly which AI tool can eliminate it. Free, instant, no credit card." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>{`
           @keyframes micPulse {
@@ -161,11 +161,11 @@ export default function SampleAnalysis() {
         </div>
 
         <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>
-          Get a Free AI Analysis of Your Biggest Workflow Problem
+          Tell us what's ANNOYING you. We'll tell you how to make it stop.
         </h1>
 
         <p style={{color: '#4caf50', fontWeight: 'bold', fontSize: '1.1rem', margin: '-0.5rem 0 0.75rem 0'}}>
-          60 seconds here returns 60 minutes of your time tomorrow.
+          60 seconds here could eliminate that task for good.
         </p>
 
         <p style={{textAlign: 'center', marginBottom: '1.5rem'}}>
@@ -175,9 +175,9 @@ export default function SampleAnalysis() {
         </p>
 
         <p className="lead">
-          Describe one repetitive process that's eating your time. Our AI will analyze it
-          and tell you exactly which tools can automate it — and how much time you'll get back.
-          Takes 60 seconds. Results delivered instantly.
+          You know that one thing you do every day that you wish would just go away?
+          Tell us what it is. We'll tell you exactly which AI tool can take it off your plate
+          and how much time you'll get back. Takes 60 seconds. Results delivered instantly.
         </p>
 
         <div style={{
@@ -191,9 +191,9 @@ export default function SampleAnalysis() {
             What you'll get
           </p>
           <ul style={{listStyle: 'none', padding: 0, margin: 0, color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.8'}}>
-            <li>✓ &nbsp;Specific AI tools that solve your exact problem</li>
-            <li>✓ &nbsp;Realistic time savings estimate</li>
-            <li>✓ &nbsp;Approximate cost to implement</li>
+            <li>✓ &nbsp;The exact AI tool that fixes your specific problem</li>
+            <li>✓ &nbsp;How much time you'll get back each week</li>
+            <li>✓ &nbsp;What it costs to set up</li>
             <li>✓ &nbsp;Delivered instantly — no waiting</li>
           </ul>
         </div>
@@ -221,7 +221,7 @@ export default function SampleAnalysis() {
           </div>
 
           <p style={{color: '#8a95aa', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1.5rem'}}>
-            The more specific you are, the more useful your analysis will be.
+            The more detail you give, the more specific the fix will be.
           </p>
 
           <p style={{color: '#5a6a7a', fontSize: '0.8rem', marginBottom: '1.5rem', borderLeft: '2px solid #1e2a45', paddingLeft: '0.75rem'}}>
@@ -246,7 +246,7 @@ export default function SampleAnalysis() {
             }}
             disabled={loading}
           >
-            {loading ? 'Analyzing your workflow...' : 'Get My Free Analysis →'}
+            {loading ? 'Finding your fix...' : 'Show Me the Fix →'}
           </button>
 
           <p style={{textAlign: 'center', color: '#8a95aa', fontSize: '0.85rem', marginTop: '1rem'}}>
