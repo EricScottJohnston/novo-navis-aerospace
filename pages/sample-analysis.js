@@ -94,7 +94,7 @@ export default function SampleAnalysis() {
       })
       const data = await res.json()
       if (res.status === 429 || data.error === 'rate_limited') {
-        alert('You\'ve already used your free analysis.')
+        alert('You\'ve already used your free analysis. Please purchase the full AI Blueprint.')
         setLoading(false)
         return
       }
