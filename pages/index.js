@@ -191,10 +191,13 @@ export default function Home() {
         </p>
 
         <Image
-          src="/flow.png"
-          alt="From manual to AI-automated workflow — 3 step process"
-          width={600}
-          height={900}
+          src="/jungle.png"
+          alt="Business owner lost in a jungle of AI tools"
+          width={700}
+          height={700}
+          priority
+          sizes="609px"
+          quality={60}
           style={{width: '100%', height: 'auto', borderRadius: '8px', margin: '0 0 1.5rem 0'}}
         />
 
@@ -358,10 +361,10 @@ export default function Home() {
 
 
         <Image
-          src="/jungle.png"
-          alt="Business owner lost in a jungle of AI tools"
-          width={700}
-          height={700}
+          src="/flow.png"
+          alt="From manual to AI-automated workflow — 3 step process"
+          width={600}
+          height={900}
           priority
           sizes="609px"
           quality={60}
