@@ -520,9 +520,9 @@ export default function Home() {
               <ul style={{listStyle: 'none', padding: 0, margin: '0 0 1rem 0', color: '#8a95aa', fontSize: '0.85rem', lineHeight: '1.8'}}>
                 <li>✓ &nbsp;5-page report</li>
                 <li>✓ &nbsp;Identifies AI tools and workflows</li>
-                <li>✓ &nbsp;Built in real time</li>
                 <li>✓ &nbsp;Implementation guidance</li>
                 <li>✗ &nbsp;No ROI estimates</li>
+                <li>✓ &nbsp;Built in real time</li>
               </ul>
               <button
                 onClick={() => handleCheckout('starter')}
@@ -573,11 +573,11 @@ export default function Home() {
                 <p style={{color: '#d0d8e8', fontWeight: 'bold', fontSize: '1.4rem', margin: 0}}>$199</p>
               </div>
               <ul style={{listStyle: 'none', padding: 0, margin: '0 0 1rem 0', color: '#d0d8e8', fontSize: '0.85rem', lineHeight: '1.8'}}>
-                <li>✓ &nbsp;Up to 25-page custom report</li>
+                <li>✓ &nbsp;Up to 25-page report</li>
                 <li>✓ &nbsp;Identifies AI tools and workflows</li>
-                <li>✓ &nbsp;Step-by-step implementation guidance</li>
-                <li>✓ &nbsp;ROI estimates for each recommendation</li>
-                <li>✓ &nbsp;Built and delivered in real time</li>
+                <li>✓ &nbsp;Implementation guidance</li>
+                <li>✓ &nbsp;ROI estimates</li>
+                <li>✓ &nbsp;Built in real time</li>
               </ul>
               <button
                 onClick={() => handleCheckout('blueprint')}
