@@ -10,7 +10,10 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 const sqs = new SQSClient({ region: process.env.AWS_REGION || 'us-east-1' })
 
-const BLUEPRINT_AMOUNT = 19900 // $199.00
+const TIER_MAP = {
+  4900:  'starter',   // $49
+  19900: 'blueprint', // $199
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
@@ -72,15 +75,16 @@ export default async function handler(req, res) {
     `Problem: ${goal}`,
   ].join('\n')
 
-  // Route $199 Blueprint orders to David via SQS
+  // Route all known tiers to David via SQS
+  const tier = TIER_MAP[amountTotal] || null
   let sqsSent = false
-  if (amountTotal === BLUEPRINT_AMOUNT && process.env.SQS_QUEUE_URL) {
+  if (tier && process.env.SQS_QUEUE_URL) {
     try {
       await sqs.send(new SendMessageCommand({
         QueueUrl:    process.env.SQS_QUEUE_URL,
-        MessageBody: JSON.stringify({ orderId, orderText }),
+        MessageBody: JSON.stringify({ orderId, orderText, tier }),
         MessageAttributes: {
-          tier: { DataType: 'String', StringValue: 'blueprint' }
+          tier: { DataType: 'String', StringValue: tier }
         }
       }))
       sqsSent = true
@@ -100,7 +104,8 @@ export default async function handler(req, res) {
       html: `
         <h2>Intake Form Received</h2>
         <p><strong>Amount Paid:</strong> ${amountPaid}</p>
-        <p><strong>David Auto-Queued:</strong> ${sqsSent ? '✅ Yes — Order ID: ' + orderId : '⚠️ No — SQS not configured or wrong tier'}</p>
+        <p><strong>Tier:</strong> ${tier || 'unknown'}</p>
+        <p><strong>David Auto-Queued:</strong> ${sqsSent ? '✅ Yes — Order ID: ' + orderId : '⚠️ No — SQS not configured or unrecognized tier'}</p>
         <hr />
         <h3>Customer</h3>
         <p><strong>Name:</strong> ${customerName}</p>
