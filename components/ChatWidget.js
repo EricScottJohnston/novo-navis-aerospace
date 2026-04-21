@@ -443,39 +443,62 @@ export default function ChatWidget() {
         </div>
       )}
 
-      {/* Floating toggle button */}
-      <button
-        onClick={() => setOpen(prev => !prev)}
-        aria-label={open ? 'Close chat' : 'Chat with us'}
-        style={{
-          position: 'fixed',
-          bottom: '16px',
-          right: '16px',
-          width: '52px',
-          height: '52px',
-          borderRadius: '50%',
-          background: '#c8a96e',
-          border: 'none',
-          cursor: 'pointer',
-          boxShadow: '0 4px 16px rgba(200, 169, 110, 0.4)',
-          zIndex: 10000,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '1.4rem',
-          transition: 'transform 0.2s, box-shadow 0.2s'
-        }}
-        onMouseEnter={e => {
-          e.currentTarget.style.transform = 'scale(1.08)'
-          e.currentTarget.style.boxShadow = '0 6px 20px rgba(200, 169, 110, 0.6)'
-        }}
-        onMouseLeave={e => {
-          e.currentTarget.style.transform = 'scale(1)'
-          e.currentTarget.style.boxShadow = '0 4px 16px rgba(200, 169, 110, 0.4)'
-        }}
-      >
-        {open ? '✕' : '💬'}
-      </button>
+      {/* Floating toggle button + nudge */}
+      <div style={{
+        position: 'fixed',
+        bottom: '16px',
+        right: '16px',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        zIndex: 10000
+      }}>
+        {!open && (
+          <div style={{
+            background: '#0d1221',
+            border: '1px solid #1e2a45',
+            borderRadius: '20px',
+            padding: '0.4rem 0.9rem',
+            color: '#d0d8e8',
+            fontSize: '0.85rem',
+            fontWeight: '500',
+            whiteSpace: 'nowrap',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.4)',
+            cursor: 'pointer'
+          }} onClick={() => setOpen(true)}>
+            Ask us anything!
+          </div>
+        )}
+        <button
+          onClick={() => setOpen(prev => !prev)}
+          aria-label={open ? 'Close chat' : 'Chat with us'}
+          style={{
+            width: '52px',
+            height: '52px',
+            borderRadius: '50%',
+            background: '#c8a96e',
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: '0 4px 16px rgba(200, 169, 110, 0.4)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '1.4rem',
+            transition: 'transform 0.2s, box-shadow 0.2s',
+            flexShrink: 0
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.transform = 'scale(1.08)'
+            e.currentTarget.style.boxShadow = '0 6px 20px rgba(200, 169, 110, 0.6)'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.transform = 'scale(1)'
+            e.currentTarget.style.boxShadow = '0 4px 16px rgba(200, 169, 110, 0.4)'
+          }}
+        >
+          {open ? '✕' : '💬'}
+        </button>
+      </div>
 
       <style>{`
         @keyframes chatDot {

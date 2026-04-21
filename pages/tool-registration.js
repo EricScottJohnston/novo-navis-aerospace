@@ -59,7 +59,6 @@ export default function ToolRegistration() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/sample-analysis">Try It Free</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -274,7 +273,6 @@ export default function ToolRegistration() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/sample-analysis">Try It Free</Link> &nbsp;·&nbsp;
           <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link> &nbsp;·&nbsp;

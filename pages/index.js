@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [agreedTerms, setAgreedTerms] = useState(false)
-  const [showStickyBar, setShowStickyBar] = useState(false)
   const [timeLeft, setTimeLeft] = useState(null)
 
   // Countdown timer — persists across refreshes via localStorage
@@ -35,13 +34,6 @@ export default function Home() {
     tick()
     const id = setInterval(tick, 1000)
     return () => clearInterval(id)
-  }, [])
-
-  // Sticky bar — show after scrolling past the hero
-  useEffect(() => {
-    const onScroll = () => setShowStickyBar(window.scrollY > 480)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   // Fade-in on scroll via IntersectionObserver
@@ -98,10 +90,6 @@ export default function Home() {
             70%  { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
             100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
           }
-          @keyframes stickySlideUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(12px); }
-            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
-          }
           .fade-in {
             opacity: 0;
             transform: translateY(22px);
@@ -124,50 +112,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {showStickyBar && (
-        <div style={{
-          position: 'fixed',
-          bottom: '88px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 999,
-          display: 'flex',
-          gap: '0.5rem',
-          background: '#0a0f1a',
-          border: '1px solid #2a3a5a',
-          borderRadius: '40px',
-          padding: '0.45rem 0.6rem',
-          boxShadow: '0 4px 28px rgba(0,0,0,0.65)',
-          animation: 'stickySlideUp 0.3s ease',
-          whiteSpace: 'nowrap'
-        }}>
-          <Link href="/sample-analysis" style={{
-            background: '#4caf50',
-            color: '#fff',
-            borderRadius: '20px',
-            padding: '0.4rem 1.1rem',
-            fontSize: '0.85rem',
-            fontWeight: 'bold',
-            textDecoration: 'none'
-          }}>Free Sample →</Link>
-          <Link href="/#order-form" style={{
-            background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
-            color: '#111111',
-            borderRadius: '20px',
-            padding: '0.4rem 1.1rem',
-            fontSize: '0.85rem',
-            fontWeight: 'bold',
-            textDecoration: 'none'
-          }}>Get My AI Blueprint — $199</Link>
-        </div>
-      )}
-
       <nav>
         <Link href="/" className="nav-logo">NOVO NAVIS</Link>
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/sample-analysis">Free Sample</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -661,26 +610,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* FREE TRIAL CTA */}
-          <div style={{margin: '0.5rem 0 0 0', textAlign: 'center'}}>
-            <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block'}}>
-              <div style={{
-                background: '#0d1a0d',
-                border: '1px solid #4caf50',
-                borderRadius: '6px',
-                padding: '0.85rem 1.5rem',
-                textAlign: 'center',
-                cursor: 'pointer'
-              }}>
-                <span style={{color: '#4caf50', fontSize: '1rem', fontWeight: 'bold'}}>
-                  Not convinced? Try a single workflow analysis before you buy →
-                </span>
-              </div>
-              <p style={{color: '#5a6a7a', fontSize: '0.82rem', margin: '0.4rem 0 0 0', textAlign: 'center'}}>
-                No credit card · instant results
-              </p>
-            </Link>
-          </div>
 
         </div>
 
@@ -704,7 +633,6 @@ export default function Home() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/sample-analysis">Free Sample</Link> &nbsp;·&nbsp;
           <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
           <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link> &nbsp;·&nbsp;
