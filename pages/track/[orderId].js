@@ -6,7 +6,15 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState, useRef } from 'react'
 
-const CHECK_INTERVAL = 3000 // ms
+const CHECK_INTERVAL = 2000 // ms
+
+const LOG_COLORS = {
+  step:   '#c8a96e',
+  search: '#4caf50',
+  info:   '#d0d8e8',
+  detail: '#6a7a8a',
+  warn:   '#e57373',
+}
 
 export default function TrackOrder() {
   const router   = useRouter()
@@ -15,6 +23,7 @@ export default function TrackOrder() {
   const [data,    setData]    = useState(null)
   const [error,   setError]   = useState(null)
   const intervalRef = useRef(null)
+  const logBottomRef = useRef(null)
 
   useEffect(() => {
     if (!orderId) return
@@ -37,6 +46,11 @@ export default function TrackOrder() {
     intervalRef.current = setInterval(poll, CHECK_INTERVAL)
     return () => clearInterval(intervalRef.current)
   }, [orderId])
+
+  // Auto-scroll log to bottom when new entries arrive
+  useEffect(() => {
+    logBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [data?.log?.length])
 
   const isComplete = data?.status === 'complete'
   const isError    = data?.status === 'error'
@@ -156,21 +170,22 @@ export default function TrackOrder() {
         )}
 
         {/* Live log */}
-        {data?.log && data.log.length > 0 && !isComplete && (
+        {data?.log && data.log.length > 0 && (
           <div style={{
             background: '#060c18', border: '1px solid #1e2a45',
             borderRadius: '6px', padding: '1rem', marginBottom: '2rem',
-            maxHeight: '220px', overflowY: 'auto', fontFamily: 'monospace'
+            maxHeight: '400px', overflowY: 'auto', fontFamily: 'monospace'
           }}>
             <p style={{ color: '#4a5568', fontSize: '0.75rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
               Live log
             </p>
-            {[...data.log].reverse().slice(0, 20).map((entry, i) => (
-              <div key={i} style={{ fontSize: '0.8rem', color: '#8a95aa', marginBottom: '0.2rem' }}>
-                <span style={{ color: '#4a5568', marginRight: '0.5rem' }}>{entry.time}</span>
-                {entry.message}
+            {data.log.map((entry, i) => (
+              <div key={i} style={{ fontSize: '0.8rem', marginBottom: '0.2rem', display: 'flex', gap: '0.5rem' }}>
+                <span style={{ color: '#4a5568', flexShrink: 0 }}>{entry.time}</span>
+                <span style={{ color: LOG_COLORS[entry.type] || LOG_COLORS.info }}>{entry.message}</span>
               </div>
             ))}
+            <div ref={logBottomRef} />
           </div>
         )}
 
