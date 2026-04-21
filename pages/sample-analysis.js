@@ -24,14 +24,12 @@ export default function SampleAnalysis() {
       return
     }
 
-    // Toggle off if already listening to this field
     if (listeningField === fieldName) {
       recognitionRef.current?.stop()
       setListeningField(null)
       return
     }
 
-    // Stop any existing session
     recognitionRef.current?.stop()
 
     const recognition = new SpeechRecognition()
@@ -148,7 +146,7 @@ export default function SampleAnalysis() {
 
       <div className="report-page">
 
-        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0 0 1.5rem 0'}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '0 0 2rem 0'}}>
           <button onClick={() => window.scrollBy({top: 300, behavior: 'smooth'})} style={{background: 'none', border: 'none', cursor: 'pointer', padding: '0.5rem', animation: 'bounce 1.4s ease-in-out infinite'}}>
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4caf50" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
           </button>
@@ -159,48 +157,6 @@ export default function SampleAnalysis() {
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4caf50" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
           </button>
         </div>
-
-        <h1 style={{color: '#c8a96e', fontWeight: 'bold', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)'}}>
-          Tell us what's ANNOYING you. We'll tell you how to make it stop.
-        </h1>
-
-        <p style={{color: '#4caf50', fontWeight: 'bold', fontSize: '1.1rem', margin: '-0.5rem 0 0.75rem 0'}}>
-          60 seconds here could eliminate that task for good.
-        </p>
-
-        <p style={{textAlign: 'center', marginBottom: '1.5rem'}}>
-          <Link href="/david" style={{color: '#8a95aa', fontSize: '0.85rem', borderBottom: '1px solid #2a3a55', paddingBottom: '1px'}}>
-            Curious how the analysis works? See David's reasoning process →
-          </Link>
-        </p>
-
-        <p className="lead">
-          You know that one thing you do every day that you wish would just go away?
-          Tell us what it is. We'll tell you exactly which AI tool can take it off your plate
-          and how much time you'll get back. Takes 60 seconds. Results delivered instantly.
-        </p>
-
-        <div style={{
-          background: '#0d1221',
-          border: '1px solid #1e2a45',
-          borderRadius: '6px',
-          padding: '1.25rem 1.5rem',
-          margin: '1.5rem 0'
-        }}>
-          <p style={{color: '#c8a96e', fontSize: '0.8rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 'bold', marginBottom: '0.75rem'}}>
-            What you'll get
-          </p>
-          <ul style={{listStyle: 'none', padding: 0, margin: 0, color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.8'}}>
-            <li>✓ &nbsp;The exact AI tool that fixes your specific problem</li>
-            <li>✓ &nbsp;How much time you'll get back each week</li>
-            <li>✓ &nbsp;What it costs to set up</li>
-            <li>✓ &nbsp;Delivered instantly — no waiting</li>
-          </ul>
-        </div>
-
-        <p style={{color: '#8a95aa', fontSize: '0.85rem', marginBottom: '1rem'}}>
-          🎤 Tap the microphone next to any field to speak your answer.
-        </p>
 
         <form onSubmit={handleSubmit}>
 
@@ -219,10 +175,6 @@ export default function SampleAnalysis() {
               <MicButton fieldName="workflow" />
             </div>
           </div>
-
-          <p style={{color: '#8a95aa', fontSize: '0.85rem', marginTop: '-0.5rem', marginBottom: '1.5rem'}}>
-            The more detail you give, the more specific the fix will be.
-          </p>
 
           <p style={{color: '#5a6a7a', fontSize: '0.8rem', marginBottom: '1.5rem', borderLeft: '2px solid #1e2a45', paddingLeft: '0.75rem'}}>
             Note: Ad blockers may interfere with the free analysis. If you get an error, try disabling your ad blocker for this page and reloading.
@@ -254,17 +206,6 @@ export default function SampleAnalysis() {
           </p>
 
         </form>
-
-        <hr className="divider" />
-
-        <div style={{textAlign: 'center', padding: '1rem 0'}}>
-          <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '0.5rem'}}>
-            Ready for the full report?
-          </p>
-          <Link href="/#order-form" style={{color: '#c8a96e', fontWeight: 'bold'}}>
-            Get Your AI Blueprint — $199 →
-          </Link>
-        </div>
 
       </div>
 
