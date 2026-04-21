@@ -53,7 +53,7 @@ export default function JobCostingArticle() {
             </p>
             <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '1rem'}}>
               Our proprietary Small Psychological Model builds a custom up to 25-page
-              AI integration report tailored to your workflows. Delivered within 24 hours.
+              AI integration report tailored to your workflows. Built and delivered in real time.
             </p>
             <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint — $199</Link>
           </div>
@@ -84,7 +84,7 @@ export default function JobCostingArticle() {
             This article covers the problem. Your AI Blueprint maps the solution —
             specific tools, real pricing, and a fast action implementation plan built
             for your workflows and your software stack.
-            Up to 25 pages. Delivered within 24 hours. $199.
+            Up to 25 pages. Built and delivered in real time. $199.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint</Link>
         </div>

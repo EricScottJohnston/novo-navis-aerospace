@@ -113,7 +113,7 @@ export default function Results() {
             The full Novo Navis report analyzes your entire operation. You'll receive a up to 25-page
             custom report with specific AI tools matched to your budget, a prioritized
             fast action implementation plan, and an honest ROI estimate — reviewed by a human
-            AI consultant and delivered to your inbox within 24 hours.
+            AI consultant and built and delivered to your inbox in real time.
           </p>
 
           <div style={{
@@ -154,7 +154,7 @@ export default function Results() {
           justifyContent: 'center',
           marginBottom: '2rem'
         }}>
-          {['up to 25 pages', 'fast action plan', '24-hour delivery', '100% satisfaction guarantee'].map(label => (
+          {['up to 25 pages', 'fast action plan', 'real-time delivery', '100% satisfaction guarantee'].map(label => (
             <span key={label} style={{
               background: '#0d1221',
               border: '1px solid #1e2a45',

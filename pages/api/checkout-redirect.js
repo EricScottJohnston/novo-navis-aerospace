@@ -16,7 +16,7 @@ export default async function handler(req, res) {
             currency: 'usd',
             product_data: {
               name: 'AI Blueprint — Novo Navis',
-              description: 'Custom up-to-25-page AI integration report for your business. Delivered within 24 hours.'
+              description: 'Custom up-to-25-page AI integration report for your business. Built and delivered in real time.'
             },
             unit_amount: 19900
           },

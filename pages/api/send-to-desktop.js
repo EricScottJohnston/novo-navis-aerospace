@@ -24,7 +24,7 @@ export default async function handler(req, res) {
             Get My AI Blueprint — $199
           </a>
         </p>
-        <p style="color: #888; font-size: 13px;">100% money-back guarantee. Delivered within 24 hours.</p>
+        <p style="color: #888; font-size: 13px;">100% money-back guarantee. Built and delivered in real time.</p>
         <p style="color: #888; font-size: 12px; margin-top: 2rem;">Novo Navis Aerospace Operations LLC · support@novonavis.com · (623) 428-9308</p>
       `
     })

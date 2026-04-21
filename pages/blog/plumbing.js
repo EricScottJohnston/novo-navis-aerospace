@@ -53,7 +53,7 @@ export default function PlumbingArticle() {
             </p>
             <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '1rem'}}>
               Our proprietary Small Psychological Model builds a custom up to 25-page
-              AI integration report tailored to your workflows. Delivered within 24 hours.
+              AI integration report tailored to your workflows. Built and delivered in real time.
             </p>
             <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint — $199</Link>
           </div>
@@ -87,7 +87,7 @@ export default function PlumbingArticle() {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your AI Blueprint is built specifically
             for your business, your workflows, your pain points.
-            Up to 25 pages. Delivered within 24 hours. $199.
+            Up to 25 pages. Built and delivered in real time. $199.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint</Link>
         </div>

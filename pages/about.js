@@ -184,7 +184,7 @@ export default function About() {
         <div style={{textAlign: 'center', padding: '2rem 0'}}>
           <div className="section-title" style={{marginBottom: '0.8rem'}}>Ready to See What AI Can Do for Your Business?</div>
           <p style={{color: '#8a95aa', marginBottom: '1.5rem'}}>
-            One custom report. Built for your business. Delivered within 24 hours.
+            One custom report. Built for your business. Built and delivered in real time.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint — $199 →</Link>
         </div>

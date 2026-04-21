@@ -24,7 +24,7 @@ export default function Success() {
         <h1 style={{marginBottom: '1rem'}}>You're all set.</h1>
         <p className="lead">
           Your intake has been received. Eric will review your business details,
-          run your AI Blueprint, and deliver it to your inbox within 24 hours.
+          run your AI Blueprint, and deliver it to your inbox in real time.
         </p>
 
         <div style={{

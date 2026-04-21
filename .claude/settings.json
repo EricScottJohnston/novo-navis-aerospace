@@ -1,5 +1,9 @@
 {
   "permissions": {
+    "allow": [
+      "WebFetch(domain:www.novonavis.com)",
+      "Bash(curl -sI https://www.novonavis.com)"
+    ],
     "additionalDirectories": [
       "c:\\Users\\capag\\OneDrive\\Documents\\GitHub\\novo-navis-aerospace\\pages"
     ]

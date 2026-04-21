@@ -88,7 +88,7 @@ export default function Blog() {
             Get a Custom AI Blueprint for Your Business
           </h3>
           <p style={{ color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
-            These articles cover general strategies. Your blueprint is built specifically for your workflows, your tools, your bottlenecks. Delivered in 24 hours.
+            These articles cover general strategies. Your blueprint is built specifically for your workflows, your tools, your bottlenecks. Built and delivered in real time.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint — $199</Link>
         </div>

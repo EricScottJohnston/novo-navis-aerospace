@@ -94,7 +94,7 @@ export default function DIYGuide() {
             textAlign: 'center'
           }}>
             <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.7', marginBottom: '0.5rem'}}>
-              This is exactly the process David runs on your business — in about 24 hours.
+              This is exactly the process David runs on your business — in real time.
             </p>
             <p style={{color: '#8a95aa', fontSize: '0.9rem', margin: 0}}>
               Every tip above is baked into the analysis. You get the output without the weeks of work.
@@ -113,7 +113,7 @@ export default function DIYGuide() {
               Get My AI Blueprint — $199 →
             </Link>
             <p style={{color: '#5a6a7a', fontSize: '0.82rem', marginTop: '1rem'}}>
-              One report. Your business. Delivered within 24 hours.
+              One report. Your business. Built and delivered in real time.
             </p>
           </div>
 

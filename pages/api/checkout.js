@@ -11,7 +11,7 @@ const TIERS = {
   },
   blueprint: {
     name: 'Blueprint — Novo Navis',
-    description: 'Custom up-to-25-page AI integration report with implementation guidance and ROI estimates. Delivered within 24 hours.',
+    description: 'Custom up-to-25-page AI integration report with implementation guidance and ROI estimates. Built and delivered in real time.',
     unit_amount: 19900
   },
   consult: {

@@ -31,8 +31,8 @@ const faqs = [
     a: "The Small Psychological Model is trained on automation profiles across trades (HVAC, plumbing, electrical, landscaping), professional services (legal, accounting, consulting), healthcare (dental, chiropractic), real estate and property management, retail, e-commerce, restaurant and hospitality, and construction. If your industry isn't listed, select 'Other' in the intake form and describe your business — the model handles it."
   },
   {
-    q: "How does the 24-hour delivery work?",
-    a: "After checkout, you'll complete a short intake form with details about your business and workflows. That intake is sent directly to Eric. He runs your data through the Small Psychological Model, reviews the output, and emails your finished report within 24 hours. If there's any delay, you'll hear from us."
+    q: "How does the real-time delivery work?",
+    a: "After checkout, you'll complete a short intake form with details about your business and workflows. Your intake is immediately processed by our Small Psychological Model — David — which researches your industry, analyzes your workflows, and assembles your report automatically. Your finished report is emailed to you as soon as it's built, typically within the hour."
   },
   {
     q: "What if I'm not satisfied with the AI Blueprint?",

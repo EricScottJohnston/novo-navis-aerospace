@@ -70,7 +70,7 @@ export default function Article({ post }) {
             <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '1rem'}}>
               Our proprietary Small Psychological Model builds a custom 10-page
               AI integration report tailored to your workflows and industry.
-              Delivered in 24 hours.
+              Built and delivered in real time.
             </p>
             <Link href="/report" className="btn-primary">Get Your Custom Report — $29</Link>
           </div>
@@ -98,7 +98,7 @@ export default function Article({ post }) {
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
             This article covers general strategies. Your report is built specifically
             for your business, your workflows, your pain points, your industry.
-            Ten pages. Delivered in 24 hours. $29.
+            Ten pages. Built and delivered in real time. $29.
           </p>
           <Link href="/report" className="btn-primary">Get Your Custom Report</Link>
         </div>

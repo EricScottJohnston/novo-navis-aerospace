@@ -120,7 +120,7 @@ export default function Home() {
           }
         `}</style>
         <title>Novo Navis | Custom AI Integration Reports for Small Business</title>
-        <meta name="description" content="Tell us about your business and receive a custom AI integration report — up to 25 pages — built by our proprietary Small Psychological Model. Delivered within 24 hours." />
+        <meta name="description" content="Tell us about your business and receive a custom AI integration report — up to 25 pages — built by our proprietary Small Psychological Model. Built and delivered in real time." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -576,7 +576,7 @@ export default function Home() {
                 <li>✓ &nbsp;Identifies AI tools and workflows</li>
                 <li>✓ &nbsp;Step-by-step implementation guidance</li>
                 <li>✓ &nbsp;ROI estimates for each recommendation</li>
-                <li>✓ &nbsp;Delivered within 24 hours</li>
+                <li>✓ &nbsp;Built and delivered in real time</li>
               </ul>
               <button
                 onClick={() => handleCheckout('blueprint')}
@@ -607,7 +607,7 @@ export default function Home() {
             justifyContent: 'center',
             marginBottom: '1.25rem'
           }}>
-            {['🔒 Secured by Stripe', '📬 Delivered within 24 hours', '🚫 Never sold or shared'].map(label => (
+            {['🔒 Secured by Stripe', '📬 Built and delivered in real time', '🚫 Never sold or shared'].map(label => (
               <span key={label} style={{
                 background: '#0d1221',
                 border: '1px solid #1e2a45',

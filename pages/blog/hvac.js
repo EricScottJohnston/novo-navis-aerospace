@@ -54,7 +54,7 @@ export default function HvacArticle() {
               Want this analysis done for your specific company?
             </p>
             <p style={{ color: '#8a95aa', fontSize: '0.9rem', marginBottom: '1rem' }}>
-              Our AI builds a custom blueprint tailored to your dispatch process, service area, and software stack. Delivered in 24 hours.
+              Our AI builds a custom blueprint tailored to your dispatch process, service area, and software stack. Built and delivered in real time.
             </p>
             <Link href="/#order-form" className="btn-primary">Get Your Custom Blueprint — $199</Link>
           </div>
@@ -86,7 +86,7 @@ export default function HvacArticle() {
             Get a Custom Blueprint Built for Your HVAC Company
           </h3>
           <p style={{ color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
-            This article covers general strategies. Your blueprint is built specifically for your dispatch process, your software, your pain points. Delivered in 24 hours.
+            This article covers general strategies. Your blueprint is built specifically for your dispatch process, your software, your pain points. Built and delivered in real time.
           </p>
           <Link href="/#order-form" className="btn-primary">Get Your Custom Blueprint</Link>
         </div>

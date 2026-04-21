@@ -399,7 +399,7 @@ export default function Intake() {
                 </button>
 
                 <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
-                  Your AI Blueprint will be delivered to your email within 24 hours.
+                  Your AI Blueprint will be built and delivered to your email in real time.
                 </p>
 
               </form>
