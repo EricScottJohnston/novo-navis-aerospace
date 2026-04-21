@@ -48,7 +48,7 @@ export default async function handler(req, res) {
       return res.status(402).json({ error: 'Payment not verified' })
     }
     customerName  = bodyName     || session.metadata?.customer_name  || 'Unknown'
-    customerEmail = session.customer_email                            || 'Unknown'
+    customerEmail = session.customer_details?.email || session.customer_email || 'Unknown'
     businessName  = bodyBusiness || session.metadata?.business_name  || 'Unknown'
     amountTotal   = session.amount_total || 0
     amountPaid    = `$${(amountTotal / 100).toFixed(2)}`

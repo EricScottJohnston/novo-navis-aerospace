@@ -598,7 +598,15 @@ export default function Home() {
                 Internal test — remove before launch
               </p>
               <button
-                onClick={() => handleCheckout('test')}
+                onClick={async () => {
+                  setLoadingTier('test')
+                  try {
+                    const res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tier: 'test' }) })
+                    const data = await res.json()
+                    if (data.url) window.location.href = data.url
+                    else { alert('Checkout error'); setLoadingTier(null) }
+                  } catch { alert('Checkout error'); setLoadingTier(null) }
+                }}
                 disabled={loadingTier !== null}
                 style={{
                   width: '100%', padding: '0.6rem',
