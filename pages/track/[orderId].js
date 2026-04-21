@@ -110,7 +110,7 @@ export default function TrackOrder() {
               <p className="lead" style={{ color: '#8a95aa' }}>
                 {isQueued
                   ? 'David is starting up. This page updates automatically.'
-                  : 'David is analyzing your business. This page updates in real time.'}
+                  : 'David is analyzing your business. Watch the log below in real time, or feel free to close this window — your report will be emailed to you automatically when it\'s done.'}
               </p>
             </>
           )}
