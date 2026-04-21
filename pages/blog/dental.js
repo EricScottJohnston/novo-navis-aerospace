@@ -15,7 +15,7 @@ export default function DentalArticle() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
+          <li><Link href="/report">Get Your Report</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
@@ -52,10 +52,10 @@ export default function DentalArticle() {
               Want this analysis done for your specific practice?
             </p>
             <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '1rem'}}>
-              Our proprietary Small Psychological Model builds a custom up to 25-page
-              AI integration report tailored to your workflows. Delivered within 24 hours.
+              Our proprietary Small Psychological Model builds a custom 10-page
+              AI integration report tailored to your workflows. Delivered in 24 hours.
             </p>
-            <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint — $199</Link>
+            <Link href="/report" className="btn-primary">Get Your Custom Report — $29</Link>
           </div>
 
           <p>During business hours, the same system handles the routine calls that do not require your front desk's judgment. Appointment confirmations, directions to the office, basic insurance questions, prescription refill requests routed to the appropriate dentist. Your front desk handles the calls that actually need a human. Complex insurance questions, anxious new patients, treatment plan discussions. The calls where your team's judgment and warmth genuinely matter.</p>
@@ -84,14 +84,14 @@ export default function DentalArticle() {
             Ready to Take Action?
           </p>
           <h3 style={{color: '#ffffff', fontSize: '1.3rem', marginBottom: '0.8rem'}}>
-            Get Your AI Blueprint for Your Practice
+            Get a Custom Report Built for Your Practice
           </h3>
           <p style={{color: '#8a95aa', fontSize: '0.95rem', marginBottom: '1.5rem'}}>
-            This article covers general strategies. Your AI Blueprint is built specifically
+            This article covers general strategies. Your report is built specifically
             for your practice, your workflows, your pain points.
-            Up to 25 pages. Delivered within 24 hours. $199.
+            Ten pages. Delivered in 24 hours. $29.
           </p>
-          <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint</Link>
+          <Link href="/report" className="btn-primary">Get Your Custom Report</Link>
         </div>
 
         <div style={{textAlign: 'center', marginTop: '2rem'}}>
@@ -104,7 +104,7 @@ export default function DentalArticle() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
+          <Link href="/report">Get Your Report</Link> &nbsp;·&nbsp;
           <Link href="/about">About</Link>
         </p>
       </footer>

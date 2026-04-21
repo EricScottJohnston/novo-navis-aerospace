@@ -125,7 +125,7 @@ export default function Intake() {
         if (typeof window !== 'undefined' && window.gtag) {
           window.gtag('event', 'conversion_event_purchase_1')
         }
-        router.push('/success')
+        router.push('/track/' + data.orderId)
       } else {
         alert('Something went wrong submitting your intake. Please email support@novonavis.com.')
         setSubmitting(false)
