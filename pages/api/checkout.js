@@ -3,10 +3,31 @@
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
+const TIERS = {
+  starter: {
+    name: 'Starter — Novo Navis',
+    description: '5-page AI workflow analysis. Identifies the right tools and workflows for your business.',
+    unit_amount: 4900
+  },
+  blueprint: {
+    name: 'Blueprint — Novo Navis',
+    description: 'Custom up-to-25-page AI integration report with implementation guidance and ROI estimates. Delivered within 24 hours.',
+    unit_amount: 19900
+  },
+  consult: {
+    name: 'Blueprint + Consult — Novo Navis',
+    description: 'Full AI Blueprint plus a 2-hour Zoom session with an AI consultant to walk through implementation together.',
+    unit_amount: 49900
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
   }
+
+  const { tier = 'blueprint' } = req.body
+  const product = TIERS[tier] || TIERS.blueprint
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -16,10 +37,10 @@ export default async function handler(req, res) {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'AI Blueprint — Novo Navis',
-              description: 'Custom up-to-25-page AI integration report for your business. Delivered within 24 hours.'
+              name: product.name,
+              description: product.description
             },
-            unit_amount: 19900
+            unit_amount: product.unit_amount
           },
           quantity: 1
         }

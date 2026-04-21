@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react'
 
 
 export default function Home() {
-  const [loading, setLoading] = useState(false)
   const [agreedTerms, setAgreedTerms] = useState(false)
   const [showStickyBar, setShowStickyBar] = useState(false)
   const [timeLeft, setTimeLeft] = useState(null)
@@ -60,26 +59,28 @@ export default function Home() {
     return () => observer.disconnect()
   }, [])
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+  const [loadingTier, setLoadingTier] = useState(null)
+
+  const handleCheckout = async (tier) => {
+    if (!agreedTerms) return
+    setLoadingTier(tier)
 
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({})
+        body: JSON.stringify({ tier })
       })
       const data = await res.json()
       if (data.url) {
         window.location.href = data.url
       } else {
         alert('Something went wrong. Please try again.')
-        setLoading(false)
+        setLoadingTier(null)
       }
     } catch (err) {
       alert('Something went wrong. Please try again.')
-      setLoading(false)
+      setLoadingTier(null)
     }
   }
 
@@ -458,7 +459,7 @@ export default function Home() {
           </Link>
         </p>
 
-        <form className="fade-in" onSubmit={handleSubmit} id="order-form">
+        <div className="fade-in" id="order-form">
 
           {/* MONEY BACK GUARANTEE */}
           <div style={{
@@ -473,7 +474,7 @@ export default function Home() {
               ✓ 100% Money-Back Guarantee
             </p>
             <p style={{color: '#a0c8a0', fontSize: '0.88rem', margin: 0}}>
-              Not satisfied with your AI Blueprint? We'll refund you in full — no questions asked.
+              Not satisfied with your report? We'll refund you in full — no questions asked.
             </p>
           </div>
 
@@ -483,7 +484,7 @@ export default function Home() {
             border: '1px solid #1e2a45',
             borderRadius: '6px',
             padding: '1rem 1.5rem',
-            margin: '0 0 1rem 0'
+            margin: '0 0 1.25rem 0'
           }}>
             <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer'}}>
               <input
@@ -499,13 +500,154 @@ export default function Home() {
             </label>
           </div>
 
+          {/* PRICING CARDS */}
+          <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.25rem'}}>
+
+            {/* STARTER */}
+            <div style={{
+              background: '#0d1221',
+              border: '1px solid #1e2a45',
+              borderRadius: '8px',
+              padding: '1.25rem 1.5rem',
+              opacity: agreedTerms ? 1 : 0.5
+            }}>
+              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem'}}>
+                <div>
+                  <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1rem', margin: 0}}>Starter</p>
+                  <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: '0.15rem 0 0 0'}}>Single workflow analysis</p>
+                </div>
+                <p style={{color: '#d0d8e8', fontWeight: 'bold', fontSize: '1.4rem', margin: 0}}>$49</p>
+              </div>
+              <ul style={{listStyle: 'none', padding: 0, margin: '0 0 1rem 0', color: '#8a95aa', fontSize: '0.85rem', lineHeight: '1.8'}}>
+                <li>✓ &nbsp;5-page report</li>
+                <li>✓ &nbsp;Identifies AI tools and workflows</li>
+                <li>✗ &nbsp;No implementation guidance</li>
+                <li>✗ &nbsp;No ROI estimates</li>
+              </ul>
+              <button
+                onClick={() => handleCheckout('starter')}
+                disabled={!agreedTerms || loadingTier !== null}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  background: agreedTerms ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : '#2a3a55',
+                  border: 'none',
+                  borderRadius: '6px',
+                  color: agreedTerms ? '#111111' : '#8a95aa',
+                  fontWeight: 'bold',
+                  fontSize: '0.95rem',
+                  cursor: agreedTerms ? 'pointer' : 'not-allowed'
+                }}
+              >
+                {loadingTier === 'starter' ? 'Redirecting...' : 'Get Starter Report — $49'}
+              </button>
+            </div>
+
+            {/* BLUEPRINT — RECOMMENDED */}
+            <div style={{
+              background: '#0a1221',
+              border: '2px solid #c8a96e',
+              borderRadius: '8px',
+              padding: '1.25rem 1.5rem',
+              position: 'relative',
+              opacity: agreedTerms ? 1 : 0.5
+            }}>
+              <div style={{
+                position: 'absolute',
+                top: '-12px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                background: '#c8a96e',
+                color: '#111',
+                fontSize: '0.7rem',
+                fontWeight: 'bold',
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                padding: '0.2rem 0.9rem',
+                borderRadius: '20px'
+              }}>Most Popular</div>
+              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem'}}>
+                <div>
+                  <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1rem', margin: 0}}>Blueprint</p>
+                  <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: '0.15rem 0 0 0'}}>Full AI integration report</p>
+                </div>
+                <p style={{color: '#d0d8e8', fontWeight: 'bold', fontSize: '1.4rem', margin: 0}}>$199</p>
+              </div>
+              <ul style={{listStyle: 'none', padding: 0, margin: '0 0 1rem 0', color: '#d0d8e8', fontSize: '0.85rem', lineHeight: '1.8'}}>
+                <li>✓ &nbsp;Up to 25-page custom report</li>
+                <li>✓ &nbsp;Identifies AI tools and workflows</li>
+                <li>✓ &nbsp;Step-by-step implementation guidance</li>
+                <li>✓ &nbsp;ROI estimates for each recommendation</li>
+                <li>✓ &nbsp;Delivered within 24 hours</li>
+              </ul>
+              <button
+                onClick={() => handleCheckout('blueprint')}
+                disabled={!agreedTerms || loadingTier !== null}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  background: agreedTerms ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : '#2a3a55',
+                  border: 'none',
+                  borderRadius: '6px',
+                  color: agreedTerms ? '#111111' : '#8a95aa',
+                  fontWeight: 'bold',
+                  fontSize: '0.95rem',
+                  cursor: agreedTerms ? 'pointer' : 'not-allowed'
+                }}
+              >
+                {loadingTier === 'blueprint' ? 'Redirecting...' : 'Get My AI Blueprint — $199'}
+              </button>
+            </div>
+
+            {/* BLUEPRINT + CONSULT */}
+            <div style={{
+              background: '#0d1221',
+              border: '1px solid #1e2a45',
+              borderRadius: '8px',
+              padding: '1.25rem 1.5rem',
+              opacity: agreedTerms ? 1 : 0.5
+            }}>
+              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem'}}>
+                <div>
+                  <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1rem', margin: 0}}>Blueprint + Consult</p>
+                  <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: '0.15rem 0 0 0'}}>Report plus live Zoom session</p>
+                </div>
+                <p style={{color: '#d0d8e8', fontWeight: 'bold', fontSize: '1.4rem', margin: 0}}>$499</p>
+              </div>
+              <ul style={{listStyle: 'none', padding: 0, margin: '0 0 1rem 0', color: '#8a95aa', fontSize: '0.85rem', lineHeight: '1.8'}}>
+                <li>✓ &nbsp;Everything in Blueprint</li>
+                <li>✓ &nbsp;2-hour Zoom with an AI consultant</li>
+                <li>✓ &nbsp;Walk through implementation together</li>
+                <li>✓ &nbsp;Leave with a clear action plan</li>
+              </ul>
+              <button
+                onClick={() => handleCheckout('consult')}
+                disabled={!agreedTerms || loadingTier !== null}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  background: agreedTerms ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : '#2a3a55',
+                  border: 'none',
+                  borderRadius: '6px',
+                  color: agreedTerms ? '#111111' : '#8a95aa',
+                  fontWeight: 'bold',
+                  fontSize: '0.95rem',
+                  cursor: agreedTerms ? 'pointer' : 'not-allowed'
+                }}
+              >
+                {loadingTier === 'consult' ? 'Redirecting...' : 'Get Blueprint + Consult — $499'}
+              </button>
+            </div>
+
+          </div>
+
           {/* TRUST SIGNALS */}
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
             gap: '0.5rem',
             justifyContent: 'center',
-            marginBottom: '1rem'
+            marginBottom: '1.25rem'
           }}>
             {['🔒 Secured by Stripe', '📬 Delivered within 24 hours', '🚫 Never sold or shared'].map(label => (
               <span key={label} style={{
@@ -519,77 +661,8 @@ export default function Home() {
             ))}
           </div>
 
-          <button
-            type="submit"
-            className="btn-primary"
-            style={{
-              width: '100%',
-              fontSize: '1.1rem',
-              padding: '1rem',
-              background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
-              borderColor: '#e8a000',
-              color: '#111111',
-              opacity: agreedTerms ? 1 : 0.5,
-              cursor: agreedTerms ? 'pointer' : 'not-allowed'
-            }}
-            disabled={loading || !agreedTerms}
-          >
-            {loading ? 'Redirecting to Checkout...' : 'Get My AI Blueprint — $199'}
-          </button>
-
-          {timeLeft !== null && (
-            <div style={{
-              background: 'linear-gradient(135deg, #00081a, #000e22)',
-              border: '1px solid #1a6abd',
-              borderRadius: '8px',
-              padding: '1rem 1.25rem',
-              margin: '1.5rem 0 0 0',
-              textAlign: 'center'
-            }}>
-              <p style={{color: '#4a9af0', fontSize: '0.72rem', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 'bold', margin: '0 0 0.4rem 0'}}>
-                ⚠ Price Increase Notice
-              </p>
-              <p style={{color: '#d0d8e8', fontSize: '0.92rem', margin: '0 0 0.75rem 0'}}>
-                Current price of <strong style={{color: '#4caf50'}}>$199</strong> increases to <strong style={{color: '#4a9af0'}}>$499</strong> when this timer expires
-              </p>
-              <div style={{display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: '0.4rem'}}>
-                {[
-                  [timeLeft.d, 'Days'],
-                  [timeLeft.h, 'Hrs'],
-                  [timeLeft.m, 'Min'],
-                  [timeLeft.s, 'Sec'],
-                ].map(([val, label], i) => (
-                  <div key={label} style={{display: 'flex', alignItems: 'flex-start', gap: '0.4rem'}}>
-                    <div style={{textAlign: 'center'}}>
-                      <div style={{
-                        background: '#0a0f1a',
-                        border: '1px solid #1a6abd',
-                        borderRadius: '6px',
-                        padding: '0.35rem 0.6rem',
-                        minWidth: '42px'
-                      }}>
-                        <span style={{color: '#4a9af0', fontSize: '1.4rem', fontWeight: 'bold', fontFamily: 'monospace', letterSpacing: '0.05em'}}>
-                          {String(val).padStart(2, '0')}
-                        </span>
-                      </div>
-                      <span style={{color: '#7a8599', fontSize: '0.6rem', textTransform: 'uppercase', letterSpacing: '0.1em'}}>
-                        {label}
-                      </span>
-                    </div>
-                    {i < 3 && (
-                      <span style={{color: '#1a6abd', fontSize: '1.4rem', fontWeight: 'bold', paddingTop: '0.25rem', lineHeight: 1}}>:</span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* FREE TRIAL CTA — after buy button */}
-          <div style={{margin: '1.5rem 0 0 0', textAlign: 'center'}}>
-            <p style={{color: '#8a95aa', fontSize: '0.88rem', marginBottom: '0.6rem'}}>
-              Not ready to commit? Try it free first.
-            </p>
+          {/* FREE TRIAL CTA */}
+          <div style={{margin: '0.5rem 0 0 0', textAlign: 'center'}}>
             <Link href="/sample-analysis" style={{textDecoration: 'none', display: 'block'}}>
               <div style={{
                 background: '#0d1a0d',
@@ -600,7 +673,7 @@ export default function Home() {
                 cursor: 'pointer'
               }}>
                 <span style={{color: '#4caf50', fontSize: '1rem', fontWeight: 'bold'}}>
-                  Find My AI Tools — It's Free →
+                  Not convinced? Try a single workflow analysis before you buy →
                 </span>
               </div>
               <p style={{color: '#5a6a7a', fontSize: '0.82rem', margin: '0.4rem 0 0 0', textAlign: 'center'}}>
@@ -609,7 +682,7 @@ export default function Home() {
             </Link>
           </div>
 
-        </form>
+        </div>
 
         <hr className="divider" />
 
