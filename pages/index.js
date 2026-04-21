@@ -358,8 +358,8 @@ export default function Home() {
 
 
         <Image
-          src="/Drowning.jpg"
-          alt="Business owner overwhelmed by AI tools"
+          src="/jungle.png"
+          alt="Business owner lost in a jungle of AI tools"
           width={700}
           height={700}
           priority
