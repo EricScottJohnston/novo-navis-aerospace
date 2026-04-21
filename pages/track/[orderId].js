@@ -180,7 +180,7 @@ export default function TrackOrder() {
           borderRadius: '6px', padding: '1.25rem', textAlign: 'center'
         }}>
           <p style={{ color: '#8a95aa', marginBottom: '0.6rem', fontSize: '0.85rem' }}>
-            {isComplete ? 'Didn't receive your report?' : 'Questions while you wait?'}
+            {isComplete ? "Didn't receive your report?" : 'Questions while you wait?'}
           </p>
           <p style={{ color: '#ffffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>
             <a href="mailto:support@novonavis.com" style={{ color: '#c8a96e' }}>support@novonavis.com</a>
