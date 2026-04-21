@@ -509,7 +509,6 @@ export default function Home() {
               border: '1px solid #1e2a45',
               borderRadius: '8px',
               padding: '1.25rem 1.5rem',
-              opacity: agreedTerms ? 1 : 0.5
             }}>
               <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem'}}>
                 <div>
@@ -543,101 +542,6 @@ export default function Home() {
               </button>
             </div>
 
-            {/* BLUEPRINT — RECOMMENDED */}
-            <div style={{
-              background: '#0a1221',
-              border: '2px solid #c8a96e',
-              borderRadius: '8px',
-              padding: '1.25rem 1.5rem',
-              position: 'relative',
-              opacity: agreedTerms ? 1 : 0.5
-            }}>
-              <div style={{
-                position: 'absolute',
-                top: '-12px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                background: '#c8a96e',
-                color: '#111',
-                fontSize: '0.7rem',
-                fontWeight: 'bold',
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                padding: '0.2rem 0.9rem',
-                borderRadius: '20px'
-              }}>Most Popular</div>
-              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem'}}>
-                <div>
-                  <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1rem', margin: 0}}>Blueprint</p>
-                  <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: '0.15rem 0 0 0'}}>Full AI integration report</p>
-                </div>
-                <p style={{color: '#d0d8e8', fontWeight: 'bold', fontSize: '1.4rem', margin: 0}}>$199</p>
-              </div>
-              <ul style={{listStyle: 'none', padding: 0, margin: '0 0 1rem 0', color: '#d0d8e8', fontSize: '0.85rem', lineHeight: '1.8'}}>
-                <li>✓ &nbsp;Up to 25-page custom report</li>
-                <li>✓ &nbsp;Identifies AI tools and workflows</li>
-                <li>✓ &nbsp;Step-by-step implementation guidance</li>
-                <li>✓ &nbsp;ROI estimates for each recommendation</li>
-                <li>✓ &nbsp;Delivered within 24 hours</li>
-              </ul>
-              <button
-                onClick={() => handleCheckout('blueprint')}
-                disabled={!agreedTerms || loadingTier !== null}
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  background: agreedTerms ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : '#2a3a55',
-                  border: 'none',
-                  borderRadius: '6px',
-                  color: agreedTerms ? '#111111' : '#8a95aa',
-                  fontWeight: 'bold',
-                  fontSize: '0.95rem',
-                  cursor: agreedTerms ? 'pointer' : 'not-allowed'
-                }}
-              >
-                {loadingTier === 'blueprint' ? 'Redirecting...' : 'Get My AI Blueprint — $199'}
-              </button>
-            </div>
-
-            {/* BLUEPRINT + CONSULT */}
-            <div style={{
-              background: '#0d1221',
-              border: '1px solid #1e2a45',
-              borderRadius: '8px',
-              padding: '1.25rem 1.5rem',
-              opacity: agreedTerms ? 1 : 0.5
-            }}>
-              <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem'}}>
-                <div>
-                  <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1rem', margin: 0}}>Blueprint + Consult</p>
-                  <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: '0.15rem 0 0 0'}}>Report plus live Zoom session</p>
-                </div>
-                <p style={{color: '#d0d8e8', fontWeight: 'bold', fontSize: '1.4rem', margin: 0}}>$499</p>
-              </div>
-              <ul style={{listStyle: 'none', padding: 0, margin: '0 0 1rem 0', color: '#8a95aa', fontSize: '0.85rem', lineHeight: '1.8'}}>
-                <li>✓ &nbsp;Everything in Blueprint</li>
-                <li>✓ &nbsp;2-hour Zoom with an AI consultant</li>
-                <li>✓ &nbsp;Walk through implementation together</li>
-                <li>✓ &nbsp;Leave with a clear action plan</li>
-              </ul>
-              <button
-                onClick={() => handleCheckout('consult')}
-                disabled={!agreedTerms || loadingTier !== null}
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  background: agreedTerms ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : '#2a3a55',
-                  border: 'none',
-                  borderRadius: '6px',
-                  color: agreedTerms ? '#111111' : '#8a95aa',
-                  fontWeight: 'bold',
-                  fontSize: '0.95rem',
-                  cursor: agreedTerms ? 'pointer' : 'not-allowed'
-                }}
-              >
-                {loadingTier === 'consult' ? 'Redirecting...' : 'Get Blueprint + Consult — $499'}
-              </button>
-            </div>
 
           </div>
 
