@@ -167,7 +167,7 @@ export default function Home() {
           margin: '1.25rem 0'
         }}>
           <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.8', margin: 0}}>
-            There are over <strong style={{color: '#c8a96e'}}>16,000 AI tools</strong> out there. Nobody has time to sort through that — and honestly, you shouldn't have to. 
+            There are over <strong style={{color: '#c8a96e'}}>16,000 AI tools</strong> out there. Nobody has time to sort through that — hire us for that. It's fast, safe and guaranteed.
           </p>
         </div>
 
