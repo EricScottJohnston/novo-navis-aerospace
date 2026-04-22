@@ -132,10 +132,10 @@ export default function Home() {
 
         <h1 style={{fontWeight: 'bold'}}>
           <span style={{color: '#c8a96e', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)', display: 'block'}}>
-            If you already know which AI tools your business needs, you don't need us.
+            You can stop searching.
           </span>
           <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
-            If you don't — you're in the right spot.
+            We build a custom AI roadmap for your business — the specific tools, the exact workflows, and a fast implementation plan. Delivered in minutes.
           </span>
         </h1>
 
