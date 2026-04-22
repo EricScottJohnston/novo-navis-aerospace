@@ -6,8 +6,8 @@ export default function About() {
   return (
     <>
       <Head>
-        <title>About | Novo Navis Aerospace Operations LLC</title>
-        <meta name="description" content="Novo Navis Aerospace Operations LLC is a registered, active U.S. Defense Contractor (CAGE 8GN22). We deliver the same trusted AI solutions to small businesses that we deliver to our defense customers." />
+        <title>About | Novo Navis</title>
+        <meta name="description" content="Novo Navis is a registered, active U.S. Defense Contractor (CAGE 8GN22). We deliver the same trusted AI solutions to small businesses that we deliver to our defense customers." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -45,7 +45,7 @@ export default function About() {
             </figcaption>
           </figure>
 
-          <p>Novo Navis Aerospace Operations LLC is a registered, active U.S. Defense Contractor. CAGE Code <a href="https://www.dla.mil/LandandMaritime/Business/Selling/Vendor-Registration/CAGE-Code-Look-up/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e'}}>8GN22</a> — you can verify that right now through the Defense Logistics Agency. That is not a marketing claim. It is a federal registration you can look up in thirty seconds.</p>
+          <p>Novo Navis is a registered, active U.S. Defense Contractor. CAGE Code 8GN22 — you can verify that right now through the Defense Logistics Agency <a href="https://www.dla.mil/LandandMaritime/Business/Selling/Vendor-Registration/CAGE-Code-Look-up/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e'}}>here</a>. That is not a marketing claim. It is a federal registration you can look up in thirty seconds.</p>
 
           <p>Operating as a defense contractor means our internal AI work is held to a standard that most commercial tools never have to meet. It has to be right. It has to reason from cause to effect, not just find patterns and make predictions. That requirement shaped how we build AI — and it is the foundation of everything we do.</p>
 
@@ -97,14 +97,14 @@ export default function About() {
             <p style={{color: '#b0b8cc', marginBottom: '0.4rem'}}>Location: Phoenix, Arizona Area</p>
             <p style={{color: '#b0b8cc', marginBottom: '1rem'}}>Registration: Registered Federal Contractor with the U.S. Government</p>
             <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: 0}}>
-              Novo Navis is a registered federal contractor with the U.S. government. Our CAGE Code (8GN22) can be verified directly through the{' '}
+              Novo Navis is a registered federal contractor with the U.S. government. Our CAGE Code (8GN22) can be verified directly through the Defense Logistics Agency —{' '}
               <a
                 href="https://www.dla.mil/LandandMaritime/Business/Selling/Vendor-Registration/CAGE-Code-Look-up/"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{color: '#c8a96e'}}
               >
-                Defense Logistics Agency CAGE Code lookup service →
+                look it up here →
               </a>
             </p>
           </div>
