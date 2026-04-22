@@ -479,6 +479,7 @@ export default function Home() {
                 <li>✓ &nbsp;Implementation guidance</li>
                 <li>✗ &nbsp;No ROI estimates</li>
                 <li>✓ &nbsp;Built in real time</li>
+                <li><span style={{color: '#4caf50'}}>✓</span> &nbsp;100% money-back guarantee</li>
               </ul>
               <button
                 onClick={() => handleCheckout('starter')}
@@ -534,6 +535,7 @@ export default function Home() {
                 <li>✓ &nbsp;Implementation guidance</li>
                 <li>✓ &nbsp;ROI estimates</li>
                 <li>✓ &nbsp;Built in real time</li>
+                <li><span style={{color: '#4caf50'}}>✓</span> &nbsp;100% money-back guarantee</li>
               </ul>
               <button
                 onClick={() => handleCheckout('blueprint')}
@@ -575,6 +577,7 @@ export default function Home() {
                 <li>✓ &nbsp;ROI estimates</li>
                 <li>✓ &nbsp;Built in real time</li>
                 <li>✓ &nbsp;2-hour Zoom with Eric Johnston</li>
+                <li><span style={{color: '#4caf50'}}>✓</span> &nbsp;100% money-back guarantee</li>
               </ul>
               <button
                 onClick={() => handleCheckout('consult')}

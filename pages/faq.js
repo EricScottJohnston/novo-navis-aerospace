@@ -4,7 +4,7 @@ import Link from 'next/link'
 const faqs = [
   {
     q: "Who is Novo Navis?",
-    a: <>Novo Navis Aerospace Operations LLC is a registered U.S. federal contractor and aerospace research and development company that built a causal AI system for air traffic control — and made it available to small businesses. You can read what we&apos;re talking about in the AI for Small Business community on Reddit:{' '}
+    a: <>Novo Navis is a registered U.S. federal contractor. We research and develop trusted AI systems that got its start building AI systems for government and defense — and made that same rigor available to small businesses. You can read what we&apos;re talking about in the AI for Small Business community on Reddit:{' '}
       <a href="https://www.reddit.com/r/AiForSmallBusiness/comments/1snruki/i_built_a_causal_ai_system_for_small_businesses/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e'}}>I built a causal AI system for small businesses →</a>
       {' '}and{' '}
       <a href="https://www.reddit.com/r/AiForSmallBusiness/comments/1shq87i/ai_got_gimmecky_real_fast/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e'}}>AI got gimmicky real fast →</a>
@@ -32,11 +32,11 @@ const faqs = [
   },
   {
     q: "How does the real-time delivery work?",
-    a: "After checkout, you'll complete a short intake form with details about your business and workflows. Your intake is immediately processed by our Small Psychological Model — David — which researches your industry, analyzes your workflows, and assembles your report automatically. Your finished report is emailed to you as soon as it's built, typically within the hour."
+    a: "After checkout, you'll complete a short intake form with details about your business and workflows. Your intake is immediately processed by our Small Psychological Model — David — which researches your industry, analyzes your workflows, and assembles your report automatically. You'll be taken to a live tracking page where you can watch David build your report in real time — many customers find it fascinating to see the model reason through their business step by step. Your finished report is emailed to you as soon as it's built, typically within the hour. You're also free to close the tracking page at any time — the report will arrive in your inbox regardless."
   },
   {
     q: "What if I'm not satisfied with the AI Blueprint?",
-    a: "Full refund, no questions asked. If you read your AI Blueprint and don't find it useful, email support@novonavis.com and we'll refund you in full. We'd rather lose the $199 than send a report that doesn't deliver value."
+    a: "Full refund, no questions asked. If you read your AI Blueprint and don't find it useful, email support@novonavis.com and we'll refund you in full. We'd rather lose the sale than send a report that doesn't deliver value."
   },
   {
     q: "How is my business information handled?",
