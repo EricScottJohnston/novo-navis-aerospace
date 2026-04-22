@@ -117,6 +117,7 @@ export default function Home() {
         <ul className="nav-links">
           <li><Link href="/">Home</Link></li>
           <li><Link href="/blog">Blog</Link></li>
+          <li><Link href="/faq">FAQ</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
       </nav>
