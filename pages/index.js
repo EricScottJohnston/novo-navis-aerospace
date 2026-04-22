@@ -52,9 +52,15 @@ export default function Home() {
   }, [])
 
   const [loadingTier, setLoadingTier] = useState(null)
+  const [showTermsModal, setShowTermsModal] = useState(false)
+  const [pendingTier, setPendingTier] = useState(null)
 
   const handleCheckout = async (tier) => {
-    if (!agreedTerms) return
+    if (!agreedTerms) {
+      setPendingTier(tier)
+      setShowTermsModal(true)
+      return
+    }
     setLoadingTier(tier)
 
     try {
@@ -476,17 +482,17 @@ export default function Home() {
               </ul>
               <button
                 onClick={() => handleCheckout('starter')}
-                disabled={!agreedTerms || loadingTier !== null}
+                disabled={loadingTier !== null}
                 style={{
                   width: '100%',
                   padding: '0.75rem',
-                  background: agreedTerms ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : '#2a3a55',
+                  background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
                   border: 'none',
                   borderRadius: '6px',
-                  color: agreedTerms ? '#111111' : '#8a95aa',
+                  color: '#111111',
                   fontWeight: 'bold',
                   fontSize: '0.95rem',
-                  cursor: agreedTerms ? 'pointer' : 'not-allowed'
+                  cursor: 'pointer'
                 }}
               >
                 {loadingTier === 'starter' ? 'Redirecting...' : 'Get Starter Report — $49'}
@@ -531,17 +537,17 @@ export default function Home() {
               </ul>
               <button
                 onClick={() => handleCheckout('blueprint')}
-                disabled={!agreedTerms || loadingTier !== null}
+                disabled={loadingTier !== null}
                 style={{
                   width: '100%',
                   padding: '0.75rem',
-                  background: agreedTerms ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : '#2a3a55',
+                  background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
                   border: 'none',
                   borderRadius: '6px',
-                  color: agreedTerms ? '#111111' : '#8a95aa',
+                  color: '#111111',
                   fontWeight: 'bold',
                   fontSize: '0.95rem',
-                  cursor: agreedTerms ? 'pointer' : 'not-allowed'
+                  cursor: 'pointer'
                 }}
               >
                 {loadingTier === 'blueprint' ? 'Redirecting...' : 'Get My AI Blueprint — $199'}
@@ -572,17 +578,17 @@ export default function Home() {
               </ul>
               <button
                 onClick={() => handleCheckout('consult')}
-                disabled={!agreedTerms || loadingTier !== null}
+                disabled={loadingTier !== null}
                 style={{
                   width: '100%',
                   padding: '0.75rem',
-                  background: agreedTerms ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : '#2a3a55',
+                  background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
                   border: 'none',
                   borderRadius: '6px',
-                  color: agreedTerms ? '#111111' : '#8a95aa',
+                  color: '#111111',
                   fontWeight: 'bold',
                   fontSize: '0.95rem',
-                  cursor: agreedTerms ? 'pointer' : 'not-allowed'
+                  cursor: 'pointer'
                 }}
               >
                 {loadingTier === 'consult' ? 'Redirecting...' : 'Get Blueprint + Consult — $499'}
@@ -642,6 +648,76 @@ export default function Home() {
           <Link href="/terms">Terms and Conditions</Link>
         </p>
       </footer>
+
+      {/* TERMS MODAL */}
+      {showTermsModal && (
+        <div
+          onClick={() => setShowTermsModal(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 9999,
+            background: 'rgba(0,0,0,0.7)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1rem'
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: '#0d1221', border: '1px solid #1e2a45',
+              borderRadius: '8px', padding: '2rem',
+              maxWidth: '420px', width: '100%'
+            }}
+          >
+            <h3 style={{color: '#d0d8e8', marginBottom: '0.75rem', fontSize: '1.1rem'}}>
+              One quick step
+            </h3>
+            <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '1.25rem', lineHeight: '1.6'}}>
+              Please accept the Terms and Conditions before continuing.
+            </p>
+            <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', marginBottom: '1.5rem'}}>
+              <input
+                type="checkbox"
+                checked={agreedTerms}
+                onChange={(e) => setAgreedTerms(e.target.checked)}
+                style={{marginTop: '3px', width: '18px', height: '18px', flexShrink: 0, cursor: 'pointer'}}
+              />
+              <span style={{color: '#d0d8e8', fontSize: '0.9rem', lineHeight: '1.5'}}>
+                I agree to the{' '}
+                <Link href="/terms" style={{color: '#c8a96e'}} target="_blank">Terms and Conditions</Link>
+              </span>
+            </label>
+            <div style={{display: 'flex', gap: '0.75rem'}}>
+              <button
+                onClick={() => setShowTermsModal(false)}
+                style={{
+                  flex: 1, padding: '0.65rem',
+                  background: 'transparent', border: '1px solid #1e2a45',
+                  borderRadius: '6px', color: '#8a95aa',
+                  cursor: 'pointer', fontSize: '0.9rem'
+                }}
+              >Cancel</button>
+              <button
+                disabled={!agreedTerms || loadingTier !== null}
+                onClick={() => {
+                  if (!agreedTerms) return
+                  setShowTermsModal(false)
+                  handleCheckout(pendingTier)
+                }}
+                style={{
+                  flex: 1, padding: '0.65rem',
+                  background: agreedTerms ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : '#2a3a55',
+                  border: 'none', borderRadius: '6px',
+                  color: agreedTerms ? '#111' : '#8a95aa',
+                  fontWeight: 'bold', fontSize: '0.9rem',
+                  cursor: agreedTerms ? 'pointer' : 'not-allowed'
+                }}
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
