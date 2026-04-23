@@ -132,10 +132,10 @@ export default function Home() {
 
         <h1 style={{fontWeight: 'bold'}}>
           <span style={{color: '#c8a96e', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)', display: 'block'}}>
-            You can stop searching.
+            We UN-complicate AI for you. In about 12 minutes.
           </span>
           <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
-            We build a custom AI roadmap for your business — the specific tools, the exact workflows, and a fast implementation plan. Delivered in minutes.
+            We build a custom step-by-step guide so your business can leverage the specific AI tools, workflows, and a fast implementation plan to eliminate manual tasks. Our step-by-step guide is tailored to your business and designed for a person with limited technical skills, and it's delivered in minutes.
           </span>
         </h1>
 
