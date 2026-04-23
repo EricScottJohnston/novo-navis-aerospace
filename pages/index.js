@@ -135,7 +135,7 @@ export default function Home() {
             We UN-complicate AI for you. In about 12 minutes.
           </span>
           <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
-            We build a custom step-by-step guide so your business can leverage the specific AI tools, workflows, and a fast implementation plan to eliminate manual tasks. Our step-by-step guide is tailored to your business and designed for a person with limited technical skills, and it's delivered in minutes.
+            We tell you exactly which AI tools your business needs and how to get started — no tech background required.
           </span>
         </h1>
 
