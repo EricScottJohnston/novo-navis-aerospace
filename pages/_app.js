@@ -3,9 +3,21 @@ import Script from 'next/script'
 import Head from 'next/head'
 import ChatWidget from '../components/ChatWidget'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 export default function App({ Component, pageProps }) {
   const router = useRouter()
+
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      if (typeof window.gtag === 'function') {
+        window.gtag('config', 'G-G3X6LMB2HE', { page_path: url })
+      }
+    }
+    router.events.on('routeChangeComplete', handleRouteChange)
+    return () => router.events.off('routeChangeComplete', handleRouteChange)
+  }, [router.events])
+
   return (
     <>
       <Head />
