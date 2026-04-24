@@ -46,7 +46,7 @@ export default function Interactive() {
     setAnswers(newAnswers)
     track(`quiz_round_${round}_complete`, { answer: option })
 
-    if (round === 3) {
+    if (round === 4) {
       setLoading(true)
       try {
         const res  = await fetch('/api/interactive', {
@@ -232,7 +232,7 @@ export default function Interactive() {
           {/* Progress dots */}
           {round !== 'final' && (
             <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '1.75rem' }}>
-              {[1, 2, 3].map(n => (
+              {[1, 2, 3, 4].map(n => (
                 <div key={n} style={{
                   width: '8px', height: '8px', borderRadius: '50%',
                   background: n <= round ? GOLD : '#dde2ef',

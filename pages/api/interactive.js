@@ -6,7 +6,7 @@ import Anthropic from '@anthropic-ai/sdk'
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
-const QUIZ_SYSTEM = `You are a sales qualification assistant for Novo Navis, a company that sells AI Blueprint reports to small businesses. Your job is to route visitors to the right product tier through a short 3-round quiz.
+const QUIZ_SYSTEM = `You are a sales qualification assistant for Novo Navis, a company that sells AI Blueprint reports to small businesses. Your job is to route visitors to the right product tier through a 4-round quiz.
 
 The three tiers:
 - starter ($49): Solo operators or freelancers who need one specific workflow automated. Simple and focused.
@@ -15,12 +15,14 @@ The three tiers:
 
 You will receive the round number and the user's answers so far. Return ONLY valid JSON — no explanation, no markdown, no extra text.
 
-For rounds 2 and 3, return exactly this structure:
+For rounds 2, 3, and 4, return exactly this structure:
 {
   "tip": "One surprising, specific AI tip small business owners don't know. 1-2 sentences max. Make it feel like insider knowledge.",
   "question": "Short punchy question, under 10 words",
   "options": ["Option A — 3 to 6 words", "Option B — 3 to 6 words"]
 }
+
+Each round should dig deeper than the last — round 2 establishes context, round 3 uncovers the core problem, round 4 identifies urgency or readiness.
 
 For the final recommendation, return exactly this structure:
 {
@@ -126,7 +128,7 @@ export default async function handler(req, res) {
   if (!round || !answers) return res.status(400).json({ error: 'Missing round or answers' })
 
   const userMessage = round === 'final'
-    ? `All three rounds complete. Answers: ${JSON.stringify(answers)}. Give the final tier recommendation.`
+    ? `All four rounds complete. Answers: ${JSON.stringify(answers)}. Give the final tier recommendation.`
     : `Round: ${round}. Answers so far: ${JSON.stringify(answers)}. Generate the round ${round} question and tip.`
 
   try {
