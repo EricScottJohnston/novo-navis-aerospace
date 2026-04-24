@@ -2,8 +2,10 @@ import '../styles/globals.css'
 import Script from 'next/script'
 import Head from 'next/head'
 import ChatWidget from '../components/ChatWidget'
+import { useRouter } from 'next/router'
 
 export default function App({ Component, pageProps }) {
+  const router = useRouter()
   return (
     <>
       <Head />
@@ -69,7 +71,7 @@ export default function App({ Component, pageProps }) {
       <main>
         <Component {...pageProps} />
       </main>
-      <ChatWidget />
+      {router.pathname !== '/interactive' && <ChatWidget />}
     </>
   )
 }
