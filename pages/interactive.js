@@ -27,7 +27,72 @@ export default function Interactive() {
   const [loading,   setLoading]   = useState(false)
   const [final,     setFinal]     = useState(null)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
-  const [navModal, setNavModal] = useState(null) // null | 'home' | 'faq' | 'about'
+  const [navModal,        setNavModal]        = useState(null)
+  const [objOpen,         setObjOpen]         = useState(false)
+  const [objRound,        setObjRound]        = useState(1)
+  const [objData,         setObjData]         = useState(null)  // {questions} | {answer, questions} | {answer, pitch, recommendation}
+  const [objLoading,      setObjLoading]      = useState(false)
+  const [objCheckoutLoad, setObjCheckoutLoad] = useState(false)
+
+  const openObjection = async () => {
+    setObjOpen(true)
+    setObjRound(1)
+    setObjData(null)
+    setObjLoading(true)
+    try {
+      const res  = await fetch('/api/interactive', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'objection', round: 1 }),
+      })
+      const data = await res.json()
+      setObjData(data)
+    } catch {
+      setObjData({ questions: ['What exactly do I get?', 'Is this just ChatGPT?'] })
+    }
+    setObjLoading(false)
+  }
+
+  const handleObjChoice = async (chosen) => {
+    const nextRound = objRound + 1
+    setObjLoading(true)
+    setObjData(null)
+    try {
+      const res  = await fetch('/api/interactive', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'objection', round: nextRound, chosen }),
+      })
+      const data = await res.json()
+      setObjData(data)
+      setObjRound(nextRound)
+    } catch {
+      if (nextRound === 2) {
+        setObjData({ answer: 'Great question. Your AI Blueprint is a custom report built specifically for your business — not generic advice.', questions: ['How long does it take?', 'What if I\'m not happy?'] })
+      } else {
+        setObjData({ answer: 'Your report is ready in about 12 minutes and comes with a full money-back guarantee.', pitch: 'Hundreds of business owners have stopped guessing and started knowing. Your blueprint is 12 minutes away.', recommendation: 'blueprint' })
+      }
+      setObjRound(nextRound)
+    }
+    setObjLoading(false)
+  }
+
+  const handleObjCheckout = async (tier) => {
+    setObjCheckoutLoad(true)
+    try {
+      const res  = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier }),
+      })
+      const data = await res.json()
+      if (data.url) window.location.href = data.url
+      else { alert('Something went wrong.'); setObjCheckoutLoad(false) }
+    } catch {
+      alert('Something went wrong.')
+      setObjCheckoutLoad(false)
+    }
+  }
 
   const handleChoice = async (option) => {
     const newAnswers = [...answers, { question: current.question, answer: option }]
@@ -374,6 +439,20 @@ export default function Interactive() {
                   </button>
                 ))}
               </div>
+
+              {/* Objection button */}
+              <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+                <button
+                  onClick={openObjection}
+                  style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    color: '#8a95aa', fontSize: '0.85rem',
+                    textDecoration: 'underline', textUnderlineOffset: '3px',
+                  }}
+                >
+                  Wait, what is an AI Blueprint?
+                </button>
+              </div>
             </>
           )}
 
@@ -383,6 +462,117 @@ export default function Interactive() {
       <footer>
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
       </footer>
+
+      {/* Objection handler modal */}
+      {objOpen && (
+        <div
+          onClick={() => setObjOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 99998,
+            background: 'rgba(0,0,0,0.65)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1rem',
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: '#ffffff', borderRadius: '14px',
+              border: '1px solid #e0e4ef',
+              boxShadow: '0 8px 48px rgba(27,42,74,0.18)',
+              maxWidth: '480px', width: '100%',
+              padding: '2rem 1.75rem',
+            }}
+          >
+            {/* Header */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
+              <div>
+                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>Good question</p>
+                <h2 style={{ color: NAVY, fontSize: '1.15rem', fontWeight: 'bold', margin: 0 }}>What is an AI Blueprint?</h2>
+              </div>
+              <button onClick={() => setObjOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '1.3rem', lineHeight: 1, padding: '0.1rem 0.3rem' }}>✕</button>
+            </div>
+
+            {objLoading ? (
+              <div style={{ textAlign: 'center', padding: '2.5rem 0' }}>
+                <div style={{
+                  width: '32px', height: '32px', borderRadius: '50%',
+                  border: `3px solid ${GOLD}`, borderTopColor: 'transparent',
+                  animation: 'spin 0.8s linear infinite', margin: '0 auto 0.75rem',
+                }} />
+                <p style={{ color: '#8a95aa', fontSize: '0.85rem' }}>Thinking...</p>
+              </div>
+            ) : objData && (objRound === 3 || objData.pitch) ? (
+              /* Final buy screen */
+              <>
+                {objData.answer && (
+                  <div style={{ background: LIGHT, border: `1px solid #e0e4ef`, borderRadius: '8px', padding: '1rem', marginBottom: '1.25rem' }}>
+                    <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, margin: 0 }}>{objData.answer}</p>
+                  </div>
+                )}
+                <div style={{ background: '#f0f7f0', border: '1px solid #b2dab2', borderRadius: '8px', padding: '1rem', marginBottom: '1.5rem' }}>
+                  <p style={{ color: '#2e6b2e', fontSize: '0.92rem', lineHeight: 1.7, margin: 0 }}>{objData.pitch}</p>
+                </div>
+                {(() => {
+                  const t = TIER_LABELS[objData.recommendation] || TIER_LABELS.blueprint
+                  return (
+                    <button
+                      onClick={() => handleObjCheckout(t.tier)}
+                      disabled={objCheckoutLoad}
+                      style={{
+                        width: '100%', padding: '0.9rem',
+                        background: objCheckoutLoad ? '#dde2ef' : 'linear-gradient(to bottom, #FFD814, #FFA41C)',
+                        border: 'none', borderRadius: '8px',
+                        color: objCheckoutLoad ? '#8a95aa' : '#111',
+                        fontWeight: 'bold', fontSize: '1rem',
+                        cursor: objCheckoutLoad ? 'not-allowed' : 'pointer',
+                        marginBottom: '0.75rem',
+                      }}
+                    >
+                      {objCheckoutLoad ? 'Redirecting...' : `Get ${t.name} — ${t.price}`}
+                    </button>
+                  )
+                })()}
+                <p style={{ color: '#8a95aa', fontSize: '0.78rem', textAlign: 'center', margin: 0 }}>
+                  After checkout, a short intake form — then your blueprint in ~12 minutes.
+                </p>
+              </>
+            ) : objData ? (
+              /* Question rounds */
+              <>
+                {objData.answer && (
+                  <div style={{ background: LIGHT, border: `1px solid #e0e4ef`, borderRadius: '8px', padding: '1rem', marginBottom: '1.25rem' }}>
+                    <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, margin: 0 }}>{objData.answer}</p>
+                  </div>
+                )}
+                <p style={{ color: NAVY, fontWeight: 'bold', fontSize: '1rem', marginBottom: '0.85rem' }}>
+                  {objRound === 1 ? 'What would you like to know?' : 'What else is on your mind?'}
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                  {objData.questions?.map((q, i) => (
+                    <button
+                      key={i}
+                      onClick={() => handleObjChoice(q)}
+                      style={{
+                        width: '100%', padding: '0.85rem 1.1rem',
+                        background: '#ffffff', border: '1.5px solid #dde2ef',
+                        borderRadius: '10px', color: NAVY,
+                        fontWeight: '600', fontSize: '0.93rem',
+                        cursor: 'pointer', textAlign: 'left',
+                        transition: 'border-color 0.15s, background 0.15s',
+                      }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = GOLD; e.currentTarget.style.background = '#fffbf4' }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = '#dde2ef'; e.currentTarget.style.background = '#ffffff' }}
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : null}
+          </div>
+        </div>
+      )}
 
       <style>{`
         @keyframes spin {
