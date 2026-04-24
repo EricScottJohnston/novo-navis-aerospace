@@ -2,7 +2,6 @@
 // Interactive AI Blueprint sales funnel — 3 rounds of questions, powered by Haiku, leads to purchase.
 
 import Head from 'next/head'
-import Link from 'next/link'
 import { useState } from 'react'
 
 const NAVY  = '#1B2A4A'
@@ -16,7 +15,7 @@ const TIER_LABELS = {
 }
 
 const ROUND_1 = {
-  tip: 'Did you know? Most small businesses could automate 30–40% of their daily admin tasks with tools that cost less than $50/month — but fewer than 10% know which ones to use.',
+  tip: 'The average small business owner spends 40+ hours researching AI tools before giving up — and still doesn\'t know what to use. Our report does that research for you, customized to your business, in about 12 minutes.',
   question: 'What best describes you?',
   options: ['Solo / Freelancer', 'Small Business', 'Growing Business'],
 }
@@ -28,6 +27,7 @@ export default function Interactive() {
   const [loading,   setLoading]   = useState(false)
   const [final,     setFinal]     = useState(null)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const [navModal, setNavModal] = useState(null) // null | 'home' | 'faq' | 'about'
 
   const handleChoice = async (option) => {
     const newAnswers = [...answers, { question: current.question, answer: option }]
@@ -105,13 +105,66 @@ export default function Interactive() {
       </Head>
 
       <nav>
-        <Link href="/" className="nav-logo">NOVO NAVIS</Link>
+        <span className="nav-logo" style={{cursor:'default'}}>NOVO NAVIS</span>
         <ul className="nav-links">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/faq">FAQ</Link></li>
-          <li><Link href="/about">About</Link></li>
+          {[['Home','home'],['FAQ','faq'],['About','about']].map(([label, key]) => (
+            <li key={key}>
+              <button
+                onClick={() => setNavModal(key)}
+                style={{background:'none', border:'none', cursor:'pointer', color:'inherit', font:'inherit', padding:0}}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
         </ul>
       </nav>
+
+      {/* Nav modal */}
+      {navModal && (
+        <div
+          onClick={() => setNavModal(null)}
+          style={{
+            position:'fixed', inset:0, zIndex:99999,
+            background:'rgba(0,0,0,0.65)',
+            display:'flex', alignItems:'center', justifyContent:'center',
+            padding:'1rem'
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background:'#fff', borderRadius:'12px',
+              width:'100%', maxWidth:'780px',
+              height:'80vh', display:'flex', flexDirection:'column',
+              overflow:'hidden', boxShadow:'0 8px 48px rgba(0,0,0,0.35)'
+            }}
+          >
+            <div style={{
+              display:'flex', justifyContent:'space-between', alignItems:'center',
+              padding:'0.85rem 1.25rem',
+              borderBottom:'1px solid #e0e4ef',
+              background:'#f8f9fc', flexShrink:0
+            }}>
+              <span style={{color:NAVY, fontWeight:'bold', fontSize:'0.95rem', textTransform:'capitalize'}}>
+                {navModal === 'home' ? 'Novo Navis' : navModal.toUpperCase()}
+              </span>
+              <button
+                onClick={() => setNavModal(null)}
+                style={{
+                  background:'none', border:'none', cursor:'pointer',
+                  color:'#8a95aa', fontSize:'1.3rem', lineHeight:1, padding:'0.2rem 0.4rem'
+                }}
+              >✕</button>
+            </div>
+            <iframe
+              src={navModal === 'home' ? '/' : `/${navModal}`}
+              style={{flex:1, border:'none', width:'100%'}}
+              title={navModal}
+            />
+          </div>
+        </div>
+      )}
 
       <div style={{
         minHeight: '80vh',

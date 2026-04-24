@@ -32,9 +32,10 @@ recommendation must be exactly one of: starter, blueprint, consult
 
 Rules:
 - All text is SHORT. No long sentences in questions or options.
-- Tips feel like secrets — things they haven't heard before.
+- Tips must sell the VALUE of getting an expert-built report for their specific situation. Every tip should make the reader feel the pain of guessing on their own, and the relief of having it done for them in about 12 minutes. Examples of the right angle: "Most business owners try 3-4 wrong tools before finding the right one — costing months of wasted time. A custom report skips all of that." or "Generic AI advice fails because it ignores your industry, budget, and workflows. Your report is built around all three." Never give generic AI statistics — always connect it to the value of expert advice delivered fast.
 - The pitch is personalized — reference what they told you.
-- Always recommend a tier. Never leave them without a next step.`
+- Always recommend a tier. Never leave them without a next step.
+- The product is a REPORT — a custom AI Blueprint document, not software or a subscription.`
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
