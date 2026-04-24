@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const faqs = [
   {
@@ -53,6 +54,8 @@ const faqs = [
 ]
 
 export default function FAQ() {
+  const router = useRouter()
+  const embed = router.query.embed === '1'
   return (
     <>
       <Head>
@@ -61,15 +64,17 @@ export default function FAQ() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <nav>
-        <Link href="/" className="nav-logo">NOVO NAVIS</Link>
-        <ul className="nav-links">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
-          <li><Link href="/about">About</Link></li>
-        </ul>
-      </nav>
+      {!embed && (
+        <nav>
+          <Link href="/" className="nav-logo">NOVO NAVIS</Link>
+          <ul className="nav-links">
+            <li><Link href="/">Home</Link></li>
+            <li><Link href="/blog">Blog</Link></li>
+            <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
+            <li><Link href="/about">About</Link></li>
+          </ul>
+        </nav>
+      )}
 
       <div className="report-page">
 
@@ -120,17 +125,19 @@ export default function FAQ() {
 
       </div>
 
-      <footer>
-        <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
-        <p style={{marginTop: '0.5rem'}}>
-          <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
-          <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
-          <Link href="/about">About</Link> &nbsp;·&nbsp;
-          <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
-          <Link href="/terms">Terms and Conditions</Link>
-        </p>
-      </footer>
+      {!embed && (
+        <footer>
+          <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
+          <p style={{marginTop: '0.5rem'}}>
+            <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
+            <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
+            <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
+            <Link href="/about">About</Link> &nbsp;·&nbsp;
+            <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
+            <Link href="/terms">Terms and Conditions</Link>
+          </p>
+        </footer>
+      )}
     </>
   )
 }

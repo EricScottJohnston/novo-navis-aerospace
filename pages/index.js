@@ -2,9 +2,12 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 
 export default function Home() {
+  const router = useRouter()
+  const embed = router.query.embed === '1'
   const [agreedTerms, setAgreedTerms] = useState(false)
 
   // Fade-in on scroll via IntersectionObserver
@@ -87,15 +90,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <nav>
-        <Link href="/" className="nav-logo">NOVO NAVIS</Link>
-        <ul className="nav-links">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/blog">Blog</Link></li>
-          <li><Link href="/faq">FAQ</Link></li>
-          <li><Link href="/about">About</Link></li>
-        </ul>
-      </nav>
+      {!embed && (
+        <nav>
+          <Link href="/" className="nav-logo">NOVO NAVIS</Link>
+          <ul className="nav-links">
+            <li><Link href="/">Home</Link></li>
+            <li><Link href="/blog">Blog</Link></li>
+            <li><Link href="/faq">FAQ</Link></li>
+            <li><Link href="/about">About</Link></li>
+          </ul>
+        </nav>
+      )}
 
       <div className="report-page">
 
@@ -639,17 +644,19 @@ export default function Home() {
 
       </div>
 
-      <footer>
-        <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
-        <p style={{marginTop: '0.5rem'}}>
-          <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-          <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
-          <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
-          <Link href="/about">About</Link> &nbsp;·&nbsp;
-          <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
-          <Link href="/terms">Terms and Conditions</Link>
-        </p>
-      </footer>
+      {!embed && (
+        <footer>
+          <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
+          <p style={{marginTop: '0.5rem'}}>
+            <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
+            <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
+            <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
+            <Link href="/about">About</Link> &nbsp;·&nbsp;
+            <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
+            <Link href="/terms">Terms and Conditions</Link>
+          </p>
+        </footer>
+      )}
 
       {/* TERMS MODAL — appears on checkout click if terms not yet agreed */}
       {showTermsModal && (

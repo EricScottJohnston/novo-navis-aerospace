@@ -9,13 +9,13 @@ const GOLD  = '#c8a96e'
 const LIGHT = '#f4f6fb'
 
 const TIER_LABELS = {
-  starter:  { name: 'Starter Report',         price: '$49',  tier: 'starter' },
+  starter:  { name: 'Starter Blueprint',       price: '$49',  tier: 'starter' },
   blueprint:{ name: 'AI Blueprint',            price: '$199', tier: 'blueprint' },
   consult:  { name: 'Blueprint + Consult',     price: '$499', tier: 'consult' },
 }
 
 const ROUND_1 = {
-  tip: 'The average small business owner spends 40+ hours researching AI tools before giving up — and still doesn\'t know what to use. Our report does that research for you, customized to your business, in about 12 minutes.',
+  tip: 'The average small business owner spends 40+ hours researching AI tools before giving up — and still doesn\'t know what to use. Our blueprint does that research for you, customized to your business, in about 12 minutes.',
   question: 'What best describes you?',
   options: ['Solo / Freelancer', 'Small Business', 'Growing Business'],
 }
@@ -68,9 +68,9 @@ export default function Interactive() {
       setObjRound(nextRound)
     } catch {
       if (nextRound === 2) {
-        setObjData({ answer: 'Great question. Your AI Blueprint is a custom report built specifically for your business — not generic advice.', questions: ['How long does it take?', 'What if I\'m not happy?'] })
+        setObjData({ answer: 'Great question. Your AI Blueprint is built specifically for your business — not generic advice.', questions: ['How long does it take?', 'What if I\'m not happy?'] })
       } else {
-        setObjData({ answer: 'Your report is ready in about 12 minutes and comes with a full money-back guarantee.', pitch: 'Hundreds of business owners have stopped guessing and started knowing. Your blueprint is 12 minutes away.', recommendation: 'blueprint' })
+        setObjData({ answer: 'Your blueprint is ready in about 12 minutes and comes with a full money-back guarantee.', pitch: 'Hundreds of business owners have stopped guessing and started knowing. Your blueprint is 12 minutes away.', recommendation: 'blueprint' })
       }
       setObjRound(nextRound)
     }
@@ -223,7 +223,7 @@ export default function Interactive() {
               >✕</button>
             </div>
             <iframe
-              src={navModal === 'home' ? '/' : `/${navModal}`}
+              src={navModal === 'home' ? '/?embed=1' : `/${navModal}?embed=1`}
               style={{flex:1, border:'none', width:'100%'}}
               title={navModal}
             />
