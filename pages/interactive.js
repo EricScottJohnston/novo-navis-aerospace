@@ -172,7 +172,7 @@ export default function Interactive() {
       <nav>
         <span className="nav-logo" style={{cursor:'default'}}>NOVO NAVIS</span>
         <ul className="nav-links">
-          {[['Home','home'],['FAQ','faq'],['About','about']].map(([label, key]) => (
+          {[['FAQ','faq'],['About','about']].map(([label, key]) => (
             <li key={key}>
               <button
                 onClick={() => setNavModal(key)}
@@ -223,7 +223,7 @@ export default function Interactive() {
               >✕</button>
             </div>
             <iframe
-              src={navModal === 'home' ? '/?embed=1' : `/${navModal}?embed=1`}
+              src={`/${navModal}?embed=1`}
               style={{flex:1, border:'none', width:'100%'}}
               title={navModal}
             />
@@ -360,6 +360,20 @@ export default function Interactive() {
                 {checkoutLoading ? 'Redirecting...' : `Get ${tierInfo.name} — ${tierInfo.price}`}
               </button>
 
+              {/* Objection handler link */}
+              <div style={{ textAlign: 'center', marginBottom: '0.75rem' }}>
+                <button
+                  onClick={openObjection}
+                  style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    color: '#8a95aa', fontSize: '0.85rem',
+                    textDecoration: 'underline', textUnderlineOffset: '3px',
+                  }}
+                >
+                  Wait, what is an AI Blueprint?
+                </button>
+              </div>
+
               {/* Post-checkout reassurance */}
               <div style={{
                 background: '#f0f7f0',
@@ -368,6 +382,9 @@ export default function Interactive() {
                 padding: '1rem 1.1rem',
                 textAlign: 'center',
               }}>
+                <p style={{ color: '#2e6b2e', fontSize: '0.9rem', fontWeight: 'bold', margin: '0 0 0.4rem' }}>
+                  <span style={{ color: '#4caf50' }}>✓</span> 100% money-back guarantee
+                </p>
                 <p style={{ color: '#2e6b2e', fontSize: '0.85rem', lineHeight: 1.7, margin: 0 }}>
                   After checkout, we'll bring you back for a short, easy intake form.<br />
                   Then we build your blueprint — <strong>ready in about 12 minutes.</strong>
@@ -440,19 +457,6 @@ export default function Interactive() {
                 ))}
               </div>
 
-              {/* Objection button */}
-              <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-                <button
-                  onClick={openObjection}
-                  style={{
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    color: '#8a95aa', fontSize: '0.85rem',
-                    textDecoration: 'underline', textUnderlineOffset: '3px',
-                  }}
-                >
-                  Wait, what is an AI Blueprint?
-                </button>
-              </div>
             </>
           )}
 
