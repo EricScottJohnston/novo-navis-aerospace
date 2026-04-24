@@ -55,7 +55,8 @@ export default async function handler(req, res) {
       messages: [{ role: 'user', content: userMessage }]
     })
 
-    const text = response.content[0].text.trim()
+    let text = response.content[0].text.trim()
+    text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim()
     const json = JSON.parse(text)
     res.status(200).json(json)
   } catch (e) {
