@@ -21,6 +21,12 @@ const ROUND_1 = {
   options: ['Solo / Freelancer', 'Small Business', 'Growing Business'],
 }
 
+function track(event, params = {}) {
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', event, params)
+  }
+}
+
 export default function Interactive() {
   const [round,     setRound]     = useState(1)
   const [answers,   setAnswers]   = useState([])
@@ -38,6 +44,7 @@ export default function Interactive() {
   const handleChoice = async (option) => {
     const newAnswers = [...answers, { question: current.question, answer: option }]
     setAnswers(newAnswers)
+    track(`quiz_round_${round}_complete`, { answer: option })
 
     if (round === 3) {
       setLoading(true)
@@ -50,6 +57,7 @@ export default function Interactive() {
         const data = await res.json()
         setFinal(data)
         setRound('final')
+        track('quiz_recommendation_shown', { tier: data.recommendation })
       } catch {
         setFinal({
           tip: 'AI can reduce manual data entry by up to 80% for most small businesses.',
@@ -57,6 +65,7 @@ export default function Interactive() {
           pitch: 'Based on your answers, the AI Blueprint is the right fit. It gives you a complete, prioritized roadmap — exactly what you need to start seeing results fast.',
         })
         setRound('final')
+        track('quiz_recommendation_shown', { tier: 'blueprint' })
       }
       setLoading(false)
       return
@@ -88,8 +97,10 @@ export default function Interactive() {
     if (!agreedTerms) {
       setPendingTier(tier)
       setShowTermsModal(true)
+      track('quiz_buy_clicked', { tier })
       return
     }
+    track('quiz_checkout_started', { tier })
     setCheckoutLoading(true)
     try {
       const res  = await fetch('/api/checkout', {
@@ -309,7 +320,7 @@ export default function Interactive() {
               {/* Secondary links */}
               <div style={{ textAlign: 'center', marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <button
-                  onClick={() => setObjOpen(true)}
+                  onClick={() => { setObjOpen(true); track('quiz_objection_opened') }}
                   style={{
                     background: 'none', border: 'none', cursor: 'pointer',
                     color: '#8a95aa', fontSize: '0.85rem',
@@ -319,7 +330,7 @@ export default function Interactive() {
                   Wait, what is an AI Blueprint?
                 </button>
                 <button
-                  onClick={() => setReviewsOpen(true)}
+                  onClick={() => { setReviewsOpen(true); track('quiz_reviews_opened') }}
                   style={{
                     background: 'none', border: 'none', cursor: 'pointer',
                     color: '#8a95aa', fontSize: '0.85rem',
