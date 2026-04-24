@@ -6,35 +6,6 @@ import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [agreedTerms, setAgreedTerms] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(null)
-
-  // Countdown timer — persists across refreshes via localStorage
-  useEffect(() => {
-    const KEY = 'nn_price_deadline'
-    const DURATION = (0 * 86400 + 2 * 3600 + 34 * 60 + 15) * 1000
-    let deadline = parseInt(localStorage.getItem(KEY) || '0', 10)
-    if (!deadline || deadline <= Date.now()) {
-      deadline = Date.now() + DURATION
-      localStorage.setItem(KEY, String(deadline))
-    }
-    const tick = () => {
-      const rem = deadline - Date.now()
-      if (rem <= 0) {
-        setTimeLeft({ d: 0, h: 0, m: 0, s: 0 })
-        clearInterval(id)
-        return
-      }
-      setTimeLeft({
-        d: Math.floor(rem / 86400000),
-        h: Math.floor((rem % 86400000) / 3600000),
-        m: Math.floor((rem % 3600000) / 60000),
-        s: Math.floor((rem % 60000) / 1000)
-      })
-    }
-    tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
-  }, [])
 
   // Fade-in on scroll via IntersectionObserver
   useEffect(() => {
@@ -85,17 +56,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js?pixel_id=a2_is5chzhhi73u",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','a2_is5chzhhi73u');rdt('track', 'PageVisit');`
-          }}
-        />
         <style>{`
-          @keyframes micPulse {
-            0%   { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.6); }
-            70%  { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
-          }
           .fade-in {
             opacity: 0;
             transform: translateY(22px);
@@ -112,9 +73,17 @@ export default function Home() {
             transform: translateY(-3px);
             box-shadow: 0 6px 24px rgba(0,0,0,0.45);
           }
+          .primary-cta {
+            box-shadow: 0 4px 16px rgba(200, 169, 110, 0.35);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+          }
+          .primary-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(200, 169, 110, 0.5);
+          }
         `}</style>
         <title>Novo Navis | Custom AI Integration Reports for Small Business</title>
-        <meta name="description" content="Tell us about your business and receive a custom AI integration report — up to 25 pages — built by our proprietary Small Psychological Model. Built and delivered in real time." />
+        <meta name="description" content="Tell us about your business and receive a custom AI integration report — up to 25 pages — built by our proprietary Small Psychological Model. Delivered in minutes." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
@@ -130,17 +99,43 @@ export default function Home() {
 
       <div className="report-page">
 
+        {/* HERO — leads with outcomes + audience */}
         <h1 style={{fontWeight: 'bold'}}>
           <span style={{color: '#c8a96e', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)', display: 'block'}}>
-            We uncomplicate the AI decision for you. In about 12 minutes.
+            Stop guessing which AI tools your business needs.
           </span>
           <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
-            We tell you exactly which AI tools your business needs and how to get started — no tech background required.
+            Get a custom report — in about 12 minutes — with the exact tools, costs, and ROI for your workflows. No tech background required.
           </span>
         </h1>
 
-        <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.7', margin: '0.75rem 0 1.25rem 0'}}>
-          No guessing. No googling. Just the specific tools that fit your workflows, your budget, and your industry.
+        {/* OUTCOME STRIP — concrete numbers above the fold */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '0.5rem',
+          margin: '1rem 0 1.25rem 0'
+        }}>
+          {[
+            ['~11 hrs', 'saved per week'],
+            ['$28K–$55K', 'typical annual value'],
+            ['12 min', 'to your report']
+          ].map(([val, lbl]) => (
+            <div key={lbl} style={{
+              background: '#0d1221',
+              border: '1px solid #1e2a45',
+              borderRadius: '6px',
+              padding: '0.65rem 0.5rem',
+              textAlign: 'center'
+            }}>
+              <span style={{display: 'block', fontSize: '0.95rem', fontWeight: 'bold', color: '#c8a96e'}}>{val}</span>
+              <span style={{fontSize: '0.7rem', color: '#8a95aa'}}>{lbl}</span>
+            </div>
+          ))}
+        </div>
+
+        <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.7', margin: '0 0 0.75rem 0'}}>
+          Built for contractors, dental practices, property managers, clinics, agencies, and other small business owners drowning in tasks AI could handle automatically.
         </p>
 
         <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0 0 1.25rem 0'}}>
@@ -355,7 +350,7 @@ export default function Home() {
             <li>✓ &nbsp;Specific AI tools matched to each one — and your budget</li>
             <li>✓ &nbsp;A fast action implementation plan</li>
             <li>✓ &nbsp;A straight answer on whether this will actually save you money</li>
-            <li>✓ &nbsp;Fully automated — no human delay</li>
+            <li>✓ &nbsp;Delivered in minutes, not weeks</li>
           </ul>
         </div>
 
@@ -417,49 +412,28 @@ export default function Home() {
 
         <div className="fade-in" id="order-form">
 
-          {/* MONEY BACK GUARANTEE */}
+          {/* MONEY BACK GUARANTEE — prominent, above pricing */}
           <div style={{
-            background: '#0a1a0a',
+            background: 'linear-gradient(to bottom, #0d2a15, #0a1a0a)',
             border: '2px solid #4caf50',
             borderRadius: '8px',
-            padding: '1rem 1.5rem',
-            margin: '0 0 1.25rem 0',
-            textAlign: 'center'
+            padding: '1.25rem 1.5rem',
+            margin: '0 0 1.5rem 0',
+            textAlign: 'center',
+            boxShadow: '0 4px 16px rgba(76, 175, 80, 0.15)'
           }}>
-            <p style={{color: '#4caf50', fontSize: '1rem', fontWeight: 'bold', margin: '0 0 0.25rem 0'}}>
+            <p style={{color: '#4caf50', fontSize: '1.15rem', fontWeight: 'bold', margin: '0 0 0.4rem 0', letterSpacing: '0.02em'}}>
               ✓ 100% Money-Back Guarantee
             </p>
-            <p style={{color: '#a0c8a0', fontSize: '0.88rem', margin: 0}}>
-              Not satisfied with your report? We'll refund you in full — no questions asked.
+            <p style={{color: '#c5e0c5', fontSize: '0.9rem', margin: 0, lineHeight: '1.5'}}>
+              If your report doesn't give you clear, actionable answers — we refund you in full. No questions asked.
             </p>
-          </div>
-
-          {/* TERMS CHECKBOX */}
-          <div style={{
-            background: '#0d1221',
-            border: '1px solid #1e2a45',
-            borderRadius: '6px',
-            padding: '1rem 1.5rem',
-            margin: '0 0 1.25rem 0'
-          }}>
-            <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer'}}>
-              <input
-                type="checkbox"
-                checked={agreedTerms}
-                onChange={(e) => setAgreedTerms(e.target.checked)}
-                style={{marginTop: '3px', width: '18px', height: '18px', flexShrink: 0, cursor: 'pointer'}}
-              />
-              <span style={{color: '#d0d8e8', fontSize: '0.9rem', lineHeight: '1.5'}}>
-                I agree to the{' '}
-                <Link href="/terms" style={{color: '#c8a96e'}}>Terms and Conditions</Link>
-              </span>
-            </label>
           </div>
 
           {/* PRICING CARDS */}
           <div style={{display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.25rem'}}>
 
-            {/* STARTER */}
+            {/* STARTER — secondary style */}
             <div style={{
               background: '#0d1221',
               border: '1px solid #1e2a45',
@@ -478,7 +452,7 @@ export default function Home() {
                 <li>✓ &nbsp;Identifies AI tools and workflows</li>
                 <li>✓ &nbsp;Implementation guidance</li>
                 <li>✗ &nbsp;No ROI estimates</li>
-                <li>✓ &nbsp;Built in real time</li>
+                <li>✓ &nbsp;Delivered in minutes</li>
                 <li><span style={{color: '#4caf50'}}>✓</span> &nbsp;100% money-back guarantee</li>
               </ul>
               <button
@@ -486,13 +460,13 @@ export default function Home() {
                 disabled={loadingTier !== null}
                 style={{
                   width: '100%',
-                  padding: '0.75rem',
-                  background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
-                  border: 'none',
+                  padding: '0.7rem',
+                  background: 'transparent',
+                  border: '1px solid #c8a96e',
                   borderRadius: '6px',
-                  color: '#111111',
+                  color: '#c8a96e',
                   fontWeight: 'bold',
-                  fontSize: '0.95rem',
+                  fontSize: '0.9rem',
                   cursor: 'pointer'
                 }}
               >
@@ -500,13 +474,14 @@ export default function Home() {
               </button>
             </div>
 
-            {/* BLUEPRINT — RECOMMENDED */}
+            {/* BLUEPRINT — PRIMARY CTA, visually dominant */}
             <div style={{
-              background: '#0a1221',
+              background: 'linear-gradient(to bottom, #0f1628, #0a1221)',
               border: '2px solid #c8a96e',
               borderRadius: '8px',
-              padding: '1.25rem 1.5rem',
+              padding: '1.5rem 1.5rem 1.25rem',
               position: 'relative',
+              boxShadow: '0 4px 20px rgba(200, 169, 110, 0.2)'
             }}>
               <div style={{
                 position: 'absolute',
@@ -519,36 +494,37 @@ export default function Home() {
                 fontWeight: 'bold',
                 letterSpacing: '0.12em',
                 textTransform: 'uppercase',
-                padding: '0.2rem 0.9rem',
+                padding: '0.25rem 1rem',
                 borderRadius: '20px'
-              }}>Most Popular</div>
+              }}>★ Most Popular</div>
               <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem'}}>
                 <div>
-                  <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1rem', margin: 0}}>Blueprint</p>
-                  <p style={{color: '#8a95aa', fontSize: '0.8rem', margin: '0.15rem 0 0 0'}}>Full AI integration report</p>
+                  <p style={{color: '#c8a96e', fontWeight: 'bold', fontSize: '1.15rem', margin: 0}}>Blueprint</p>
+                  <p style={{color: '#d0d8e8', fontSize: '0.85rem', margin: '0.15rem 0 0 0'}}>Full AI integration report</p>
                 </div>
-                <p style={{color: '#d0d8e8', fontWeight: 'bold', fontSize: '1.4rem', margin: 0}}>$199</p>
+                <p style={{color: '#ffffff', fontWeight: 'bold', fontSize: '1.6rem', margin: 0}}>$199</p>
               </div>
-              <ul style={{listStyle: 'none', padding: 0, margin: '0 0 1rem 0', color: '#d0d8e8', fontSize: '0.85rem', lineHeight: '1.8'}}>
+              <ul style={{listStyle: 'none', padding: 0, margin: '0 0 1.25rem 0', color: '#d0d8e8', fontSize: '0.9rem', lineHeight: '1.85'}}>
                 <li>✓ &nbsp;Up to 25-page report</li>
                 <li>✓ &nbsp;Identifies AI tools and workflows</li>
                 <li>✓ &nbsp;Implementation guidance</li>
                 <li>✓ &nbsp;ROI estimates</li>
-                <li>✓ &nbsp;Built in real time</li>
+                <li>✓ &nbsp;Delivered in minutes</li>
                 <li><span style={{color: '#4caf50'}}>✓</span> &nbsp;100% money-back guarantee</li>
               </ul>
               <button
                 onClick={() => handleCheckout('blueprint')}
                 disabled={loadingTier !== null}
+                className="primary-cta"
                 style={{
                   width: '100%',
-                  padding: '0.75rem',
+                  padding: '0.95rem',
                   background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
                   border: 'none',
                   borderRadius: '6px',
                   color: '#111111',
                   fontWeight: 'bold',
-                  fontSize: '0.95rem',
+                  fontSize: '1.05rem',
                   cursor: 'pointer'
                 }}
               >
@@ -556,7 +532,7 @@ export default function Home() {
               </button>
             </div>
 
-            {/* BLUEPRINT + CONSULT */}
+            {/* BLUEPRINT + CONSULT — secondary style */}
             <div style={{
               background: '#0d1221',
               border: '1px solid #1e2a45',
@@ -575,7 +551,7 @@ export default function Home() {
                 <li>✓ &nbsp;Identifies AI tools and workflows</li>
                 <li>✓ &nbsp;Implementation guidance</li>
                 <li>✓ &nbsp;ROI estimates</li>
-                <li>✓ &nbsp;Built in real time</li>
+                <li>✓ &nbsp;Delivered in minutes</li>
                 <li>✓ &nbsp;2-hour Zoom with Eric Johnston</li>
                 <li><span style={{color: '#4caf50'}}>✓</span> &nbsp;100% money-back guarantee</li>
               </ul>
@@ -584,13 +560,13 @@ export default function Home() {
                 disabled={loadingTier !== null}
                 style={{
                   width: '100%',
-                  padding: '0.75rem',
-                  background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
-                  border: 'none',
+                  padding: '0.7rem',
+                  background: 'transparent',
+                  border: '1px solid #c8a96e',
                   borderRadius: '6px',
-                  color: '#111111',
+                  color: '#c8a96e',
                   fontWeight: 'bold',
-                  fontSize: '0.95rem',
+                  fontSize: '0.9rem',
                   cursor: 'pointer'
                 }}
               >
@@ -609,7 +585,7 @@ export default function Home() {
             justifyContent: 'center',
             marginBottom: '1.25rem'
           }}>
-            {['🔒 Secured by Stripe', '📬 Built and delivered in real time', '🚫 Never sold or shared'].map(label => (
+            {['🔒 Secured by Stripe', '📬 Delivered in minutes', '🚫 Never sold or shared'].map(label => (
               <span key={label} style={{
                 background: '#0d1221',
                 border: '1px solid #1e2a45',
@@ -652,7 +628,7 @@ export default function Home() {
         </p>
       </footer>
 
-      {/* TERMS MODAL */}
+      {/* TERMS MODAL — appears on checkout click if terms not yet agreed */}
       {showTermsModal && (
         <div
           onClick={() => setShowTermsModal(false)}
@@ -675,7 +651,7 @@ export default function Home() {
               One quick step
             </h3>
             <p style={{color: '#8a95aa', fontSize: '0.9rem', marginBottom: '1.25rem', lineHeight: '1.6'}}>
-              Please accept the Terms and Conditions before continuing.
+              Please accept the Terms and Conditions before continuing to checkout.
             </p>
             <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', marginBottom: '1.5rem'}}>
               <input
