@@ -28,7 +28,8 @@ export default function Interactive() {
   const [final,     setFinal]     = useState(null)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [navModal,        setNavModal]        = useState(null)
-  const [objOpen, setObjOpen] = useState(false)
+  const [objOpen,     setObjOpen]     = useState(false)
+  const [reviewsOpen, setReviewsOpen] = useState(false)
 
   const handleChoice = async (option) => {
     const newAnswers = [...answers, { question: current.question, answer: option }]
@@ -296,8 +297,8 @@ export default function Interactive() {
                 {checkoutLoading ? 'Redirecting...' : `Get ${tierInfo.name} — ${tierInfo.price}`}
               </button>
 
-              {/* Objection handler link */}
-              <div style={{ textAlign: 'center', marginBottom: '0.75rem' }}>
+              {/* Secondary links */}
+              <div style={{ textAlign: 'center', marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <button
                   onClick={() => setObjOpen(true)}
                   style={{
@@ -307,6 +308,16 @@ export default function Interactive() {
                   }}
                 >
                   Wait, what is an AI Blueprint?
+                </button>
+                <button
+                  onClick={() => setReviewsOpen(true)}
+                  style={{
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    color: '#8a95aa', fontSize: '0.85rem',
+                    textDecoration: 'underline', textUnderlineOffset: '3px',
+                  }}
+                >
+                  Wait, I want to know what other people have to say.
                 </button>
               </div>
 
@@ -459,6 +470,65 @@ export default function Interactive() {
               }}
             >
               Got it — back to my recommendation
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Reviews modal */}
+      {reviewsOpen && (
+        <div
+          onClick={() => setReviewsOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 99998,
+            background: 'rgba(0,0,0,0.65)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1rem',
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: '#ffffff', borderRadius: '14px',
+              border: '1px solid #e0e4ef',
+              boxShadow: '0 8px 48px rgba(27,42,74,0.18)',
+              maxWidth: '480px', width: '100%',
+              padding: '2rem 1.75rem',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+              <div>
+                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>What customers say</p>
+                <h2 style={{ color: NAVY, fontSize: '1.15rem', fontWeight: 'bold', margin: 0 }}>Real results from real businesses.</h2>
+              </div>
+              <button onClick={() => setReviewsOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '1.3rem', lineHeight: 1, padding: '0.1rem 0.3rem' }}>✕</button>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
+              <div style={{ background: LIGHT, border: '1px solid #e0e4ef', borderRadius: '10px', padding: '1.1rem 1.25rem' }}>
+                <p style={{ color: GOLD, fontSize: '0.95rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>★★★★★ — Brian T.</p>
+                <p style={{ color: NAVY, fontSize: '0.88rem', lineHeight: 1.7, margin: 0 }}>
+                  When it comes to AI, there is no best technology, there is just best for you. I literally scoured the internet for weeks and never came close to getting the answer my company needed to integrate AI. Novo Navis gave us the entire answer.
+                </p>
+              </div>
+              <div style={{ background: LIGHT, border: '1px solid #e0e4ef', borderRadius: '10px', padding: '1.1rem 1.25rem' }}>
+                <p style={{ color: GOLD, fontSize: '0.95rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>★★★★ — Kay W.</p>
+                <p style={{ color: NAVY, fontSize: '0.88rem', lineHeight: 1.7, margin: 0 }}>
+                  I run a small property management company that handles online rentals. I couldn't find a cost effective solution or product for my budget. Novo Navis uncovered AI tools for me that I never would have found on my own.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setReviewsOpen(false)}
+              style={{
+                width: '100%', padding: '0.85rem',
+                background: NAVY, border: 'none', borderRadius: '8px',
+                color: '#ffffff', fontWeight: 'bold', fontSize: '0.95rem',
+                cursor: 'pointer',
+              }}
+            >
+              Back to my recommendation
             </button>
           </div>
         </div>
