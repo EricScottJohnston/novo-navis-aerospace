@@ -28,71 +28,7 @@ export default function Interactive() {
   const [final,     setFinal]     = useState(null)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [navModal,        setNavModal]        = useState(null)
-  const [objOpen,         setObjOpen]         = useState(false)
-  const [objRound,        setObjRound]        = useState(1)
-  const [objData,         setObjData]         = useState(null)  // {questions} | {answer, questions} | {answer, pitch, recommendation}
-  const [objLoading,      setObjLoading]      = useState(false)
-  const [objCheckoutLoad, setObjCheckoutLoad] = useState(false)
-
-  const openObjection = async () => {
-    setObjOpen(true)
-    setObjRound(1)
-    setObjData(null)
-    setObjLoading(true)
-    try {
-      const res  = await fetch('/api/interactive', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'objection', round: 1 }),
-      })
-      const data = await res.json()
-      setObjData(data)
-    } catch {
-      setObjData({ questions: ['What exactly do I get?', 'Is this just ChatGPT?'] })
-    }
-    setObjLoading(false)
-  }
-
-  const handleObjChoice = async (chosen) => {
-    const nextRound = objRound + 1
-    setObjLoading(true)
-    setObjData(null)
-    try {
-      const res  = await fetch('/api/interactive', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'objection', round: nextRound, chosen }),
-      })
-      const data = await res.json()
-      setObjData(data)
-      setObjRound(nextRound)
-    } catch {
-      if (nextRound === 2) {
-        setObjData({ answer: 'Great question. Your AI Blueprint is built specifically for your business — not generic advice.', questions: ['How long does it take?', 'What if I\'m not happy?'] })
-      } else {
-        setObjData({ answer: 'Your blueprint is ready in about 12 minutes and comes with a full money-back guarantee.', pitch: 'Hundreds of business owners have stopped guessing and started knowing. Your blueprint is 12 minutes away.', recommendation: 'blueprint' })
-      }
-      setObjRound(nextRound)
-    }
-    setObjLoading(false)
-  }
-
-  const handleObjCheckout = async (tier) => {
-    setObjCheckoutLoad(true)
-    try {
-      const res  = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tier }),
-      })
-      const data = await res.json()
-      if (data.url) window.location.href = data.url
-      else { alert('Something went wrong.'); setObjCheckoutLoad(false) }
-    } catch {
-      alert('Something went wrong.')
-      setObjCheckoutLoad(false)
-    }
-  }
+  const [objOpen, setObjOpen] = useState(false)
 
   const handleChoice = async (option) => {
     const newAnswers = [...answers, { question: current.question, answer: option }]
@@ -363,7 +299,7 @@ export default function Interactive() {
               {/* Objection handler link */}
               <div style={{ textAlign: 'center', marginBottom: '0.75rem' }}>
                 <button
-                  onClick={openObjection}
+                  onClick={() => setObjOpen(true)}
                   style={{
                     background: 'none', border: 'none', cursor: 'pointer',
                     color: '#8a95aa', fontSize: '0.85rem',
@@ -467,7 +403,7 @@ export default function Interactive() {
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
       </footer>
 
-      {/* Objection handler modal */}
+      {/* What is an AI Blueprint — static info modal */}
       {objOpen && (
         <div
           onClick={() => setObjOpen(false)}
@@ -488,7 +424,6 @@ export default function Interactive() {
               padding: '2rem 1.75rem',
             }}
           >
-            {/* Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
               <div>
                 <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>Good question</p>
@@ -497,83 +432,34 @@ export default function Interactive() {
               <button onClick={() => setObjOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '1.3rem', lineHeight: 1, padding: '0.1rem 0.3rem' }}>✕</button>
             </div>
 
-            {objLoading ? (
-              <div style={{ textAlign: 'center', padding: '2.5rem 0' }}>
-                <div style={{
-                  width: '32px', height: '32px', borderRadius: '50%',
-                  border: `3px solid ${GOLD}`, borderTopColor: 'transparent',
-                  animation: 'spin 0.8s linear infinite', margin: '0 auto 0.75rem',
-                }} />
-                <p style={{ color: '#8a95aa', fontSize: '0.85rem' }}>Thinking...</p>
-              </div>
-            ) : objData && (objRound === 3 || objData.pitch) ? (
-              /* Final buy screen */
-              <>
-                {objData.answer && (
-                  <div style={{ background: LIGHT, border: `1px solid #e0e4ef`, borderRadius: '8px', padding: '1rem', marginBottom: '1.25rem' }}>
-                    <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, margin: 0 }}>{objData.answer}</p>
-                  </div>
-                )}
-                <div style={{ background: '#f0f7f0', border: '1px solid #b2dab2', borderRadius: '8px', padding: '1rem', marginBottom: '1.5rem' }}>
-                  <p style={{ color: '#2e6b2e', fontSize: '0.92rem', lineHeight: 1.7, margin: 0 }}>{objData.pitch}</p>
-                </div>
-                {(() => {
-                  const t = TIER_LABELS[objData.recommendation] || TIER_LABELS.blueprint
-                  return (
-                    <button
-                      onClick={() => handleObjCheckout(t.tier)}
-                      disabled={objCheckoutLoad}
-                      style={{
-                        width: '100%', padding: '0.9rem',
-                        background: objCheckoutLoad ? '#dde2ef' : 'linear-gradient(to bottom, #FFD814, #FFA41C)',
-                        border: 'none', borderRadius: '8px',
-                        color: objCheckoutLoad ? '#8a95aa' : '#111',
-                        fontWeight: 'bold', fontSize: '1rem',
-                        cursor: objCheckoutLoad ? 'not-allowed' : 'pointer',
-                        marginBottom: '0.75rem',
-                      }}
-                    >
-                      {objCheckoutLoad ? 'Redirecting...' : `Get ${t.name} — ${t.price}`}
-                    </button>
-                  )
-                })()}
-                <p style={{ color: '#8a95aa', fontSize: '0.78rem', textAlign: 'center', margin: 0 }}>
-                  After checkout, a short intake form — then your blueprint in ~12 minutes.
-                </p>
-              </>
-            ) : objData ? (
-              /* Question rounds */
-              <>
-                {objData.answer && (
-                  <div style={{ background: LIGHT, border: `1px solid #e0e4ef`, borderRadius: '8px', padding: '1rem', marginBottom: '1.25rem' }}>
-                    <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, margin: 0 }}>{objData.answer}</p>
-                  </div>
-                )}
-                <p style={{ color: NAVY, fontWeight: 'bold', fontSize: '1rem', marginBottom: '0.85rem' }}>
-                  {objRound === 1 ? 'What would you like to know?' : 'What else is on your mind?'}
-                </p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
-                  {objData.questions?.map((q, i) => (
-                    <button
-                      key={i}
-                      onClick={() => handleObjChoice(q)}
-                      style={{
-                        width: '100%', padding: '0.85rem 1.1rem',
-                        background: '#ffffff', border: '1.5px solid #dde2ef',
-                        borderRadius: '10px', color: NAVY,
-                        fontWeight: '600', fontSize: '0.93rem',
-                        cursor: 'pointer', textAlign: 'left',
-                        transition: 'border-color 0.15s, background 0.15s',
-                      }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = GOLD; e.currentTarget.style.background = '#fffbf4' }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = '#dde2ef'; e.currentTarget.style.background = '#ffffff' }}
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
-              </>
-            ) : null}
+            <div style={{ background: '#fff8ee', border: `1px solid ${GOLD}60`, borderLeft: `3px solid ${GOLD}`, borderRadius: '8px', padding: '1rem 1.1rem', marginBottom: '1.25rem' }}>
+              <p style={{ color: NAVY, fontSize: '0.88rem', fontWeight: 'bold', margin: '0 0 0.3rem' }}>
+                95% of businesses fail to implement AI successfully.
+              </p>
+              <p style={{ color: '#4a5568', fontSize: '0.85rem', lineHeight: 1.65, margin: 0 }}>
+                According to MIT research, the reason isn't the technology — it's that businesses get upsold by vendors who don't understand their specific workflows. They end up with tools that don't fit, budgets that don't work, and no clear plan.
+              </p>
+            </div>
+
+            <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.1rem' }}>
+              An AI Blueprint is a <strong>custom document built specifically for your business</strong> — not generic advice. It identifies the exact AI tools that fit your workflows and budget, gives you a fast implementation plan, and includes honest ROI estimates.
+            </p>
+
+            <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+              It's built by David — a proprietary AI system developed under defense-grade standards — and delivered in about <strong>12 minutes</strong>. Up to 25 pages, built around your specific business.
+            </p>
+
+            <button
+              onClick={() => setObjOpen(false)}
+              style={{
+                width: '100%', padding: '0.85rem',
+                background: NAVY, border: 'none', borderRadius: '8px',
+                color: '#ffffff', fontWeight: 'bold', fontSize: '0.95rem',
+                cursor: 'pointer',
+              }}
+            >
+              Got it — back to my recommendation
+            </button>
           </div>
         </div>
       )}
