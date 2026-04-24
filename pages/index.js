@@ -132,7 +132,7 @@ export default function Home() {
 
         <h1 style={{fontWeight: 'bold'}}>
           <span style={{color: '#c8a96e', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)', display: 'block'}}>
-            We UN-complicate AI for you. In about 12 minutes.
+            We uncomplicate AI decesion for you. In about 12 minutes.
           </span>
           <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
             We tell you exactly which AI tools your business needs and how to get started — no tech background required.
