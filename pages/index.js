@@ -109,39 +109,62 @@ export default function Home() {
           </span>
         </h1>
 
-        {/* OUTCOME STRIP — concrete numbers above the fold */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '0.5rem',
-          margin: '1rem 0 1.25rem 0'
-        }}>
-          {[
-            ['~11 hrs', 'saved per week'],
-            ['$28K–$55K', 'typical annual value'],
-            ['12 min', 'to your report']
-          ].map(([val, lbl]) => (
-            <div key={lbl} style={{
-              background: '#0d1221',
-              border: '1px solid #1e2a45',
-              borderRadius: '6px',
-              padding: '0.65rem 0.5rem',
-              textAlign: 'center'
-            }}>
-              <span style={{display: 'block', fontSize: '0.95rem', fontWeight: 'bold', color: '#c8a96e'}}>{val}</span>
-              <span style={{fontSize: '0.7rem', color: '#8a95aa'}}>{lbl}</span>
-            </div>
-          ))}
-        </div>
+        {/* HERO — MIT credibility angle */}
+<h1 style={{fontWeight: 'bold'}}>
+  <span style={{color: '#c8a96e', textShadow: '0 2px 8px rgba(200, 169, 110, 0.4)', display: 'block'}}>
+    95% of AI pilots fail. Make sure yours isn't one of them.
+  </span>
+  <span style={{color: '#d0d8e8', fontSize: '0.65em', fontWeight: 'normal', display: 'block', marginTop: '0.35em'}}>
+    MIT's 2025 research found that only 5% of AI rollouts deliver real ROI. The winners pick one workflow and partner with experts. Your custom Blueprint tells you exactly how — in about 12 minutes.
+  </span>
+</h1>
 
-        <p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.7', margin: '0 0 0.75rem 0'}}>
-          Built for contractors, dental practices, property managers, clinics, agencies, and other small business owners drowning in tasks AI could handle automatically.
-        </p>
+{/* MIT CREDIBILITY BADGE — sits right under hero */}
+<div style={{
+  background: '#0d1221',
+  border: '1px solid #c8a96e',
+  borderLeft: '3px solid #c8a96e',
+  borderRadius: '6px',
+  padding: '0.85rem 1.1rem',
+  margin: '1rem 0 1.25rem 0',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.75rem'
+}}>
+  <span style={{color: '#c8a96e', fontSize: '1.3rem'}}>📊</span>
+  <p style={{color: '#d0d8e8', fontSize: '0.88rem', lineHeight: '1.5', margin: 0}}>
+    According to <strong style={{color: '#c8a96e'}}>MIT's 2025 GenAI Divide study</strong>, businesses that partner with outside experts succeed at 2× the rate of those going it alone.
+  </p>
+</div>
 
-        <p style={{color: '#8a95aa', fontSize: '0.85rem', margin: '0 0 1.25rem 0'}}>
-          <Link href="/about" style={{color: '#c8a96e'}}>Read our story →</Link>
-        </p>
+{/* OUTCOME STRIP — concrete numbers */}
+<div style={{
+  display: 'grid',
+  gridTemplateColumns: 'repeat(3, 1fr)',
+  gap: '0.5rem',
+  margin: '0 0 1.25rem 0'
+}}>
+  {[
+    ['~11 hrs', 'saved per week'],
+    ['$28K–$55K', 'typical annual value'],
+    ['12 min', 'to your report']
+  ].map(([val, lbl]) => (
+    <div key={lbl} style={{
+      background: '#0d1221',
+      border: '1px solid #1e2a45',
+      borderRadius: '6px',
+      padding: '0.65rem 0.5rem',
+      textAlign: 'center'
+    }}>
+      <span style={{display: 'block', fontSize: '0.95rem', fontWeight: 'bold', color: '#c8a96e'}}>{val}</span>
+      <span style={{fontSize: '0.7rem', color: '#8a95aa'}}>{lbl}</span>
+    </div>
+  ))}
+</div>
 
+<p style={{color: '#d0d8e8', fontSize: '1rem', lineHeight: '1.7', margin: '0 0 0.75rem 0'}}>
+  Built for contractors, dental practices, property managers, clinics, agencies, and other small business owners drowning in tasks AI could handle automatically.
+</p>
         <Image
           src="/jungle.png"
           alt="Business owner lost in a jungle of AI tools"
