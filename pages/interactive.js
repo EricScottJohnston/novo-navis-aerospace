@@ -3,7 +3,7 @@
 
 import Head from 'next/head'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const NAVY  = '#1B2A4A'
 const GOLD  = '#c8a96e'
@@ -45,6 +45,8 @@ export default function Interactive() {
   const [final,     setFinal]     = useState(null)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [navModal,        setNavModal]        = useState(null)
+  useEffect(() => { track('funnel_entered') }, [])
+
   const [objOpen,        setObjOpen]        = useState(false)
   const [reviewsOpen,    setReviewsOpen]    = useState(false)
   const [agreedTerms,    setAgreedTerms]    = useState(false)
@@ -129,8 +131,9 @@ export default function Interactive() {
       })
       const data = await res.json()
       if (data.url) window.location.href = data.url
-      else { alert('Something went wrong. Please try again.'); setCheckoutLoading(false) }
+      else { track('checkout_failed', { tier }); alert('Something went wrong. Please try again.'); setCheckoutLoading(false) }
     } catch {
+      track('checkout_failed', { tier })
       alert('Something went wrong. Please try again.')
       setCheckoutLoading(false)
     }
@@ -380,7 +383,7 @@ export default function Interactive() {
 
               <p style={{ textAlign: 'center', marginTop: '1.25rem', marginBottom: 0 }}>
                 <button
-                  onClick={() => { setRound(1); setAnswers([]); setCurrent(ROUND_1); setFinal(null) }}
+                  onClick={() => { setRound(1); setAnswers([]); setCurrent(ROUND_1); setFinal(null); track('quiz_restarted') }}
                   style={{ background: 'none', border: 'none', color: '#8a95aa', fontSize: '0.82rem', cursor: 'pointer', textDecoration: 'underline' }}
                 >
                   Start over
@@ -649,7 +652,7 @@ export default function Interactive() {
               </label>
               <div style={{ display: 'flex', gap: '0.75rem' }}>
                 <button
-                  onClick={() => setShowTermsModal(false)}
+                  onClick={() => { setShowTermsModal(false); track('terms_dismissed') }}
                   style={{
                     flex: 1, padding: '0.65rem',
                     background: 'transparent', border: '1px solid #1e2a45',
