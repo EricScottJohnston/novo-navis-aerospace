@@ -3,7 +3,6 @@
 
 import Head from 'next/head'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 const NAVY  = '#1B2A4A'
@@ -155,9 +154,7 @@ export default function Interactive() {
       </Head>
 
       <nav>
-        <span className="nav-logo" style={{cursor:'default', display:'flex', alignItems:'center'}}>
-          <Image src="/logonovo.png" alt="Novo Navis" width={120} height={36} style={{objectFit:'contain'}} />
-        </span>
+        <span className="nav-logo" style={{cursor:'default'}}>NOVO NAVIS</span>
         <ul className="nav-links">
           {[['FAQ','faq'],['About','about']].map(([label, key]) => (
             <li key={key}>
@@ -236,6 +233,29 @@ export default function Interactive() {
           padding: '2.5rem 2rem',
         }}>
 
+          {/* I AM headline */}
+          <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
+            <p style={{
+              color: GOLD,
+              fontSize: '0.75rem',
+              fontWeight: 'bold',
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              marginBottom: '0.3rem',
+            }}>
+              Find your fit
+            </p>
+            <h1 style={{
+              color: NAVY,
+              fontSize: '1.9rem',
+              fontWeight: 'bold',
+              margin: 0,
+              lineHeight: 1.2,
+            }}>
+              I AM...
+            </h1>
+          </div>
+
           {/* Trust badges */}
           <div style={{
             display: 'flex',
@@ -245,10 +265,8 @@ export default function Interactive() {
             marginBottom: '1.5rem',
           }}>
             {[
-              ['✓', '100% Money-Back'],
               ['🔒', 'Stripe Secure'],
-              ['⚡', 'Ready in ~12 Min'],
-              ['🛡️', 'U.S. Defense Contractor'],
+              ['🔐', 'Information Encrypted'],
             ].map(([icon, label]) => (
               <div key={label} style={{
                 display: 'flex',
@@ -267,19 +285,6 @@ export default function Interactive() {
               </div>
             ))}
           </div>
-
-          {/* Progress dots */}
-          {round !== 'final' && (
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '1.75rem' }}>
-              {[1, 2, 3, 4].map(n => (
-                <div key={n} style={{
-                  width: '8px', height: '8px', borderRadius: '50%',
-                  background: n <= round ? GOLD : '#dde2ef',
-                  transition: 'background 0.3s ease',
-                }} />
-              ))}
-            </div>
-          )}
 
           {loading ? (
             <div style={{ textAlign: 'center', padding: '3rem 0' }}>
@@ -408,16 +413,18 @@ export default function Interactive() {
             </>
           ) : (
             <>
-              {/* Question */}
-              <p style={{
-                color: NAVY,
-                fontSize: '1.15rem',
-                fontWeight: 'bold',
-                textAlign: 'center',
-                marginBottom: '0.4rem',
-              }}>
-                {current.question}
-              </p>
+              {/* Question — only show for Haiku-generated rounds */}
+              {round > 2 && (
+                <p style={{
+                  color: NAVY,
+                  fontSize: '1.15rem',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  marginBottom: '0.4rem',
+                }}>
+                  {current.question}
+                </p>
+              )}
 
               {/* Nudge */}
               <p style={{
@@ -454,6 +461,26 @@ export default function Interactive() {
                     {opt}
                   </button>
                 ))}
+                <button
+                  onClick={() => { setSiteOpen(true); track('site_explainer_opened') }}
+                  style={{
+                    width: '100%',
+                    padding: '0.9rem 1.25rem',
+                    background: '#ffffff',
+                    border: `1.5px dashed #dde2ef`,
+                    borderRadius: '10px',
+                    color: '#8a95aa',
+                    fontWeight: '500',
+                    fontSize: '0.97rem',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    transition: 'border-color 0.15s, background 0.15s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = '#8a95aa'; e.currentTarget.style.background = LIGHT }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = '#dde2ef'; e.currentTarget.style.background = '#ffffff' }}
+                >
+                  Wait, what is this site?
+                </button>
               </div>
 
               {/* Tip box */}
@@ -478,18 +505,6 @@ export default function Interactive() {
         </div>
       </div>
 
-      <div style={{ textAlign: 'center', padding: '0.75rem 0 1.5rem' }}>
-        <button
-          onClick={() => { setSiteOpen(true); track('site_explainer_opened') }}
-          style={{
-            background: 'none', border: 'none', cursor: 'pointer',
-            color: '#8a95aa', fontSize: '0.82rem',
-            textDecoration: 'underline', textUnderlineOffset: '3px',
-          }}
-        >
-          Wait, what is this site?
-        </button>
-      </div>
 
       <footer>
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
