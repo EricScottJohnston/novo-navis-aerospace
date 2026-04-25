@@ -3,6 +3,7 @@
 
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
 const NAVY  = '#1B2A4A'
@@ -148,10 +149,15 @@ export default function Interactive() {
         <title>Find Your AI Blueprint | Novo Navis</title>
         <meta name="description" content="Answer 4 quick questions and get a custom AI Blueprint built for your specific business — delivered in about 12 minutes. Find your fit now." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:image" content="/logonovo.png" />
+        <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
+        <meta property="og:description" content="Answer 4 quick questions and get a custom AI Blueprint built for your specific business — delivered in about 12 minutes." />
       </Head>
 
       <nav>
-        <span className="nav-logo" style={{cursor:'default'}}>NOVO NAVIS</span>
+        <span className="nav-logo" style={{cursor:'default', display:'flex', alignItems:'center'}}>
+          <Image src="/logonovo.png" alt="Novo Navis" width={120} height={36} style={{objectFit:'contain'}} />
+        </span>
         <ul className="nav-links">
           {[['FAQ','faq'],['About','about']].map(([label, key]) => (
             <li key={key}>
