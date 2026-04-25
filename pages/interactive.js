@@ -192,6 +192,7 @@ export default function Interactive() {
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
         <meta property="og:description" content="Answer 4 quick questions and get a custom AI Blueprint built for your specific business — delivered in about 12 minutes." />
+        <style>{`html, body { background: #f8f9fc !important; }`}</style>
       </Head>
 
       <nav>
@@ -257,7 +258,6 @@ export default function Interactive() {
       )}
 
       <div style={{
-        minHeight: '80vh',
         background: '#f8f9fc',
         display: 'flex',
         alignItems: 'center',
@@ -392,6 +392,20 @@ export default function Interactive() {
               >
                 {checkoutLoading ? 'Redirecting...' : `Get ${tierInfo.name} — ${tierInfo.price}`}
               </button>
+
+              {/* Trust badges */}
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+                {[['🔒', 'Stripe Secure'], ['🔐', 'Information Encrypted']].map(([icon, label]) => (
+                  <div key={label} style={{
+                    display: 'flex', alignItems: 'center', gap: '0.3rem',
+                    background: LIGHT, border: '1px solid #e0e4ef',
+                    borderRadius: '20px', padding: '0.3rem 0.75rem',
+                    fontSize: '0.75rem', color: '#6b7a99', fontWeight: '500',
+                  }}>
+                    <span>{icon}</span><span>{label}</span>
+                  </div>
+                ))}
+              </div>
 
               {/* Secondary links */}
               <div style={{ textAlign: 'center', marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
@@ -571,36 +585,6 @@ export default function Interactive() {
 
           </div>{/* end inner padding */}
         </div>
-      </div>
-
-      {/* Trust badges */}
-      <div style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        gap: '0.5rem',
-        padding: '1rem 1rem 1.5rem',
-      }}>
-        {[
-          ['🔒', 'Stripe Secure'],
-          ['🔐', 'Information Encrypted'],
-        ].map(([icon, label]) => (
-          <div key={label} style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.3rem',
-            background: '#ffffff',
-            border: '1px solid #e0e4ef',
-            borderRadius: '20px',
-            padding: '0.3rem 0.75rem',
-            fontSize: '0.75rem',
-            color: '#6b7a99',
-            fontWeight: '500',
-          }}>
-            <span>{icon}</span>
-            <span>{label}</span>
-          </div>
-        ))}
       </div>
 
       <footer>
