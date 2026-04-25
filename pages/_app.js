@@ -88,7 +88,7 @@ export default function App({ Component, pageProps }) {
       <main>
         <Component {...pageProps} />
       </main>
-      {router.pathname !== '/interactive' && <ChatWidget />}
+      {!['/interactive', '/'].includes(router.pathname) && <ChatWidget />}
     </>
   )
 }
