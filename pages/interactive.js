@@ -68,10 +68,10 @@ const ROUND_1 = {
 const ROUND_2 = {
   tip: 'Most AI tools are built for enterprise companies — not small businesses. Your AI Blueprint is built around what actually works at your scale and budget.',
   question: 'I am a...',
-  options: ['Solo operator or freelancer', 'Small business with a team', 'Growing business ready to scale', 'Established organization with multiple departments'],
+  options: ['Solo operator or freelancer', 'Small business with a team', 'Growing business ready to scale', 'Enterprise organization'],
 }
 
-const ENTERPRISE_OPTION = 'Established organization with multiple departments'
+const ENTERPRISE_OPTION = 'Enterprise organization'
 
 function track(event, params = {}) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
