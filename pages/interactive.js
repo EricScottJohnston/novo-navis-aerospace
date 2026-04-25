@@ -296,7 +296,7 @@ export default function Interactive() {
 
           {/* Headline */}
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-            <p style={{ color: '#4a5568', fontSize: '0.85rem', fontWeight: '500', margin: '0 0 0.15rem' }}>
+            <p style={{ color: '#4a5568', fontSize: '1.05rem', fontWeight: '600', margin: '0 0 0.15rem' }}>
               Let's figure this out together.
             </p>
             <p style={{ color: '#8a95aa', fontSize: '0.75rem', margin: '0 0 0.75rem' }}>
