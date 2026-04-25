@@ -123,6 +123,7 @@ export default function Interactive() {
     <>
       <Head>
         <title>Find Your AI Blueprint | Novo Navis</title>
+        <meta name="description" content="Answer 4 quick questions and get a custom AI Blueprint built for your specific business — delivered in about 12 minutes. Find your fit now." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
