@@ -48,6 +48,7 @@ export default function Interactive() {
   useEffect(() => { track('funnel_entered') }, [])
 
   const [objOpen,        setObjOpen]        = useState(false)
+  const [siteOpen,       setSiteOpen]       = useState(false)
   const [reviewsOpen,    setReviewsOpen]    = useState(false)
   const [agreedTerms,    setAgreedTerms]    = useState(false)
   const [showTermsModal, setShowTermsModal] = useState(false)
@@ -229,27 +230,36 @@ export default function Interactive() {
           padding: '2.5rem 2rem',
         }}>
 
-          {/* I AM headline */}
-          <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-            <p style={{
-              color: GOLD,
-              fontSize: '0.75rem',
-              fontWeight: 'bold',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              marginBottom: '0.3rem',
-            }}>
-              Find your fit
-            </p>
-            <h1 style={{
-              color: NAVY,
-              fontSize: '1.9rem',
-              fontWeight: 'bold',
-              margin: 0,
-              lineHeight: 1.2,
-            }}>
-              I AM...
-            </h1>
+          {/* Trust badges */}
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            marginBottom: '1.5rem',
+          }}>
+            {[
+              ['✓', '100% Money-Back'],
+              ['🔒', 'Stripe Secure'],
+              ['⚡', 'Ready in ~12 Min'],
+              ['🛡️', 'U.S. Defense Contractor'],
+            ].map(([icon, label]) => (
+              <div key={label} style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+                background: LIGHT,
+                border: '1px solid #e0e4ef',
+                borderRadius: '20px',
+                padding: '0.3rem 0.75rem',
+                fontSize: '0.75rem',
+                color: NAVY,
+                fontWeight: '600',
+              }}>
+                <span>{icon}</span>
+                <span>{label}</span>
+              </div>
+            ))}
           </div>
 
           {/* Progress dots */}
@@ -462,6 +472,19 @@ export default function Interactive() {
         </div>
       </div>
 
+      <div style={{ textAlign: 'center', padding: '0.75rem 0 1.5rem' }}>
+        <button
+          onClick={() => { setSiteOpen(true); track('site_explainer_opened') }}
+          style={{
+            background: 'none', border: 'none', cursor: 'pointer',
+            color: '#8a95aa', fontSize: '0.82rem',
+            textDecoration: 'underline', textUnderlineOffset: '3px',
+          }}
+        >
+          Wait, what is this site?
+        </button>
+      </div>
+
       <footer>
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
       </footer>
@@ -581,6 +604,58 @@ export default function Interactive() {
               }}
             >
               Back to my recommendation
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* What is this site modal */}
+      {siteOpen && (
+        <div
+          onClick={() => setSiteOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 99998,
+            background: 'rgba(0,0,0,0.65)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1rem',
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: '#ffffff', borderRadius: '14px',
+              border: '1px solid #e0e4ef',
+              boxShadow: '0 8px 48px rgba(27,42,74,0.18)',
+              maxWidth: '440px', width: '100%',
+              padding: '2rem 1.75rem',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
+              <div>
+                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>About this site</p>
+                <h2 style={{ color: NAVY, fontSize: '1.15rem', fontWeight: 'bold', margin: 0 }}>You're on Novo Navis.</h2>
+              </div>
+              <button onClick={() => setSiteOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '1.3rem', lineHeight: 1, padding: '0.1rem 0.3rem' }}>✕</button>
+            </div>
+
+            <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1rem' }}>
+              Novo Navis is a registered U.S. Defense Contractor that builds custom AI Blueprints for small businesses — the same rigor we apply to defense-grade AI, applied to your workflows and budget.
+            </p>
+
+            <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+              This short quiz helps us understand your situation so we can recommend the right Blueprint for you. Answer 4 quick questions and we'll tell you exactly which tier fits — and why.
+            </p>
+
+            <button
+              onClick={() => setSiteOpen(false)}
+              style={{
+                width: '100%', padding: '0.85rem',
+                background: NAVY, border: 'none', borderRadius: '8px',
+                color: '#ffffff', fontWeight: 'bold', fontSize: '0.95rem',
+                cursor: 'pointer',
+              }}
+            >
+              Got it — let's do this
             </button>
           </div>
         </div>
