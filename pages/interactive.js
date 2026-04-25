@@ -254,6 +254,9 @@ export default function Interactive() {
             <p style={{ color: '#4a5568', fontSize: '1.05rem', fontWeight: '600', margin: '0 0 0.15rem' }}>
               Let's figure this out together.
             </p>
+            <p style={{ color: GOLD, fontSize: '0.82rem', fontWeight: '600', margin: '0 0 0.35rem', fontStyle: 'italic' }}>
+              We're your consultant — not their marketing agency.
+            </p>
             <p style={{ color: '#8a95aa', fontSize: '0.75rem', margin: '0 0 0.75rem' }}>
               2 quick questions — then we show you the options.
             </p>
@@ -487,19 +490,19 @@ export default function Interactive() {
 
             <div style={{ background: '#fff8ee', border: `1px solid ${GOLD}60`, borderLeft: `3px solid ${GOLD}`, borderRadius: '8px', padding: '1rem 1.1rem', marginBottom: '1.25rem' }}>
               <p style={{ color: NAVY, fontSize: '0.88rem', fontWeight: 'bold', margin: '0 0 0.3rem' }}>
-                95% of businesses fail to implement AI successfully.
+                95% of businesses pick the wrong AI tools.
               </p>
               <p style={{ color: '#4a5568', fontSize: '0.85rem', lineHeight: 1.65, margin: 0 }}>
-                According to MIT research, the reason isn't the technology — it's that businesses get upsold by vendors who don't understand their specific workflows. They end up with tools that don't fit, budgets that don't work, and no clear plan.
+                Not because they're not smart — because they're searching Google and finding whatever has the biggest marketing budget. The right tool for your business might be built by a team of 12 people who can't afford a Super Bowl ad. We find those tools.
               </p>
             </div>
 
             <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.1rem' }}>
-              An AI Blueprint is a <strong>custom document built specifically for your business</strong> — not generic advice. It identifies the exact AI tools that fit your workflows and budget, gives you a fast implementation plan, and includes honest ROI estimates.
+              Your AI Blueprint is built by scanning the full landscape — the big names and the hidden ones — and matching the right tool to your specific workflows and budget. That's what a consultant does. That's what we do.
             </p>
 
             <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-              It's built by David — a proprietary AI system developed under defense-grade standards — and delivered in about <strong>12 minutes</strong>. Up to 25 pages, built around your specific business.
+              Built by David — a proprietary AI system developed under defense-grade standards — and delivered in about <strong>12 minutes</strong>. Up to 25 pages, built around your specific business.
             </p>
 
             <button

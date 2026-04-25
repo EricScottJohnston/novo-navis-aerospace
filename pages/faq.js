@@ -48,6 +48,10 @@ const faqs = [
     a: "Yes. Novo Navis does not provide services to cannabis or marijuana dispensary operations. As a registered U.S. federal contractor, we are prohibited from conducting business with entities engaged in activities that remain illegal under federal law, regardless of state-level legalization. We also do not serve businesses whose operations conflict with U.S. national security interests. As a defense contractor and Principal Investigator on active Department of Defense research projects, we have an obligation to decline any engagement that could present a conflict with those responsibilities. Beyond these specific exclusions, Novo Navis reserves the right to decline service to any business we determine, at our sole discretion, may be in conflict with local, state, federal, or international law. If we decline your order for any reason, you will receive a full refund."
   },
   {
+    q: "Why wouldn't I just research AI tools myself?",
+    a: "You can — but here's what you'll run into. The AI tools that show up first in your search results are there because they have the largest marketing budgets, not because they're the best fit for your business. There are incredibly well-built AI tools made by talented teams that simply can't compete on the marketing scene. They get buried. We know about them. When we build your blueprint, we're looking across the full landscape — the household names and the hidden ones — and recommending what actually fits your workflows and budget. That's the difference between a consultant and a Google search."
+  },
+  {
     q: "I'm not ready to buy yet. How do I know the AI Blueprint is worth it?",
     a: <><Link href="/david" style={{color: '#c8a96e'}}>See how David thinks</Link> before you decide. It walks you through exactly how the analysis works — the reasoning process, the depth, and what makes it different from generic AI advice. If after reading it you still have questions, call us at (623) 428-9308 or email support@novonavis.com. We'd rather answer your questions now than have you buy something you're uncertain about.</>
   }
