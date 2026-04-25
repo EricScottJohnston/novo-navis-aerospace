@@ -87,6 +87,11 @@ export default function Interactive() {
   const [checkoutLoading, setCheckoutLoading] = useState(null)
   const [navModal,        setNavModal]        = useState(null)
   useEffect(() => { track('funnel_entered') }, [])
+  useEffect(() => {
+    const handler = (e) => { if (e.data === 'close-nav-modal') setNavModal(null) }
+    window.addEventListener('message', handler)
+    return () => window.removeEventListener('message', handler)
+  }, [])
 
   const [objOpen,        setObjOpen]        = useState(false)
   const [siteOpen,       setSiteOpen]       = useState(false)
