@@ -15,6 +15,29 @@ const TIER_LABELS = {
   consult:  { name: 'Blueprint + Consult',     price: '$499', tier: 'consult' },
 }
 
+const TIER_DETAILS = {
+  starter: [
+    'Custom AI Blueprint — up to 25 pages',
+    'Focused on 1–2 of your key workflows',
+    'Specific tool recommendations matched to your budget',
+    'Fast implementation plan',
+    'ROI estimates',
+  ],
+  blueprint: [
+    'Custom AI Blueprint — up to 25 pages',
+    '3–5 workflows analyzed and prioritized',
+    'Specific tool recommendations matched to your budget',
+    'Full implementation plan',
+    'ROI estimates + risks section',
+  ],
+  consult: [
+    'Everything in the AI Blueprint',
+    '2-hour hands-on Zoom with an AI expert',
+    'Live implementation guidance for your business',
+    'Q&A tailored to your specific workflows',
+  ],
+}
+
 const ROUND_1 = {
   tip: 'The average small business owner spends 40+ hours researching AI tools before giving up — and still doesn\'t know what to use. Our blueprint does that research for you, customized to your business, in about 12 minutes.',
   question: 'I am...',
@@ -45,10 +68,6 @@ export default function Interactive() {
   const [final,     setFinal]     = useState(null)
   const [checkoutLoading, setCheckoutLoading] = useState(false)
   const [navModal,        setNavModal]        = useState(null)
-  const [emailStep,       setEmailStep]       = useState(false)
-  const [email,           setEmail]           = useState('')
-  const [emailError,      setEmailError]      = useState('')
-  const [pendingAnswers,  setPendingAnswers]  = useState(null)
   useEffect(() => { track('funnel_entered') }, [])
 
   const [objOpen,        setObjOpen]        = useState(false)
@@ -97,13 +116,6 @@ export default function Interactive() {
       return
     }
 
-    // After round 3 — collect email before loading round 4
-    if (round === 3) {
-      setPendingAnswers(newAnswers)
-      setEmailStep(true)
-      return
-    }
-
     // Rounds 3 and 4 are Haiku-generated
     setLoading(true)
     try {
@@ -111,36 +123,6 @@ export default function Interactive() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ answers: newAnswers, round: nextRound }),
-      })
-      const data = await res.json()
-      setCurrent(data)
-      setRound(nextRound)
-    } catch {
-      setCurrent({
-        tip: 'AI scheduling tools can save the average small business owner 5–8 hours per week.',
-        question: 'What slows you down most?',
-        options: ['Admin and paperwork', 'Finding and keeping customers'],
-      })
-      setRound(nextRound)
-    }
-    setLoading(false)
-  }
-
-  const handleEmailSubmit = async () => {
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setEmailError('Please enter a valid email.')
-      return
-    }
-    track('email_captured', { round: 3 })
-    setEmailStep(false)
-    setEmailError('')
-    const nextRound = 4
-    setLoading(true)
-    try {
-      const res  = await fetch('/api/interactive', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers: pendingAnswers, round: nextRound }),
       })
       const data = await res.json()
       setCurrent(data)
@@ -275,7 +257,7 @@ export default function Interactive() {
         }}>
 
           {/* Progress bar */}
-          {round !== 'final' && !emailStep && (
+          {round !== 'final' && (
             <>
               <div style={{ background: '#e8ecf4', height: '5px', width: '100%' }}>
                 <div style={{
@@ -330,34 +312,38 @@ export default function Interactive() {
             </div>
           ) : round === 'final' && final ? (
             <>
-              {/* Tip */}
+              {/* Recommendation — product name + price at top */}
+              <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+                <p style={{ color: '#6b7a99', fontSize: '0.82rem', marginBottom: '0.4rem' }}>
+                  Based on your answers, we recommend:
+                </p>
+                <p style={{ color: NAVY, fontSize: '1.6rem', fontWeight: 'bold', margin: '0 0 0.2rem' }}>
+                  {tierInfo.name}
+                </p>
+                <p style={{ color: GOLD, fontSize: '2.1rem', fontWeight: 'bold', margin: 0 }}>
+                  {tierInfo.price}
+                </p>
+              </div>
+
+              {/* What's included */}
               <div style={{
                 background: LIGHT,
                 border: `1px solid ${GOLD}40`,
                 borderLeft: `3px solid ${GOLD}`,
                 borderRadius: '8px',
-                padding: '0.9rem 1.1rem',
-                marginBottom: '1.75rem',
+                padding: '1rem 1.1rem',
+                marginBottom: '1.5rem',
               }}>
-                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                  Did you know?
+                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem' }}>
+                  What's included
                 </p>
-                <p style={{ color: NAVY, fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
-                  {final.tip}
-                </p>
-              </div>
-
-              {/* Recommendation */}
-              <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                <p style={{ color: '#6b7a99', fontSize: '0.88rem', marginBottom: '0.5rem' }}>
-                  Based on your answers, we recommend:
-                </p>
-                <p style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 'bold', margin: '0 0 0.25rem' }}>
-                  {tierInfo.name}
-                </p>
-                <p style={{ color: GOLD, fontSize: '2rem', fontWeight: 'bold', margin: 0 }}>
-                  {tierInfo.price}
-                </p>
+                <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
+                  {(TIER_DETAILS[final.recommendation] || TIER_DETAILS.blueprint).map((item, i) => (
+                    <li key={i} style={{ color: NAVY, fontSize: '0.88rem', lineHeight: 1.7, marginBottom: i < TIER_DETAILS[final.recommendation].length - 1 ? '0.2rem' : 0 }}>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               {/* Pitch */}
@@ -537,49 +523,6 @@ export default function Interactive() {
                 Wait, what is this site?
               </button>
             </p>
-            </>
-          )}
-
-          {/* Email capture — between Q3 and Q4 */}
-          {emailStep && (
-            <>
-              <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>Almost there</p>
-                <h2 style={{ color: NAVY, fontSize: '1.3rem', fontWeight: 'bold', margin: '0 0 0.5rem' }}>Where should we send your results?</h2>
-                <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>One more question after this — then your personalized recommendation.</p>
-              </div>
-              <input
-                type="email"
-                value={email}
-                onChange={e => { setEmail(e.target.value); setEmailError('') }}
-                onKeyDown={e => e.key === 'Enter' && handleEmailSubmit()}
-                placeholder="you@yourbusiness.com"
-                style={{
-                  width: '100%', padding: '0.9rem 1rem',
-                  border: emailError ? '1.5px solid #e53e3e' : '1px solid #e8ecf4',
-                  borderRadius: '10px', fontSize: '0.97rem',
-                  color: NAVY, outline: 'none', marginBottom: '0.5rem',
-                  boxSizing: 'border-box',
-                  boxShadow: '0 2px 8px rgba(27,42,74,0.07)',
-                }}
-              />
-              {emailError && <p style={{ color: '#e53e3e', fontSize: '0.8rem', margin: '0 0 0.75rem' }}>{emailError}</p>}
-              <button
-                onClick={handleEmailSubmit}
-                style={{
-                  width: '100%', padding: '0.9rem',
-                  background: 'linear-gradient(to bottom, #FFD814, #FFA41C)',
-                  border: 'none', borderRadius: '10px',
-                  color: '#111', fontWeight: 'bold', fontSize: '1rem',
-                  cursor: 'pointer', marginBottom: '0.75rem',
-                  boxShadow: '0 2px 8px rgba(200,169,110,0.25)',
-                }}
-              >
-                Continue to last question →
-              </button>
-              <p style={{ textAlign: 'center', color: '#8a95aa', fontSize: '0.75rem', margin: 0 }}>
-                🔐 Your information is encrypted and never shared.
-              </p>
             </>
           )}
 
