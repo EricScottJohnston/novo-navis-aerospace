@@ -11,7 +11,12 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     const handleRouteChange = (url) => {
       if (typeof window.gtag === 'function') {
-        window.gtag('config', 'G-G3X6LMB2HE', { page_path: url })
+        setTimeout(() => {
+          window.gtag('config', 'G-G3X6LMB2HE', {
+            page_path: url,
+            page_title: document.title,
+          })
+        }, 0)
       }
     }
     router.events.on('routeChangeComplete', handleRouteChange)
