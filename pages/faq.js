@@ -4,6 +4,10 @@ import { useRouter } from 'next/router'
 
 const faqs = [
   {
+    q: "Why wouldn't I just research AI tools myself?",
+    a: "You can — but here's what you'll run into. The AI tools that show up first in your search results are there because they have the largest marketing budgets, not because they're the best fit for your business. There are incredibly well-built AI tools made by talented teams that simply can't compete on the marketing scene. They get buried. We know about them. When we build your blueprint, we're looking across the full landscape — the household names and the hidden ones — and recommending what actually fits your workflows and budget. That's the difference between a consultant and a Google search."
+  },
+  {
     q: "Who is Novo Navis?",
     a: <>Novo Navis is a registered U.S. federal contractor. We research and develop trusted AI systems that got its start building AI systems for government and defense — and made that same rigor available to small businesses. You can read what we&apos;re talking about in the AI for Small Business community on Reddit:{' '}
       <a href="https://www.reddit.com/r/AiForSmallBusiness/comments/1snruki/i_built_a_causal_ai_system_for_small_businesses/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e'}}>I built a causal AI system for small businesses →</a>
@@ -46,10 +50,6 @@ const faqs = [
   {
     q: "Are there any businesses you don't serve?",
     a: "Yes. Novo Navis does not provide services to cannabis or marijuana dispensary operations. As a registered U.S. federal contractor, we are prohibited from conducting business with entities engaged in activities that remain illegal under federal law, regardless of state-level legalization. We also do not serve businesses whose operations conflict with U.S. national security interests. As a defense contractor and Principal Investigator on active Department of Defense research projects, we have an obligation to decline any engagement that could present a conflict with those responsibilities. Beyond these specific exclusions, Novo Navis reserves the right to decline service to any business we determine, at our sole discretion, may be in conflict with local, state, federal, or international law. If we decline your order for any reason, you will receive a full refund."
-  },
-  {
-    q: "Why wouldn't I just research AI tools myself?",
-    a: "You can — but here's what you'll run into. The AI tools that show up first in your search results are there because they have the largest marketing budgets, not because they're the best fit for your business. There are incredibly well-built AI tools made by talented teams that simply can't compete on the marketing scene. They get buried. We know about them. When we build your blueprint, we're looking across the full landscape — the household names and the hidden ones — and recommending what actually fits your workflows and budget. That's the difference between a consultant and a Google search."
   },
   {
     q: "I'm not ready to buy yet. How do I know the AI Blueprint is worth it?",

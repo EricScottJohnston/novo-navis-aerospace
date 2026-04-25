@@ -156,7 +156,7 @@ export default function Interactive() {
           {[['FAQ','faq'],['About','about']].map(([label, key]) => (
             <li key={key}>
               <button
-                onClick={() => { setNavModal(key); track('nav_modal_opened', { page: key }) }}
+                onClick={() => { setNavModal(key); track('nav_modal_opened', { page: key, round }) }}
                 style={{background:'none', border:'none', cursor:'pointer', color:'inherit', font:'inherit', padding:0}}
               >
                 {label}
@@ -368,13 +368,13 @@ export default function Interactive() {
               {/* Secondary links */}
               <div style={{ textAlign: 'center', marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <button
-                  onClick={() => { setObjOpen(true); track('quiz_objection_opened') }}
+                  onClick={() => { setObjOpen(true); track('modal_opened', { modal: 'what_is_blueprint', round }) }}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.85rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}
                 >
                   Wait, what is an AI Blueprint?
                 </button>
                 <button
-                  onClick={() => { setReviewsOpen(true); track('quiz_reviews_opened') }}
+                  onClick={() => { setReviewsOpen(true); track('modal_opened', { modal: 'reviews', round }) }}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.85rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}
                 >
                   Wait, I want to know what other people have to say.
@@ -442,7 +442,7 @@ export default function Interactive() {
               {/* Site explainer link */}
               <p style={{ textAlign: 'center', marginTop: '1rem', marginBottom: 0 }}>
                 <button
-                  onClick={() => { setSiteOpen(true); track('site_explainer_opened') }}
+                  onClick={() => { setSiteOpen(true); track('modal_opened', { modal: 'what_is_this_site', round }) }}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.78rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}
                 >
                   Wait, what is this site?
