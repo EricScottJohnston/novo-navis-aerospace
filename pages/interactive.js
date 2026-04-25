@@ -39,8 +39,10 @@ const TIER_DETAILS = {
   enterprise: [
     'Custom AI Blueprint — up to 50 pages',
     'Up to 10 things to automate, prioritized by impact',
-    'Specific tools matched to your budget',
-    'Full implementation plan',
+    'Department-by-department rollout plan',
+    '12-month implementation roadmap',
+    'IT integration architecture',
+    'Compliance & security assessment',
     'ROI estimates + risks section',
     '2-hour hands-on Zoom with an AI expert',
   ],
@@ -66,8 +68,10 @@ const ROUND_1 = {
 const ROUND_2 = {
   tip: 'Most AI tools are built for enterprise companies — not small businesses. Your AI Blueprint is built around what actually works at your scale and budget.',
   question: 'I am a...',
-  options: ['Solo operator or freelancer', 'Small business with a team', 'Growing business ready to scale'],
+  options: ['Solo operator or freelancer', 'Small business with a team', 'Growing business ready to scale', 'Established organization with multiple departments'],
 }
+
+const ENTERPRISE_OPTION = 'Established organization with multiple departments'
 
 function track(event, params = {}) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -76,9 +80,10 @@ function track(event, params = {}) {
 }
 
 export default function Interactive() {
-  const [round,     setRound]     = useState(1)
-  const [answers,   setAnswers]   = useState([])
-  const [current,   setCurrent]   = useState(ROUND_1)
+  const [round,          setRound]          = useState(1)
+  const [answers,        setAnswers]        = useState([])
+  const [current,        setCurrent]        = useState(ROUND_1)
+  const [isEnterprise,   setIsEnterprise]   = useState(false)
   const [checkoutLoading, setCheckoutLoading] = useState(null)
   const [navModal,        setNavModal]        = useState(null)
   useEffect(() => { track('funnel_entered') }, [])
@@ -101,9 +106,11 @@ export default function Interactive() {
       return
     }
 
-    // Round 2 complete — show all tiers
+    // Round 2 complete — show tiers
+    const enterprise = option === ENTERPRISE_OPTION
+    setIsEnterprise(enterprise)
     setRound('final')
-    track('quiz_pricing_shown')
+    track('quiz_pricing_shown', { enterprise })
   }
 
   const handleCheckout = async (tier) => {
@@ -278,8 +285,8 @@ export default function Interactive() {
                 </h2>
               </div>
 
-              {/* Three tier cards */}
-              {TIERS.map(({ key, name, price, badge }) => (
+              {/* Tier cards — enterprise buyers see only $499 and $999 */}
+              {TIERS.filter(t => isEnterprise ? ['consult','enterprise'].includes(t.key) : t.key !== 'enterprise').map(({ key, name, price, badge }) => (
                 <div key={key} style={{
                   border: key === 'blueprint' ? `2px solid ${GOLD}` : '1px solid #e0e4ef',
                   borderRadius: '10px',
@@ -373,7 +380,7 @@ export default function Interactive() {
 
               <p style={{ textAlign: 'center', marginTop: '1.25rem', marginBottom: 0 }}>
                 <button
-                  onClick={() => { setRound(1); setAnswers([]); setCurrent(ROUND_1); track('quiz_restarted') }}
+                  onClick={() => { setRound(1); setAnswers([]); setCurrent(ROUND_1); setIsEnterprise(false); track('quiz_restarted') }}
                   style={{ background: 'none', border: 'none', color: '#8a95aa', fontSize: '0.82rem', cursor: 'pointer', textDecoration: 'underline' }}
                 >
                   Start over
