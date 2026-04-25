@@ -392,36 +392,29 @@ export default function Interactive() {
             </>
           ) : (
             <>
-              {/* Tip box */}
-              <div style={{
-                background: LIGHT,
-                border: `1px solid ${GOLD}40`,
-                borderLeft: `3px solid ${GOLD}`,
-                borderRadius: '8px',
-                padding: '0.9rem 1.1rem',
-                marginBottom: '1.75rem',
-              }}>
-                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                  Did you know?
-                </p>
-                <p style={{ color: NAVY, fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
-                  {current.tip}
-                </p>
-              </div>
-
               {/* Question */}
               <p style={{
                 color: NAVY,
                 fontSize: '1.15rem',
                 fontWeight: 'bold',
                 textAlign: 'center',
-                marginBottom: '1.25rem',
+                marginBottom: '0.4rem',
               }}>
                 {current.question}
               </p>
 
+              {/* Nudge */}
+              <p style={{
+                color: '#8a95aa',
+                fontSize: '0.78rem',
+                textAlign: 'center',
+                marginBottom: '1.25rem',
+              }}>
+                Select whichever matches best.
+              </p>
+
               {/* Options */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.75rem' }}>
                 {current.options.map((opt, i) => (
                   <button
                     key={i}
@@ -445,6 +438,22 @@ export default function Interactive() {
                     {opt}
                   </button>
                 ))}
+              </div>
+
+              {/* Tip box */}
+              <div style={{
+                background: LIGHT,
+                border: `1px solid ${GOLD}40`,
+                borderLeft: `3px solid ${GOLD}`,
+                borderRadius: '8px',
+                padding: '0.9rem 1.1rem',
+              }}>
+                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
+                  Did you know?
+                </p>
+                <p style={{ color: NAVY, fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
+                  {current.tip}
+                </p>
               </div>
 
             </>
