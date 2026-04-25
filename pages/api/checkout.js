@@ -11,7 +11,7 @@ const TIERS = {
   },
   starter: {
     name: 'Starter — Novo Navis',
-    description: '5-page AI workflow analysis. Identifies the right tools and workflows for your business.',
+    description: 'Custom 10-page AI Blueprint. Identifies the single highest-impact thing to automate in your business.',
     unit_amount: 4900
   },
   blueprint: {

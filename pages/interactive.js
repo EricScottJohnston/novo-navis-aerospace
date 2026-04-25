@@ -17,11 +17,10 @@ const TIER_LABELS = {
 
 const TIER_DETAILS = {
   starter: [
-    'Custom AI Blueprint — up to 25 pages',
-    '1–2 things to automate, analyzed and planned',
+    'Custom AI Blueprint — up to 10 pages',
+    '1 thing to automate, analyzed and planned',
     'Specific tools matched to your budget',
     'Fast implementation plan',
-    'ROI estimates',
   ],
   blueprint: [
     'Custom AI Blueprint — up to 25 pages',
