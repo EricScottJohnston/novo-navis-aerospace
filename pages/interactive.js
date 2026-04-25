@@ -17,8 +17,18 @@ const TIER_LABELS = {
 
 const ROUND_1 = {
   tip: 'The average small business owner spends 40+ hours researching AI tools before giving up — and still doesn\'t know what to use. Our blueprint does that research for you, customized to your business, in about 12 minutes.',
-  question: 'What best describes you?',
-  options: ['Solo / Freelancer', 'Small Business', 'Growing Business'],
+  question: 'I am...',
+  options: [
+    'Having a hard time selecting the right AI tools',
+    'Struggling to match AI tools to my specific workflows',
+    'Not sure where to start with AI at all',
+  ],
+}
+
+const ROUND_2 = {
+  tip: 'Most AI tools are built for enterprise companies — not small businesses. Your AI Blueprint is built around what actually works at your scale and budget.',
+  question: 'I am a...',
+  options: ['Solo operator or freelancer', 'Small business with a team', 'Growing business ready to scale'],
 }
 
 function track(event, params = {}) {
@@ -72,6 +82,15 @@ export default function Interactive() {
     }
 
     const nextRound = round + 1
+
+    // Round 2 is hardcoded — no API call needed
+    if (nextRound === 2) {
+      setCurrent(ROUND_2)
+      setRound(2)
+      return
+    }
+
+    // Rounds 3 and 4 are Haiku-generated
     setLoading(true)
     try {
       const res  = await fetch('/api/interactive', {
