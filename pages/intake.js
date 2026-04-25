@@ -27,7 +27,11 @@ export default function Intake() {
   })
 
   useEffect(() => {
-    if (!session_id) return
+    if (!router.isReady) return
+    if (!session_id) {
+      router.replace('/')
+      return
+    }
     fetch(`/api/session?id=${session_id}`)
       .then(r => r.json())
       .then(data => {
@@ -38,7 +42,7 @@ export default function Intake() {
         }
       })
       .catch(() => setSessionError(true))
-  }, [session_id])
+  }, [router.isReady, session_id])
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -194,7 +198,7 @@ export default function Intake() {
               </p>
             )}
 
-            {(sessionData || !session_id) && (
+            {sessionData && (
               <form onSubmit={handleSubmit}>
 
                 <div className="form-group">
