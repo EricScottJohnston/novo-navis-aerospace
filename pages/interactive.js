@@ -230,60 +230,43 @@ export default function Interactive() {
           boxShadow: '0 4px 32px rgba(27,42,74,0.10)',
           maxWidth: '520px',
           width: '100%',
-          padding: '2.5rem 2rem',
+          overflow: 'hidden',
         }}>
 
-          {/* I AM headline */}
-          <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
+          {/* Progress bar */}
+          {round !== 'final' && (
+            <div style={{ background: '#e8ecf4', height: '5px', width: '100%' }}>
+              <div style={{
+                height: '100%',
+                width: `${(round / 4) * 100}%`,
+                background: GOLD,
+                transition: 'width 0.4s ease',
+                minWidth: '25%',
+              }} />
+            </div>
+          )}
+
+          <div style={{ padding: '2.5rem 2rem' }}>
+
+          {/* Headline */}
+          <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
             <p style={{
-              color: GOLD,
-              fontSize: '0.75rem',
-              fontWeight: 'bold',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              marginBottom: '0.3rem',
+              color: '#4a5568',
+              fontSize: '0.85rem',
+              fontWeight: '500',
+              marginBottom: '0.4rem',
             }}>
-              Find your fit
+              Let's figure this out together.
             </p>
             <h1 style={{
               color: NAVY,
-              fontSize: '1.9rem',
+              fontSize: '1.75rem',
               fontWeight: 'bold',
               margin: 0,
               lineHeight: 1.2,
             }}>
-              I AM...
+              Where are you with AI right now?
             </h1>
-          </div>
-
-          {/* Trust badges */}
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '0.5rem',
-            marginBottom: '1.5rem',
-          }}>
-            {[
-              ['🔒', 'Stripe Secure'],
-              ['🔐', 'Information Encrypted'],
-            ].map(([icon, label]) => (
-              <div key={label} style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.3rem',
-                background: LIGHT,
-                border: '1px solid #e0e4ef',
-                borderRadius: '20px',
-                padding: '0.3rem 0.75rem',
-                fontSize: '0.75rem',
-                color: NAVY,
-                fontWeight: '600',
-              }}>
-                <span>{icon}</span>
-                <span>{label}</span>
-              </div>
-            ))}
           </div>
 
           {loading ? (
@@ -446,17 +429,18 @@ export default function Interactive() {
                       width: '100%',
                       padding: '0.9rem 1.25rem',
                       background: '#ffffff',
-                      border: `1.5px solid #dde2ef`,
+                      border: `1px solid #e8ecf4`,
                       borderRadius: '10px',
+                      boxShadow: '0 2px 8px rgba(27,42,74,0.07)',
                       color: NAVY,
                       fontWeight: '600',
                       fontSize: '0.97rem',
                       cursor: 'pointer',
                       textAlign: 'left',
-                      transition: 'border-color 0.15s, background 0.15s',
+                      transition: 'border-color 0.15s, background 0.15s, box-shadow 0.15s',
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = GOLD; e.currentTarget.style.background = '#fffbf4' }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = '#dde2ef'; e.currentTarget.style.background = '#ffffff' }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = GOLD; e.currentTarget.style.background = '#fffbf4'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(200,169,110,0.18)' }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = '#e8ecf4'; e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(27,42,74,0.07)' }}
                   >
                     {opt}
                   </button>
@@ -502,9 +486,39 @@ export default function Interactive() {
             </>
           )}
 
+          </div>{/* end inner padding */}
         </div>
       </div>
 
+      {/* Trust badges */}
+      <div style={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: '0.5rem',
+        padding: '1rem 1rem 1.5rem',
+      }}>
+        {[
+          ['🔒', 'Stripe Secure'],
+          ['🔐', 'Information Encrypted'],
+        ].map(([icon, label]) => (
+          <div key={label} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.3rem',
+            background: '#ffffff',
+            border: '1px solid #e0e4ef',
+            borderRadius: '20px',
+            padding: '0.3rem 0.75rem',
+            fontSize: '0.75rem',
+            color: '#6b7a99',
+            fontWeight: '500',
+          }}>
+            <span>{icon}</span>
+            <span>{label}</span>
+          </div>
+        ))}
+      </div>
 
       <footer>
         <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
