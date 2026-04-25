@@ -11,10 +11,11 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const sqs = new SQSClient({ region: process.env.AWS_REGION || 'us-east-1' })
 
 const TIER_MAP = {
-  100:   'test',      // $1 — smoke test only
-  4900:  'starter',   // $49
-  19900: 'blueprint', // $199
-  49900: 'consult',   // $499
+  100:   'test',       // $1 — smoke test only
+  4900:  'starter',    // $49
+  19900: 'blueprint',  // $199
+  49900: 'consult',    // $499
+  99900: 'enterprise', // $999
 }
 
 export default async function handler(req, res) {

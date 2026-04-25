@@ -36,12 +36,21 @@ const TIER_DETAILS = {
     'Live implementation guidance',
     'Q&A tailored to your specific situation',
   ],
+  enterprise: [
+    'Custom AI Blueprint — up to 50 pages',
+    'Up to 10 things to automate, prioritized by impact',
+    'Specific tools matched to your budget',
+    'Full implementation plan',
+    'ROI estimates + risks section',
+    '2-hour hands-on Zoom with an AI expert',
+  ],
 }
 
 const TIERS = [
-  { key: 'starter',   name: 'Starter Blueprint',   price: '$49',  badge: null },
-  { key: 'blueprint', name: 'AI Blueprint',         price: '$199', badge: 'Most Popular' },
-  { key: 'consult',   name: 'Blueprint + Consult',  price: '$499', badge: null },
+  { key: 'starter',    name: 'Starter Blueprint',    price: '$49',   badge: null },
+  { key: 'blueprint',  name: 'AI Blueprint',          price: '$199',  badge: 'Most Popular' },
+  { key: 'consult',    name: 'Blueprint + Consult',   price: '$499',  badge: null },
+  { key: 'enterprise', name: 'Enterprise Blueprint',  price: '$999',  badge: null },
 ]
 
 const ROUND_1 = {

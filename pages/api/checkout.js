@@ -23,6 +23,11 @@ const TIERS = {
     name: 'Blueprint + Consult — Novo Navis',
     description: 'Full AI Blueprint plus a 2-hour Zoom session with an AI consultant to walk through implementation together.',
     unit_amount: 49900
+  },
+  enterprise: {
+    name: 'Enterprise Blueprint — Novo Navis',
+    description: 'Custom up-to-50-page AI Blueprint covering up to 10 workflows, full implementation plan, ROI estimates, and a 2-hour Zoom with an AI consultant.',
+    unit_amount: 99900
   }
 }
 
@@ -52,8 +57,8 @@ export default async function handler(req, res) {
       ],
       mode: 'payment',
       allow_promotion_codes: true,
-      success_url: `${req.headers.origin}/intake?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.origin}/#order-form`
+      success_url: `${req.headers.origin}/${tier === 'enterprise' ? 'enterprise-intake' : 'intake'}?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin}/`
     })
 
     res.status(200).json({ url: session.url })
