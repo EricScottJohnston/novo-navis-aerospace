@@ -18,25 +18,32 @@ const TIER_LABELS = {
 const TIER_DETAILS = {
   starter: [
     'Custom AI Blueprint — up to 25 pages',
-    'Focused on 1–2 of your key workflows',
-    'Specific tool recommendations matched to your budget',
+    '1–2 things to automate, analyzed and planned',
+    'Specific tools matched to your budget',
     'Fast implementation plan',
     'ROI estimates',
   ],
   blueprint: [
     'Custom AI Blueprint — up to 25 pages',
-    '3–5 workflows analyzed and prioritized',
-    'Specific tool recommendations matched to your budget',
+    '3–5 things to automate, prioritized by impact',
+    'Specific tools matched to your budget',
     'Full implementation plan',
     'ROI estimates + risks section',
   ],
   consult: [
     'Everything in the AI Blueprint',
+    '3–5 things to automate, prioritized by impact',
     '2-hour hands-on Zoom with an AI expert',
-    'Live implementation guidance for your business',
-    'Q&A tailored to your specific workflows',
+    'Live implementation guidance',
+    'Q&A tailored to your specific situation',
   ],
 }
+
+const TIERS = [
+  { key: 'starter',   name: 'Starter Blueprint',   price: '$49',  badge: null },
+  { key: 'blueprint', name: 'AI Blueprint',         price: '$199', badge: 'Most Popular' },
+  { key: 'consult',   name: 'Blueprint + Consult',  price: '$499', badge: null },
+]
 
 const ROUND_1 = {
   tip: 'The average small business owner spends 40+ hours researching AI tools before giving up — and still doesn\'t know what to use. Our blueprint does that research for you, customized to your business, in about 12 minutes.',
@@ -64,9 +71,7 @@ export default function Interactive() {
   const [round,     setRound]     = useState(1)
   const [answers,   setAnswers]   = useState([])
   const [current,   setCurrent]   = useState(ROUND_1)
-  const [loading,   setLoading]   = useState(false)
-  const [final,     setFinal]     = useState(null)
-  const [checkoutLoading, setCheckoutLoading] = useState(false)
+  const [checkoutLoading, setCheckoutLoading] = useState(null)
   const [navModal,        setNavModal]        = useState(null)
   useEffect(() => { track('funnel_entered') }, [])
 
@@ -77,65 +82,20 @@ export default function Interactive() {
   const [showTermsModal, setShowTermsModal] = useState(false)
   const [pendingTier,    setPendingTier]    = useState(null)
 
-  const handleChoice = async (option) => {
+  const handleChoice = (option) => {
     const newAnswers = [...answers, { question: current.question, answer: option }]
     setAnswers(newAnswers)
     track(`quiz_round_${round}_complete`, { answer: option })
 
-    if (round === 4) {
-      setLoading(true)
-      try {
-        const res  = await fetch('/api/interactive', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ answers: newAnswers, round: 'final' }),
-        })
-        const data = await res.json()
-        setFinal(data)
-        setRound('final')
-        track('quiz_recommendation_shown', { tier: data.recommendation })
-      } catch {
-        setFinal({
-          tip: 'AI can reduce manual data entry by up to 80% for most small businesses.',
-          recommendation: 'blueprint',
-          pitch: 'Based on your answers, the AI Blueprint is the right fit. It gives you a complete, prioritized roadmap — exactly what you need to start seeing results fast.',
-        })
-        setRound('final')
-        track('quiz_recommendation_shown', { tier: 'blueprint' })
-      }
-      setLoading(false)
-      return
-    }
-
-    const nextRound = round + 1
-
-    // Round 2 is hardcoded — no API call needed
-    if (nextRound === 2) {
+    if (round === 1) {
       setCurrent(ROUND_2)
       setRound(2)
       return
     }
 
-    // Rounds 3 and 4 are Haiku-generated
-    setLoading(true)
-    try {
-      const res  = await fetch('/api/interactive', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ answers: newAnswers, round: nextRound }),
-      })
-      const data = await res.json()
-      setCurrent(data)
-      setRound(nextRound)
-    } catch {
-      setCurrent({
-        tip: 'AI scheduling tools can save the average small business owner 5–8 hours per week.',
-        question: 'What slows you down most?',
-        options: ['Admin and paperwork', 'Finding and keeping customers'],
-      })
-      setRound(nextRound)
-    }
-    setLoading(false)
+    // Round 2 complete — show all tiers
+    setRound('final')
+    track('quiz_pricing_shown')
   }
 
   const handleCheckout = async (tier) => {
@@ -146,7 +106,7 @@ export default function Interactive() {
       return
     }
     track('quiz_checkout_started', { tier })
-    setCheckoutLoading(true)
+    setCheckoutLoading(tier)
     try {
       const res  = await fetch('/api/checkout', {
         method: 'POST',
@@ -155,15 +115,13 @@ export default function Interactive() {
       })
       const data = await res.json()
       if (data.url) window.location.href = data.url
-      else { track('checkout_failed', { tier }); alert('Something went wrong. Please try again.'); setCheckoutLoading(false) }
+      else { track('checkout_failed', { tier }); alert('Something went wrong. Please try again.'); setCheckoutLoading(null) }
     } catch {
       track('checkout_failed', { tier })
       alert('Something went wrong. Please try again.')
-      setCheckoutLoading(false)
+      setCheckoutLoading(null)
     }
   }
-
-  const tierInfo = final ? (TIER_LABELS[final.recommendation] || TIER_LABELS.blueprint) : null
 
   return (
     <>
@@ -262,14 +220,14 @@ export default function Interactive() {
               <div style={{ background: '#e8ecf4', height: '5px', width: '100%' }}>
                 <div style={{
                   height: '100%',
-                  width: `${(round / 4) * 100}%`,
+                  width: `${(round / 2) * 100}%`,
                   background: GOLD,
                   transition: 'width 0.4s ease',
-                  minWidth: '25%',
+                  minWidth: '50%',
                 }} />
               </div>
               <p style={{ textAlign: 'right', fontSize: '0.72rem', color: '#8a95aa', margin: '0.3rem 1rem 0', paddingBottom: '0' }}>
-                Question {round} of 4
+                Question {round} of 2
               </p>
             </>
           )}
@@ -282,7 +240,7 @@ export default function Interactive() {
               Let's figure this out together.
             </p>
             <p style={{ color: '#8a95aa', fontSize: '0.75rem', margin: '0 0 0.75rem' }}>
-              Takes about 90 seconds.
+              2 quick questions — then we show you the options.
             </p>
             <h1 style={{
               color: NAVY,
@@ -295,92 +253,74 @@ export default function Interactive() {
             </h1>
             {round === 1 && (
               <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
-                Answer 4 quick questions and we'll show you exactly which AI tools fit your business.
+                Answer 2 quick questions and we'll show you exactly what we can automate for your business.
               </p>
             )}
           </div>
 
-          {loading ? (
-            <div style={{ textAlign: 'center', padding: '3rem 0' }}>
-              <div style={{
-                width: '36px', height: '36px', borderRadius: '50%',
-                border: `3px solid ${GOLD}`, borderTopColor: 'transparent',
-                animation: 'spin 0.8s linear infinite',
-                margin: '0 auto 1rem',
-              }} />
-              <p style={{ color: '#8a95aa', fontSize: '0.9rem' }}>Thinking...</p>
-            </div>
-          ) : round === 'final' && final ? (
+          {round === 'final' ? (
             <>
-              {/* Recommendation — product name + price at top */}
-              <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
-                <p style={{ color: '#6b7a99', fontSize: '0.82rem', marginBottom: '0.4rem' }}>
-                  Based on your answers, we recommend:
+              {/* Pricing header */}
+              <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>
+                  Here's what we can build for you
                 </p>
-                <p style={{ color: NAVY, fontSize: '1.6rem', fontWeight: 'bold', margin: '0 0 0.2rem' }}>
-                  {tierInfo.name}
-                </p>
-                <p style={{ color: GOLD, fontSize: '2.1rem', fontWeight: 'bold', margin: 0 }}>
-                  {tierInfo.price}
-                </p>
+                <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: 0 }}>
+                  Choose your plan
+                </h2>
               </div>
 
-              {/* What's included */}
-              <div style={{
-                background: LIGHT,
-                border: `1px solid ${GOLD}40`,
-                borderLeft: `3px solid ${GOLD}`,
-                borderRadius: '8px',
-                padding: '1rem 1.1rem',
-                marginBottom: '1.5rem',
-              }}>
-                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.6rem' }}>
-                  What's included
-                </p>
-                <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
-                  {(TIER_DETAILS[final.recommendation] || TIER_DETAILS.blueprint).map((item, i) => (
-                    <li key={i} style={{ color: NAVY, fontSize: '0.88rem', lineHeight: 1.7, marginBottom: i < TIER_DETAILS[final.recommendation].length - 1 ? '0.2rem' : 0 }}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Pitch */}
-              <div style={{
-                background: LIGHT,
-                border: '1px solid #e0e4ef',
-                borderRadius: '8px',
-                padding: '1rem 1.1rem',
-                marginBottom: '1.75rem',
-              }}>
-                <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, margin: 0 }}>
-                  {final.pitch}
-                </p>
-              </div>
-
-              {/* Buy button */}
-              <button
-                onClick={() => handleCheckout(tierInfo.tier)}
-                disabled={checkoutLoading}
-                style={{
-                  width: '100%',
-                  padding: '0.9rem',
-                  background: checkoutLoading ? '#dde2ef' : 'linear-gradient(to bottom, #FFD814, #FFA41C)',
-                  border: 'none',
-                  borderRadius: '8px',
-                  color: checkoutLoading ? '#8a95aa' : '#111',
-                  fontWeight: 'bold',
-                  fontSize: '1rem',
-                  cursor: checkoutLoading ? 'not-allowed' : 'pointer',
-                  marginBottom: '1rem',
-                }}
-              >
-                {checkoutLoading ? 'Redirecting...' : `Get ${tierInfo.name} — ${tierInfo.price}`}
-              </button>
+              {/* Three tier cards */}
+              {TIERS.map(({ key, name, price, badge }) => (
+                <div key={key} style={{
+                  border: key === 'blueprint' ? `2px solid ${GOLD}` : '1px solid #e0e4ef',
+                  borderRadius: '10px',
+                  padding: '1.1rem 1.25rem',
+                  marginBottom: '0.75rem',
+                  background: key === 'blueprint' ? '#fffbf4' : '#ffffff',
+                  position: 'relative',
+                }}>
+                  {badge && (
+                    <div style={{
+                      position: 'absolute', top: '-11px', left: '50%', transform: 'translateX(-50%)',
+                      background: GOLD, color: '#111', fontSize: '0.68rem', fontWeight: 'bold',
+                      padding: '0.18rem 0.75rem', borderRadius: '20px', whiteSpace: 'nowrap',
+                      letterSpacing: '0.05em',
+                    }}>
+                      {badge}
+                    </div>
+                  )}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
+                    <p style={{ color: NAVY, fontWeight: 'bold', fontSize: '1rem', margin: 0 }}>{name}</p>
+                    <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.25rem', margin: 0 }}>{price}</p>
+                  </div>
+                  <ul style={{ margin: '0 0 0.85rem', paddingLeft: '1.1rem' }}>
+                    {TIER_DETAILS[key].map((item, i) => (
+                      <li key={i} style={{ color: '#4a5568', fontSize: '0.83rem', lineHeight: 1.7 }}>{item}</li>
+                    ))}
+                  </ul>
+                  <button
+                    onClick={() => handleCheckout(key)}
+                    disabled={checkoutLoading === key}
+                    style={{
+                      width: '100%',
+                      padding: '0.75rem',
+                      background: checkoutLoading === key ? '#dde2ef' : key === 'blueprint' ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : NAVY,
+                      border: 'none',
+                      borderRadius: '8px',
+                      color: checkoutLoading === key ? '#8a95aa' : key === 'blueprint' ? '#111' : '#fff',
+                      fontWeight: 'bold',
+                      fontSize: '0.95rem',
+                      cursor: checkoutLoading === key ? 'not-allowed' : 'pointer',
+                    }}
+                  >
+                    {checkoutLoading === key ? 'Redirecting...' : `Get ${name} — ${price}`}
+                  </button>
+                </div>
+              ))}
 
               {/* Trust badges */}
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '1rem', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', margin: '1rem 0', flexWrap: 'wrap' }}>
                 {[['🔒', 'Stripe Secure'], ['🔐', 'Information Encrypted']].map(([icon, label]) => (
                   <div key={label} style={{
                     display: 'flex', alignItems: 'center', gap: '0.3rem',
@@ -397,46 +337,35 @@ export default function Interactive() {
               <div style={{ textAlign: 'center', marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <button
                   onClick={() => { setObjOpen(true); track('quiz_objection_opened') }}
-                  style={{
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    color: '#8a95aa', fontSize: '0.85rem',
-                    textDecoration: 'underline', textUnderlineOffset: '3px',
-                  }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.85rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}
                 >
                   Wait, what is an AI Blueprint?
                 </button>
                 <button
                   onClick={() => { setReviewsOpen(true); track('quiz_reviews_opened') }}
-                  style={{
-                    background: 'none', border: 'none', cursor: 'pointer',
-                    color: '#8a95aa', fontSize: '0.85rem',
-                    textDecoration: 'underline', textUnderlineOffset: '3px',
-                  }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.85rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}
                 >
                   Wait, I want to know what other people have to say.
                 </button>
               </div>
 
-              {/* Post-checkout reassurance */}
+              {/* Reassurance */}
               <div style={{
-                background: '#f0f7f0',
-                border: '1px solid #b2dab2',
-                borderRadius: '8px',
-                padding: '1rem 1.1rem',
-                textAlign: 'center',
+                background: '#f0f7f0', border: '1px solid #b2dab2',
+                borderRadius: '8px', padding: '1rem 1.1rem', textAlign: 'center',
               }}>
                 <p style={{ color: '#2e6b2e', fontSize: '0.9rem', fontWeight: 'bold', margin: '0 0 0.4rem' }}>
                   <span style={{ color: '#4caf50' }}>✓</span> 100% money-back guarantee
                 </p>
                 <p style={{ color: '#2e6b2e', fontSize: '0.85rem', lineHeight: 1.7, margin: 0 }}>
-                  After checkout, we'll bring you back for a short, easy intake form.<br />
+                  After checkout, we'll bring you back for a short intake form.<br />
                   Then we build your blueprint — <strong>ready in about 12 minutes.</strong>
                 </p>
               </div>
 
               <p style={{ textAlign: 'center', marginTop: '1.25rem', marginBottom: 0 }}>
                 <button
-                  onClick={() => { setRound(1); setAnswers([]); setCurrent(ROUND_1); setFinal(null); track('quiz_restarted') }}
+                  onClick={() => { setRound(1); setAnswers([]); setCurrent(ROUND_1); track('quiz_restarted') }}
                   style={{ background: 'none', border: 'none', color: '#8a95aa', fontSize: '0.82rem', cursor: 'pointer', textDecoration: 'underline' }}
                 >
                   Start over
@@ -445,31 +374,8 @@ export default function Interactive() {
             </>
           ) : (
             <>
-              {/* Question — only show for Haiku-generated rounds */}
-              {round > 2 && (
-                <p style={{
-                  color: NAVY,
-                  fontSize: '1.15rem',
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  marginBottom: '0.4rem',
-                }}>
-                  {current.question}
-                </p>
-              )}
-
-              {/* Nudge */}
-              <p style={{
-                color: '#8a95aa',
-                fontSize: '0.78rem',
-                textAlign: 'center',
-                marginBottom: '1.25rem',
-              }}>
-                Select whichever matches best.
-              </p>
-
               {/* Options */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.75rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.25rem' }}>
                 {current.options.map((opt, i) => (
                   <button
                     key={i}
@@ -496,33 +402,20 @@ export default function Interactive() {
                 ))}
               </div>
 
-              {/* Tip box — only between Q2 and Q3 onwards */}
-              {round >= 3 && current.tip && (
-                <div style={{
-                  background: LIGHT,
-                  border: `1px solid ${GOLD}40`,
-                  borderLeft: `3px solid ${GOLD}`,
-                  borderRadius: '8px',
-                  padding: '0.9rem 1.1rem',
-                }}>
-                  <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.3rem' }}>
-                    Did you know?
-                  </p>
-                  <p style={{ color: NAVY, fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
-                    {current.tip}
-                  </p>
-                </div>
-              )}
+              {/* Nudge */}
+              <p style={{ color: '#8a95aa', fontSize: '0.78rem', textAlign: 'center', margin: 0 }}>
+                Select whichever matches best.
+              </p>
 
-            {/* Site explainer link */}
-            <p style={{ textAlign: 'center', marginTop: '1.25rem', marginBottom: 0 }}>
-              <button
-                onClick={() => { setSiteOpen(true); track('site_explainer_opened') }}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.78rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}
-              >
-                Wait, what is this site?
-              </button>
-            </p>
+              {/* Site explainer link */}
+              <p style={{ textAlign: 'center', marginTop: '1rem', marginBottom: 0 }}>
+                <button
+                  onClick={() => { setSiteOpen(true); track('site_explainer_opened') }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.78rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                >
+                  Wait, what is this site?
+                </button>
+              </p>
             </>
           )}
 
