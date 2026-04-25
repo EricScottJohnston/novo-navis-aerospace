@@ -57,8 +57,8 @@ export default async function handler(req, res) {
       ],
       mode: 'payment',
       allow_promotion_codes: true,
-      success_url: `${req.headers.origin}/${tier === 'enterprise' ? 'enterprise-intake' : 'intake'}?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.origin}/`
+      success_url: `${req.headers.origin || 'https://www.novonavis.com'}/${tier === 'enterprise' ? 'enterprise-intake' : 'intake'}?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin || 'https://www.novonavis.com'}/`
     })
 
     res.status(200).json({ url: session.url })
