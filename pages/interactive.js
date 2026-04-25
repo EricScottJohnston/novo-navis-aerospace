@@ -152,7 +152,7 @@ export default function Interactive() {
           {[['FAQ','faq'],['About','about']].map(([label, key]) => (
             <li key={key}>
               <button
-                onClick={() => setNavModal(key)}
+                onClick={() => { setNavModal(key); track('nav_modal_opened', { page: key }) }}
                 style={{background:'none', border:'none', cursor:'pointer', color:'inherit', font:'inherit', padding:0}}
               >
                 {label}
