@@ -111,11 +111,11 @@ export default function Interactive() {
       return
     }
 
-    // Round 2 complete — show tiers
+    // Round 2 complete — show sample prompt
     const enterprise = option === ENTERPRISE_OPTION
     setIsEnterprise(enterprise)
-    setRound('final')
-    track('quiz_pricing_shown', { enterprise })
+    setRound('sample-prompt')
+    track('quiz_sample_prompt_shown', { enterprise })
   }
 
   const handleCheckout = async (tier) => {
@@ -235,7 +235,7 @@ export default function Interactive() {
         }}>
 
           {/* Progress bar */}
-          {round !== 'final' && (
+          {round !== 'final' && round !== 'sample-prompt' && (
             <>
               <div style={{ background: '#e8ecf4', height: '5px', width: '100%' }}>
                 <div style={{
@@ -256,7 +256,7 @@ export default function Interactive() {
 
           {/* Headline */}
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-            {round !== 'final' && (
+            {round !== 'final' && round !== 'sample-prompt' && (
               <>
                 <p style={{ color: '#4a5568', fontSize: '1.05rem', fontWeight: '600', margin: '0 0 0.15rem' }}>
                   Let's figure this out together.
@@ -269,17 +269,19 @@ export default function Interactive() {
                 </p>
               </>
             )}
-            <h1 style={{
-              color: NAVY,
-              fontSize: round === 'final' ? '1.45rem' : '1.75rem',
-              fontWeight: 'bold',
-              margin: '0 0 0.5rem',
-              lineHeight: 1.2,
-            }}>
-              {round === 'final'
-                ? "We've solved 50% of your problem. Choose an option to solve the other 50%."
-                : 'Where are you with AI right now?'}
-            </h1>
+            {round !== 'sample-prompt' && (
+              <h1 style={{
+                color: NAVY,
+                fontSize: round === 'final' ? '1.45rem' : '1.75rem',
+                fontWeight: 'bold',
+                margin: '0 0 0.5rem',
+                lineHeight: 1.2,
+              }}>
+                {round === 'final'
+                  ? "We've solved 50% of your problem. Choose an option to solve the other 50%."
+                  : 'Where are you with AI right now?'}
+              </h1>
+            )}
             {round === 1 && (
               <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
                 Answer 2 quick questions and we'll show you exactly what we can automate for your business.
@@ -287,7 +289,42 @@ export default function Interactive() {
             )}
           </div>
 
-          {round === 'final' ? (
+          {round === 'sample-prompt' ? (
+            <div style={{ textAlign: 'center', padding: '1rem 0 0.5rem' }}>
+              <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.75rem' }}>
+                Before we show you the options
+              </p>
+              <h2 style={{ color: NAVY, fontSize: '1.3rem', fontWeight: 'bold', margin: '0 0 0.5rem', lineHeight: 1.3 }}>
+                Would you like to see a sample report first?
+              </h2>
+              <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: '0 0 2rem' }}>
+                See exactly what we build before you decide.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '340px', margin: '0 auto' }}>
+                <button
+                  onClick={() => { setSampleOpen(true); setRound('final'); track('quiz_sample_yes') }}
+                  style={{
+                    width: '100%', padding: '0.9rem 1.25rem',
+                    background: NAVY, border: 'none', borderRadius: '10px',
+                    color: '#fff', fontWeight: 'bold', fontSize: '0.97rem', cursor: 'pointer',
+                  }}
+                >
+                  Yes, show me a sample report
+                </button>
+                <button
+                  onClick={() => { setRound('final'); track('quiz_sample_skipped') }}
+                  style={{
+                    width: '100%', padding: '0.9rem 1.25rem',
+                    background: '#ffffff', border: '1px solid #e8ecf4', borderRadius: '10px',
+                    boxShadow: '0 2px 8px rgba(27,42,74,0.07)',
+                    color: NAVY, fontWeight: '600', fontSize: '0.97rem', cursor: 'pointer',
+                  }}
+                >
+                  No, show me the options
+                </button>
+              </div>
+            </div>
+          ) : round === 'final' ? (
             <>
               {/* Pricing header */}
               <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
