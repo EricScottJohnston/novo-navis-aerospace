@@ -92,6 +92,7 @@ export default function Interactive() {
     return () => window.removeEventListener('message', handler)
   }, [])
 
+  const [sampleOpen,     setSampleOpen]     = useState(false)
   const [objOpen,        setObjOpen]        = useState(false)
   const [siteOpen,       setSiteOpen]       = useState(false)
   const [reviewsOpen,    setReviewsOpen]    = useState(false)
@@ -157,7 +158,7 @@ export default function Interactive() {
       <nav>
         <span className="nav-logo" style={{cursor:'default'}}>NOVO NAVIS</span>
         <ul className="nav-links">
-          {[['FAQ','faq'],['About','about']].map(([label, key]) => (
+          {[['Sample','sample-report'],['FAQ','faq'],['About','about']].map(([label, key]) => (
             <li key={key}>
               <button
                 onClick={() => { setNavModal(key); track('nav_modal_opened', { page: key, round }) }}
@@ -610,6 +611,50 @@ export default function Interactive() {
             >
               Back to my recommendation
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Sample report modal */}
+      {sampleOpen && (
+        <div
+          onClick={() => setSampleOpen(false)}
+          style={{
+            position:'fixed', inset:0, zIndex:99998,
+            background:'rgba(0,0,0,0.65)',
+            display:'flex', alignItems:'center', justifyContent:'center',
+            padding:'1rem'
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background:'#fff', borderRadius:'12px',
+              width:'100%', maxWidth:'820px',
+              height:'85vh', display:'flex', flexDirection:'column',
+              overflow:'hidden', boxShadow:'0 8px 48px rgba(0,0,0,0.35)'
+            }}
+          >
+            <div style={{
+              display:'flex', justifyContent:'space-between', alignItems:'center',
+              padding:'0.85rem 1.25rem',
+              borderBottom:'1px solid #e0e4ef',
+              background:'#f8f9fc', flexShrink:0
+            }}>
+              <span style={{color:NAVY, fontWeight:'bold', fontSize:'0.95rem'}}>Sample AI Blueprint</span>
+              <button
+                onClick={() => setSampleOpen(false)}
+                style={{
+                  background:'none', border:'none', cursor:'pointer',
+                  color:'#8a95aa', fontSize:'1.3rem', lineHeight:1, padding:'0.2rem 0.4rem'
+                }}
+              >✕</button>
+            </div>
+            <iframe
+              src="/sample-report?embed=1"
+              style={{flex:1, border:'none', width:'100%'}}
+              title="Sample AI Blueprint"
+            />
           </div>
         </div>
       )}
