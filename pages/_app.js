@@ -55,34 +55,6 @@ export default function App({ Component, pageProps }) {
           gtag('js', new Date());
           gtag('config', 'G-G3X6LMB2HE');
 
-          (function() {
-            var depths = [25];
-            var fired = {};
-            var docHeight = 0;
-            var winHeight = 0;
-
-            function updateDimensions() {
-              docHeight = Math.max(
-                document.body.scrollHeight, document.documentElement.scrollHeight,
-                document.body.offsetHeight, document.documentElement.offsetHeight
-              );
-              winHeight = window.innerHeight || document.documentElement.clientHeight;
-            }
-
-            updateDimensions();
-            window.addEventListener('resize', updateDimensions, { passive: true });
-
-            window.addEventListener('scroll', function() {
-              if (docHeight - winHeight <= 0) return;
-              var pct = Math.round((window.scrollY || 0) / (docHeight - winHeight) * 100);
-              depths.forEach(function(d) {
-                if (!fired[d] && pct >= d) {
-                  fired[d] = true;
-                  gtag('event', 'scroll_depth', { percent_scrolled: d });
-                }
-              });
-            }, { passive: true });
-          })();
         `}
       </Script>
       <main>
