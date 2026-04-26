@@ -385,17 +385,37 @@ export default function Interactive() {
                 </button>
               </div>
 
+              {/* What happens next */}
+              <div style={{
+                background: '#f4f6fb', border: '1px solid #e0e4ef',
+                borderRadius: '8px', padding: '1rem 1.1rem',
+              }}>
+                <p style={{ color: NAVY, fontSize: '0.82rem', fontWeight: 'bold', margin: '0 0 0.6rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                  What happens after you checkout
+                </p>
+                {[
+                  ['1', 'Stripe takes your payment — secure, takes about 30 seconds.'],
+                  ['2', 'We bring you back for a short intake form — 2 to 3 minutes.'],
+                  ['3', 'David builds your custom blueprint — delivered to your inbox in about 12 minutes.'],
+                ].map(([n, text]) => (
+                  <div key={n} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.5rem' }}>
+                    <span style={{
+                      background: GOLD, color: '#111', fontWeight: 'bold', fontSize: '0.7rem',
+                      borderRadius: '50%', width: '18px', height: '18px', flexShrink: 0,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>{n}</span>
+                    <p style={{ color: '#4a5568', fontSize: '0.83rem', lineHeight: 1.6, margin: 0 }}>{text}</p>
+                  </div>
+                ))}
+              </div>
+
               {/* Reassurance */}
               <div style={{
                 background: '#f0f7f0', border: '1px solid #b2dab2',
-                borderRadius: '8px', padding: '1rem 1.1rem', textAlign: 'center',
+                borderRadius: '8px', padding: '0.85rem 1.1rem', textAlign: 'center', marginTop: '0.75rem',
               }}>
-                <p style={{ color: '#2e6b2e', fontSize: '0.9rem', fontWeight: 'bold', margin: '0 0 0.4rem' }}>
-                  <span style={{ color: '#4caf50' }}>✓</span> 100% money-back guarantee
-                </p>
-                <p style={{ color: '#2e6b2e', fontSize: '0.85rem', lineHeight: 1.7, margin: 0 }}>
-                  After checkout, we'll bring you back for a short intake form.<br />
-                  Then we build your blueprint — <strong>ready in about 12 minutes.</strong>
+                <p style={{ color: '#2e6b2e', fontSize: '0.88rem', fontWeight: 'bold', margin: 0 }}>
+                  <span style={{ color: '#4caf50' }}>✓</span> 100% money-back guarantee — no questions asked
                 </p>
               </div>
 
