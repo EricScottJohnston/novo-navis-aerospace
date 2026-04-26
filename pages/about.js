@@ -43,12 +43,21 @@ export default function About() {
 
         <div className="article-body">
 
-          <p>
-            The difference between a business that implements AI well and one that wastes money on the wrong tools usually comes down to one thing: access to real expertise. Enterprise companies have it. They hire consultants, run internal pilots, and build implementation roadmaps. Everyone else is left searching Google and hoping the first result is actually the right answer.
-          </p>
+          <div style={{
+            background: '#0d1221', border: '1px solid #1e2a45',
+            borderLeft: `3px solid ${GOLD}`, borderRadius: '6px',
+            padding: '1.25rem 1.5rem', marginBottom: '1.75rem',
+          }}>
+            <p style={{color: GOLD, fontWeight: 'bold', fontSize: '1rem', margin: '0 0 0.6rem'}}>
+              We're your AI consultants — not their marketing agency.
+            </p>
+            <p style={{color: '#d0d8e8', fontSize: '0.95rem', lineHeight: '1.75', margin: 0}}>
+              When you search for the best AI tool, you're not seeing the best AI tool. You're seeing the AI tool with the best marketing budget. The right tool for your business might be built by a team of twelve people who can't afford a Super Bowl ad. We know about those tools. We find them. And we match them to your specific workflows and budget — the same way a consultant would.
+            </p>
+          </div>
 
           <p>
-            It usually isn't. The tools that rank highest have the biggest marketing budgets — not the best fit for your situation. We know the full landscape. When we build your AI Blueprint, we're looking across every option — the household names and the ones that don't advertise — and recommending what actually fits your workflows, your team, and your budget. That's what a consultant does. That's what we do.
+            We're not going to recommend the most popular AI tool. We're going to find you the right one. The one that actually fits how you work, what you can afford, and what you're trying to get done. Most people never find it because it's buried under a pile of ads. We dig it out.
           </p>
 
           {/* CUSTOMER VOICES */}
@@ -82,15 +91,11 @@ export default function About() {
           </figure>
 
           <p>
-            My name is Eric Johnston. I built Novo Navis because the gap between enterprise AI consulting and everyone else is absurd. The analysis that helps a large company implement AI correctly isn't complicated — it's just expensive to access. We close that gap.
+            Novo Navis was founded by Eric Johnston, an active AI researcher and Principal Investigator on U.S. Department of Defense projects. The same rigor applied to defense-grade AI work powers every blueprint — not adapted from a consumer chatbot, not influenced by which vendor has the biggest partnership budget.
           </p>
 
           <p>
-            The system that builds your blueprint — David — was developed under the same standards I hold myself to as an active AI researcher working on Department of Defense projects. It doesn't generate generic advice. It reasons through your specific operational reality, identifies the actual causes of your inefficiencies, and tells you exactly where AI can help, what it will cost, and what the realistic return looks like.
-          </p>
-
-          <p style={{color: GOLD, fontWeight: 'bold', fontSize: '1.05rem'}}>
-            We're your consultant — not their marketing agency.
+            The system that builds your blueprint is called David. David doesn't search Google. It reasons through your specific situation, identifies what's actually causing your inefficiencies, and recommends the tools that fit your workflows and budget — not the ones with the loudest marketing.
           </p>
 
           {/* CONTACT */}
