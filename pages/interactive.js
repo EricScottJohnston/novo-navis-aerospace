@@ -255,23 +255,29 @@ export default function Interactive() {
 
           {/* Headline */}
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-            <p style={{ color: '#4a5568', fontSize: '1.05rem', fontWeight: '600', margin: '0 0 0.15rem' }}>
-              Let's figure this out together.
-            </p>
-            <p style={{ color: GOLD, fontSize: '0.82rem', fontWeight: '600', margin: '0 0 0.35rem', fontStyle: 'italic' }}>
-              We're your consultant — not their marketing agency.
-            </p>
-            <p style={{ color: '#8a95aa', fontSize: '0.75rem', margin: '0 0 0.75rem' }}>
-              2 quick questions — then we show you the options.
-            </p>
+            {round !== 'final' && (
+              <>
+                <p style={{ color: '#4a5568', fontSize: '1.05rem', fontWeight: '600', margin: '0 0 0.15rem' }}>
+                  Let's figure this out together.
+                </p>
+                <p style={{ color: GOLD, fontSize: '0.82rem', fontWeight: '600', margin: '0 0 0.35rem', fontStyle: 'italic' }}>
+                  We're your consultant — not their marketing agency.
+                </p>
+                <p style={{ color: '#8a95aa', fontSize: '0.75rem', margin: '0 0 0.75rem' }}>
+                  2 quick questions — then we show you the options.
+                </p>
+              </>
+            )}
             <h1 style={{
               color: NAVY,
-              fontSize: '1.75rem',
+              fontSize: round === 'final' ? '1.45rem' : '1.75rem',
               fontWeight: 'bold',
               margin: '0 0 0.5rem',
               lineHeight: 1.2,
             }}>
-              Where are you with AI right now?
+              {round === 'final'
+                ? "We've solved 50% of your problem. Choose an option to solve the other 50%."
+                : 'Where are you with AI right now?'}
             </h1>
             {round === 1 && (
               <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
