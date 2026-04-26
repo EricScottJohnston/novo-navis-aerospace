@@ -60,7 +60,7 @@ export default function App({ Component, pageProps }) {
       <main>
         <Component {...pageProps} />
       </main>
-      {!['/interactive', '/'].includes(router.pathname) && <ChatWidget />}
+      {!['/interactive', '/'].includes(router.pathname) && router.query.embed !== '1' && <ChatWidget />}
     </>
   )
 }
