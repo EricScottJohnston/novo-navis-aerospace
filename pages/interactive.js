@@ -49,10 +49,10 @@ const TIER_DETAILS = {
 }
 
 const TIERS = [
-  { key: 'starter',    name: 'Starter Blueprint',    price: '$49',   badge: null },
-  { key: 'blueprint',  name: 'AI Blueprint',          price: '$199',  badge: 'Most Popular' },
-  { key: 'consult',    name: 'Blueprint + Consult',   price: '$499',  badge: null },
-  { key: 'enterprise', name: 'Enterprise Blueprint',  price: '$999',  badge: null },
+  { key: 'starter',    name: 'Starter Blueprint',    price: '$49',   wasPrice: '$69',  badge: null },
+  { key: 'blueprint',  name: 'AI Blueprint',          price: '$199',  wasPrice: '$249', badge: 'Most Popular' },
+  { key: 'consult',    name: 'Blueprint + Consult',   price: '$499',  wasPrice: null,   badge: null },
+  { key: 'enterprise', name: 'Enterprise Blueprint',  price: '$999',  wasPrice: null,   badge: null },
 ]
 
 const ROUND_1 = {
@@ -293,7 +293,7 @@ export default function Interactive() {
               </div>
 
               {/* Tier cards — enterprise buyers see only $499 and $999 */}
-              {TIERS.filter(t => isEnterprise ? ['consult','enterprise'].includes(t.key) : t.key !== 'enterprise').map(({ key, name, price, badge }) => (
+              {TIERS.filter(t => isEnterprise ? ['consult','enterprise'].includes(t.key) : t.key !== 'enterprise').map(({ key, name, price, wasPrice, badge }) => (
                 <div key={key} style={{
                   border: key === 'blueprint' ? `2px solid ${GOLD}` : '1px solid #e0e4ef',
                   borderRadius: '10px',
@@ -314,7 +314,12 @@ export default function Interactive() {
                   )}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
                     <p style={{ color: NAVY, fontWeight: 'bold', fontSize: '1rem', margin: 0 }}>{name}</p>
-                    <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.25rem', margin: 0 }}>{price}</p>
+                    <div style={{ textAlign: 'right' }}>
+                      {wasPrice && (
+                        <p style={{ color: '#a0aab8', fontSize: '0.8rem', textDecoration: 'line-through', margin: '0 0 0.1rem' }}>{wasPrice}</p>
+                      )}
+                      <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.25rem', margin: 0 }}>{price}</p>
+                    </div>
                   </div>
                   <ul style={{ margin: '0 0 0.85rem', paddingLeft: '1.1rem' }}>
                     {TIER_DETAILS[key].map((item, i) => (
