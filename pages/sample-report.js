@@ -64,7 +64,9 @@ export default function SampleReport() {
             AI Integration Starter Report: Mold Remediation Business
           </h2>
           <p style={{ color: '#6b7a99', fontSize: '0.9rem', margin: '0 0 0.25rem', fontFamily: 'sans-serif' }}>Novo Navis AI Starter Report | May 2025</p>
-          <p style={{ color: '#6b7a99', fontSize: '0.9rem', margin: 0, fontFamily: 'sans-serif' }}>Prepared exclusively for: Harold Kramer | Mountain High Restorations</p>
+          <p style={{ color: '#6b7a99', fontSize: '0.9rem', margin: 0, fontFamily: 'sans-serif' }}>
+            Prepared exclusively for: <Redacted width="120px" /> | <Redacted width="160px" />
+          </p>
           <div style={{ borderBottom: `1px solid #d0d4de`, marginTop: '1.5rem' }} />
         </div>
 
@@ -118,7 +120,9 @@ export default function SampleReport() {
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
           fontFamily: 'sans-serif',
         }}>
-          <span style={{ color: '#8a95aa', fontSize: '0.78rem' }}>Confidential — Harold Kramer | Mountain High Restorations</span>
+          <span style={{ color: '#8a95aa', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            Confidential — <Redacted width="100px" /> | <Redacted width="140px" />
+          </span>
           <span style={{ color: '#8a95aa', fontSize: '0.78rem' }}>Starter Blueprint</span>
         </div>
 
@@ -155,6 +159,16 @@ export default function SampleReport() {
         </footer>
       )}
     </>
+  )
+}
+
+function Redacted({ width }) {
+  return (
+    <span style={{
+      display: 'inline-block', width, height: '0.9em',
+      background: '#1a1a2e', borderRadius: '2px',
+      verticalAlign: 'middle', opacity: 0.15,
+    }} />
   )
 }
 
