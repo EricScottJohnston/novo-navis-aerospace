@@ -158,7 +158,7 @@ export default function Interactive() {
       <nav>
         <span className="nav-logo" style={{cursor:'default'}}>NOVO NAVIS</span>
         <ul className="nav-links">
-          {[['Sample','sample-report'],['FAQ','faq'],['About','about']].map(([label, key]) => (
+          {[['Blueprint Sample','sample-report'],['FAQ','faq'],['About','about']].map(([label, key]) => (
             <li key={key}>
               <button
                 onClick={() => { setNavModal(key); track('nav_modal_opened', { page: key, round }) }}
@@ -295,7 +295,7 @@ export default function Interactive() {
                 Before we show you the options
               </p>
               <h2 style={{ color: NAVY, fontSize: '1.3rem', fontWeight: 'bold', margin: '0 0 0.5rem', lineHeight: 1.3 }}>
-                Would you like to see a sample report first?
+                Would you like to see a sample blueprint first?
               </h2>
               <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: '0 0 2rem' }}>
                 See exactly what we build before you decide.
@@ -309,7 +309,7 @@ export default function Interactive() {
                     color: '#fff', fontWeight: 'bold', fontSize: '0.97rem', cursor: 'pointer',
                   }}
                 >
-                  Yes, show me a sample report
+                  Yes, show me a sample blueprint
                 </button>
                 <button
                   onClick={() => { setRound('final'); track('quiz_sample_skipped') }}
@@ -678,7 +678,7 @@ export default function Interactive() {
               borderBottom:'1px solid #e0e4ef',
               background:'#f8f9fc', flexShrink:0
             }}>
-              <span style={{color:NAVY, fontWeight:'bold', fontSize:'0.95rem'}}>Sample AI Blueprint</span>
+              <span style={{color:NAVY, fontWeight:'bold', fontSize:'0.95rem'}}>Sample Blueprint</span>
               <button
                 onClick={() => setSampleOpen(false)}
                 style={{

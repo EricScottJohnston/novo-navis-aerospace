@@ -43,7 +43,7 @@ export default function SampleReport() {
           <span style={{ color: NAVY, fontWeight: 'bold', fontSize: '0.85rem', letterSpacing: '0.08em', fontFamily: 'sans-serif' }}>
             NOVO NAVIS
           </span>
-          <span style={{ color: '#8a95aa', fontSize: '0.82rem', fontFamily: 'sans-serif' }}>AI Blueprint</span>
+          <span style={{ color: '#8a95aa', fontSize: '0.82rem', fontFamily: 'sans-serif' }}>Sample Blueprint</span>
         </div>
 
         {/* Sample watermark notice */}
