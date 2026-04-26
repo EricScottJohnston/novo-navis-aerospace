@@ -61,7 +61,7 @@ const ROUND_1 = {
   options: [
     'Having a hard time selecting the right AI tools',
     'Struggling to match AI tools to my specific workflows',
-    'Not sure where to start with AI at all',
+    'I want more value from the AI tools I currently use',
   ],
 }
 
