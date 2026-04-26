@@ -66,6 +66,7 @@ export default function FAQ() {
         <title>Frequently Asked Questions | Novo Navis</title>
         <meta name="description" content="Common questions about the Novo Navis custom AI integration report — what's in it, how it's built, who it's for, and what happens if you're not satisfied." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {embed && <style>{`html, body { background: #fff !important; color: #1a1a2e !important; }`}</style>}
       </Head>
 
       {!embed && (

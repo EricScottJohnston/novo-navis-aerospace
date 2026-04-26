@@ -15,6 +15,7 @@ export default function SampleReport() {
         <title>Sample AI Blueprint | Novo Navis</title>
         <meta name="description" content="See a real AI Blueprint built by Novo Navis — a mold remediation business, analyzed and delivered in real time." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {embed && <style>{`html, body { background: #fff !important; color: #1a1a2e !important; }`}</style>}
       </Head>
 
       {!embed && (

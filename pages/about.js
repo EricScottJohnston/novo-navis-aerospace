@@ -15,6 +15,7 @@ export default function About() {
         <title>About | Novo Navis</title>
         <meta name="description" content="Novo Navis delivers enterprise-level AI consulting at a fraction of the price. The same rigor Fortune 500 companies pay consulting firms tens of thousands for — built for your business." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {embed && <style>{`html, body { background: #fff !important; color: #1a1a2e !important; }`}</style>}
       </Head>
 
       {!embed && (
