@@ -407,7 +407,7 @@ export default function Interactive() {
                 {[
                   ['1', 'Stripe takes your payment — secure, takes about 30 seconds.'],
                   ['2', 'We bring you back for a short intake form — 2 to 3 minutes.'],
-                  ['3', 'David builds your custom blueprint — delivered to your inbox in about 12 minutes.'],
+                  ['3', 'We build your custom blueprint — delivered to your inbox in about 12 minutes.'],
                 ].map(([n, text]) => (
                   <div key={n} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.5rem' }}>
                     <span style={{
