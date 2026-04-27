@@ -154,7 +154,7 @@ export default function Interactive() {
       <nav>
         <span className="nav-logo" style={{cursor:'default'}}>NOVO NAVIS</span>
         <ul className="nav-links">
-          {[['Blueprint Sample','sample-report'],['FAQ','faq'],['About','about']].map(([label, key]) => (
+          {[['FAQ','faq'],['About','about']].map(([label, key]) => (
             <li key={key}>
               <button
                 onClick={() => { setNavModal(key) }}
