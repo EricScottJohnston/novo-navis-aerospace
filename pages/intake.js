@@ -5,15 +5,18 @@ import { useRouter } from 'next/router'
 
 export default function Intake() {
   const router = useRouter()
-  const { session_id } = router.query
+  const { session_id, tier } = router.query
+  const isFree = !!tier && !session_id
 
   const [sessionData, setSessionData] = useState(null)
   const [sessionError, setSessionError] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [agreedTerms, setAgreedTerms] = useState(false)
   const [listeningField, setListeningField] = useState(null)
   const recognitionRef = useRef(null)
   const [formData, setFormData] = useState({
     name: '',
+    email: '',
     business: '',
     industry: '',
     employees: '',
@@ -28,21 +31,23 @@ export default function Intake() {
 
   useEffect(() => {
     if (!router.isReady) return
-    if (!session_id) {
+    if (!session_id && !tier) {
       router.replace('/')
       return
     }
-    fetch(`/api/session?id=${session_id}`)
-      .then(r => r.json())
-      .then(data => {
-        if (data.error) {
-          setSessionError(true)
-        } else {
-          setSessionData(data)
-        }
-      })
-      .catch(() => setSessionError(true))
-  }, [router.isReady, session_id])
+    if (session_id) {
+      fetch(`/api/session?id=${session_id}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.error) {
+            setSessionError(true)
+          } else {
+            setSessionData(data)
+          }
+        })
+        .catch(() => setSessionError(true))
+    }
+  }, [router.isReady, session_id, tier])
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -116,17 +121,25 @@ export default function Intake() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (isFree && !agreedTerms) {
+      alert('Please agree to the Terms and Conditions to continue.')
+      return
+    }
     setSubmitting(true)
 
     try {
+      const payload = isFree
+        ? { tier, ...formData }
+        : { sessionId: session_id, ...formData }
+
       const res = await fetch('/api/intake', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId: session_id, ...formData })
+        body: JSON.stringify(payload)
       })
       const data = await res.json()
       if (data.success) {
-        if (typeof window !== 'undefined' && window.gtag) {
+        if (!isFree && typeof window !== 'undefined' && window.gtag) {
           window.gtag('event', 'conversion_event_purchase_1')
         }
         router.push('/track/' + data.orderId)
@@ -139,6 +152,9 @@ export default function Intake() {
       setSubmitting(false)
     }
   }
+
+  const tierLabel = tier === 'starter' ? 'Single Workflow Blueprint' : 'AI Blueprint'
+  const showMultiWorkflow = tier !== 'starter'
 
   return (
     <>
@@ -181,24 +197,36 @@ export default function Intake() {
         ) : (
           <>
             <div style={{textAlign: 'center', marginBottom: '2rem'}}>
-              <div style={{fontSize: '2rem', marginBottom: '0.75rem'}}>✓</div>
-              <h1 style={{marginBottom: '0.5rem'}}>
-                Payment confirmed
-                {sessionData?.name ? `, ${sessionData.name.split(' ')[0]}` : ''}.
-              </h1>
-              <p className="lead" style={{marginBottom: '0'}}>
-                Now tell us about {sessionData?.business || 'your business'} so we can build your AI Blueprint.
-                The more specific you are, the more valuable Your AI Blueprint will be.
-              </p>
+              {isFree ? (
+                <>
+                  <h1 style={{marginBottom: '0.5rem'}}>Let's build your {tierLabel}.</h1>
+                  <p className="lead" style={{marginBottom: '0'}}>
+                    Tell us about your business so David can build your custom AI Blueprint.
+                    The more specific you are, the more useful your report will be.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <div style={{fontSize: '2rem', marginBottom: '0.75rem'}}>✓</div>
+                  <h1 style={{marginBottom: '0.5rem'}}>
+                    Payment confirmed
+                    {sessionData?.name ? `, ${sessionData.name.split(' ')[0]}` : ''}.
+                  </h1>
+                  <p className="lead" style={{marginBottom: '0'}}>
+                    Now tell us about {sessionData?.business || 'your business'} so we can build your AI Blueprint.
+                    The more specific you are, the more valuable your AI Blueprint will be.
+                  </p>
+                </>
+              )}
             </div>
 
-            {!sessionData && !sessionError && (
+            {!isFree && !sessionData && !sessionError && (
               <p style={{textAlign: 'center', color: '#8a95aa', marginBottom: '2rem'}}>
                 Verifying your payment...
               </p>
             )}
 
-            {sessionData && (
+            {(isFree || sessionData) && (
               <form onSubmit={handleSubmit}>
 
                 <div className="form-group">
@@ -216,6 +244,20 @@ export default function Intake() {
                     <MicButton fieldName="name" />
                   </div>
                 </div>
+
+                {isFree && (
+                  <div className="form-group">
+                    <label>Email Address * — we'll send your report here</label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="you@yourbusiness.com"
+                    />
+                  </div>
+                )}
 
                 <div className="form-group">
                   <label>Business Name *</label>
@@ -326,7 +368,9 @@ export default function Intake() {
                 </p>
 
                 <div className="form-group">
-                  <label>Most Repetitive Task #1 — What is it and how long does it take per week? *</label>
+                  <label>
+                    {showMultiWorkflow ? 'Most Repetitive Task #1' : 'Most Repetitive Task'} — What is it and how long does it take per week? *
+                  </label>
                   <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
                     <textarea
                       name="process1"
@@ -340,33 +384,37 @@ export default function Intake() {
                   </div>
                 </div>
 
-                <div className="form-group">
-                  <label>Most Repetitive Task #2 — What is it and how long does it take per week?</label>
-                  <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
-                    <textarea
-                      name="process2"
-                      value={formData.process2}
-                      onChange={handleChange}
-                      placeholder="Example: We create invoices manually in Word at the end of every job. Takes 20-30 minutes per invoice."
-                      style={{flex: 1}}
-                    />
-                    <MicButton fieldName="process2" />
-                  </div>
-                </div>
+                {showMultiWorkflow && (
+                  <>
+                    <div className="form-group">
+                      <label>Most Repetitive Task #2 — What is it and how long does it take per week?</label>
+                      <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
+                        <textarea
+                          name="process2"
+                          value={formData.process2}
+                          onChange={handleChange}
+                          placeholder="Example: We create invoices manually in Word at the end of every job. Takes 20-30 minutes per invoice."
+                          style={{flex: 1}}
+                        />
+                        <MicButton fieldName="process2" />
+                      </div>
+                    </div>
 
-                <div className="form-group">
-                  <label>Most Repetitive Task #3 — What is it and how long does it take per week?</label>
-                  <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
-                    <textarea
-                      name="process3"
-                      value={formData.process3}
-                      onChange={handleChange}
-                      placeholder="Example: Following up with leads who haven't responded. We do this manually by email and it often falls through the cracks."
-                      style={{flex: 1}}
-                    />
-                    <MicButton fieldName="process3" />
-                  </div>
-                </div>
+                    <div className="form-group">
+                      <label>Most Repetitive Task #3 — What is it and how long does it take per week?</label>
+                      <div style={{display: 'flex', gap: '0.5rem', alignItems: 'flex-start'}}>
+                        <textarea
+                          name="process3"
+                          value={formData.process3}
+                          onChange={handleChange}
+                          placeholder="Example: Following up with leads who haven't responded. We do this manually by email and it often falls through the cracks."
+                          style={{flex: 1}}
+                        />
+                        <MicButton fieldName="process3" />
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 <div className="form-group">
                   <label>What is the single biggest operational problem in your business right now? *</label>
@@ -393,17 +441,34 @@ export default function Intake() {
                   </p>
                 )}
 
+                {isFree && (
+                  <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', marginBottom: '1.25rem'}}>
+                    <input
+                      type="checkbox"
+                      checked={agreedTerms}
+                      onChange={e => setAgreedTerms(e.target.checked)}
+                      style={{marginTop: '3px', width: '20px', height: '20px', flexShrink: 0, cursor: 'pointer'}}
+                    />
+                    <span style={{color: '#b0b8cc', fontSize: '0.88rem', lineHeight: '1.6'}}>
+                      I agree to the{' '}
+                      <a href="/terms" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e'}}>Terms and Conditions</a>.
+                    </span>
+                  </label>
+                )}
+
                 <button
                   type="submit"
                   className="btn-primary"
                   style={{width: '100%', fontSize: '1.1rem', padding: '1rem'}}
-                  disabled={submitting}
+                  disabled={submitting || (isFree && !agreedTerms)}
                 >
-                  {submitting ? 'Submitting...' : 'Submit My Intake — Start Building My Report'}
+                  {submitting ? 'Submitting...' : 'Submit — Build My Blueprint →'}
                 </button>
 
                 <p style={{textAlign: 'center', color: '#4a5568', fontSize: '0.85rem', marginTop: '1rem'}}>
-                  Your AI Blueprint will be built and delivered to your email in real time.
+                  {isFree
+                    ? "You'll receive a preview by email. Unlock the full report when you're ready."
+                    : 'Your AI Blueprint will be built and delivered to your email in real time.'}
                 </p>
 
               </form>
@@ -414,7 +479,7 @@ export default function Intake() {
       </div>
 
       <footer>
-        <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
+        <p>© {new Date().getFullYear()} Novo Navis, LLC · Fidelis Diligentia</p>
         <p style={{marginTop: '0.5rem'}}>
           <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
           <Link href="/terms">Terms and Conditions</Link>

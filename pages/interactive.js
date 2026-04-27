@@ -9,35 +9,21 @@ const NAVY  = '#1B2A4A'
 const GOLD  = '#c8a96e'
 const LIGHT = '#f4f6fb'
 
-const TIER_LABELS = {
-  starter:  { name: 'Starter Blueprint',       price: '$49',  tier: 'starter' },
-  blueprint:{ name: 'AI Blueprint',            price: '$199', tier: 'blueprint' },
-  consult:  { name: 'Blueprint + Consult',     price: '$499', tier: 'consult' },
-}
-
 const TIER_DETAILS = {
   starter: [
     'Custom AI Blueprint — up to 10 pages',
-    '1 thing to automate, analyzed and planned',
+    '1 workflow analyzed and planned',
     'Specific tools matched to your budget',
     'Maximize existing AI tool utility',
     'Fast implementation plan',
   ],
   blueprint: [
     'Custom AI Blueprint — up to 25 pages',
-    '3–5 things to automate, prioritized by impact',
+    '3–5 workflows, prioritized by impact',
     'Specific tools matched to your budget',
     'Maximize existing AI tool utility',
     'Full implementation plan',
     'ROI estimates + risks section',
-  ],
-  consult: [
-    'Everything in the AI Blueprint',
-    '3–5 things to automate, prioritized by impact',
-    'Maximize existing AI tool utility',
-    '2-hour hands-on Zoom with an AI expert',
-    'Live implementation guidance',
-    'Q&A tailored to your specific situation',
   ],
   enterprise: [
     'Custom AI Blueprint — up to 50 pages',
@@ -53,10 +39,9 @@ const TIER_DETAILS = {
 }
 
 const TIERS = [
-  { key: 'starter',    name: 'Starter Blueprint',    price: '$49',   wasPrice: '$69',  badge: null },
-  { key: 'blueprint',  name: 'AI Blueprint',          price: '$199',  wasPrice: '$249', badge: 'Most Popular' },
-  { key: 'consult',    name: 'Blueprint + Consult',   price: '$499',  wasPrice: null,   badge: null },
-  { key: 'enterprise', name: 'Enterprise Blueprint',  price: '$999',  wasPrice: null,   badge: null },
+  { key: 'starter',    name: 'Single Workflow Blueprint', price: '$99',  badge: null },
+  { key: 'blueprint',  name: 'AI Blueprint',              price: '$299', badge: 'Most Popular' },
+  { key: 'enterprise', name: 'Enterprise Blueprint',      price: '$999', badge: null },
 ]
 
 const ROUND_1 = {
@@ -126,10 +111,16 @@ export default function Interactive() {
   }
 
   const handleCheckout = async (tier) => {
+    track('quiz_buy_clicked', { tier })
+    if (tier !== 'enterprise') {
+      setCheckoutLoading(tier)
+      track('quiz_intake_started', { tier })
+      window.location.href = `/intake?tier=${tier}`
+      return
+    }
     if (!agreedTerms) {
       setPendingTier(tier)
       setShowTermsModal(true)
-      track('quiz_buy_clicked', { tier })
       return
     }
     track('quiz_checkout_started', { tier })
@@ -340,8 +331,8 @@ export default function Interactive() {
                 </h2>
               </div>
 
-              {/* Tier cards — enterprise buyers see only $499 and $999 */}
-              {TIERS.filter(t => isEnterprise ? ['consult','enterprise'].includes(t.key) : t.key !== 'enterprise').map(({ key, name, price, wasPrice, badge }) => (
+              {/* Tier cards */}
+              {TIERS.filter(t => isEnterprise ? t.key === 'enterprise' : t.key !== 'enterprise').map(({ key, name, price, badge }) => (
                 <div key={key} style={{
                   border: key === 'blueprint' ? `2px solid ${GOLD}` : '1px solid #e0e4ef',
                   borderRadius: '10px',
@@ -363,9 +354,6 @@ export default function Interactive() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
                     <p style={{ color: NAVY, fontWeight: 'bold', fontSize: '1rem', margin: 0 }}>{name}</p>
                     <div style={{ textAlign: 'right' }}>
-                      {wasPrice && (
-                        <p style={{ color: '#a0aab8', fontSize: '0.8rem', textDecoration: 'line-through', margin: '0 0 0.1rem' }}>{wasPrice}</p>
-                      )}
                       <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.25rem', margin: 0 }}>{price}</p>
                     </div>
                   </div>
@@ -389,14 +377,19 @@ export default function Interactive() {
                       cursor: checkoutLoading === key ? 'not-allowed' : 'pointer',
                     }}
                   >
-                    {checkoutLoading === key ? 'Redirecting...' : `Get ${name} — ${price}`}
+                    {checkoutLoading === key
+                      ? (key === 'enterprise' ? 'Redirecting...' : 'Taking you there...')
+                      : key === 'enterprise' ? `Get ${name} — ${price}` : `Get Started — Free`}
                   </button>
                 </div>
               ))}
 
               {/* Trust badges */}
               <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', margin: '1rem 0', flexWrap: 'wrap' }}>
-                {[['🔒', 'Stripe Secure'], ['🔐', 'Information Encrypted']].map(([icon, label]) => (
+                {(isEnterprise
+                  ? [['🔒', 'Stripe Secure'], ['🔐', 'Information Encrypted']]
+                  : [['✓', 'Free to Start'], ['🔐', 'Information Encrypted']]
+                ).map(([icon, label]) => (
                   <div key={label} style={{
                     display: 'flex', alignItems: 'center', gap: '0.3rem',
                     background: LIGHT, border: '1px solid #e0e4ef',
@@ -444,13 +437,17 @@ export default function Interactive() {
                 borderRadius: '8px', padding: '1rem 1.1rem',
               }}>
                 <p style={{ color: NAVY, fontSize: '0.82rem', fontWeight: 'bold', margin: '0 0 0.6rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                  What happens after you checkout
+                  What happens next
                 </p>
-                {[
+                {(isEnterprise ? [
                   ['1', 'Stripe takes your payment — secure, takes about 30 seconds.'],
                   ['2', 'We bring you back for a short intake form — 2 to 3 minutes.'],
                   ['3', 'We build your custom blueprint — delivered to your inbox in about 12 minutes.'],
-                ].map(([n, text]) => (
+                ] : [
+                  ['1', 'Fill out a short intake form — 2 to 3 minutes, completely free.'],
+                  ['2', 'David builds your custom blueprint — takes about 12 minutes.'],
+                  ['3', 'You get a preview sent to your inbox. Unlock the full report when you\'re ready.'],
+                ]).map(([n, text]) => (
                   <div key={n} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.5rem' }}>
                     <span style={{
                       background: GOLD, color: '#111', fontWeight: 'bold', fontSize: '0.7rem',
