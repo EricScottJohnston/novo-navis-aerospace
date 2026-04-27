@@ -39,6 +39,8 @@ export default async function handler(req, res) {
     process1,
     process2,
     process3,
+    process4,
+    process5,
     goal
   } = req.body
 
@@ -91,6 +93,8 @@ export default async function handler(req, res) {
     `Task 1: ${process1}`,
     `Task 2: ${process2 || 'Not provided'}`,
     `Task 3: ${process3 || 'Not provided'}`,
+    `Task 4: ${process4 || 'Not provided'}`,
+    `Task 5: ${process5 || 'Not provided'}`,
     `Problem: ${goal}`,
   ].join('\n')
 
@@ -150,9 +154,11 @@ export default async function handler(req, res) {
         <p><strong>Current Software Tools:</strong> ${currentTools || 'Not provided'}</p>
         <hr />
         <h3>Pain Points</h3>
-        <p><strong>Repetitive Task 1:</strong><br/>${process1}</p>
-        <p><strong>Repetitive Task 2:</strong><br/>${process2 || 'Not provided'}</p>
-        <p><strong>Repetitive Task 3:</strong><br/>${process3 || 'Not provided'}</p>
+        <p><strong>Task 1:</strong><br/>${process1}</p>
+        <p><strong>Task 2:</strong><br/>${process2 || 'Not provided'}</p>
+        <p><strong>Task 3:</strong><br/>${process3 || 'Not provided'}</p>
+        <p><strong>Task 4:</strong><br/>${process4 || 'Not provided'}</p>
+        <p><strong>Task 5:</strong><br/>${process5 || 'Not provided'}</p>
         <p><strong>Biggest Operational Problem:</strong><br/>${goal}</p>
         <hr />
         <h3 style="color:#333;">order.txt — manual fallback</h3>
