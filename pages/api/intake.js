@@ -5,10 +5,42 @@
 
 import { Resend } from 'resend'
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
+import { S3Client, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const sqs = new SQSClient({ region: process.env.AWS_REGION || 'us-east-1' })
+const s3  = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
+
+const RATE_LIMIT_WINDOW_MS = 24 * 60 * 60 * 1000 // 24 hours
+
+async function checkRateLimit(email) {
+  const key = `ratelimit/${email.toLowerCase().replace(/[^a-z0-9@._-]/g, '_')}.json`
+  try {
+    const obj = await s3.send(new GetObjectCommand({ Bucket: process.env.S3_BUCKET, Key: key }))
+    const { submittedAt } = JSON.parse(await obj.Body.transformToString())
+    if (Date.now() - new Date(submittedAt).getTime() < RATE_LIMIT_WINDOW_MS) {
+      return false // blocked
+    }
+  } catch (err) {
+    if (err.name !== 'NoSuchKey') console.error('[intake] rate-limit check error:', err)
+  }
+  return true // allowed
+}
+
+async function writeRateLimit(email) {
+  const key = `ratelimit/${email.toLowerCase().replace(/[^a-z0-9@._-]/g, '_')}.json`
+  try {
+    await s3.send(new PutObjectCommand({
+      Bucket:      process.env.S3_BUCKET,
+      Key:         key,
+      Body:        JSON.stringify({ submittedAt: new Date().toISOString() }),
+      ContentType: 'application/json',
+    }))
+  } catch (err) {
+    console.error('[intake] rate-limit write error:', err)
+  }
+}
 
 // Stripe amount → tier for enterprise (paid-upfront) flow
 const ENTERPRISE_TIER_MAP = {
@@ -76,6 +108,12 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid tier' })
   }
 
+  // Rate limit — one submission per email per 24 hours
+  const allowed = await checkRateLimit(customerEmail)
+  if (!allowed) {
+    return res.status(429).json({ error: 'rate_limited' })
+  }
+
   // Generate order ID
   const safeName = customerName.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 20)
   const orderId  = `${safeName}_${Date.now()}`
@@ -126,6 +164,9 @@ export default async function handler(req, res) {
       console.error('[intake] SQS send failed:', err)
     }
   }
+
+  // Record submission for rate limiting
+  await writeRateLimit(customerEmail)
 
   // Email Eric (notification + manual fallback)
   try {

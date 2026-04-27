@@ -137,6 +137,11 @@ export default function Intake() {
         body: JSON.stringify(payload),
       })
       const data = await res.json()
+      if (data.error === 'rate_limited') {
+        alert('You already submitted a report request in the last 24 hours. Check your inbox for your preview, or call (623) 428-9308 if you need help.')
+        setSubmitting(false)
+        return
+      }
       if (data.success) {
         if (!isFree && typeof window !== 'undefined' && window.gtag) {
           window.gtag('event', 'conversion_event_purchase_1')
