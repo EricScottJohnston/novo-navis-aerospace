@@ -379,8 +379,13 @@ export default function Interactive() {
                   >
                     {checkoutLoading === key
                       ? (key === 'enterprise' ? 'Redirecting...' : 'Taking you there...')
-                      : key === 'enterprise' ? `Get ${name} — ${price}` : `Get Started — Free`}
+                      : key === 'enterprise' ? `Get ${name} — ${price}` : `Get Free Preview →`}
                   </button>
+                  {key !== 'enterprise' && (
+                    <p style={{ textAlign: 'center', color: '#6b7a99', fontSize: '0.78rem', margin: '0.45rem 0 0' }}>
+                      Pay <strong style={{ color: NAVY }}>{price}</strong> to unlock the full report — only if you like it.
+                    </p>
+                  )}
                 </div>
               ))}
 
