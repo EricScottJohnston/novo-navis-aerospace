@@ -42,7 +42,7 @@ const faqs = [
   },
   {
     q: "What if I'm not satisfied with the AI Blueprint?",
-    a: "Full refund, no questions asked. If you read your AI Blueprint and don't find it useful, email support@novonavis.com and we'll refund you in full. We'd rather lose the sale than send a report that doesn't deliver value."
+    a: "All sales of the full unlocked report are final — that's why we give you a free preview first. Your preview includes the complete analysis, workflows, ROI framework, and implementation strategy. Review it carefully before you unlock. If you have questions before unlocking, call us at (623) 428-9308 or email support@novonavis.com."
   },
   {
     q: "How is my business information handled?",
@@ -50,7 +50,7 @@ const faqs = [
   },
   {
     q: "Are there any businesses you don't serve?",
-    a: "Yes. Novo Navis does not provide services to cannabis or marijuana dispensary operations. As a registered U.S. federal contractor, we are prohibited from conducting business with entities engaged in activities that remain illegal under federal law, regardless of state-level legalization. We also do not serve businesses whose operations conflict with U.S. national security interests. As a defense contractor and Principal Investigator on active Department of Defense research projects, we have an obligation to decline any engagement that could present a conflict with those responsibilities. Beyond these specific exclusions, Novo Navis reserves the right to decline service to any business we determine, at our sole discretion, may be in conflict with local, state, federal, or international law. If we decline your order for any reason, you will receive a full refund."
+    a: "Yes. Novo Navis does not provide services to cannabis or marijuana dispensary operations. As a registered U.S. federal contractor, we are prohibited from conducting business with entities engaged in activities that remain illegal under federal law, regardless of state-level legalization. We also do not serve businesses whose operations conflict with U.S. national security interests. As a defense contractor and Principal Investigator on active Department of Defense research projects, we have an obligation to decline any engagement that could present a conflict with those responsibilities. Beyond these specific exclusions, Novo Navis reserves the right to decline service to any business we determine, at our sole discretion, may be in conflict with local, state, federal, or international law. If we decline your order for any reason prior to delivery, you will be notified by email."
   },
   {
     q: "I'm not ready to buy yet. How do I know the AI Blueprint is worth it?",

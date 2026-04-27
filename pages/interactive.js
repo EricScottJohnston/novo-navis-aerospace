@@ -480,11 +480,11 @@ export default function Interactive() {
 
               {/* Reassurance */}
               <div style={{
-                background: '#f0f7f0', border: '1px solid #b2dab2',
+                background: '#f4f6fb', border: '1px solid #e0e4ef',
                 borderRadius: '8px', padding: '0.85rem 1.1rem', textAlign: 'center', marginTop: '0.75rem',
               }}>
-                <p style={{ color: '#2e6b2e', fontSize: '0.88rem', fontWeight: 'bold', margin: 0 }}>
-                  <span style={{ color: '#4caf50' }}>✓</span> 100% money-back guarantee — no questions asked
+                <p style={{ color: '#4a5568', fontSize: '0.88rem', margin: 0 }}>
+                  All sales of the full unlocked report are final. Review your preview before unlocking.
                 </p>
               </div>
 
@@ -787,10 +787,9 @@ export default function Interactive() {
               padding: '1.75rem 1.5rem',
             }}
           >
-            <div style={{ background: '#0a1a0a', border: '2px solid #4caf50', borderRadius: '8px', padding: '1rem 1.25rem', marginBottom: '1.25rem' }}>
-              <p style={{ color: '#4caf50', fontWeight: 'bold', margin: '0 0 0.2rem', fontSize: '0.92rem' }}>✓ 100% Money-Back Guarantee</p>
+            <div style={{ background: '#0d1221', border: '1px solid #1e2a45', borderRadius: '8px', padding: '1rem 1.25rem', marginBottom: '1.25rem' }}>
               <p style={{ color: '#d0d8e8', fontSize: '0.84rem', lineHeight: '1.6', margin: 0 }}>
-                Not satisfied for any reason? Email support@novonavis.com and we'll refund you in full — no questions asked.
+                All sales of the full unlocked report are final. You will receive a free preview first — review it before you decide to unlock.
               </p>
             </div>
 

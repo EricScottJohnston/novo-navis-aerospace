@@ -115,7 +115,7 @@ export default function Intake() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (isFree && !agreedTerms) {
+    if (!agreedTerms) {
       alert('Please agree to the Terms and Conditions to continue.')
       return
     }
@@ -448,27 +448,26 @@ export default function Intake() {
                   </p>
                 )}
 
-                {/* Terms — free flow only */}
-                {isFree && (
-                  <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', marginBottom: '1.25rem'}}>
-                    <input
-                      type="checkbox"
-                      checked={agreedTerms}
-                      onChange={e => setAgreedTerms(e.target.checked)}
-                      style={{marginTop: '3px', width: '20px', height: '20px', flexShrink: 0, cursor: 'pointer'}}
-                    />
-                    <span style={{color: '#4a5568', fontSize: '0.88rem', lineHeight: '1.6'}}>
-                      I agree to the{' '}
-                      <a href="/terms" target="_blank" rel="noopener noreferrer" style={{color: GOLD}}>Terms and Conditions</a>.
-                    </span>
-                  </label>
-                )}
+                {/* Terms — all tiers */}
+                <label style={{display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', marginBottom: '1.25rem'}}>
+                  <input
+                    type="checkbox"
+                    checked={agreedTerms}
+                    onChange={e => setAgreedTerms(e.target.checked)}
+                    style={{marginTop: '3px', width: '20px', height: '20px', flexShrink: 0, cursor: 'pointer'}}
+                  />
+                  <span style={{color: '#4a5568', fontSize: '0.88rem', lineHeight: '1.6'}}>
+                    I agree to the{' '}
+                    <a href="/terms" target="_blank" rel="noopener noreferrer" style={{color: GOLD}}>Terms and Conditions</a>,
+                    including that all sales of the full unlocked report are final.
+                  </span>
+                </label>
 
                 <button
                   type="submit"
                   className="btn-primary"
                   style={{width: '100%', fontSize: '1.1rem', padding: '1rem'}}
-                  disabled={submitting || (isFree && !agreedTerms)}
+                  disabled={submitting || !agreedTerms}
                 >
                   {submitting ? 'Submitting...' : 'Submit — Build My Blueprint →'}
                 </button>

@@ -209,12 +209,12 @@ export default function Unlock() {
 
                 {/* Trust */}
                 <div style={{
-                  background: '#f0f7f0', border: '1px solid #b2dab2',
+                  background: '#f4f6fb', border: '1px solid #e0e4ef',
                   borderRadius: '8px', padding: '0.7rem 1rem',
                   textAlign: 'center', marginBottom: '1rem',
                 }}>
-                  <p style={{ color: '#2e6b2e', fontSize: '0.85rem', fontWeight: 'bold', margin: 0 }}>
-                    <span style={{ color: '#4caf50' }}>✓</span> 100% money-back guarantee — no questions asked
+                  <p style={{ color: '#4a5568', fontSize: '0.85rem', margin: 0 }}>
+                    All sales are final. Review your preview carefully before unlocking.
                   </p>
                 </div>
 
