@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Script from 'next/script'
 import { useRouter } from 'next/router'
 
 const GOLD = '#c8a96e'
@@ -15,7 +16,8 @@ export default function SampleReport() {
         <title>Sample AI Blueprint | Novo Navis</title>
         <meta name="description" content="See a real AI Blueprint built by Novo Navis — a mold remediation business, analyzed and delivered in real time." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {embed && <style>{`html, body { background: #fff !important; color: #1a1a2e !important; }`}</style>}
+        {embed && <style>{`html, body { background: #fff !important; color: #1a1a2e !important; } .report-page, .article-page { background: #fff !important; }`}</style>}
+        <Script id="embed-bg" strategy="beforeInteractive">{`if(location.search.includes('embed=1'))document.documentElement.style.background='#fff'`}</Script>
       </Head>
 
       {!embed && (

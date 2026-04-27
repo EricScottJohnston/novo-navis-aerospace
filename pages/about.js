@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
+import Script from 'next/script'
 import { useRouter } from 'next/router'
 
 const NAVY = '#1B2A4A'
@@ -15,7 +16,8 @@ export default function About() {
         <title>About | Novo Navis</title>
         <meta name="description" content="Novo Navis delivers enterprise-level AI consulting at a fraction of the price. The same rigor Fortune 500 companies pay consulting firms tens of thousands for — built for your business." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {embed && <style>{`html, body { background: #fff !important; color: #1a1a2e !important; }`}</style>}
+        {embed && <style>{`html, body { background: #fff !important; color: #1a1a2e !important; } .report-page, .article-page { background: #fff !important; }`}</style>}
+        <Script id="embed-bg" strategy="beforeInteractive">{`if(location.search.includes('embed=1'))document.documentElement.style.background='#fff'`}</Script>
       </Head>
 
       {!embed && (

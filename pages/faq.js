@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Script from 'next/script'
 import { useRouter } from 'next/router'
 
 const faqs = [
@@ -66,7 +67,8 @@ export default function FAQ() {
         <title>Frequently Asked Questions | Novo Navis</title>
         <meta name="description" content="Common questions about the Novo Navis custom AI integration report — what's in it, how it's built, who it's for, and what happens if you're not satisfied." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {embed && <style>{`html, body { background: #fff !important; color: #1a1a2e !important; }`}</style>}
+        {embed && <style>{`html, body { background: #fff !important; color: #1a1a2e !important; } .report-page, .article-page { background: #fff !important; }`}</style>}
+        <Script id="embed-bg" strategy="beforeInteractive">{`if(location.search.includes('embed=1'))document.documentElement.style.background='#fff'`}</Script>
       </Head>
 
       {!embed && (
