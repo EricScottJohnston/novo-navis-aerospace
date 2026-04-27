@@ -85,6 +85,7 @@ export default function Interactive() {
   }, [])
 
   const [sampleOpen,     setSampleOpen]     = useState(false)
+  const [sampleType,     setSampleType]     = useState('mold')
   const [objOpen,        setObjOpen]        = useState(false)
   const [siteOpen,       setSiteOpen]       = useState(false)
   const [reviewsOpen,    setReviewsOpen]    = useState(false)
@@ -295,16 +296,29 @@ export default function Interactive() {
               <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: '0 0 2rem' }}>
                 See exactly what we build before you decide.
               </p>
+              <p style={{ color: '#6b7a99', fontSize: '0.83rem', margin: '0 0 1rem' }}>
+                Pick an industry to see a real blueprint.
+              </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '340px', margin: '0 auto' }}>
                 <button
-                  onClick={() => { setSampleOpen(true); setRound('final'); track('quiz_sample_yes') }}
+                  onClick={() => { setSampleType('mold'); setSampleOpen(true); setRound('final'); track('quiz_sample_mold') }}
                   style={{
                     width: '100%', padding: '0.9rem 1.25rem',
                     background: NAVY, border: 'none', borderRadius: '10px',
                     color: '#fff', fontWeight: 'bold', fontSize: '0.97rem', cursor: 'pointer',
                   }}
                 >
-                  Yes, show me a sample blueprint
+                  Mold Remediation Company
+                </button>
+                <button
+                  onClick={() => { setSampleType('law'); setSampleOpen(true); setRound('final'); track('quiz_sample_law') }}
+                  style={{
+                    width: '100%', padding: '0.9rem 1.25rem',
+                    background: NAVY, border: 'none', borderRadius: '10px',
+                    color: '#fff', fontWeight: 'bold', fontSize: '0.97rem', cursor: 'pointer',
+                  }}
+                >
+                  Personal Injury Law Firm
                 </button>
                 <button
                   onClick={() => { setRound('final'); track('quiz_sample_skipped') }}
@@ -315,7 +329,7 @@ export default function Interactive() {
                     color: NAVY, fontWeight: '600', fontSize: '0.97rem', cursor: 'pointer',
                   }}
                 >
-                  No, show me the options
+                  No thanks, show me the options
                 </button>
               </div>
             </div>
@@ -694,7 +708,7 @@ export default function Interactive() {
               >✕</button>
             </div>
             <iframe
-              src="/sample-report?embed=1"
+              src={sampleType === 'law' ? '/sample-report-law?embed=1' : '/sample-report?embed=1'}
               style={{flex:1, border:'none', width:'100%', background:'#fff'}}
               title="Sample AI Blueprint"
             />
