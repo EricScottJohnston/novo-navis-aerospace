@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-const ALLOWED_COUNTRIES = new Set(['US', 'CA'])
+const ALLOWED_COUNTRIES = new Set(['US', 'CA', 'IE', 'GB', 'AU'])
 
 export function middleware(req) {
   const country = req.geo?.country || req.headers.get('x-vercel-ip-country')
