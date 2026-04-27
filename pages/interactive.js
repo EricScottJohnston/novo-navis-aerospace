@@ -526,7 +526,7 @@ export default function Interactive() {
       </div>
 
       <footer>
-        <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
+        <p>© {new Date().getFullYear()} Novo Navis, LLC · Fidelis Diligentia</p>
       </footer>
 
       {/* What is an AI Blueprint — static info modal */}
