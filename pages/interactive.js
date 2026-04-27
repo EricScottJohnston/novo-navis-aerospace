@@ -61,7 +61,7 @@ const ROUND_1 = {
   options: [
     'Having a hard time selecting the right AI tools',
     'Struggling to match AI tools to my specific workflows',
-    'I want more value from the AI tools I currently use',
+    'I want to get more out of the AI tools I already use',
   ],
 }
 
@@ -284,7 +284,7 @@ export default function Interactive() {
             )}
             {round === 1 && (
               <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
-                Answer 2 quick questions and we'll show you exactly what we can automate for your business.
+                Answer 2 quick questions and we'll match you to one of our AI blueprint services.
               </p>
             )}
           </div>
