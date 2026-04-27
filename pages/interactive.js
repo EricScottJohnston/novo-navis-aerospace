@@ -261,11 +261,8 @@ export default function Interactive() {
                 <p style={{ color: '#4a5568', fontSize: '1.05rem', fontWeight: '600', margin: '0 0 0.15rem' }}>
                   Let's figure this out together.
                 </p>
-                <p style={{ color: GOLD, fontSize: '0.82rem', fontWeight: '600', margin: '0 0 0.35rem', fontStyle: 'italic' }}>
-                  We're your consultant — not their marketing agency.
-                </p>
-                <p style={{ color: '#8a95aa', fontSize: '0.75rem', margin: '0 0 0.75rem' }}>
-                  2 quick questions — then we show you the options.
+                <p style={{ color: GOLD, fontSize: '0.82rem', fontWeight: '600', margin: '0 0 0.75rem', fontStyle: 'italic' }}>
+                  We're YOUR consultant — not their marketing agency.
                 </p>
               </>
             )}
