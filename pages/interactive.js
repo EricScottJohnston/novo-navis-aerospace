@@ -217,7 +217,7 @@ export default function Interactive() {
             </div>
             <iframe
               src={`/${navModal}?embed=1`}
-              style={{flex:1, border:'none', width:'100%'}}
+              style={{flex:1, border:'none', width:'100%', background:'#fff'}}
               title={navModal}
             />
           </div>
@@ -693,7 +693,7 @@ export default function Interactive() {
             </div>
             <iframe
               src="/sample-report?embed=1"
-              style={{flex:1, border:'none', width:'100%'}}
+              style={{flex:1, border:'none', width:'100%', background:'#fff'}}
               title="Sample AI Blueprint"
             />
           </div>
