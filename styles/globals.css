@@ -7,7 +7,6 @@
 html {
   scroll-behavior: smooth;
   min-height: 100%;
-  background: linear-gradient(to bottom, #0a0e1a 0%, #0a1a3e 20%, #0d3872 38%, #1056a0 50%);
 }
 
 body {
