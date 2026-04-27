@@ -427,7 +427,7 @@ export default function Interactive() {
                 background: LIGHT, border: '1px solid #e0e4ef', borderRadius: '8px',
               }}>
                 <p style={{ color: NAVY, fontSize: '0.88rem', fontWeight: '600', margin: '0 0 0.2rem' }}>
-                  Have questions? Yeah, it's the weekend — we're still here.
+                  Questions?
                 </p>
                 <a href="tel:6234289308" style={{ color: GOLD, fontWeight: 'bold', fontSize: '1rem', textDecoration: 'none' }}>
                   (623) 428-9308
