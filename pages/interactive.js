@@ -91,7 +91,10 @@ export default function Interactive() {
   const [checkoutLoading, setCheckoutLoading] = useState(null)
   const [navModal,        setNavModal]        = useState(null)
   useEffect(() => {
-    const handler = (e) => { if (e.data === 'close-nav-modal') setNavModal(null) }
+    const handler = (e) => {
+      if (e.data === 'close-nav-modal') setNavModal(null)
+      if (e.data === 'close-sample-modal') setSampleOpen(false)
+    }
     window.addEventListener('message', handler)
     return () => window.removeEventListener('message', handler)
   }, [])

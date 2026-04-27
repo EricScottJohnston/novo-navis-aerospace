@@ -132,7 +132,7 @@ export default function SampleReport() {
               Your blueprint will be built the same way — around your specific business, workflows, and budget.
             </p>
             <button
-              onClick={() => window.parent.postMessage('close-nav-modal', '*')}
+              onClick={() => window.parent.postMessage('close-sample-modal', '*')}
               style={{
                 background: NAVY, border: 'none', borderRadius: '8px',
                 color: '#fff', fontWeight: 'bold', fontSize: '1rem',
