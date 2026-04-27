@@ -55,7 +55,7 @@ export default function SampleReport() {
           fontFamily: 'sans-serif',
         }}>
           <p style={{ color: NAVY, fontSize: '0.82rem', margin: 0 }}>
-            <strong>Sample Report</strong> — This is a real AI Blueprint built for a mold remediation business. Customer name and details are published with permission. Your blueprint will be built the same way, around your specific business.
+            <strong>Sample Blueprint</strong> — Real blueprint built for a mold remediation business. Customer name and business redacted. Yours will be built the same way, around your specific business.
           </p>
         </div>
 
