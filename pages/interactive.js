@@ -96,8 +96,6 @@ export default function Interactive() {
   const handleChoice = (option) => {
     const newAnswers = [...answers, { question: current.question, answer: option }]
     setAnswers(newAnswers)
-    track(`quiz_round_${round}_complete`, { answer: option })
-
     if (round === 1) {
       setCurrent(ROUND_2)
       setRound(2)
@@ -108,7 +106,6 @@ export default function Interactive() {
     const enterprise = option === ENTERPRISE_OPTION
     setIsEnterprise(enterprise)
     setRound('sample-prompt')
-    track('quiz_sample_prompt_shown', { enterprise })
   }
 
   const handleCheckout = async (tier) => {
@@ -160,7 +157,7 @@ export default function Interactive() {
           {[['Blueprint Sample','sample-report'],['FAQ','faq'],['About','about']].map(([label, key]) => (
             <li key={key}>
               <button
-                onClick={() => { setNavModal(key); track('nav_modal_opened', { page: key, round }) }}
+                onClick={() => { setNavModal(key) }}
                 style={{background:'none', border:'none', cursor:'pointer', color:'inherit', font:'inherit', padding:0}}
               >
                 {label}
@@ -490,7 +487,7 @@ export default function Interactive() {
 
               <p style={{ textAlign: 'center', marginTop: '1.25rem', marginBottom: 0 }}>
                 <button
-                  onClick={() => { setRound(1); setAnswers([]); setCurrent(ROUND_1); setIsEnterprise(false); track('quiz_restarted') }}
+                  onClick={() => { setRound(1); setAnswers([]); setCurrent(ROUND_1); setIsEnterprise(false) }}
                   style={{ background: 'none', border: 'none', color: '#8a95aa', fontSize: '0.82rem', cursor: 'pointer', textDecoration: 'underline' }}
                 >
                   Start over
@@ -808,7 +805,7 @@ export default function Interactive() {
 
             <div style={{ display: 'flex', gap: '0.75rem' }}>
               <button
-                onClick={() => { setShowTermsModal(false); track('terms_dismissed') }}
+                onClick={() => { setShowTermsModal(false) }}
                 style={{
                   flex: 1, padding: '0.75rem',
                   background: 'transparent', border: '1px solid #1e2a45',
