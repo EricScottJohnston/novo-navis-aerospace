@@ -21,6 +21,62 @@ export default function Intake() {
   const [listeningField, setListeningField] = useState(null)
   const recognitionRef = useRef(null)
 
+  // Email verification state (free flow only)
+  const [verifyEmail,    setVerifyEmail]    = useState('')
+  const [codeSent,       setCodeSent]       = useState(false)
+  const [codeInput,      setCodeInput]      = useState('')
+  const [emailVerified,  setEmailVerified]  = useState(false)
+  const [verifyLoading,  setVerifyLoading]  = useState(false)
+  const [verifyError,    setVerifyError]    = useState('')
+
+  const handleSendCode = async () => {
+    if (!verifyEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(verifyEmail)) {
+      setVerifyError('Please enter a valid email address.')
+      return
+    }
+    setVerifyLoading(true)
+    setVerifyError('')
+    try {
+      const res = await fetch('/api/verify-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'send', email: verifyEmail }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setCodeSent(true)
+        setFormData(prev => ({ ...prev, email: verifyEmail }))
+      } else {
+        setVerifyError(data.error || 'Failed to send code. Please try again.')
+      }
+    } catch {
+      setVerifyError('Something went wrong. Please try again.')
+    }
+    setVerifyLoading(false)
+  }
+
+  const handleVerifyCode = async () => {
+    if (!codeInput.trim()) { setVerifyError('Please enter the code.'); return }
+    setVerifyLoading(true)
+    setVerifyError('')
+    try {
+      const res = await fetch('/api/verify-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'verify', email: verifyEmail, code: codeInput.trim() }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setEmailVerified(true)
+      } else {
+        setVerifyError(data.error || 'Incorrect code. Please try again.')
+      }
+    } catch {
+      setVerifyError('Something went wrong. Please try again.')
+    }
+    setVerifyLoading(false)
+  }
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -263,7 +319,97 @@ export default function Intake() {
               </p>
             )}
 
-            {(isFree || sessionData) && (
+            {/* Email verification gate — free flow only */}
+            {isFree && !emailVerified && (
+              <div style={{ marginBottom: '2rem' }}>
+                <p style={{ color: NAVY, fontWeight: '600', marginBottom: '0.5rem' }}>
+                  First, verify your email address.
+                </p>
+                <p style={{ color: '#6b7a99', fontSize: '0.88rem', marginBottom: '1.25rem' }}>
+                  We'll send a 6-digit code to confirm your email before building your report.
+                </p>
+
+                {!codeSent ? (
+                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+                    <input
+                      type="email"
+                      value={verifyEmail}
+                      onChange={e => setVerifyEmail(e.target.value)}
+                      placeholder="you@yourbusiness.com"
+                      style={{
+                        flex: 1, minWidth: '200px',
+                        background: '#ffffff', color: '#1a1a2e',
+                        border: '1px solid #d0d4de', borderRadius: '6px',
+                        padding: '0.65rem 0.85rem', fontSize: '1rem',
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleSendCode}
+                      disabled={verifyLoading}
+                      style={{
+                        background: NAVY, color: '#fff', border: 'none',
+                        borderRadius: '6px', padding: '0.65rem 1.25rem',
+                        fontWeight: 'bold', fontSize: '0.95rem',
+                        cursor: verifyLoading ? 'not-allowed' : 'pointer',
+                        opacity: verifyLoading ? 0.6 : 1,
+                      }}
+                    >
+                      {verifyLoading ? 'Sending...' : 'Send Code'}
+                    </button>
+                  </div>
+                ) : (
+                  <div>
+                    <p style={{ color: '#4a5568', fontSize: '0.88rem', marginBottom: '0.75rem' }}>
+                      Code sent to <strong>{verifyEmail}</strong>. Check your inbox.
+                    </p>
+                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                      <input
+                        type="text"
+                        value={codeInput}
+                        onChange={e => setCodeInput(e.target.value)}
+                        placeholder="6-digit code"
+                        maxLength={6}
+                        style={{
+                          width: '140px',
+                          background: '#ffffff', color: '#1a1a2e',
+                          border: '1px solid #d0d4de', borderRadius: '6px',
+                          padding: '0.65rem 0.85rem', fontSize: '1.1rem',
+                          letterSpacing: '0.2em', textAlign: 'center',
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleVerifyCode}
+                        disabled={verifyLoading}
+                        style={{
+                          background: GOLD, color: '#111', border: 'none',
+                          borderRadius: '6px', padding: '0.65rem 1.25rem',
+                          fontWeight: 'bold', fontSize: '0.95rem',
+                          cursor: verifyLoading ? 'not-allowed' : 'pointer',
+                          opacity: verifyLoading ? 0.6 : 1,
+                        }}
+                      >
+                        {verifyLoading ? 'Verifying...' : 'Verify'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => { setCodeSent(false); setCodeInput(''); setVerifyError('') }}
+                        style={{ background: 'none', border: 'none', color: '#8a95aa', fontSize: '0.85rem', cursor: 'pointer', textDecoration: 'underline' }}
+                      >
+                        Use a different email
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {verifyError && (
+                  <p style={{ color: '#c0392b', fontSize: '0.88rem', marginTop: '0.6rem' }}>{verifyError}</p>
+                )}
+              </div>
+            )}
+
+            {(isFree || sessionData) && (!isFree || emailVerified) && (
               <form onSubmit={handleSubmit}>
 
                 {/* Name */}
@@ -279,14 +425,15 @@ export default function Intake() {
                   </div>
                 </div>
 
-                {/* Email — free flow only (enterprise gets it from Stripe) */}
+                {/* Email — free flow captured during verification, enterprise gets it from Stripe */}
                 {isFree && (
                   <div className="form-group">
-                    <label>Email Address * — we'll send your report here</label>
+                    <label>Email Address</label>
                     <input
-                      type="email" name="email" required
-                      value={formData.email} onChange={handleChange}
-                      placeholder="you@yourbusiness.com"
+                      type="email" name="email"
+                      value={formData.email}
+                      readOnly
+                      style={{ background: '#f4f6fb', color: '#6b7a99', cursor: 'not-allowed' }}
                     />
                   </div>
                 )}

@@ -108,6 +108,22 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid tier' })
   }
 
+  // Email verification check — free flow only
+  if (isFree) {
+    const verifyKey = `verify/${customerEmail.toLowerCase().replace(/[^a-z0-9@._-]/g, '_')}.json`
+    try {
+      const obj = await s3.send(new GetObjectCommand({ Bucket: process.env.S3_BUCKET, Key: verifyKey }))
+      const record = JSON.parse(await obj.Body.transformToString())
+      if (!record.verified || new Date(record.expiresAt).getTime() < Date.now()) {
+        return res.status(403).json({ error: 'email_not_verified' })
+      }
+    } catch (err) {
+      if (err.name === 'NoSuchKey') return res.status(403).json({ error: 'email_not_verified' })
+      console.error('[intake] verify check error:', err)
+      return res.status(500).json({ error: 'Verification check failed' })
+    }
+  }
+
   // Rate limit — one submission per email per 24 hours
   const allowed = await checkRateLimit(customerEmail)
   if (!allowed) {
