@@ -116,6 +116,13 @@ export default function SampleReport() {
           <p>The most significant risk across all of these tools is the absence of a validation step. The risk is not that the tools are unreliable. The risk is that they produce reliable-looking outputs that mask underlying inaccuracies.</p>
         </Section>
 
+        {/* Disclaimer */}
+        <div style={{ textAlign: 'center', margin: '2.5rem 0 1.5rem', fontFamily: 'sans-serif' }}>
+          <p style={{ color: NAVY, fontWeight: 'bold', fontSize: '0.9rem', letterSpacing: '0.03em' }}>
+            YOUR AI TOOLS WILL BE DIFFERENT DEPENDING ON YOUR BUSINESS AND WORKFLOWS — FOR INFORMATION ONLY
+          </p>
+        </div>
+
         {/* Footer */}
         <div style={{
           borderTop: `1px solid #d0d4de`, marginTop: '3rem', paddingTop: '1rem',
