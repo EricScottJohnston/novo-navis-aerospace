@@ -146,6 +146,10 @@ export default function Intake() {
         if (!isFree && typeof window !== 'undefined' && window.gtag) {
           window.gtag('event', 'conversion_event_purchase_1')
         }
+        if (typeof window !== 'undefined') {
+          window.uetq = window.uetq || []
+          window.uetq.push('event', 'submit_lead_form', {})
+        }
         router.push('/track/' + data.orderId)
       } else {
         alert('Something went wrong submitting your intake. Please email support@novonavis.com.')
