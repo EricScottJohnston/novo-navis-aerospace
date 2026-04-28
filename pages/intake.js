@@ -325,8 +325,11 @@ export default function Intake() {
                 <p style={{ color: NAVY, fontWeight: '600', marginBottom: '0.5rem' }}>
                   First, verify your email address.
                 </p>
-                <p style={{ color: '#6b7a99', fontSize: '0.88rem', marginBottom: '1.25rem' }}>
+                <p style={{ color: '#6b7a99', fontSize: '0.88rem', marginBottom: '0.5rem' }}>
                   We'll send a 6-digit code to confirm your email before building your report.
+                </p>
+                <p style={{ color: '#4a5568', fontSize: '0.85rem', fontStyle: 'italic', marginBottom: '1.25rem' }}>
+                  We will never sell or share your information.
                 </p>
 
                 {!codeSent ? (
