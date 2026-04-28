@@ -1,5 +1,5 @@
 // pages/interactive.js
-// Interactive AI Blueprint sales funnel — 3 rounds of questions, powered by Haiku, leads to purchase.
+// Interactive AI Blueprint sales funnel — 2 rounds of questions, leads to free personalized report.
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -46,17 +46,17 @@ const TIERS = [
 
 const ROUND_1 = {
   tip: 'The average small business owner spends 40+ hours researching AI tools before giving up — and still doesn\'t know what to use. Our blueprint does that research for you, customized to your business, in about 12 minutes.',
-  question: 'I am...',
+  question: 'Which sounds most like you?',
   options: [
-    'Having a hard time selecting the right AI tools',
-    'Struggling to match AI tools to my specific workflows',
+    'I know I need AI but have no idea where to start',
+    'I\'ve tried some AI tools but they\'re not quite right for my business',
     'I want to get more out of the AI tools I already use',
   ],
 }
 
 const ROUND_2 = {
   tip: 'Most AI tools are built for enterprise companies — not small businesses. Your AI Blueprint is built around what actually works at your scale and budget.',
-  question: 'I am a...',
+  question: 'What size is your business?',
   options: ['Solo operator or freelancer', 'Small business with a team', 'Growing business ready to scale', 'Enterprise organization'],
 }
 
@@ -143,11 +143,11 @@ export default function Interactive() {
     <>
       <Head>
         <title>Find Your AI Blueprint | Novo Navis</title>
-        <meta name="description" content="Answer 4 quick questions and get a custom AI Blueprint built for your specific business — delivered in about 12 minutes. Find your fit now." />
+        <meta name="description" content="Get a custom AI Blueprint built for your specific business — completely free preview, delivered in about 12 minutes. Find your fit now." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
-        <meta property="og:description" content="Answer 4 quick questions and get a custom AI Blueprint built for your specific business — delivered in about 12 minutes." />
+        <meta property="og:description" content="Get a custom AI Blueprint built for your specific business — completely free preview, delivered in about 12 minutes." />
         <style>{`html, body { background: #f8f9fc !important; }`}</style>
       </Head>
 
@@ -254,30 +254,43 @@ export default function Interactive() {
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
             {round !== 'final' && round !== 'sample-prompt' && (
               <>
-                <p style={{ color: '#4a5568', fontSize: '1.05rem', fontWeight: '600', margin: '0 0 0.15rem' }}>
-                  Let's figure this out together.
+                <p style={{ color: GOLD, fontSize: '0.72rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.5rem' }}>
+                  Free · Personalized · 12 minutes
                 </p>
-                <p style={{ color: GOLD, fontSize: '0.82rem', fontWeight: '600', margin: '0 0 0.75rem', fontStyle: 'italic' }}>
-                  We're YOUR consultant — not their marketing agency.
+                <p style={{ color: '#4a5568', fontSize: '1.05rem', fontWeight: '600', margin: '0 0 0.15rem' }}>
+                  Stop guessing which AI tools to use.
+                </p>
+                <p style={{ color: NAVY, fontSize: '0.92rem', fontWeight: '600', margin: '0 0 0.75rem' }}>
+                  Get a custom blueprint built around <em>your</em> business — free.
                 </p>
               </>
             )}
             {round !== 'sample-prompt' && (
               <h1 style={{
                 color: NAVY,
-                fontSize: round === 'final' ? '1.45rem' : '1.75rem',
+                fontSize: round === 'final' ? '1.45rem' : '1.7rem',
                 fontWeight: 'bold',
                 margin: '0 0 0.5rem',
                 lineHeight: 1.2,
               }}>
                 {round === 'final'
                   ? "We've solved 50% of your problem. Choose an option to solve the other 50%."
-                  : 'Where are you with AI right now?'}
+                  : current.question}
               </h1>
             )}
             {round === 1 && (
+              <>
+                <p style={{ color: '#6b7a99', fontSize: '0.9rem', lineHeight: 1.6, margin: '0 0 0.5rem' }}>
+                  Answer 2 quick questions and we'll build you a personalized AI report — completely free. No credit card. No commitment.
+                </p>
+                <p style={{ color: '#8a95aa', fontSize: '0.82rem', lineHeight: 1.5, margin: 0, fontStyle: 'italic' }}>
+                  Up to 25 pages. Specific to your business. Yours to keep.
+                </p>
+              </>
+            )}
+            {round === 2 && (
               <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
-                Answer 2 quick questions and we'll match you to one of our AI blueprint services.
+                Almost there. One more question and we'll build your free blueprint.
               </p>
             )}
           </div>
@@ -288,13 +301,13 @@ export default function Interactive() {
                 Before we show you the options
               </p>
               <h2 style={{ color: NAVY, fontSize: '1.3rem', fontWeight: 'bold', margin: '0 0 0.5rem', lineHeight: 1.3 }}>
-                Would you like to see a sample blueprint first?
+                Want to see exactly what we'll build for you?
               </h2>
               <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: '0 0 2rem' }}>
-                See exactly what we build before you decide.
+                Take 60 seconds and look at a real blueprint we built for another business. Same depth, same detail, same format you'll get.
               </p>
               <p style={{ color: '#6b7a99', fontSize: '0.83rem', margin: '0 0 1rem' }}>
-                Pick an industry to see a real blueprint.
+                Pick an industry to see a real blueprint:
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '340px', margin: '0 auto' }}>
                 <button
@@ -326,7 +339,7 @@ export default function Interactive() {
                     color: NAVY, fontWeight: '600', fontSize: '0.97rem', cursor: 'pointer',
                   }}
                 >
-                  No thanks, show me the options
+                  Skip — show me my options
                 </button>
               </div>
             </div>
@@ -335,11 +348,14 @@ export default function Interactive() {
               {/* Pricing header */}
               <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
                 <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>
-                  Here's what we can build for you
+                  Your free blueprint is ready to be built
                 </p>
-                <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: 0 }}>
-                  Choose your plan
+                <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: '0 0 0.5rem' }}>
+                  Pick your blueprint depth
                 </h2>
+                <p style={{ color: '#6b7a99', fontSize: '0.85rem', lineHeight: 1.5, margin: 0 }}>
+                  You only pay if you love it. Read the full preview first — unlock the tool names only when you're ready.
+                </p>
               </div>
 
               {/* Tier cards */}
@@ -390,11 +406,11 @@ export default function Interactive() {
                   >
                     {checkoutLoading === key
                       ? (key === 'enterprise' ? 'Redirecting...' : 'Taking you there...')
-                      : key === 'enterprise' ? `Get ${name} — ${price}` : `Get Free Preview →`}
+                      : key === 'enterprise' ? `Get ${name} — ${price}` : `Build My Free Blueprint →`}
                   </button>
                   {key !== 'enterprise' && (
                     <p style={{ textAlign: 'center', color: '#6b7a99', fontSize: '0.78rem', margin: '0.45rem 0 0' }}>
-                      Pay <strong style={{ color: NAVY }}>{price}</strong> to unlock the full report — only if you like it.
+                      Free preview now. Pay <strong style={{ color: NAVY }}>{price}</strong> only if you want the tool names unlocked.
                     </p>
                   )}
                 </div>
@@ -404,7 +420,7 @@ export default function Interactive() {
               <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', margin: '1rem 0', flexWrap: 'wrap' }}>
                 {(isEnterprise
                   ? [['🔒', 'Stripe Secure'], ['🔐', 'Information Encrypted']]
-                  : [['✓', 'Free to Start'], ['🔐', 'Information Encrypted']]
+                  : [['✓', '100% Free Preview'], ['🔐', 'Information Encrypted'], ['💳', 'No Card Required']]
                 ).map(([icon, label]) => (
                   <div key={label} style={{
                     display: 'flex', alignItems: 'center', gap: '0.3rem',
@@ -424,7 +440,7 @@ export default function Interactive() {
                 background: LIGHT, border: '1px solid #e0e4ef', borderRadius: '8px',
               }}>
                 <p style={{ color: NAVY, fontSize: '0.88rem', fontWeight: '600', margin: '0 0 0.2rem' }}>
-                  Questions?
+                  Want to talk to a real person first?
                 </p>
                 <a href="tel:6234289308" style={{ color: GOLD, fontWeight: 'bold', fontSize: '1rem', textDecoration: 'none' }}>
                   (623) 428-9308
@@ -443,7 +459,7 @@ export default function Interactive() {
                   onClick={() => { setReviewsOpen(true); track('modal_opened', { modal: 'reviews', round }) }}
                   style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.85rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}
                 >
-                  Wait, I want to know what other people have to say.
+                  What are other businesses saying?
                 </button>
               </div>
 
@@ -460,9 +476,9 @@ export default function Interactive() {
                   ['2', 'We bring you back for a short intake form — 2 to 3 minutes.'],
                   ['3', 'We build your custom blueprint — delivered to your inbox in about 12 minutes.'],
                 ] : [
-                  ['1', 'Fill out a short intake form — 2 to 3 minutes, completely free.'],
-                  ['2', 'David builds your custom blueprint — takes about 12 minutes.'],
-                  ['3', 'You get a preview sent to your inbox. Unlock the full report when you\'re ready.'],
+                  ['1', 'Quick intake form — 2 to 3 minutes. Tell us about your business.'],
+                  ['2', 'David builds your custom blueprint — about 12 minutes. Up to 25 pages, all yours.'],
+                  ['3', 'Read the full preview free. Unlock the tool names later if you find it valuable.'],
                 ]).map(([n, text]) => (
                   <div key={n} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.5rem' }}>
                     <span style={{
@@ -481,7 +497,7 @@ export default function Interactive() {
                 borderRadius: '8px', padding: '0.85rem 1.1rem', textAlign: 'center', marginTop: '0.75rem',
               }}>
                 <p style={{ color: '#4a5568', fontSize: '0.88rem', margin: 0 }}>
-                  All sales of the full unlocked report are final. Review your preview before unlocking.
+                  All sales of the full unlocked report are final. Review your free preview before unlocking — no surprises.
                 </p>
               </div>
 
@@ -504,7 +520,7 @@ export default function Interactive() {
                     onClick={() => handleChoice(opt)}
                     style={{
                       width: '100%',
-                      padding: '0.9rem 1.25rem',
+                      padding: '0.95rem 1.25rem',
                       background: '#ffffff',
                       border: `1px solid #e8ecf4`,
                       borderRadius: '10px',
@@ -526,7 +542,7 @@ export default function Interactive() {
 
               {/* Nudge */}
               <p style={{ color: '#8a95aa', fontSize: '0.78rem', textAlign: 'center', margin: 0 }}>
-                Select whichever matches best.
+                Pick whichever feels closest. There's no wrong answer.
               </p>
 
               {/* Site explainer link */}
@@ -747,7 +763,7 @@ export default function Interactive() {
             </p>
 
             <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-              This short quiz helps us understand your situation so we can recommend the right Blueprint for you. Answer 4 quick questions and we'll tell you exactly which tier fits — and why.
+              Answer 2 quick questions and we'll build you a custom AI report — completely free preview, no credit card required. Up to 25 pages, all about your business.
             </p>
 
             <button
