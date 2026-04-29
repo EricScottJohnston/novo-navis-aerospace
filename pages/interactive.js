@@ -143,7 +143,7 @@ export default function Interactive() {
     <>
       <Head>
         <title>Find Your AI Blueprint | Novo Navis</title>
-        <meta name="description" content="Get a custom AI Blueprint built for your specific business — completely free preview, delivered in about 12 minutes. Find your fit now." />
+        <meta name="description" content="Get a custom AI Blueprint built for your specific business — completely free, delivered in about 12 minutes. Keep your business modern, don't lose money." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
