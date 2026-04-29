@@ -308,7 +308,7 @@ export default function Intake() {
               </h1>
               <p className="lead" style={{marginBottom: 0}}>
                 {isFree
-                  ? 'Tell us about your business so David can build your custom AI Blueprint. The more specific you are, the more useful your report will be.'
+                  ? 'Tell us about your business so we can build your custom AI Blueprint. The more specific you are, the more useful your report will be.'
                   : `Tell us about ${sessionData?.business || 'your business'} so we can build your AI Blueprint. The more specific you are, the more valuable your report will be.`}
               </p>
             </div>
