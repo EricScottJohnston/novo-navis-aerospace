@@ -143,11 +143,11 @@ export default function Interactive() {
     <>
       <Head>
         <title>Find Your AI Blueprint | Novo Navis</title>
-        <meta name="description" content="Get a custom AI Blueprint built for your specific business — completely free, delivered in about 12 minutes. Keep your business modern, don't lose money." />
+        <meta name="description" content="Get a custom AI Blueprint built for your specific business — you only pay after your approval. Delivered in about 12 minutes." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
-        <meta property="og:description" content="Get a custom AI Blueprint built for your specific business — completely free preview, delivered in about 12 minutes." />
+        <meta property="og:description" content="Get a custom AI Blueprint built for your specific business — you only pay after your approval." />
         <style>{`html, body { background: #f8f9fc !important; }`}</style>
       </Head>
 
@@ -255,13 +255,13 @@ export default function Interactive() {
             {round !== 'final' && round !== 'sample-prompt' && (
               <>
                 <p style={{ color: GOLD, fontSize: '0.72rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.5rem' }}>
-                  Free · Personalized · 12 minutes
+                  Pay only after your approval
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '1.05rem', fontWeight: '600', margin: '0 0 0.15rem' }}>
                   Stop guessing which AI tools to use.
                 </p>
                 <p style={{ color: NAVY, fontSize: '0.92rem', fontWeight: '600', margin: '0 0 0.75rem' }}>
-                  Get a custom blueprint built around <em>your</em> business — free.
+                  Get a custom blueprint built around <em>your</em> business.
                 </p>
               </>
             )}
@@ -281,16 +281,16 @@ export default function Interactive() {
             {round === 1 && (
               <>
                 <p style={{ color: '#6b7a99', fontSize: '0.9rem', lineHeight: 1.6, margin: '0 0 0.5rem' }}>
-                  Answer 2 quick questions and we'll build you a personalized AI report — completely free. No credit card. No commitment.
+                  Answer 2 quick questions. We build your report. You review it. You only pay if you love it.
                 </p>
                 <p style={{ color: '#8a95aa', fontSize: '0.82rem', lineHeight: 1.5, margin: 0, fontStyle: 'italic' }}>
-                  Up to 25 pages. Specific to your business. Yours to keep.
+                  Up to 25 pages. Specific to your business. Yours to keep either way.
                 </p>
               </>
             )}
             {round === 2 && (
               <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
-                Almost there. One more question and we'll build your free blueprint.
+                Almost there. One more question and we'll build your blueprint.
               </p>
             )}
           </div>
@@ -345,24 +345,32 @@ export default function Interactive() {
             </div>
           ) : round === 'final' ? (
             <>
-              {/* Pricing header */}
-              <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.35rem' }}>
-                  Your free blueprint is ready to be built
+              {/* APPROVAL-FIRST BANNER — the dominant message */}
+              <div style={{
+                background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)',
+                border: `2px solid ${GOLD}`,
+                borderRadius: '12px',
+                padding: '1.1rem 1.25rem',
+                marginBottom: '1.5rem',
+                textAlign: 'center',
+                boxShadow: '0 4px 16px rgba(200,169,110,0.18)',
+              }}>
+                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>
+                  Here's how this works
                 </p>
-                <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: '0 0 0.5rem' }}>
+                <p style={{ color: NAVY, fontSize: '1.15rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3 }}>
+                  You only pay after your approval.
+                </p>
+                <p style={{ color: '#4a5568', fontSize: '0.88rem', lineHeight: 1.55, margin: 0 }}>
+                  We build your full report. You preview it. If you love it, unlock the tool names. If not, walk away — no charges, no follow-up.
+                </p>
+              </div>
+
+              {/* Pricing header */}
+              <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
+                <h2 style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: 0 }}>
                   Pick your blueprint depth
                 </h2>
-                {!isEnterprise && (
-                  <p style={{ color: '#6b7a99', fontSize: '0.85rem', lineHeight: 1.5, margin: 0 }}>
-                    Your preview is 100% free. Optional unlock available later if you want the specific tool names.
-                  </p>
-                )}
-                {isEnterprise && (
-                  <p style={{ color: '#6b7a99', fontSize: '0.85rem', lineHeight: 1.5, margin: 0 }}>
-                    You only pay if you love it. Read the full preview first.
-                  </p>
-                )}
               </div>
 
               {/* Tier cards */}
@@ -387,11 +395,12 @@ export default function Interactive() {
                   )}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
                     <p style={{ color: NAVY, fontWeight: 'bold', fontSize: '1rem', margin: 0 }}>{name}</p>
-                    {key === 'enterprise' && (
-                      <div style={{ textAlign: 'right' }}>
-                        <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.25rem', margin: 0 }}>{price}</p>
-                      </div>
-                    )}
+                    <div style={{ textAlign: 'right' }}>
+                      <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.25rem', margin: 0 }}>{price}</p>
+                      {key !== 'enterprise' && (
+                        <p style={{ color: '#8a95aa', fontSize: '0.7rem', margin: '0.1rem 0 0', fontStyle: 'italic' }}>only after approval</p>
+                      )}
+                    </div>
                   </div>
                   <ul style={{ margin: '0 0 0.85rem', paddingLeft: '1.1rem' }}>
                     {TIER_DETAILS[key].map((item, i) => (
@@ -415,8 +424,13 @@ export default function Interactive() {
                   >
                     {checkoutLoading === key
                       ? (key === 'enterprise' ? 'Redirecting...' : 'Taking you there...')
-                      : key === 'enterprise' ? `Get ${name} — ${price}` : `Build My Free Blueprint →`}
+                      : key === 'enterprise' ? `Get ${name} — ${price}` : `Build My Blueprint →`}
                   </button>
+                  {key !== 'enterprise' && (
+                    <p style={{ textAlign: 'center', color: '#6b7a99', fontSize: '0.78rem', margin: '0.5rem 0 0' }}>
+                      Build & preview is <strong style={{ color: NAVY }}>free</strong>. Pay <strong style={{ color: NAVY }}>{price}</strong> only when you approve.
+                    </p>
+                  )}
                 </div>
               ))}
 
@@ -424,7 +438,7 @@ export default function Interactive() {
               <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', margin: '1rem 0', flexWrap: 'wrap' }}>
                 {(isEnterprise
                   ? [['🔒', 'Stripe Secure'], ['🔐', 'Information Encrypted']]
-                  : [['✓', '100% Free Preview'], ['🔐', 'Information Encrypted'], ['💳', 'No Card Required']]
+                  : [['✓', 'No Charge Until Approved'], ['🔐', 'Information Encrypted'], ['💳', 'No Card Required']]
                 ).map(([icon, label]) => (
                   <div key={label} style={{
                     display: 'flex', alignItems: 'center', gap: '0.3rem',
@@ -481,8 +495,8 @@ export default function Interactive() {
                   ['3', 'We build your custom blueprint — delivered to your inbox in about 12 minutes.'],
                 ] : [
                   ['1', 'Quick intake form — 2 to 3 minutes. Tell us about your business.'],
-                  ['2', 'David builds your custom blueprint — about 12 minutes. Up to 25 pages, all yours.'],
-                  ['3', 'Read the full preview free. Unlock the tool names later if you find it valuable.'],
+                  ['2', 'We build your custom blueprint — about 12 minutes. Up to 25 pages, all yours.'],
+                  ['3', 'Read the full preview. If you approve it, unlock the tool names. If not, walk away — no charge.'],
                 ]).map(([n, text]) => (
                   <div key={n} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.5rem' }}>
                     <span style={{
@@ -501,7 +515,7 @@ export default function Interactive() {
                 borderRadius: '8px', padding: '0.85rem 1.1rem', textAlign: 'center', marginTop: '0.75rem',
               }}>
                 <p style={{ color: '#4a5568', fontSize: '0.88rem', margin: 0 }}>
-                  All sales of the full unlocked report are final. Review your free preview before unlocking — no surprises.
+                  All sales of the unlocked report are final. Review your full preview first — that's why we don't charge until you approve.
                 </p>
               </div>
 
@@ -767,7 +781,7 @@ export default function Interactive() {
             </p>
 
             <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-              Answer 2 quick questions and we'll build you a custom AI report — completely free preview, no credit card required. Up to 25 pages, all about your business.
+              Answer 2 quick questions and we'll build you a custom AI report. We build it. You preview it. You only pay if you approve.
             </p>
 
             <button
