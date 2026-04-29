@@ -353,9 +353,16 @@ export default function Interactive() {
                 <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: '0 0 0.5rem' }}>
                   Pick your blueprint depth
                 </h2>
-                <p style={{ color: '#6b7a99', fontSize: '0.85rem', lineHeight: 1.5, margin: 0 }}>
-                  You only pay if you love it. Read the full preview first — unlock the tool names only when you're ready.
-                </p>
+                {!isEnterprise && (
+                  <p style={{ color: '#6b7a99', fontSize: '0.85rem', lineHeight: 1.5, margin: 0 }}>
+                    Your preview is 100% free. Optional unlock available later if you want the specific tool names.
+                  </p>
+                )}
+                {isEnterprise && (
+                  <p style={{ color: '#6b7a99', fontSize: '0.85rem', lineHeight: 1.5, margin: 0 }}>
+                    You only pay if you love it. Read the full preview first.
+                  </p>
+                )}
               </div>
 
               {/* Tier cards */}
@@ -380,9 +387,11 @@ export default function Interactive() {
                   )}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
                     <p style={{ color: NAVY, fontWeight: 'bold', fontSize: '1rem', margin: 0 }}>{name}</p>
-                    <div style={{ textAlign: 'right' }}>
-                      <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.25rem', margin: 0 }}>{price}</p>
-                    </div>
+                    {key === 'enterprise' && (
+                      <div style={{ textAlign: 'right' }}>
+                        <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.25rem', margin: 0 }}>{price}</p>
+                      </div>
+                    )}
                   </div>
                   <ul style={{ margin: '0 0 0.85rem', paddingLeft: '1.1rem' }}>
                     {TIER_DETAILS[key].map((item, i) => (
@@ -408,11 +417,6 @@ export default function Interactive() {
                       ? (key === 'enterprise' ? 'Redirecting...' : 'Taking you there...')
                       : key === 'enterprise' ? `Get ${name} — ${price}` : `Build My Free Blueprint →`}
                   </button>
-                  {key !== 'enterprise' && (
-                    <p style={{ textAlign: 'center', color: '#6b7a99', fontSize: '0.78rem', margin: '0.45rem 0 0' }}>
-                      Free preview now. Pay <strong style={{ color: NAVY }}>{price}</strong> only if you want the tool names unlocked.
-                    </p>
-                  )}
                 </div>
               ))}
 
