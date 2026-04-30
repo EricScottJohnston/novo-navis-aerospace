@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 const NAVY  = '#1B2A4A'
 const GOLD  = '#c8a96e'
 const LIGHT = '#f4f6fb'
-const SERIF = '"Playfair Display", Georgia, serif'
+const SERIF = 'Georgia, serif'
 
 const TIER_DETAILS = {
   starter: [
@@ -250,9 +250,6 @@ export default function Interactive() {
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
         <meta property="og:description" content="95% of businesses pick the wrong AI tools. We make sure you're not one of them." />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
         <style>{`
           html, body { background: #f4f7fc !important; }
           @keyframes fadeSlideIn {
@@ -426,7 +423,7 @@ export default function Interactive() {
                 </p>
               </div>
 
-              {/* APPROVAL BANNER — new copy */}
+              {/* APPROVAL BANNER */}
               <div style={{
                 background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)',
                 border: `2px solid ${GOLD}`,
@@ -522,8 +519,6 @@ export default function Interactive() {
                   )}
                 </div>
               ))}
-
-              {/* Industry strip REMOVED */}
 
               {/* Call us */}
               <div style={{
@@ -642,7 +637,7 @@ export default function Interactive() {
         <p>© {new Date().getFullYear()} Novo Navis, LLC · Registered U.S. Defense Contractor · Fidelis Diligentia</p>
       </footer>
 
-      {/* Industry picker modal — opens when blueprint mockup is tapped */}
+      {/* Industry picker modal */}
       {industryPickerOpen && (
         <div
           onClick={() => setIndustryPickerOpen(false)}
@@ -823,7 +818,7 @@ export default function Interactive() {
         </div>
       )}
 
-      {/* Sample report modal (shown after picking industry) */}
+      {/* Sample report modal */}
       {sampleOpen && (
         <div
           onClick={() => setSampleOpen(false)}
