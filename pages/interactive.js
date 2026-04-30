@@ -261,8 +261,10 @@ export default function Interactive() {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 <link
   rel="preload"
-  as="style"
-  href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap"
+  as="font"
+  type="font/woff2"
+  href="https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvXDXbtY.woff2"
+  crossOrigin="anonymous"
 />
 <link
   rel="stylesheet"
