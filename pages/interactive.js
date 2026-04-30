@@ -943,9 +943,7 @@ export default function Interactive() {
               Novo Navis is a registered U.S. Defense Contractor that builds custom AI Blueprints for small businesses — the same rigor we apply to defense-grade AI, applied to your workflows and budget.
             </p>
 
-            <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-              Answer 3 quick questions and we'll build you a custom AI report. We build it. You preview it. You only pay if you approve.
-            </p>
+            
 
             <button
               onClick={() => setSiteOpen(false)}
