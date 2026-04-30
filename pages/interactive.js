@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 const NAVY  = '#1B2A4A'
 const GOLD  = '#c8a96e'
 const LIGHT = '#f4f6fb'
-const SERIF = '"Playfair Display", Georgia, serif'
+const SERIF = '"Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif'
 
 const TIER_DETAILS = {
   starter: [
@@ -258,18 +258,8 @@ export default function Interactive() {
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
         <meta property="og:description" content="Find the AI tools that actually fit your business — in about 12 minutes. Pay only if you approve." />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-<link
-  rel="preload"
-  as="font"
-  type="font/woff2"
-  href="https://fonts.gstatic.com/s/playfairdisplay/v40/nuFiD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvXDXbtY.woff2"
-  crossOrigin="anonymous"
-/>
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap"
-/>
+        
+
         <style>{`
           html, body { background: #f4f7fc !important; }
           @keyframes fadeSlideIn {
