@@ -50,7 +50,7 @@ const ROUND_1 = {
   options: [
     'I know I need AI but have no idea where to start',
     'I\'ve tried some AI tools but they\'re not quite right for my business',
-    'I want to get more out of the AI tools I already use',
+    'I don'tknow where to start with AI,
   ],
 }
 
