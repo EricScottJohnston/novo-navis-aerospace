@@ -1,3 +1,7 @@
+// pages/intake.js — Drop-in replacement.
+// Same payload to David, same endpoints (/api/intake, /api/verify-email, /api/session).
+// Only the UI is changed to reduce friction.
+
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
@@ -13,12 +17,57 @@ const STEPS = [
   { num: 4, label: 'Wrap Up'       },
 ]
 
+const INDUSTRIES = [
+  'HVAC / Plumbing / Electrical',
+  'Landscaping / Field Services',
+  'Legal Services',
+  'Accounting / Finance',
+  'Dental / Chiropractic / Healthcare',
+  'Real Estate',
+  'Property Management',
+  'Retail / E-commerce',
+  'Restaurant / Hospitality',
+  'Consulting',
+  'Construction',
+  'Other',
+]
+
+const EMPLOYEE_OPTIONS = ['Just me', '2-5', '6-15', '16-50', '50+']
+
+const BUDGET_OPTIONS = [
+  'Under $50/month',
+  '$50–$200/month',
+  '$200–$500/month',
+  '$500+/month',
+  'Not sure yet',
+]
+
+const COMMON_TOOLS = [
+  'QuickBooks', 'Google Workspace', 'Microsoft 365', 'Slack',
+  'Excel / Sheets', 'Gmail', 'Outlook', 'Square',
+  'Stripe', 'Shopify', 'Mailchimp', 'HubSpot', 'Salesforce',
+  'Jobber', 'ServiceTitan', 'Calendly', 'Zoom', 'WhatsApp',
+]
+
+const COMMON_TASKS = [
+  'Following up with leads',
+  'Creating invoices / quotes',
+  'Scheduling / dispatching',
+  'Customer intake / onboarding',
+  'Email management',
+  'Bookkeeping / categorizing',
+  'Social posting / marketing',
+  'Reporting / dashboards',
+]
+
+const DRAFT_KEY = 'novonavis_intake_draft_v1'
+
 export default function Intake() {
   const router = useRouter()
   const { session_id, tier } = router.query
   const isFree = !!tier && !session_id
 
-  // $99 starter: 1 automation field. $299 blueprint: 5 automation fields.
+  // $99 starter: 1 task. $299 blueprint: up to 5 tasks.
   const taskCount = tier === 'starter' ? 1 : 5
 
   const [sessionData,    setSessionData]   = useState(null)
@@ -28,16 +77,26 @@ export default function Intake() {
   const [listeningField, setListeningField] = useState(null)
   const [currentStep,    setCurrentStep]   = useState(1)
   const [stepError,      setStepError]     = useState('')
+  const [submitNotice,   setSubmitNotice]  = useState('')
   const recognitionRef = useRef(null)
-  const topRef = useRef(null)
+  const baseTextRef    = useRef('') // for interim results: text before this dictation started
+  const topRef         = useRef(null)
+  const businessRef    = useRef(null)
+  const draftHydrated  = useRef(false)
 
-  // Email verification state (free flow only)
-  const [verifyEmail,   setVerifyEmail]   = useState('')
+  // Email verification state — now lives inside Step 4 for free flow.
   const [codeSent,      setCodeSent]      = useState(false)
   const [codeInput,     setCodeInput]     = useState('')
   const [emailVerified, setEmailVerified] = useState(false)
   const [verifyLoading, setVerifyLoading] = useState(false)
   const [verifyError,   setVerifyError]   = useState('')
+
+  // Tools chip state — compiled into formData.currentTools (a single string)
+  const [selectedTools, setSelectedTools] = useState([])
+  const [customTools,   setCustomTools]   = useState('')
+
+  // Step 3: how many task fields are visible (progressive disclosure for $299)
+  const [visibleTasks,  setVisibleTasks]  = useState(taskCount === 1 ? 1 : 2)
 
   const [formData, setFormData] = useState({
     name: '',
@@ -57,6 +116,42 @@ export default function Intake() {
     goal: '',
   })
 
+  // ── Hydrate draft from localStorage ───────────────────────────────────────
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    try {
+      const raw = window.localStorage.getItem(DRAFT_KEY)
+      if (raw) {
+        const d = JSON.parse(raw)
+        if (d.formData)        setFormData(prev => ({ ...prev, ...d.formData }))
+        if (d.currentStep)     setCurrentStep(d.currentStep)
+        if (d.agreedTerms)     setAgreedTerms(d.agreedTerms)
+        if (d.selectedTools)   setSelectedTools(d.selectedTools)
+        if (d.customTools)     setCustomTools(d.customTools)
+        if (d.visibleTasks)    setVisibleTasks(d.visibleTasks)
+        if (d.emailVerified)   setEmailVerified(d.emailVerified)
+      }
+    } catch {}
+    draftHydrated.current = true
+  }, [])
+
+  // ── Persist draft to localStorage ─────────────────────────────────────────
+  useEffect(() => {
+    if (typeof window === 'undefined' || !draftHydrated.current) return
+    try {
+      window.localStorage.setItem(DRAFT_KEY, JSON.stringify({
+        formData, currentStep, agreedTerms, selectedTools, customTools, visibleTasks, emailVerified,
+      }))
+    } catch {}
+  }, [formData, currentStep, agreedTerms, selectedTools, customTools, visibleTasks, emailVerified])
+
+  // ── Compile selected tools + custom into formData.currentTools ────────────
+  useEffect(() => {
+    const compiled = [...selectedTools, customTools.trim()].filter(Boolean).join(', ')
+    setFormData(prev => prev.currentTools === compiled ? prev : { ...prev, currentTools: compiled })
+  }, [selectedTools, customTools])
+
+  // ── Bootstrap (route validation + paid session lookup) ────────────────────
   useEffect(() => {
     if (!router.isReady) return
     if (!session_id && !tier) { router.replace('/'); return }
@@ -78,20 +173,36 @@ export default function Intake() {
     setStepError('')
   }
 
-  // ── Voice input ───────────────────────────────────────────────────────────
+  const setField = (name, value) => {
+    setFormData(prev => ({ ...prev, [name]: value }))
+    setStepError('')
+  }
+
+  // ── Voice input with live (interim) transcription ────────────────────────
   const startVoice = (fieldName) => {
     if (typeof window === 'undefined') return
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition
     if (!SR) { alert('Voice input is not supported in this browser. Please use Chrome.'); return }
     if (listeningField === fieldName) { recognitionRef.current?.stop(); setListeningField(null); return }
     recognitionRef.current?.stop()
+
+    baseTextRef.current = formData[fieldName] ? formData[fieldName] + ' ' : ''
     const rec = new SR()
-    rec.continuous = false; rec.interimResults = false; rec.lang = 'en-US'
+    rec.continuous     = true
+    rec.interimResults = true
+    rec.lang           = 'en-US'
+
     rec.onresult = (e) => {
-      const t = e.results[0][0].transcript
-      setFormData(prev => ({ ...prev, [fieldName]: prev[fieldName] ? prev[fieldName] + ' ' + t : t }))
+      let finalText = ''
+      let interim   = ''
+      for (let i = 0; i < e.results.length; i++) {
+        const t = e.results[i][0].transcript
+        if (e.results[i].isFinal) finalText += t + ' '
+        else                      interim   += t
+      }
+      setFormData(prev => ({ ...prev, [fieldName]: (baseTextRef.current + finalText + interim).trimStart() }))
     }
-    rec.onend = () => setListeningField(null)
+    rec.onend   = () => setListeningField(null)
     rec.onerror = () => setListeningField(null)
     recognitionRef.current = rec
     rec.start()
@@ -104,11 +215,11 @@ export default function Intake() {
       <button type="button" onClick={() => startVoice(fieldName)}
         title={active ? 'Stop listening' : 'Tap to speak'}
         style={{
-          flexShrink: 0, width: '36px', height: '36px', borderRadius: '50%',
+          flexShrink: 0, width: '40px', height: '40px', borderRadius: '50%',
           border: active ? '2px solid #e53935' : '2px solid #d0d4de',
           background: active ? '#fff0f0' : '#f8f9fc',
           cursor: 'pointer', display: 'flex', alignItems: 'center',
-          justifyContent: 'center', fontSize: '1rem', padding: 0,
+          justifyContent: 'center', fontSize: '1.05rem', padding: 0,
           animation: active ? 'micPulse 1s ease-in-out infinite' : 'none',
           transition: 'border-color 0.2s',
         }}>
@@ -117,16 +228,20 @@ export default function Intake() {
     )
   }
 
-  // ── Email verification ────────────────────────────────────────────────────
+  // ── Email verification (Step 4) ───────────────────────────────────────────
   const handleSendCode = async () => {
-    if (!verifyEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(verifyEmail)) {
+    const email = formData.email.trim()
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setVerifyError('Please enter a valid email address.'); return
     }
     setVerifyLoading(true); setVerifyError('')
     try {
-      const res  = await fetch('/api/verify-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'send', email: verifyEmail }) })
+      const res  = await fetch('/api/verify-email', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'send', email }),
+      })
       const data = await res.json()
-      if (data.success) { setCodeSent(true); setFormData(prev => ({ ...prev, email: verifyEmail })) }
+      if (data.success) setCodeSent(true)
       else setVerifyError(data.error || 'Failed to send code. Please try again.')
     } catch { setVerifyError('Something went wrong. Please try again.') }
     setVerifyLoading(false)
@@ -136,7 +251,10 @@ export default function Intake() {
     if (!codeInput.trim()) { setVerifyError('Please enter the code.'); return }
     setVerifyLoading(true); setVerifyError('')
     try {
-      const res  = await fetch('/api/verify-email', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'verify', email: verifyEmail, code: codeInput.trim() }) })
+      const res  = await fetch('/api/verify-email', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'verify', email: formData.email.trim(), code: codeInput.trim() }),
+      })
       const data = await res.json()
       if (data.success) setEmailVerified(true)
       else setVerifyError(data.error || 'Incorrect code. Please try again.')
@@ -150,6 +268,7 @@ export default function Intake() {
       if (!formData.business.trim()) return 'Please enter your business name.'
       if (!formData.industry)        return 'Please select your industry.'
       if (formData.industry === 'Other' && !formData.otherIndustry.trim()) return 'Please describe your industry.'
+      if (!formData.employees)       return 'Please pick the number of employees.'
     }
     if (step === 2) {
       if (!formData.businessDescription.trim()) return 'Please tell us about your business.'
@@ -159,9 +278,10 @@ export default function Intake() {
       if (!formData.process1.trim()) return 'Please describe at least one task to automate.'
     }
     if (step === 4) {
-      if (!formData.name.trim()) return 'Please enter your full name.'
-      if (!formData.budget)      return 'Please select a monthly budget.'
-      if (!agreedTerms)          return 'Please agree to the Terms and Conditions.'
+      if (!formData.name.trim())                 return 'Please enter your full name.'
+      if (!formData.budget)                      return 'Please pick a monthly budget.'
+      if (isFree && !emailVerified)              return 'Please verify your email so we can deliver your preview.'
+      if (!agreedTerms)                          return 'Please agree to the Terms and Conditions.'
     }
     return null
   }
@@ -173,10 +293,7 @@ export default function Intake() {
     setCurrentStep(s => s + 1)
   }
 
-  const handleBack = () => {
-    setStepError('')
-    setCurrentStep(s => s - 1)
-  }
+  const handleBack = () => { setStepError(''); setCurrentStep(s => s - 1) }
 
   // ── Submit ────────────────────────────────────────────────────────────────
   const handleSubmit = async (e) => {
@@ -184,6 +301,7 @@ export default function Intake() {
     const err = validateStep(4)
     if (err) { setStepError(err); return }
     setSubmitting(true)
+    setSubmitNotice('')
 
     const industryValue = formData.industry === 'Other' && formData.otherIndustry
       ? `Other: ${formData.otherIndustry}`
@@ -194,42 +312,45 @@ export default function Intake() {
         ? { tier, ...formData, industry: industryValue }
         : { sessionId: session_id, ...formData, industry: industryValue }
 
-      const res  = await fetch('/api/intake', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      const res  = await fetch('/api/intake', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
       const data = await res.json()
 
       if (data.error === 'rate_limited') {
-        alert('You already submitted a report request in the last 24 hours. Check your inbox for your preview, or call (623) 428-9308 if you need help.')
+        setSubmitNotice('You already submitted a report request in the last 24 hours. Check your inbox for your preview, or call (623) 428-9308 if you need help.')
         setSubmitting(false); return
       }
       if (data.success) {
+        try { window.localStorage.removeItem(DRAFT_KEY) } catch {}
         if (!isFree && typeof window !== 'undefined' && window.gtag) window.gtag('event', 'conversion_event_purchase_1')
         if (typeof window !== 'undefined') { window.uetq = window.uetq || []; window.uetq.push('event', 'submit_lead_form', {}) }
         router.push('/track/' + data.orderId)
       } else {
-        alert('Something went wrong submitting your intake. Please email support@novonavis.com.')
+        setSubmitNotice('Something went wrong submitting your intake. Please email support@novonavis.com.')
         setSubmitting(false)
       }
     } catch {
-      alert('Something went wrong. Please email support@novonavis.com.')
+      setSubmitNotice('Something went wrong. Please email support@novonavis.com.')
       setSubmitting(false)
     }
   }
 
   const tierLabel = tier === 'starter' ? 'Single Workflow Blueprint' : 'AI Blueprint'
 
-  const taskFields = [
-    { key: 'process1', num: 1, required: true },
-    { key: 'process2', num: 2, required: taskCount >= 2 },
-    { key: 'process3', num: 3, required: false },
-    { key: 'process4', num: 4, required: false },
-    { key: 'process5', num: 5, required: false },
-  ].slice(0, taskCount)
+  // Visible task fields (progressive disclosure for $299/$999)
+  const taskFields = Array.from({ length: visibleTasks }, (_, i) => ({
+    key: `process${i + 1}`,
+    num: i + 1,
+    required: i === 0, // only the first is strictly required
+  }))
 
-  const optional = (n) => n > 2
+  const canAddMoreTasks = taskCount > 1 && visibleTasks < taskCount
 
   // ── Step indicator ────────────────────────────────────────────────────────
   const StepIndicator = () => (
-    <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '2rem' }}>
+    <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '1.75rem' }}>
       {STEPS.map((step, i) => {
         const done   = currentStep > step.num
         const active = currentStep === step.num
@@ -268,6 +389,130 @@ export default function Intake() {
     </div>
   )
 
+  // ── Reusable: button-row for choose-one fields (replaces dropdown) ────────
+  const ButtonRow = ({ name, value, options, onChange }) => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+      {options.map(opt => {
+        const selected = value === opt
+        return (
+          <button key={opt} type="button" onClick={() => onChange(opt)}
+            style={{
+              flex: '1 1 auto', minWidth: '90px',
+              padding: '0.75rem 0.85rem',
+              background: selected ? NAVY : '#fff',
+              color:      selected ? '#fff' : NAVY,
+              border:     selected ? `2px solid ${NAVY}` : '2px solid #d8dee9',
+              borderRadius: '8px', fontSize: '0.92rem',
+              fontWeight: selected ? '700' : '600',
+              cursor: 'pointer', transition: 'all 0.15s',
+            }}>
+            {opt}
+          </button>
+        )
+      })}
+    </div>
+  )
+
+  // ── Industry tap-to-select grid ───────────────────────────────────────────
+  const IndustryGrid = () => (
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
+      {INDUSTRIES.map(ind => {
+        const selected = formData.industry === ind
+        return (
+          <button key={ind} type="button"
+            onClick={() => setField('industry', ind)}
+            style={{
+              padding: '0.7rem 0.75rem',
+              background: selected ? '#fffbf4' : '#fff',
+              color: NAVY,
+              border: selected ? `2px solid ${GOLD}` : '2px solid #e0e4ef',
+              borderRadius: '8px',
+              fontSize: '0.83rem', fontWeight: selected ? '700' : '500',
+              textAlign: 'center', cursor: 'pointer',
+              minHeight: '52px', display: 'flex',
+              alignItems: 'center', justifyContent: 'center',
+              lineHeight: 1.25, transition: 'all 0.15s',
+              boxShadow: selected ? '0 2px 8px rgba(200,169,110,0.25)' : 'none',
+            }}>
+            {ind}
+          </button>
+        )
+      })}
+    </div>
+  )
+
+  // ── Tools chip selector ───────────────────────────────────────────────────
+  const toggleTool = (tool) => {
+    setSelectedTools(prev => prev.includes(tool) ? prev.filter(t => t !== tool) : [...prev, tool])
+  }
+
+  const ToolsChips = () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+      {COMMON_TOOLS.map(tool => {
+        const selected = selectedTools.includes(tool)
+        return (
+          <button key={tool} type="button" onClick={() => toggleTool(tool)}
+            style={{
+              padding: '0.5rem 0.85rem',
+              background: selected ? NAVY : '#fff',
+              color:      selected ? '#fff' : NAVY,
+              border:     selected ? `1px solid ${NAVY}` : '1px solid #d8dee9',
+              borderRadius: '20px', fontSize: '0.85rem',
+              fontWeight: selected ? '700' : '500',
+              cursor: 'pointer', transition: 'all 0.15s',
+            }}>
+            {selected ? '✓ ' : ''}{tool}
+          </button>
+        )
+      })}
+    </div>
+  )
+
+  // ── Task starter chips (Step 3) ───────────────────────────────────────────
+  const useTaskStarter = (label) => {
+    // Find the first empty task field, fill it with the starter prefix.
+    for (let i = 1; i <= taskCount; i++) {
+      const key = `process${i}`
+      if (!formData[key]?.trim()) {
+        setField(key, `${label} — currently we `)
+        if (i > visibleTasks) setVisibleTasks(i)
+        // Focus the textarea after a tick
+        setTimeout(() => {
+          const el = document.querySelector(`textarea[name="${key}"]`)
+          if (el) {
+            el.focus()
+            el.setSelectionRange(el.value.length, el.value.length)
+          }
+        }, 30)
+        return
+      }
+    }
+  }
+
+  const TaskStarters = () => (
+    <div style={{ marginBottom: '1.25rem' }}>
+      <p style={{ color: '#6b7a99', fontSize: '0.82rem', marginBottom: '0.5rem' }}>
+        Need a starting point? Tap a common task — then add YOUR specifics in the field (how you currently do it, how often, who's involved).
+      </p>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+        {COMMON_TASKS.map(t => (
+          <button key={t} type="button" onClick={() => useTaskStarter(t)}
+            style={{
+              padding: '0.45rem 0.85rem',
+              background: '#fff', color: NAVY,
+              border: `1px dashed ${GOLD}`, borderRadius: '20px',
+              fontSize: '0.82rem', fontWeight: '500', cursor: 'pointer',
+              transition: 'all 0.15s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = '#fffbf4' }}
+            onMouseLeave={e => { e.currentTarget.style.background = '#fff' }}>
+            + {t}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+
   // ── Nav buttons ───────────────────────────────────────────────────────────
   const NavButtons = ({ isSubmit = false }) => (
     <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.75rem' }}>
@@ -285,8 +530,10 @@ export default function Intake() {
       {isSubmit ? (
         <button type="submit" className="btn-primary"
           style={{ flex: 1, fontSize: '1.05rem', padding: '0.9rem' }}
-          disabled={submitting || !agreedTerms}>
-          {submitting ? 'Submitting...' : 'Submit — Build My Blueprint →'}
+          disabled={submitting || !agreedTerms || (isFree && !emailVerified)}>
+          {submitting
+            ? 'Submitting...'
+            : isFree ? 'Submit — Get My Free Preview →' : 'Submit — Build My Blueprint →'}
         </button>
       ) : (
         <button type="button" onClick={handleNext}
@@ -302,7 +549,8 @@ export default function Intake() {
     </div>
   )
 
-  const showForm = (isFree || sessionData) && (!isFree || emailVerified)
+  // Free flow: form is shown immediately. Paid flow: wait for session lookup.
+  const showForm = isFree || sessionData
 
   return (
     <>
@@ -333,7 +581,6 @@ export default function Intake() {
           .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
             border-color: ${GOLD} !important; outline: none;
           }
-          .form-group select option { color: #1a1a2e; background: #ffffff; }
           .divider { border-color: #e0e4ef !important; }
           footer { color: #6b7a99 !important; }
           footer a { color: ${GOLD} !important; }
@@ -362,8 +609,8 @@ export default function Intake() {
           </div>
         ) : (
           <>
-            {/* ── Header ── */}
-            <div style={{ marginBottom: '1.75rem' }}>
+            {/* Header */}
+            <div style={{ marginBottom: '1.5rem' }}>
               <p style={{ color: GOLD, fontSize: '0.72rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
                 {isFree ? tierLabel : 'AI Blueprint'}
               </p>
@@ -374,11 +621,11 @@ export default function Intake() {
               </h1>
               <p className="lead" style={{ marginBottom: '0.4rem' }}>
                 {isFree
-                  ? 'Tell us about your business so we can build your custom AI Blueprint.'
+                  ? 'A few quick questions and we\'ll start building.'
                   : `Tell us about ${sessionData?.business || 'your business'} so we can build your AI Blueprint.`}
               </p>
               <p style={{ color: '#6b7a99', fontSize: '0.88rem', fontStyle: 'italic', marginBottom: 0 }}>
-                This takes about 3 minutes. The more specific you are, the more accurate your blueprint.
+                About 3 minutes. The more specific you are, the more accurate your blueprint. Tap 🎤 to speak instead of type — it's faster.
               </p>
             </div>
 
@@ -386,54 +633,6 @@ export default function Intake() {
               <p style={{ textAlign: 'center', color: '#8a95aa', marginBottom: '2rem' }}>Verifying your payment...</p>
             )}
 
-            {/* ── Email verification gate (free flow only) ── */}
-            {isFree && !emailVerified && (
-              <div style={{ marginBottom: '2rem' }}>
-                <p style={{ color: NAVY, fontWeight: '600', marginBottom: '0.5rem' }}>
-                  Your blueprint will be sent to this email — let's make sure we have it right.
-                </p>
-                <p style={{ color: '#6b7a99', fontSize: '0.88rem', marginBottom: '0.5rem' }}>
-                  We'll send a quick 6-digit code so we know your inbox is real.
-                </p>
-                <p style={{ color: '#4a5568', fontSize: '0.85rem', fontStyle: 'italic', marginBottom: '1.25rem' }}>
-                  We will never sell or share your information.
-                </p>
-
-                {!codeSent ? (
-                  <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-                    <input type="email" value={verifyEmail} onChange={e => setVerifyEmail(e.target.value)}
-                      placeholder="you@yourbusiness.com"
-                      style={{ flex: 1, minWidth: '200px', background: '#ffffff', color: '#1a1a2e', border: '1px solid #d0d4de', borderRadius: '6px', padding: '0.65rem 0.85rem', fontSize: '1rem' }} />
-                    <button type="button" onClick={handleSendCode} disabled={verifyLoading}
-                      style={{ background: NAVY, color: '#fff', border: 'none', borderRadius: '6px', padding: '0.65rem 1.25rem', fontWeight: 'bold', fontSize: '0.95rem', cursor: verifyLoading ? 'not-allowed' : 'pointer', opacity: verifyLoading ? 0.6 : 1 }}>
-                      {verifyLoading ? 'Sending...' : 'Send Code'}
-                    </button>
-                  </div>
-                ) : (
-                  <div>
-                    <p style={{ color: '#4a5568', fontSize: '0.88rem', marginBottom: '0.75rem' }}>
-                      Code sent to <strong>{verifyEmail}</strong>. Check your inbox.
-                    </p>
-                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-                      <input type="text" value={codeInput} onChange={e => setCodeInput(e.target.value)}
-                        placeholder="6-digit code" maxLength={6}
-                        style={{ width: '140px', background: '#ffffff', color: '#1a1a2e', border: '1px solid #d0d4de', borderRadius: '6px', padding: '0.65rem 0.85rem', fontSize: '1.1rem', letterSpacing: '0.2em', textAlign: 'center' }} />
-                      <button type="button" onClick={handleVerifyCode} disabled={verifyLoading}
-                        style={{ background: GOLD, color: '#111', border: 'none', borderRadius: '6px', padding: '0.65rem 1.25rem', fontWeight: 'bold', fontSize: '0.95rem', cursor: verifyLoading ? 'not-allowed' : 'pointer', opacity: verifyLoading ? 0.6 : 1 }}>
-                        {verifyLoading ? 'Verifying...' : 'Verify'}
-                      </button>
-                      <button type="button" onClick={() => { setCodeSent(false); setCodeInput(''); setVerifyError('') }}
-                        style={{ background: 'none', border: 'none', color: '#8a95aa', fontSize: '0.85rem', cursor: 'pointer', textDecoration: 'underline' }}>
-                        Use a different email
-                      </button>
-                    </div>
-                  </div>
-                )}
-                {verifyError && <p style={{ color: '#c0392b', fontSize: '0.88rem', marginTop: '0.6rem' }}>{verifyError}</p>}
-              </div>
-            )}
-
-            {/* ── Multi-step form ── */}
             {showForm && (
               <form onSubmit={handleSubmit}>
 
@@ -441,40 +640,23 @@ export default function Intake() {
 
                 {/* ────────────────────────────────────────────────────────
                     STEP 1 — Business basics
-                    Fields: business name, industry, employees
                 ──────────────────────────────────────────────────────── */}
                 {currentStep === 1 && (
                   <div className="step-panel">
-                    <p style={{ color: '#4a5568', fontSize: '0.92rem', marginBottom: '1.5rem' }}>
-                      Let's start with the basics — just three quick fields.
-                    </p>
-
                     <div className="form-group">
                       <label>Business Name *</label>
                       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                        <input type="text" name="business" value={formData.business} onChange={handleChange}
-                          placeholder="Smith Plumbing LLC" style={{ flex: 1 }} />
+                        <input ref={businessRef} type="text" name="business"
+                          value={formData.business} onChange={handleChange}
+                          placeholder="Smith Plumbing LLC"
+                          autoComplete="organization" style={{ flex: 1 }} />
                         <MicButton fieldName="business" />
                       </div>
                     </div>
 
                     <div className="form-group">
                       <label>Industry *</label>
-                      <select name="industry" value={formData.industry} onChange={handleChange}>
-                        <option value="">Select your industry</option>
-                        <option value="HVAC / Plumbing / Electrical">HVAC / Plumbing / Electrical</option>
-                        <option value="Landscaping / Field Services">Landscaping / Field Services</option>
-                        <option value="Legal Services">Legal Services</option>
-                        <option value="Accounting / Finance">Accounting / Finance</option>
-                        <option value="Dental / Chiropractic / Healthcare">Dental / Chiropractic / Healthcare</option>
-                        <option value="Real Estate">Real Estate</option>
-                        <option value="Property Management">Property Management</option>
-                        <option value="Retail / E-commerce">Retail / E-commerce</option>
-                        <option value="Restaurant / Hospitality">Restaurant / Hospitality</option>
-                        <option value="Consulting">Consulting</option>
-                        <option value="Construction">Construction</option>
-                        <option value="Other">Other</option>
-                      </select>
+                      <IndustryGrid />
                     </div>
 
                     {formData.industry === 'Other' && (
@@ -482,22 +664,17 @@ export default function Intake() {
                         <label>Describe your industry *</label>
                         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                           <input type="text" name="otherIndustry" value={formData.otherIndustry} onChange={handleChange}
-                            placeholder="e.g. Mold remediation, pet grooming, photography..." style={{ flex: 1 }} />
+                            placeholder="Mold remediation, pet grooming, photography..." style={{ flex: 1 }} />
                           <MicButton fieldName="otherIndustry" />
                         </div>
                       </div>
                     )}
 
                     <div className="form-group">
-                      <label>Number of Employees</label>
-                      <select name="employees" value={formData.employees} onChange={handleChange}>
-                        <option value="">Select range</option>
-                        <option value="Just me">Just me</option>
-                        <option value="2-5">2 to 5</option>
-                        <option value="6-15">6 to 15</option>
-                        <option value="16-50">16 to 50</option>
-                        <option value="50+">50 or more</option>
-                      </select>
+                      <label>Number of Employees *</label>
+                      <ButtonRow name="employees" value={formData.employees}
+                        options={EMPLOYEE_OPTIONS}
+                        onChange={(v) => setField('employees', v)} />
                     </div>
 
                     {stepError && <p style={{ color: '#c0392b', fontSize: '0.88rem', marginTop: '0.5rem' }}>{stepError}</p>}
@@ -507,32 +684,34 @@ export default function Intake() {
 
                 {/* ────────────────────────────────────────────────────────
                     STEP 2 — About the business
-                    Fields: businessDescription, currentTools
                 ──────────────────────────────────────────────────────── */}
                 {currentStep === 2 && (
                   <div className="step-panel">
-                    <p style={{ color: '#4a5568', fontSize: '0.92rem', marginBottom: '1.5rem' }}>
-                      Tell us what your business does. Voice input works great here — just tap the mic and talk.
-                    </p>
-
                     <div className="form-group">
                       <label>Tell us about your business — what it does, who it serves, and anything you think we should know *</label>
+                      <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.5rem' }}>
+                        The more specific you are here, the more tailored your blueprint will be. Tap 🎤 and just talk — it's the fastest way to give detail.
+                      </p>
                       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
                         <textarea name="businessDescription" value={formData.businessDescription} onChange={handleChange}
-                          placeholder="Example: We are a family owned plumbing company serving the Phoenix metro area. We have 3 trucks and handle both residential and commercial work. We do about 15 jobs per week and our busiest season is summer."
-                          style={{ flex: 1 }} />
+                          placeholder="Example: We're a family-owned plumbing company serving the Phoenix metro area. We have 3 trucks and handle both residential and light commercial work. About 15 jobs per week, busiest in summer. Office manager handles dispatch and invoicing, two field crews. Most of our leads come from Google and word of mouth."
+                          rows={6} style={{ flex: 1 }} />
                         <MicButton fieldName="businessDescription" />
                       </div>
                     </div>
 
                     <div className="form-group">
-                      <label>What software tools do you currently use in your business?</label>
-                      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
-                        <textarea name="currentTools" value={formData.currentTools} onChange={handleChange}
-                          placeholder="Example: QuickBooks, Google Workspace, Jobber, Microsoft 365, Slack, etc. List anything you use regularly — even basic tools like Excel or Gmail."
-                          style={{ flex: 1 }} />
-                        <MicButton fieldName="currentTools" />
-                      </div>
+                      <label>Tools you currently use</label>
+                      <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.6rem' }}>
+                        Tap any that apply. Add anything else below.
+                      </p>
+                      <ToolsChips />
+                      <textarea
+                        value={customTools}
+                        onChange={e => setCustomTools(e.target.value)}
+                        placeholder="Anything else, or details about HOW you use these? (e.g. 'ServiceFusion for dispatch, QuickBooks Desktop only, custom Excel sheet for job tracking, Gmail but no shared inbox')"
+                        rows={3}
+                        style={{ marginTop: '0.6rem', width: '100%' }} />
                     </div>
 
                     {listeningField && (
@@ -540,9 +719,6 @@ export default function Intake() {
                         🔴 Listening... speak now. Tap the mic again to stop.
                       </p>
                     )}
-                    <p style={{ color: '#6b7a99', fontSize: '0.82rem', marginBottom: '0.25rem' }}>
-                      🎤 Tap the microphone next to any field to speak your answer.
-                    </p>
 
                     {stepError && <p style={{ color: '#c0392b', fontSize: '0.88rem', marginTop: '0.5rem' }}>{stepError}</p>}
                     <NavButtons />
@@ -551,107 +727,176 @@ export default function Intake() {
 
                 {/* ────────────────────────────────────────────────────────
                     STEP 3 — What to fix
-                    Fields: goal (biggest problem), automation tasks
                 ──────────────────────────────────────────────────────── */}
                 {currentStep === 3 && (
                   <div className="step-panel">
-                    <p style={{ color: '#4a5568', fontSize: '0.92rem', marginBottom: '1.5rem' }}>
-                      This is the most important step — what's broken, and what do you want automated?
-                    </p>
-
                     <div className="form-group">
-                      <label>What is the single biggest operational problem in your business right now? *</label>
+                      <label>What's the single biggest operational problem in your business right now? *</label>
+                      <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.5rem' }}>
+                        Be specific — this is what your blueprint will solve. Numbers, frequency, who's affected — all of it helps.
+                      </p>
                       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
                         <textarea name="goal" value={formData.goal} onChange={handleChange}
-                          placeholder="Example: We're losing jobs because we're too slow to respond to new inquiries. By the time we follow up, they've already hired someone else."
-                          style={{ flex: 1 }} />
+                          placeholder="Example: We're losing jobs because we're too slow to respond to new inquiries. Leads come in via web form and email, but by the time someone checks them and follows up, prospects have already hired someone else. Probably losing 5–10 jobs a month this way."
+                          rows={5} style={{ flex: 1 }} />
                         <MicButton fieldName="goal" />
                       </div>
                     </div>
 
                     <hr className="divider" style={{ margin: '1.5rem 0' }} />
-                    <p style={{ color: '#4a5568', fontSize: '0.92rem', marginBottom: '1.25rem' }}>
-                      Now, what do you want to automate?
+
+                    <p style={{ color: NAVY, fontSize: '0.95rem', fontWeight: '600', marginBottom: '0.75rem' }}>
+                      {taskCount === 1
+                        ? 'What manual task do you wish to automate? *'
+                        : 'What do you want to automate?'}
                     </p>
+
+                    {taskCount > 1 && <TaskStarters />}
 
                     {taskFields.map(({ key, num, required }) => (
                       <div className="form-group" key={key}>
                         <label>
                           {taskCount === 1
-                            ? 'What manual task do you wish to automate? *'
-                            : optional(num)
-                              ? `Manual Task ${num} — Leave blank if you have no more to add.`
-                              : `Manual Task ${num} — What do you wish to automate?${required ? ' *' : ''}`}
+                            ? 'Describe the task *'
+                            : `Task ${num}${required ? ' *' : ''}`}
                         </label>
                         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
                           <textarea name={key} required={required} value={formData[key]} onChange={handleChange}
                             placeholder={
                               num === 1
-                                ? 'Example: Our office manager manually enters every job request into a spreadsheet, then texts the crew lead to check availability. Takes about 2 hours a day.'
+                                ? "Example: Our office manager manually enters every job request into a spreadsheet, then texts the crew lead to check availability. Takes about 2 hours a day. We use Google Sheets and SMS for this. Sometimes jobs get missed when she's out."
                                 : num === 2
-                                  ? 'Example: We create invoices manually in Word at the end of every job. Takes 20–30 minutes per invoice.'
-                                  : "Example: Following up with leads who haven't responded. We do this manually by email and it often falls through the cracks."
+                                  ? "Example: We create invoices manually in Word at the end of every job. ~20–30 min per invoice. Then re-enter them in QuickBooks for the books. Probably 50+ invoices a month getting double-handled."
+                                  : "Example: Following up with leads who haven't responded. We do this manually by email and it often falls through the cracks. No system to track who needs a touch."
                             }
-                            style={{ flex: 1 }} />
+                            rows={4} style={{ flex: 1 }} />
                           <MicButton fieldName={key} />
                         </div>
                       </div>
                     ))}
 
+                    {canAddMoreTasks && (
+                      <button type="button"
+                        onClick={() => setVisibleTasks(v => Math.min(v + 1, taskCount))}
+                        style={{
+                          width: '100%', padding: '0.75rem',
+                          background: '#fff', color: NAVY,
+                          border: `2px dashed ${GOLD}`, borderRadius: '8px',
+                          fontWeight: '600', fontSize: '0.92rem', cursor: 'pointer',
+                          marginTop: '0.5rem',
+                        }}>
+                        + Add another task ({visibleTasks}/{taskCount})
+                      </button>
+                    )}
+
                     {listeningField && (
-                      <p style={{ color: '#e53935', fontSize: '0.85rem', textAlign: 'center', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+                      <p style={{ color: '#e53935', fontSize: '0.85rem', textAlign: 'center', marginTop: '0.75rem', marginBottom: '0', fontWeight: 'bold' }}>
                         🔴 Listening... speak now. Tap the mic again to stop.
                       </p>
                     )}
-                    <p style={{ color: '#6b7a99', fontSize: '0.82rem', marginBottom: '0.25rem' }}>
-                      🎤 Tap the microphone next to any field to speak your answer.
-                    </p>
 
-                    {stepError && <p style={{ color: '#c0392b', fontSize: '0.88rem', marginTop: '0.5rem' }}>{stepError}</p>}
+                    {stepError && <p style={{ color: '#c0392b', fontSize: '0.88rem', marginTop: '0.75rem' }}>{stepError}</p>}
                     <NavButtons />
                   </div>
                 )}
 
                 {/* ────────────────────────────────────────────────────────
-                    STEP 4 — Wrap up
-                    Fields: name, email (read-only free), budget, terms, submit
+                    STEP 4 — Wrap up (incl. email verification for free flow)
                 ──────────────────────────────────────────────────────── */}
                 {currentStep === 4 && (
                   <div className="step-panel">
-                    <p style={{ color: '#4a5568', fontSize: '0.92rem', marginBottom: '1.5rem' }}>
-                      Almost done — just a couple of last details and you're in.
+                    <p style={{ color: '#4a5568', fontSize: '0.92rem', marginBottom: '1.25rem' }}>
+                      Last step. {isFree ? "We'll send your preview to the email you verify below." : "Just a couple of last details."}
                     </p>
 
                     <div className="form-group">
                       <label>Your Full Name *</label>
                       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                         <input type="text" name="name" value={formData.name} onChange={handleChange}
-                          placeholder="John Smith" style={{ flex: 1 }} />
+                          placeholder="John Smith" autoComplete="name" style={{ flex: 1 }} />
                         <MicButton fieldName="name" />
                       </div>
                     </div>
 
+                    <div className="form-group">
+                      <label>Monthly budget for new software tools *</label>
+                      <ButtonRow name="budget" value={formData.budget}
+                        options={BUDGET_OPTIONS}
+                        onChange={(v) => setField('budget', v)} />
+                    </div>
+
+                    {/* Email + verification (free flow only) */}
                     {isFree && (
                       <div className="form-group">
-                        <label>Email Address</label>
-                        <input type="email" name="email" value={formData.email} readOnly
-                          style={{ background: '#f4f6fb', color: '#6b7a99', cursor: 'not-allowed' }} />
+                        <label>
+                          Email Address *
+                          {emailVerified && (
+                            <span style={{ color: '#1a8a4e', fontSize: '0.85rem', marginLeft: '0.5rem', fontWeight: '600' }}>
+                              ✓ Verified
+                            </span>
+                          )}
+                        </label>
+                        <p style={{ color: '#6b7a99', fontSize: '0.82rem', margin: '-0.25rem 0 0.5rem' }}>
+                          We'll send a 6-digit code to confirm. We never sell or share your info.
+                        </p>
+
+                        {!emailVerified && (
+                          <>
+                            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                              <input type="email" name="email"
+                                value={formData.email}
+                                onChange={e => { handleChange(e); if (codeSent) { setCodeSent(false); setCodeInput('') } }}
+                                placeholder="you@yourbusiness.com"
+                                autoComplete="email"
+                                style={{ flex: 1, minWidth: '200px' }} />
+                              {!codeSent && (
+                                <button type="button" onClick={handleSendCode} disabled={verifyLoading}
+                                  style={{
+                                    background: NAVY, color: '#fff', border: 'none', borderRadius: '6px',
+                                    padding: '0.65rem 1.1rem', fontWeight: '700', fontSize: '0.9rem',
+                                    cursor: verifyLoading ? 'not-allowed' : 'pointer',
+                                    opacity: verifyLoading ? 0.6 : 1,
+                                  }}>
+                                  {verifyLoading ? 'Sending...' : 'Send Code'}
+                                </button>
+                              )}
+                            </div>
+
+                            {codeSent && (
+                              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap', marginTop: '0.6rem' }}>
+                                <input type="text" inputMode="numeric"
+                                  value={codeInput} onChange={e => setCodeInput(e.target.value)}
+                                  placeholder="6-digit code" maxLength={6}
+                                  style={{
+                                    width: '160px', textAlign: 'center',
+                                    letterSpacing: '0.2em', fontSize: '1.1rem',
+                                  }} />
+                                <button type="button" onClick={handleVerifyCode} disabled={verifyLoading}
+                                  style={{
+                                    background: GOLD, color: '#111', border: 'none', borderRadius: '6px',
+                                    padding: '0.65rem 1.1rem', fontWeight: '700', fontSize: '0.9rem',
+                                    cursor: verifyLoading ? 'not-allowed' : 'pointer',
+                                    opacity: verifyLoading ? 0.6 : 1,
+                                  }}>
+                                  {verifyLoading ? 'Verifying...' : 'Verify'}
+                                </button>
+                                <button type="button"
+                                  onClick={() => { setCodeSent(false); setCodeInput(''); setVerifyError('') }}
+                                  style={{
+                                    background: 'none', border: 'none', color: '#8a95aa',
+                                    fontSize: '0.82rem', cursor: 'pointer', textDecoration: 'underline',
+                                  }}>
+                                  Resend / change email
+                                </button>
+                              </div>
+                            )}
+                            {verifyError && <p style={{ color: '#c0392b', fontSize: '0.85rem', marginTop: '0.5rem' }}>{verifyError}</p>}
+                          </>
+                        )}
                       </div>
                     )}
 
-                    <div className="form-group">
-                      <label>Monthly budget for new software tools *</label>
-                      <select name="budget" value={formData.budget} onChange={handleChange}>
-                        <option value="">Select your budget</option>
-                        <option value="Under $50/month">Under $50 / month</option>
-                        <option value="$50–$200/month">$50 – $200 / month</option>
-                        <option value="$200–$500/month">$200 – $500 / month</option>
-                        <option value="$500+/month">$500+ / month</option>
-                        <option value="Not sure yet">Not sure yet</option>
-                      </select>
-                    </div>
-
-                    <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', marginBottom: '1.25rem', marginTop: '0.5rem' }}>
+                    <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', marginBottom: '1rem', marginTop: '0.5rem' }}>
                       <input type="checkbox" checked={agreedTerms}
                         onChange={e => { setAgreedTerms(e.target.checked); setStepError('') }}
                         style={{ marginTop: '3px', width: '20px', height: '20px', flexShrink: 0, cursor: 'pointer' }} />
@@ -663,11 +908,21 @@ export default function Intake() {
                     </label>
 
                     {stepError && <p style={{ color: '#c0392b', fontSize: '0.88rem', marginBottom: '0.75rem' }}>{stepError}</p>}
+                    {submitNotice && (
+                      <div style={{
+                        background: '#fff4f4', border: '1px solid #f5c2c0',
+                        borderRadius: '8px', padding: '0.75rem 1rem', marginBottom: '0.75rem',
+                        color: '#9b1c1c', fontSize: '0.88rem', lineHeight: 1.5,
+                      }}>
+                        {submitNotice}
+                      </div>
+                    )}
+
                     <NavButtons isSubmit />
 
                     <p style={{ textAlign: 'center', color: '#6b7a99', fontSize: '0.85rem', marginTop: '1rem' }}>
                       {isFree
-                        ? "You'll receive a preview by email. Unlock the full report when you're ready."
+                        ? "Your preview will land in your inbox. Unlock the full report when you're ready."
                         : 'Your AI Blueprint will be built and delivered to your email in real time.'}
                     </p>
                   </div>
