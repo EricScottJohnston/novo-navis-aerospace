@@ -500,7 +500,7 @@ export default function Interactive() {
                 </p>
               </div>
 
-              {/* APPROVAL-FIRST BANNER — gating mechanic explained */}
+              {/* APPROVAL-FIRST BANNER — investment framing + gating mechanic explained */}
               <div style={{
                 background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)',
                 border: `2px solid ${GOLD}`,
@@ -511,13 +511,13 @@ export default function Interactive() {
                 boxShadow: '0 4px 16px rgba(200,169,110,0.18)',
               }}>
                 <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>
-                  How this works
+                  We invest in you first
                 </p>
                 <p style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3, fontFamily: SERIF }}>
                   Read your full strategy free. Pay only to unlock the tools.
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '0.88rem', lineHeight: 1.55, margin: 0 }}>
-                  We build your complete blueprint and send you the entire strategy. The specific AI tools we recommend stay redacted in the preview. Like what you see? Approve and unlock. If not, walk away — no charges, no follow-up.
+                  We build your complete blueprint — real work, real hours — before you pay a cent. Read the entire strategy. The specific AI tools we recommend stay redacted in the preview. If it earns your business, unlock the tools. If not, walk away — no charges, no follow-up.
                 </p>
               </div>
 
