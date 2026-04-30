@@ -49,10 +49,10 @@ const TIERS = [
 const ROUND_1 = {
   question: 'What would AI tools do for your business?',
   options: [
-    'Getting hours back every week so I can focus on real work',
-    'Stopping the slow bleed of leads slipping through the cracks',
-    'Finally knowing which AI tools are actually worth the money',
-    'Scaling without hiring more people',
+    'Get hours back every week so I can focus on real work',
+    'Stop leads slipping through the cracks',
+    'Finally know which AI tools are actually worth the money',
+    'Scale without hiring more people',
   ],
 }
 
