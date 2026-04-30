@@ -593,7 +593,9 @@ export default function Intake() {
 
       <div className="report-page" ref={topRef}>
 
-        {sessionError ? (
+        {!router.isReady ? (
+          <p style={{ textAlign: 'center', color: '#8a95aa', padding: '2rem 0' }}>Loading...</p>
+        ) : sessionError ? (
           <div style={{ textAlign: 'center', padding: '3rem 0' }}>
             <p style={{ color: '#c0392b', marginBottom: '1rem' }}>We could not verify your payment session.</p>
             <p style={{ color: '#6b7a99', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
