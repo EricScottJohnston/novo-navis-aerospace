@@ -521,14 +521,11 @@ export default function Interactive() {
                 </p>
               </div>
 
-              {/* Pricing header with anchor */}
+              {/* Pricing header */}
               <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-                <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: '0 0 0.4rem', fontFamily: SERIF }}>
+                <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: 0, fontFamily: SERIF }}>
                   Pick your blueprint depth
                 </h2>
-                <p style={{ color: '#6b7a99', fontSize: '0.83rem', margin: 0, fontStyle: 'italic' }}>
-                  Most consultants charge $5,000+ for this depth. We start at $99.
-                </p>
               </div>
 
               {/* Tier cards */}
@@ -602,30 +599,13 @@ export default function Interactive() {
                 </div>
               ))}
 
-              {/* Trust badges */}
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', margin: '1rem 0 0.75rem', flexWrap: 'wrap' }}>
-                {(isEnterprise
-                  ? [['🔒', 'Stripe Secure'], ['🛡️', 'U.S. Defense Contractor']]
-                  : [['✓', 'No Charge Until Approved'], ['🛡️', 'U.S. Defense Contractor'], ['🔐', 'Information Encrypted'], ['💳', 'No Card Required']]
-                ).map(([icon, label]) => (
-                  <div key={label} style={{
-                    display: 'flex', alignItems: 'center', gap: '0.3rem',
-                    background: LIGHT, border: '1px solid #e0e4ef',
-                    borderRadius: '20px', padding: '0.3rem 0.75rem',
-                    fontSize: '0.75rem', color: '#6b7a99', fontWeight: '500',
-                  }}>
-                    <span>{icon}</span><span>{label}</span>
-                  </div>
-                ))}
-              </div>
-
               {/* Industry strip — breadth of social proof */}
               <div style={{
                 background: '#fafbfd',
                 border: '1px solid #e8ecf4',
                 borderRadius: '8px',
                 padding: '0.7rem 1rem',
-                marginBottom: '1rem',
+                margin: '1rem 0',
                 textAlign: 'center',
               }}>
                 <p style={{
@@ -653,21 +633,24 @@ export default function Interactive() {
                 </a>
               </div>
 
-              {/* Secondary links */}
-              <div style={{ textAlign: 'center', marginBottom: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {/* Consolidated secondary links — single line */}
+              <p style={{ textAlign: 'center', color: '#8a95aa', fontSize: '0.82rem', margin: '0 0 1rem' }}>
+                Questions?{' '}
                 <button
                   onClick={() => { setObjOpen(true); track('modal_opened', { modal: 'what_is_blueprint', round }) }}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.85rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.82rem', textDecoration: 'underline', textUnderlineOffset: '3px', padding: 0 }}
                 >
-                  Wait, what is an AI Blueprint?
+                  See what an AI Blueprint is
                 </button>
+                {' '}or{' '}
                 <button
                   onClick={() => { setReviewsOpen(true); track('modal_opened', { modal: 'reviews', round }) }}
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.85rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.82rem', textDecoration: 'underline', textUnderlineOffset: '3px', padding: 0 }}
                 >
-                  What are other businesses saying?
+                  read what others say
                 </button>
-              </div>
+                .
+              </p>
 
               {/* What happens next */}
               <div style={{
@@ -695,16 +678,6 @@ export default function Interactive() {
                     <p style={{ color: '#4a5568', fontSize: '0.83rem', lineHeight: 1.6, margin: 0 }}>{text}</p>
                   </div>
                 ))}
-              </div>
-
-              {/* Reassurance */}
-              <div style={{
-                background: '#f4f6fb', border: '1px solid #e0e4ef',
-                borderRadius: '8px', padding: '0.85rem 1.1rem', textAlign: 'center', marginTop: '0.75rem',
-              }}>
-                <p style={{ color: '#4a5568', fontSize: '0.88rem', margin: 0 }}>
-                  All sales of the unlocked report are final. Review your full preview first — that's why we don't charge until you approve.
-                </p>
               </div>
 
               <p style={{ textAlign: 'center', marginTop: '1.25rem', marginBottom: 0 }}>
