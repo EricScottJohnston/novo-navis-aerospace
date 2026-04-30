@@ -79,7 +79,6 @@ export default function Intake() {
   const [stepError,      setStepError]     = useState('')
   const [submitNotice,   setSubmitNotice]  = useState('')
   const recognitionRef = useRef(null)
-  const baseTextRef    = useRef('') // for interim results: text before this dictation started
   const topRef         = useRef(null)
   const businessRef    = useRef(null)
   const draftHydrated  = useRef(false)
@@ -178,7 +177,7 @@ export default function Intake() {
     setStepError('')
   }
 
-  // ── Voice input with live (interim) transcription ────────────────────────
+  // ── Voice input ───────────────────────────────────────────────────────────
   const startVoice = (fieldName) => {
     if (typeof window === 'undefined') return
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition
@@ -186,21 +185,17 @@ export default function Intake() {
     if (listeningField === fieldName) { recognitionRef.current?.stop(); setListeningField(null); return }
     recognitionRef.current?.stop()
 
-    baseTextRef.current = formData[fieldName] ? formData[fieldName] + ' ' : ''
     const rec = new SR()
-    rec.continuous     = true
-    rec.interimResults = true
+    rec.continuous     = false
+    rec.interimResults = false
     rec.lang           = 'en-US'
 
     rec.onresult = (e) => {
-      let finalText = ''
-      let interim   = ''
-      for (let i = 0; i < e.results.length; i++) {
-        const t = e.results[i][0].transcript
-        if (e.results[i].isFinal) finalText += t + ' '
-        else                      interim   += t
-      }
-      setFormData(prev => ({ ...prev, [fieldName]: (baseTextRef.current + finalText + interim).trimStart() }))
+      const t = e.results[0][0].transcript
+      setFormData(prev => ({
+        ...prev,
+        [fieldName]: prev[fieldName] ? prev[fieldName] + ' ' + t : t,
+      }))
     }
     rec.onend   = () => setListeningField(null)
     rec.onerror = () => setListeningField(null)
