@@ -80,6 +80,13 @@ const ROUND_3 = {
 
 const ENTERPRISE_OPTION = 'I\'m running an enterprise — I need this done at scale'
 
+const REVIEWS = [
+  { stars: 5, text: '...These guys definitely cut through the hype. It didn\'t take very long, and I got definitive answers for my business needs. Highly recommend....' },
+  { stars: 4, text: '...These guys found tools I never would have uncovered on my own. I was a little uncertain about their pricing model, but I can definitely see why they do it now. Try it. It works....' },
+  { stars: 5, text: '...I spent weeks trying to find the right tools and ended up getting upsold on a lot of things I didn\'t need for my business. Now I have the exact tools for my workflow at my budget....' },
+  { stars: 5, text: '...As a business owner who\'s used business consultants in the past, what Novo Navis gave me for this price would have cost me tens of thousands of dollars at one of the big consulting companies. And it was fast....' },
+]
+
 function track(event, params = {}) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
     window.gtag('event', event, params)
@@ -264,6 +271,7 @@ export default function Interactive() {
             from { opacity: 0; }
             to   { opacity: 1; }
           }
+          .reviews-scroll::-webkit-scrollbar { display: none; }
         `}</style>
       </Head>
 
@@ -405,11 +413,6 @@ export default function Interactive() {
               </>
             )}
 
-            {/*
-              Static H1 — fontSize is a fixed value (no conditional) so React
-              never triggers a style recalculation on this element during hydration.
-              fontFamily still varies by round because it's not the LCP metric.
-            */}
             <h1 style={{
               color: NAVY,
               fontSize: '1.5rem',
@@ -634,7 +637,40 @@ export default function Interactive() {
                   ))}
                 </div>
 
-                <p style={{ textAlign: 'center', marginTop: '1rem', marginBottom: 0 }}>
+                {/* Scrollable reviews strip — bleeds edge to edge, hides scrollbar */}
+                <div
+                  className="reviews-scroll"
+                  style={{
+                    overflowX: 'auto',
+                    WebkitOverflowScrolling: 'touch',
+                    scrollbarWidth: 'none',
+                    msOverflowStyle: 'none',
+                    margin: '0 -2rem 1rem',
+                    padding: '0 2rem',
+                  }}
+                >
+                  <div style={{ display: 'flex', gap: '0.75rem', width: 'max-content' }}>
+                    {REVIEWS.map((r, i) => (
+                      <div key={i} style={{
+                        background: '#f4f6fb',
+                        border: '1px solid #e0e4ef',
+                        borderRadius: '10px',
+                        padding: '0.85rem 1rem',
+                        width: '230px',
+                        flexShrink: 0,
+                      }}>
+                        <p style={{ color: GOLD, fontSize: '0.8rem', fontWeight: 'bold', margin: '0 0 0.4rem' }}>
+                          {'★'.repeat(r.stars)}{'☆'.repeat(5 - r.stars)}
+                        </p>
+                        <p style={{ color: NAVY, fontSize: '0.8rem', lineHeight: 1.6, margin: 0 }}>
+                          {r.text}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <p style={{ textAlign: 'center', marginTop: '0', marginBottom: 0 }}>
                   <button
                     onClick={() => { setSiteOpen(true); track('modal_opened', { modal: 'what_is_this_site', round }) }}
                     style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.78rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}
