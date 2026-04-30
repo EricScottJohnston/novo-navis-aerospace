@@ -401,7 +401,7 @@ export default function Interactive() {
                   letterSpacing: '0', margin: '0 0 0.5rem', lineHeight: 1.2,
                   fontFamily: SERIF,
                 }}>
-                  The AI tools that actually fit your business — picked for you in 12 minutes. 68% of businesses qualify for a free blueprint. 
+                  68% of businesses qualify for our "pay after" promotion.
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '0.95rem', fontWeight: '500', margin: '0 0 1rem', lineHeight: 1.5 }}>
                   We build the report. You preview it free. Pay only if you approve.
