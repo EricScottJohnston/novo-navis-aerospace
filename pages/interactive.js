@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 const NAVY  = '#1B2A4A'
 const GOLD  = '#c8a96e'
 const LIGHT = '#f4f6fb'
-const SERIF = '"Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif'
+const SERIF = '"Playfair Display", Georgia, serif'
 
 const TIER_DETAILS = {
   starter: [
@@ -45,9 +45,9 @@ const TIERS = [
   { key: 'enterprise', name: 'Enterprise Blueprint',      price: '$999', badge: null },
 ]
 
-// ROUND 1 — ASPIRATION (towards-language, paints the future)
+// ROUND 1 — ASPIRATION
 const ROUND_1 = {
-  question: 'What would actually change your business right now?',
+  question: 'What would AI tools do for your business?',
   options: [
     'Getting hours back every week so I can focus on real work',
     'Stopping the slow bleed of leads slipping through the cracks',
@@ -56,7 +56,7 @@ const ROUND_1 = {
   ],
 }
 
-// ROUND 2 — BEHAVIOR (neutral, how they currently operate)
+// ROUND 2 — BEHAVIOR
 const ROUND_2 = {
   question: 'How are you handling AI decisions today?',
   options: [
@@ -67,7 +67,7 @@ const ROUND_2 = {
   ],
 }
 
-// ROUND 3 — PAIN (problem-ownership, creates buying intent)
+// ROUND 3 — PAIN
 const ROUND_3 = {
   question: 'What\'s the biggest thing holding you back?',
   options: [
@@ -87,7 +87,6 @@ function track(event, params = {}) {
 }
 
 // Inline mockup of the blueprint deliverable — clickable to open sample.
-// Renders as a stack of three "pages" with a navy header and gold accent.
 function BlueprintMockup({ onClick }) {
   return (
     <button
@@ -106,21 +105,18 @@ function BlueprintMockup({ onClick }) {
         cursor: 'pointer',
       }}
     >
-      {/* Back page */}
       <div style={{
         position: 'absolute', top: '14px', left: '28px', right: '4px', bottom: '4px',
         background: '#fff', border: '1px solid #e0e4ef',
         borderRadius: '6px', boxShadow: '0 2px 8px rgba(27,42,74,0.08)',
         transform: 'rotate(2deg)',
       }} />
-      {/* Middle page */}
       <div style={{
         position: 'absolute', top: '7px', left: '14px', right: '14px', bottom: '8px',
         background: '#fff', border: '1px solid #e0e4ef',
         borderRadius: '6px', boxShadow: '0 2px 10px rgba(27,42,74,0.10)',
         transform: 'rotate(-1deg)',
       }} />
-      {/* Front page */}
       <div style={{
         position: 'absolute', top: 0, left: 0, right: '28px', bottom: '14px',
         background: '#fff', border: '1px solid #d8dee9',
@@ -128,7 +124,6 @@ function BlueprintMockup({ onClick }) {
         boxShadow: '0 6px 22px rgba(27,42,74,0.18)',
         overflow: 'hidden',
       }}>
-        {/* Navy header */}
         <div style={{
           height: '36px', background: NAVY, display: 'flex',
           alignItems: 'center', padding: '0 14px', gap: '8px',
@@ -142,7 +137,6 @@ function BlueprintMockup({ onClick }) {
           </span>
         </div>
         <div style={{ height: '2px', background: GOLD, width: '38%' }} />
-        {/* Body content lines */}
         <div style={{ padding: '14px 16px' }}>
           <div style={{ height: '7px', background: NAVY, width: '70%', marginBottom: '10px', borderRadius: '2px' }} />
           <div style={{ height: '4px', background: '#d0d8e8', width: '100%', marginBottom: '4px', borderRadius: '2px' }} />
@@ -197,7 +191,6 @@ export default function Interactive() {
       return
     }
 
-    // Round 3 complete — show sample prompt
     const enterprise = option === ENTERPRISE_OPTION
     setIsEnterprise(enterprise)
     setRound('sample-prompt')
@@ -234,42 +227,28 @@ export default function Interactive() {
     }
   }
 
-  // Round-specific sub-headlines for emotional pacing
-  const getSubheadline = () => {
-    if (round === 1) return "Pick the outcome that would matter most to you."
-    if (round === 2) return "There's no wrong answer — just where you actually are right now."
-    if (round === 3) return "One last thing. Be honest — this is what we'll solve."
-    return ""
-  }
-
-  const getMomentumLine = () => {
-    if (round === 1) return "Answer 3 quick questions. We build your report. You preview it free. You only pay if you approve."
-    if (round === 2) return "Good. We're already learning what you need."
-    if (round === 3) return "Almost there. This is the one that matters."
-    return ""
-  }
-
   return (
     <>
       <Head>
         <title>Find Your AI Blueprint | Novo Navis</title>
-        <meta name="description" content="Find the AI tools that actually fit your business — in about 12 minutes. We build a custom AI Blueprint, you preview it free, and only pay if you approve." />
+        <meta name="description" content="95% of businesses pick the wrong AI tools. We make sure you're not one of them. Take 3 quick questions and we'll build a custom AI Blueprint for your business — preview free, pay only if you approve." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
-        <meta property="og:description" content="Find the AI tools that actually fit your business — in about 12 minutes. Pay only if you approve." />
-        
-
+        <meta property="og:description" content="95% of businesses pick the wrong AI tools. We make sure you're not one of them." />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
         <style>{`
           html, body { background: #f4f7fc !important; }
           @keyframes fadeSlideIn {
             from { opacity: 0; transform: translateY(8px); }
             to   { opacity: 1; transform: translateY(0); }
           }
-          @keyframes fadeSlideIn {
-  from { opacity: 0.01; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+          }
         `}</style>
       </Head>
 
@@ -289,7 +268,6 @@ export default function Interactive() {
         </ul>
       </nav>
 
-      {/* Nav modal */}
       {navModal && (
         <div
           onClick={() => setNavModal(null)}
@@ -335,7 +313,6 @@ export default function Interactive() {
         </div>
       )}
 
-      {/* Page wrapper with subtle navy-tinted gradient anchoring the card */}
       <div style={{
         background: 'linear-gradient(to bottom, #eef2f9 0px, #f4f7fc 280px)',
         display: 'flex',
@@ -354,7 +331,7 @@ export default function Interactive() {
           overflow: 'hidden',
         }}>
 
-          {/* Defense contractor credential bar — visible authority signal */}
+          {/* Defense contractor credential bar */}
           <div style={{
             background: '#fafbfd',
             borderBottom: '1px solid #e8ecf4',
@@ -389,25 +366,29 @@ export default function Interactive() {
             </>
           )}
 
-          {/* Animated content container — re-mounts on round change for the dopamine micro-reward */}
-          <div key={round} style={{ padding: '1.75rem 2rem 2.5rem', animation: round === 1 ? 'none' : 'fadeSlideIn 0.35s ease-out' }}>
+          {/* Animated content container */}
+          <div key={round} style={{ padding: '1.75rem 2rem 2.5rem', animation: 'fadeSlideIn 0.35s ease-out' }}>
 
-          {/* Headline */}
+          {/* Headline area */}
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-            {round !== 'final' && round !== 'sample-prompt' && (
+
+            {/* ROUND 3 ONLY — eyebrow text returns here */}
+            {round === 3 && (
               <>
                 <p style={{
                   color: GOLD, fontSize: '1.4rem', fontWeight: '700',
                   letterSpacing: '0', margin: '0 0 0.5rem', lineHeight: 1.2,
                   fontFamily: SERIF,
                 }}>
-                  68% of businesses qualify for our "pay after" promotion.
+                  95% of businesses pick the wrong AI tools.
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '0.95rem', fontWeight: '500', margin: '0 0 1rem', lineHeight: 1.5 }}>
-                  We build the AI blueprint. You preview it free. Pay only if you approve.
+                  We make sure you're not one of them. Let's find out which group you're in.
                 </p>
               </>
             )}
+
+            {/* The question itself — shown on rounds 1, 2, 3, and final */}
             {round !== 'sample-prompt' && (
               <h1 style={{
                 color: NAVY,
@@ -421,23 +402,6 @@ export default function Interactive() {
                   ? "You named the problem. Pick the blueprint that fits."
                   : current.question}
               </h1>
-            )}
-            {round !== 'final' && round !== 'sample-prompt' && (
-              <>
-                <p style={{ color: '#6b7a99', fontSize: '0.9rem', lineHeight: 1.6, margin: '0 0 0.4rem' }}>
-                  {getSubheadline()}
-                </p>
-                {round === 1 && (
-                  <p style={{ color: '#8a95aa', fontSize: '0.82rem', lineHeight: 1.5, margin: 0, fontStyle: 'italic' }}>
-                    {getMomentumLine()}
-                  </p>
-                )}
-                {round > 1 && (
-                  <p style={{ color: GOLD, fontSize: '0.82rem', lineHeight: 1.5, margin: 0, fontWeight: '600' }}>
-                    {getMomentumLine()}
-                  </p>
-                )}
-              </>
             )}
           </div>
 
@@ -491,7 +455,6 @@ export default function Interactive() {
             </div>
           ) : round === 'final' ? (
             <>
-              {/* Visual proof of the deliverable — clickable to open sample */}
               <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
                 <BlueprintMockup onClick={() => { setSampleType('mold'); setSampleOpen(true); track('blueprint_mockup_clicked') }} />
                 <p style={{ color: '#8a95aa', fontSize: '0.78rem', margin: '0 0 1.25rem', fontStyle: 'italic' }}>
@@ -499,7 +462,6 @@ export default function Interactive() {
                 </p>
               </div>
 
-              {/* APPROVAL-FIRST BANNER — investment framing + gating mechanic explained */}
               <div style={{
                 background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)',
                 border: `2px solid ${GOLD}`,
@@ -510,24 +472,22 @@ export default function Interactive() {
                 boxShadow: '0 4px 16px rgba(200,169,110,0.18)',
               }}>
                 <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>
-                  We invest in you first
+                  How this works
                 </p>
                 <p style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3, fontFamily: SERIF }}>
                   Read your full strategy free. Pay only to unlock the tools.
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '0.88rem', lineHeight: 1.55, margin: 0 }}>
-                  We build your complete blueprint — real work, real hours — before you pay a cent. Read the entire strategy. The specific AI tools we recommend stay redacted in the preview. If it earns your business, unlock the tools. If not, walk away — no charges, no follow-up.
+                  We build your complete blueprint and send you the entire strategy. The specific AI tools we recommend stay redacted in the preview. Like what you see? Approve and unlock. If not, walk away — no charges, no follow-up.
                 </p>
               </div>
 
-              {/* Pricing header */}
               <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
                 <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: 0, fontFamily: SERIF }}>
                   Pick your blueprint depth
                 </h2>
               </div>
 
-              {/* Tier cards */}
               {TIERS.filter(t => isEnterprise ? t.key === 'enterprise' : t.key !== 'enterprise').map(({ key, name, price, badge }) => (
                 <div key={key} style={{
                   border: key === 'blueprint' ? `2px solid ${GOLD}` : '1px solid #e0e4ef',
@@ -598,7 +558,6 @@ export default function Interactive() {
                 </div>
               ))}
 
-              {/* Industry strip — breadth of social proof */}
               <div style={{
                 background: '#fafbfd',
                 border: '1px solid #e8ecf4',
@@ -618,7 +577,6 @@ export default function Interactive() {
                 </p>
               </div>
 
-              {/* Call us */}
               <div style={{
                 textAlign: 'center', marginBottom: '1rem',
                 padding: '0.85rem 1rem',
@@ -632,7 +590,6 @@ export default function Interactive() {
                 </a>
               </div>
 
-              {/* Consolidated secondary links — single line */}
               <p style={{ textAlign: 'center', color: '#8a95aa', fontSize: '0.82rem', margin: '0 0 1rem' }}>
                 Questions?{' '}
                 <button
@@ -651,7 +608,6 @@ export default function Interactive() {
                 .
               </p>
 
-              {/* What happens next */}
               <div style={{
                 background: '#f4f6fb', border: '1px solid #e0e4ef',
                 borderRadius: '8px', padding: '1rem 1.1rem',
@@ -690,7 +646,7 @@ export default function Interactive() {
             </>
           ) : (
             <>
-              {/* Options */}
+              {/* Options — Rounds 1, 2, 3 */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.25rem' }}>
                 {current.options.map((opt, i) => (
                   <button
@@ -718,7 +674,6 @@ export default function Interactive() {
                 ))}
               </div>
 
-              {/* Site explainer link */}
               <p style={{ textAlign: 'center', marginTop: '1rem', marginBottom: 0 }}>
                 <button
                   onClick={() => { setSiteOpen(true); track('modal_opened', { modal: 'what_is_this_site', round }) }}
@@ -730,7 +685,7 @@ export default function Interactive() {
             </>
           )}
 
-          </div>{/* end animated content container */}
+          </div>
         </div>
       </div>
 
@@ -738,7 +693,6 @@ export default function Interactive() {
         <p>© {new Date().getFullYear()} Novo Navis, LLC · Registered U.S. Defense Contractor · Fidelis Diligentia</p>
       </footer>
 
-      {/* What is an AI Blueprint — static info modal */}
       {objOpen && (
         <div
           onClick={() => setObjOpen(false)}
@@ -801,7 +755,6 @@ export default function Interactive() {
         </div>
       )}
 
-      {/* Reviews modal */}
       {reviewsOpen && (
         <div
           onClick={() => setReviewsOpen(false)}
@@ -862,7 +815,6 @@ export default function Interactive() {
         </div>
       )}
 
-      {/* Sample report modal */}
       {sampleOpen && (
         <div
           onClick={() => setSampleOpen(false)}
@@ -908,7 +860,6 @@ export default function Interactive() {
         </div>
       )}
 
-      {/* What is this site modal */}
       {siteOpen && (
         <div
           onClick={() => setSiteOpen(false)}
@@ -943,7 +894,9 @@ export default function Interactive() {
               Novo Navis is a registered U.S. Defense Contractor that builds custom AI Blueprints for small businesses — the same rigor we apply to defense-grade AI, applied to your workflows and budget.
             </p>
 
-            
+            <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+              Answer 3 quick questions and we'll build you a custom AI report. We build it. You preview it. You only pay if you approve.
+            </p>
 
             <button
               onClick={() => setSiteOpen(false)}
@@ -960,7 +913,6 @@ export default function Interactive() {
         </div>
       )}
 
-      {/* Terms modal */}
       {showTermsModal && (
         <div
           onClick={() => setShowTermsModal(false)}
