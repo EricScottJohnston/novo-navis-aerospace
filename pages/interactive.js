@@ -86,7 +86,7 @@ function track(event, params = {}) {
   }
 }
 
-// Inline mockup of the blueprint deliverable — clickable to open sample.
+// Inline mockup of the blueprint deliverable — clickable to open industry picker.
 function BlueprintMockup({ onClick }) {
   return (
     <button
@@ -159,6 +159,7 @@ export default function Interactive() {
   const [isEnterprise,   setIsEnterprise]   = useState(false)
   const [checkoutLoading, setCheckoutLoading] = useState(null)
   const [navModal,        setNavModal]        = useState(null)
+  const [industryPickerOpen, setIndustryPickerOpen] = useState(false)
   useEffect(() => {
     const handler = (e) => {
       if (e.data === 'close-nav-modal') setNavModal(null)
@@ -191,9 +192,10 @@ export default function Interactive() {
       return
     }
 
+    // Round 3 complete — go DIRECTLY to final pricing screen
     const enterprise = option === ENTERPRISE_OPTION
     setIsEnterprise(enterprise)
-    setRound('sample-prompt')
+    setRound('final')
   }
 
   const handleCheckout = async (tier) => {
@@ -225,6 +227,18 @@ export default function Interactive() {
       alert('Something went wrong. Please try again.')
       setCheckoutLoading(null)
     }
+  }
+
+  // Industry picker handlers
+  const openIndustryPicker = () => {
+    setIndustryPickerOpen(true)
+    track('blueprint_mockup_clicked')
+  }
+  const pickIndustry = (type) => {
+    setSampleType(type)
+    setIndustryPickerOpen(false)
+    setSampleOpen(true)
+    track(type === 'law' ? 'sample_picker_law' : 'sample_picker_mold')
   }
 
   return (
@@ -349,7 +363,7 @@ export default function Interactive() {
           </div>
 
           {/* Progress bar */}
-          {round !== 'final' && round !== 'sample-prompt' && (
+          {round !== 'final' && (
             <>
               <div style={{ background: '#e8ecf4', height: '5px', width: '100%' }}>
                 <div style={{
@@ -372,7 +386,7 @@ export default function Interactive() {
           {/* Headline area */}
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
 
-            {/* ROUND 3 ONLY — eyebrow text returns here */}
+            {/* ROUND 3 ONLY — eyebrow text */}
             {round === 3 && (
               <>
                 <p style={{
@@ -388,80 +402,31 @@ export default function Interactive() {
               </>
             )}
 
-            {/* The question itself — shown on rounds 1, 2, 3, and final */}
-            {round !== 'sample-prompt' && (
-              <h1 style={{
-                color: NAVY,
-                fontSize: round === 'final' ? '1.55rem' : '1.5rem',
-                fontWeight: 'bold',
-                margin: '0 0 0.5rem',
-                lineHeight: 1.25,
-                fontFamily: round === 'final' ? SERIF : 'inherit',
-              }}>
-                {round === 'final'
-                  ? "You named the problem. Pick the blueprint that fits."
-                  : current.question}
-              </h1>
-            )}
+            {/* Question — shown on rounds 1, 2, 3, and final */}
+            <h1 style={{
+              color: NAVY,
+              fontSize: round === 'final' ? '1.55rem' : '1.5rem',
+              fontWeight: 'bold',
+              margin: '0 0 0.5rem',
+              lineHeight: 1.25,
+              fontFamily: round === 'final' ? SERIF : 'inherit',
+            }}>
+              {round === 'final'
+                ? "You named the problem. Pick the blueprint that fits."
+                : current.question}
+            </h1>
           </div>
 
-          {round === 'sample-prompt' ? (
-            <div style={{ textAlign: 'center', padding: '1rem 0 0.5rem' }}>
-              <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.75rem' }}>
-                Before we show you the options
-              </p>
-              <h2 style={{ color: NAVY, fontSize: '1.4rem', fontWeight: 'bold', margin: '0 0 0.5rem', lineHeight: 1.3, fontFamily: SERIF }}>
-                Want to see exactly what we'll build for you?
-              </h2>
-              <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: '0 0 2rem' }}>
-                Take 60 seconds and look at a real blueprint we built for another business. Same depth, same detail, same format you'll get.
-              </p>
-              <p style={{ color: '#6b7a99', fontSize: '0.83rem', margin: '0 0 1rem' }}>
-                Pick an industry to see a real blueprint:
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', maxWidth: '340px', margin: '0 auto' }}>
-                <button
-                  onClick={() => { setSampleType('mold'); setSampleOpen(true); setRound('final'); track('quiz_sample_mold') }}
-                  style={{
-                    width: '100%', padding: '0.9rem 1.25rem',
-                    background: NAVY, border: 'none', borderRadius: '10px',
-                    color: '#fff', fontWeight: 'bold', fontSize: '0.97rem', cursor: 'pointer',
-                  }}
-                >
-                  Mold Remediation Company
-                </button>
-                <button
-                  onClick={() => { setSampleType('law'); setSampleOpen(true); setRound('final'); track('quiz_sample_law') }}
-                  style={{
-                    width: '100%', padding: '0.9rem 1.25rem',
-                    background: NAVY, border: 'none', borderRadius: '10px',
-                    color: '#fff', fontWeight: 'bold', fontSize: '0.97rem', cursor: 'pointer',
-                  }}
-                >
-                  Personal Injury Law Firm
-                </button>
-                <button
-                  onClick={() => { setRound('final'); track('quiz_sample_skipped') }}
-                  style={{
-                    width: '100%', padding: '0.9rem 1.25rem',
-                    background: '#ffffff', border: '1px solid #e8ecf4', borderRadius: '10px',
-                    boxShadow: '0 2px 8px rgba(27,42,74,0.07)',
-                    color: NAVY, fontWeight: '600', fontSize: '0.97rem', cursor: 'pointer',
-                  }}
-                >
-                  Skip — show me my options
-                </button>
-              </div>
-            </div>
-          ) : round === 'final' ? (
+          {round === 'final' ? (
             <>
               <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
-                <BlueprintMockup onClick={() => { setSampleType('mold'); setSampleOpen(true); track('blueprint_mockup_clicked') }} />
+                <BlueprintMockup onClick={openIndustryPicker} />
                 <p style={{ color: '#8a95aa', fontSize: '0.78rem', margin: '0 0 1.25rem', fontStyle: 'italic' }}>
                   ↑ Tap to see a real blueprint we built
                 </p>
               </div>
 
+              {/* APPROVAL BANNER — new copy */}
               <div style={{
                 background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)',
                 border: `2px solid ${GOLD}`,
@@ -475,10 +440,10 @@ export default function Interactive() {
                   How this works
                 </p>
                 <p style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3, fontFamily: SERIF }}>
-                  Read your full strategy free. Pay only to unlock the tools.
+                  Read your full strategy free. Pay to unlock the complete recommendation.
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '0.88rem', lineHeight: 1.55, margin: 0 }}>
-                  We build your complete blueprint and send you the entire strategy. The specific AI tools we recommend stay redacted in the preview. Like what you see? Approve and unlock. If not, walk away — no charges, no follow-up.
+                  We build your complete blueprint and send you the entire strategy. Read it. Like what we recommend? Approve and unlock the full report. If not, walk away — no charges, no follow-up.
                 </p>
               </div>
 
@@ -558,27 +523,11 @@ export default function Interactive() {
                 </div>
               ))}
 
-              <div style={{
-                background: '#fafbfd',
-                border: '1px solid #e8ecf4',
-                borderRadius: '8px',
-                padding: '0.7rem 1rem',
-                margin: '1rem 0',
-                textAlign: 'center',
-              }}>
-                <p style={{
-                  color: '#8a95aa', fontSize: '0.66rem', fontWeight: '700',
-                  letterSpacing: '0.14em', textTransform: 'uppercase', margin: '0 0 0.35rem',
-                }}>
-                  Blueprints built for
-                </p>
-                <p style={{ color: NAVY, fontSize: '0.78rem', margin: 0, fontWeight: '500', lineHeight: 1.5 }}>
-                  Mold Remediation · Personal Injury Law · Property Management · Healthcare · Construction · E-commerce
-                </p>
-              </div>
+              {/* Industry strip REMOVED */}
 
+              {/* Call us */}
               <div style={{
-                textAlign: 'center', marginBottom: '1rem',
+                textAlign: 'center', marginBottom: '1rem', marginTop: '1rem',
                 padding: '0.85rem 1rem',
                 background: LIGHT, border: '1px solid #e0e4ef', borderRadius: '8px',
               }}>
@@ -622,7 +571,7 @@ export default function Interactive() {
                 ] : [
                   ['1', 'Quick intake form — 2 to 3 minutes. Tell us about your business.'],
                   ['2', 'We build your custom blueprint — about 12 minutes. Up to 25 pages, all yours.'],
-                  ['3', 'Read the full preview. If you approve it, unlock the tool names. If not, walk away — no charge.'],
+                  ['3', 'Read the full preview. If you approve it, unlock the complete recommendation. If not, walk away — no charge.'],
                 ]).map(([n, text]) => (
                   <div key={n} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.5rem' }}>
                     <span style={{
@@ -693,6 +642,64 @@ export default function Interactive() {
         <p>© {new Date().getFullYear()} Novo Navis, LLC · Registered U.S. Defense Contractor · Fidelis Diligentia</p>
       </footer>
 
+      {/* Industry picker modal — opens when blueprint mockup is tapped */}
+      {industryPickerOpen && (
+        <div
+          onClick={() => setIndustryPickerOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 99998,
+            background: 'rgba(0,0,0,0.65)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1rem',
+            animation: 'fadeIn 0.2s ease-out',
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: '#ffffff', borderRadius: '14px',
+              border: '1px solid #e0e4ef',
+              boxShadow: '0 8px 48px rgba(27,42,74,0.18)',
+              maxWidth: '420px', width: '100%',
+              padding: '2rem 1.75rem',
+              animation: 'fadeSlideIn 0.3s ease-out',
+            }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
+              <div>
+                <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>Sample blueprints</p>
+                <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: 0, fontFamily: SERIF }}>Pick an industry to see a real blueprint:</h2>
+              </div>
+              <button onClick={() => setIndustryPickerOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '1.3rem', lineHeight: 1, padding: '0.1rem 0.3rem' }}>✕</button>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <button
+                onClick={() => pickIndustry('mold')}
+                style={{
+                  width: '100%', padding: '0.95rem 1.25rem',
+                  background: NAVY, border: 'none', borderRadius: '10px',
+                  color: '#fff', fontWeight: 'bold', fontSize: '0.97rem', cursor: 'pointer',
+                }}
+              >
+                Mold Remediation Company
+              </button>
+              <button
+                onClick={() => pickIndustry('law')}
+                style={{
+                  width: '100%', padding: '0.95rem 1.25rem',
+                  background: NAVY, border: 'none', borderRadius: '10px',
+                  color: '#fff', fontWeight: 'bold', fontSize: '0.97rem', cursor: 'pointer',
+                }}
+              >
+                Personal Injury Law Firm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* What is an AI Blueprint modal */}
       {objOpen && (
         <div
           onClick={() => setObjOpen(false)}
@@ -755,6 +762,7 @@ export default function Interactive() {
         </div>
       )}
 
+      {/* Reviews modal */}
       {reviewsOpen && (
         <div
           onClick={() => setReviewsOpen(false)}
@@ -815,6 +823,7 @@ export default function Interactive() {
         </div>
       )}
 
+      {/* Sample report modal (shown after picking industry) */}
       {sampleOpen && (
         <div
           onClick={() => setSampleOpen(false)}
@@ -860,6 +869,7 @@ export default function Interactive() {
         </div>
       )}
 
+      {/* What is this site modal */}
       {siteOpen && (
         <div
           onClick={() => setSiteOpen(false)}
@@ -913,6 +923,7 @@ export default function Interactive() {
         </div>
       )}
 
+      {/* Terms modal */}
       {showTermsModal && (
         <div
           onClick={() => setShowTermsModal(false)}
