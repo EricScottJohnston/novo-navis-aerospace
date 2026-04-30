@@ -358,7 +358,7 @@ export default function Interactive() {
               letterSpacing: '0.16em', textTransform: 'uppercase',
             }}>
               <span style={{ color: GOLD, marginRight: '0.4rem' }}>◆</span>
-              Defense-grade AI for small business
+              Defense-grade AI for business
               <span style={{ color: GOLD, marginLeft: '0.4rem' }}>◆</span>
             </span>
           </div>
