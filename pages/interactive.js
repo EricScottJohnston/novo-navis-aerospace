@@ -51,7 +51,7 @@ const ROUND_1 = {
   options: [
     'Get hours back every week so I can focus on real work',
     'Stop leads slipping through the cracks',
-    'Finally know which AI tools are actually worth the money',
+    'Automate mind-numbing tasks',
     'Scale without hiring more people',
   ],
 }
