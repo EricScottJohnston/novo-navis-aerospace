@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 const NAVY  = '#1B2A4A'
 const GOLD  = '#c8a96e'
 const LIGHT = '#f4f6fb'
+const SERIF = '"Playfair Display", Georgia, serif'
 
 const TIER_DETAILS = {
   starter: [
@@ -83,6 +84,78 @@ function track(event, params = {}) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
     window.gtag('event', event, params)
   }
+}
+
+// Inline mockup of the blueprint deliverable — clickable to open sample.
+// Renders as a stack of three "pages" with a navy header and gold accent.
+function BlueprintMockup({ onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label="See a sample blueprint"
+      style={{
+        display: 'block',
+        position: 'relative',
+        width: '100%',
+        maxWidth: '300px',
+        height: '200px',
+        margin: '0 auto 0.6rem',
+        background: 'transparent',
+        border: 'none',
+        padding: 0,
+        cursor: 'pointer',
+      }}
+    >
+      {/* Back page */}
+      <div style={{
+        position: 'absolute', top: '14px', left: '28px', right: '4px', bottom: '4px',
+        background: '#fff', border: '1px solid #e0e4ef',
+        borderRadius: '6px', boxShadow: '0 2px 8px rgba(27,42,74,0.08)',
+        transform: 'rotate(2deg)',
+      }} />
+      {/* Middle page */}
+      <div style={{
+        position: 'absolute', top: '7px', left: '14px', right: '14px', bottom: '8px',
+        background: '#fff', border: '1px solid #e0e4ef',
+        borderRadius: '6px', boxShadow: '0 2px 10px rgba(27,42,74,0.10)',
+        transform: 'rotate(-1deg)',
+      }} />
+      {/* Front page */}
+      <div style={{
+        position: 'absolute', top: 0, left: 0, right: '28px', bottom: '14px',
+        background: '#fff', border: '1px solid #d8dee9',
+        borderRadius: '6px',
+        boxShadow: '0 6px 22px rgba(27,42,74,0.18)',
+        overflow: 'hidden',
+      }}>
+        {/* Navy header */}
+        <div style={{
+          height: '36px', background: NAVY, display: 'flex',
+          alignItems: 'center', padding: '0 14px', gap: '8px',
+        }}>
+          <div style={{ width: '3px', height: '16px', background: GOLD }} />
+          <span style={{ color: '#fff', fontSize: '0.55rem', fontWeight: 'bold', letterSpacing: '0.18em' }}>
+            AI BLUEPRINT
+          </span>
+          <span style={{ color: GOLD, fontSize: '0.5rem', marginLeft: 'auto', letterSpacing: '0.1em' }}>
+            NOVO NAVIS
+          </span>
+        </div>
+        <div style={{ height: '2px', background: GOLD, width: '38%' }} />
+        {/* Body content lines */}
+        <div style={{ padding: '14px 16px' }}>
+          <div style={{ height: '7px', background: NAVY, width: '70%', marginBottom: '10px', borderRadius: '2px' }} />
+          <div style={{ height: '4px', background: '#d0d8e8', width: '100%', marginBottom: '4px', borderRadius: '2px' }} />
+          <div style={{ height: '4px', background: '#d0d8e8', width: '92%', marginBottom: '4px', borderRadius: '2px' }} />
+          <div style={{ height: '4px', background: '#d0d8e8', width: '96%', marginBottom: '14px', borderRadius: '2px' }} />
+          <div style={{ height: '5px', background: NAVY, width: '48%', marginBottom: '6px', borderRadius: '2px' }} />
+          <div style={{ height: '4px', background: '#d0d8e8', width: '85%', marginBottom: '4px', borderRadius: '2px' }} />
+          <div style={{ height: '4px', background: '#d0d8e8', width: '90%', marginBottom: '4px', borderRadius: '2px' }} />
+          <div style={{ height: '4px', background: '#d0d8e8', width: '78%', borderRadius: '2px' }} />
+        </div>
+      </div>
+    </button>
+  )
 }
 
 export default function Interactive() {
@@ -185,7 +258,20 @@ export default function Interactive() {
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
         <meta property="og:description" content="Find the AI tools that actually fit your business — in about 12 minutes. Pay only if you approve." />
-        <style>{`html, body { background: #f8f9fc !important; }`}</style>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+        <style>{`
+          html, body { background: #f4f7fc !important; }
+          @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+          }
+        `}</style>
       </Head>
 
       <nav>
@@ -250,22 +336,41 @@ export default function Interactive() {
         </div>
       )}
 
+      {/* Page wrapper with subtle navy-tinted gradient anchoring the card */}
       <div style={{
-        background: '#f8f9fc',
+        background: 'linear-gradient(to bottom, #eef2f9 0px, #f4f7fc 280px)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: '2rem 1rem',
+        minHeight: '100vh',
       }}>
         <div style={{
           background: '#ffffff',
           border: '1px solid #e0e4ef',
           borderRadius: '14px',
-          boxShadow: '0 4px 32px rgba(27,42,74,0.10)',
+          boxShadow: '0 8px 40px rgba(27,42,74,0.12)',
           maxWidth: '520px',
           width: '100%',
           overflow: 'hidden',
         }}>
+
+          {/* Defense contractor credential bar — visible authority signal */}
+          <div style={{
+            background: '#fafbfd',
+            borderBottom: '1px solid #e8ecf4',
+            padding: '0.55rem 1rem',
+            textAlign: 'center',
+          }}>
+            <span style={{
+              color: NAVY, fontSize: '0.66rem', fontWeight: '700',
+              letterSpacing: '0.16em', textTransform: 'uppercase',
+            }}>
+              <span style={{ color: GOLD, marginRight: '0.4rem' }}>◆</span>
+              Registered U.S. Defense Contractor
+              <span style={{ color: GOLD, marginLeft: '0.4rem' }}>◆</span>
+            </span>
+          </div>
 
           {/* Progress bar */}
           {round !== 'final' && round !== 'sample-prompt' && (
@@ -285,13 +390,18 @@ export default function Interactive() {
             </>
           )}
 
-          <div style={{ padding: '2rem 2rem 2.5rem' }}>
+          {/* Animated content container — re-mounts on round change for the dopamine micro-reward */}
+          <div key={round} style={{ padding: '1.75rem 2rem 2.5rem', animation: 'fadeSlideIn 0.35s ease-out' }}>
 
           {/* Headline */}
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
             {round !== 'final' && round !== 'sample-prompt' && (
               <>
-                <p style={{ color: GOLD, fontSize: '1.25rem', fontWeight: 'bold', letterSpacing: '0.02em', margin: '0 0 0.4rem', lineHeight: 1.25 }}>
+                <p style={{
+                  color: GOLD, fontSize: '1.4rem', fontWeight: '700',
+                  letterSpacing: '0', margin: '0 0 0.5rem', lineHeight: 1.2,
+                  fontFamily: SERIF,
+                }}>
                   Custom AI tools matched to your business — in 12 minutes.
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '0.95rem', fontWeight: '500', margin: '0 0 1rem', lineHeight: 1.5 }}>
@@ -302,10 +412,11 @@ export default function Interactive() {
             {round !== 'sample-prompt' && (
               <h1 style={{
                 color: NAVY,
-                fontSize: round === 'final' ? '1.45rem' : '1.5rem',
+                fontSize: round === 'final' ? '1.55rem' : '1.5rem',
                 fontWeight: 'bold',
                 margin: '0 0 0.5rem',
                 lineHeight: 1.25,
+                fontFamily: round === 'final' ? SERIF : 'inherit',
               }}>
                 {round === 'final'
                   ? "You named the problem. Pick the blueprint that fits."
@@ -336,7 +447,7 @@ export default function Interactive() {
               <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.75rem' }}>
                 Before we show you the options
               </p>
-              <h2 style={{ color: NAVY, fontSize: '1.3rem', fontWeight: 'bold', margin: '0 0 0.5rem', lineHeight: 1.3 }}>
+              <h2 style={{ color: NAVY, fontSize: '1.4rem', fontWeight: 'bold', margin: '0 0 0.5rem', lineHeight: 1.3, fontFamily: SERIF }}>
                 Want to see exactly what we'll build for you?
               </h2>
               <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: '0 0 2rem' }}>
@@ -381,7 +492,15 @@ export default function Interactive() {
             </div>
           ) : round === 'final' ? (
             <>
-              {/* APPROVAL-FIRST BANNER — now explains the gating mechanic clearly */}
+              {/* Visual proof of the deliverable — clickable to open sample */}
+              <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
+                <BlueprintMockup onClick={() => { setSampleType('mold'); setSampleOpen(true); track('blueprint_mockup_clicked') }} />
+                <p style={{ color: '#8a95aa', fontSize: '0.78rem', margin: '0 0 1.25rem', fontStyle: 'italic' }}>
+                  ↑ Tap to see a real blueprint we built
+                </p>
+              </div>
+
+              {/* APPROVAL-FIRST BANNER — gating mechanic explained */}
               <div style={{
                 background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)',
                 border: `2px solid ${GOLD}`,
@@ -394,7 +513,7 @@ export default function Interactive() {
                 <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>
                   How this works
                 </p>
-                <p style={{ color: NAVY, fontSize: '1.15rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3 }}>
+                <p style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3, fontFamily: SERIF }}>
                   Read your full strategy free. Pay only to unlock the tools.
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '0.88rem', lineHeight: 1.55, margin: 0 }}>
@@ -404,7 +523,7 @@ export default function Interactive() {
 
               {/* Pricing header with anchor */}
               <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-                <h2 style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 0.4rem' }}>
+                <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: '0 0 0.4rem', fontFamily: SERIF }}>
                   Pick your blueprint depth
                 </h2>
                 <p style={{ color: '#6b7a99', fontSize: '0.83rem', margin: 0, fontStyle: 'italic' }}>
@@ -425,9 +544,10 @@ export default function Interactive() {
                   {badge && (
                     <div style={{
                       position: 'absolute', top: '-11px', left: '50%', transform: 'translateX(-50%)',
-                      background: GOLD, color: '#111', fontSize: '0.68rem', fontWeight: 'bold',
-                      padding: '0.18rem 0.75rem', borderRadius: '20px', whiteSpace: 'nowrap',
-                      letterSpacing: '0.05em',
+                      background: GOLD, color: NAVY, fontSize: '0.68rem', fontWeight: 'bold',
+                      padding: '0.18rem 0.85rem', borderRadius: '20px', whiteSpace: 'nowrap',
+                      letterSpacing: '0.08em',
+                      boxShadow: '0 2px 8px rgba(200,169,110,0.35)',
                     }}>
                       {badge}
                     </div>
@@ -435,7 +555,7 @@ export default function Interactive() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
                     <p style={{ color: NAVY, fontWeight: 'bold', fontSize: '1rem', margin: 0 }}>{name}</p>
                     <div style={{ textAlign: 'right' }}>
-                      <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.25rem', margin: 0 }}>{price}</p>
+                      <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.3rem', margin: 0, fontFamily: SERIF }}>{price}</p>
                       {key !== 'enterprise' && (
                         <p style={{ color: '#8a95aa', fontSize: '0.7rem', margin: '0.1rem 0 0', fontStyle: 'italic' }}>only after approval</p>
                       )}
@@ -449,16 +569,25 @@ export default function Interactive() {
                   <button
                     onClick={() => handleCheckout(key)}
                     disabled={checkoutLoading === key}
+                    onMouseEnter={e => { if (!checkoutLoading && key === 'blueprint') { e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,169,110,0.5)'; e.currentTarget.style.transform = 'translateY(-1px)' } }}
+                    onMouseLeave={e => { if (key === 'blueprint') { e.currentTarget.style.boxShadow = '0 4px 14px rgba(200,169,110,0.35)'; e.currentTarget.style.transform = 'translateY(0)' } }}
                     style={{
                       width: '100%',
-                      padding: '0.75rem',
-                      background: checkoutLoading === key ? '#dde2ef' : key === 'blueprint' ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : NAVY,
-                      border: 'none',
+                      padding: '0.85rem',
+                      background: checkoutLoading === key
+                        ? '#dde2ef'
+                        : key === 'blueprint'
+                          ? GOLD
+                          : NAVY,
+                      border: key === 'blueprint' ? `1px solid ${GOLD}` : 'none',
                       borderRadius: '8px',
-                      color: checkoutLoading === key ? '#8a95aa' : key === 'blueprint' ? '#111' : '#fff',
+                      color: checkoutLoading === key ? '#8a95aa' : key === 'blueprint' ? NAVY : '#fff',
                       fontWeight: 'bold',
-                      fontSize: '0.95rem',
+                      fontSize: '0.97rem',
+                      letterSpacing: '0.02em',
                       cursor: checkoutLoading === key ? 'not-allowed' : 'pointer',
+                      boxShadow: key === 'blueprint' ? '0 4px 14px rgba(200,169,110,0.35)' : 'none',
+                      transition: 'box-shadow 0.18s ease, transform 0.18s ease',
                     }}
                   >
                     {checkoutLoading === key
@@ -473,8 +602,8 @@ export default function Interactive() {
                 </div>
               ))}
 
-              {/* Trust badges — defense contractor surfaced */}
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', margin: '1rem 0', flexWrap: 'wrap' }}>
+              {/* Trust badges */}
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', margin: '1rem 0 0.75rem', flexWrap: 'wrap' }}>
                 {(isEnterprise
                   ? [['🔒', 'Stripe Secure'], ['🛡️', 'U.S. Defense Contractor']]
                   : [['✓', 'No Charge Until Approved'], ['🛡️', 'U.S. Defense Contractor'], ['🔐', 'Information Encrypted'], ['💳', 'No Card Required']]
@@ -490,6 +619,26 @@ export default function Interactive() {
                 ))}
               </div>
 
+              {/* Industry strip — breadth of social proof */}
+              <div style={{
+                background: '#fafbfd',
+                border: '1px solid #e8ecf4',
+                borderRadius: '8px',
+                padding: '0.7rem 1rem',
+                marginBottom: '1rem',
+                textAlign: 'center',
+              }}>
+                <p style={{
+                  color: '#8a95aa', fontSize: '0.66rem', fontWeight: '700',
+                  letterSpacing: '0.14em', textTransform: 'uppercase', margin: '0 0 0.35rem',
+                }}>
+                  Blueprints built for
+                </p>
+                <p style={{ color: NAVY, fontSize: '0.78rem', margin: 0, fontWeight: '500', lineHeight: 1.5 }}>
+                  Mold Remediation · Personal Injury Law · Property Management · Healthcare · Construction · E-commerce
+                </p>
+              </div>
+
               {/* Call us */}
               <div style={{
                 textAlign: 'center', marginBottom: '1rem',
@@ -499,7 +648,7 @@ export default function Interactive() {
                 <p style={{ color: NAVY, fontSize: '0.88rem', fontWeight: '600', margin: '0 0 0.2rem' }}>
                   Want to talk to a real person first?
                 </p>
-                <a href="tel:6234289308" style={{ color: GOLD, fontWeight: 'bold', fontSize: '1rem', textDecoration: 'none' }}>
+                <a href="tel:6234289308" style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.05rem', textDecoration: 'none', fontFamily: SERIF }}>
                   (623) 428-9308
                 </a>
               </div>
@@ -539,7 +688,7 @@ export default function Interactive() {
                 ]).map(([n, text]) => (
                   <div key={n} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.5rem' }}>
                     <span style={{
-                      background: GOLD, color: '#111', fontWeight: 'bold', fontSize: '0.7rem',
+                      background: GOLD, color: NAVY, fontWeight: 'bold', fontSize: '0.7rem',
                       borderRadius: '50%', width: '18px', height: '18px', flexShrink: 0,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>{n}</span>
@@ -587,10 +736,10 @@ export default function Interactive() {
                       fontSize: '0.97rem',
                       cursor: 'pointer',
                       textAlign: 'left',
-                      transition: 'border-color 0.15s, background 0.15s, box-shadow 0.15s',
+                      transition: 'border-color 0.15s, background 0.15s, box-shadow 0.15s, transform 0.15s',
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = GOLD; e.currentTarget.style.background = '#fffbf4'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(200,169,110,0.18)' }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = '#e8ecf4'; e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(27,42,74,0.07)' }}
+                    onMouseEnter={e => { e.currentTarget.style.borderColor = GOLD; e.currentTarget.style.background = '#fffbf4'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(200,169,110,0.18)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = '#e8ecf4'; e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(27,42,74,0.07)'; e.currentTarget.style.transform = 'translateY(0)' }}
                   >
                     {opt}
                   </button>
@@ -609,12 +758,12 @@ export default function Interactive() {
             </>
           )}
 
-          </div>{/* end inner padding */}
+          </div>{/* end animated content container */}
         </div>
       </div>
 
       <footer>
-        <p>© {new Date().getFullYear()} Novo Navis, LLC · Fidelis Diligentia</p>
+        <p>© {new Date().getFullYear()} Novo Navis, LLC · Registered U.S. Defense Contractor · Fidelis Diligentia</p>
       </footer>
 
       {/* What is an AI Blueprint — static info modal */}
@@ -626,6 +775,7 @@ export default function Interactive() {
             background: 'rgba(0,0,0,0.65)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             padding: '1rem',
+            animation: 'fadeIn 0.2s ease-out',
           }}
         >
           <div
@@ -636,12 +786,13 @@ export default function Interactive() {
               boxShadow: '0 8px 48px rgba(27,42,74,0.18)',
               maxWidth: '480px', width: '100%',
               padding: '2rem 1.75rem',
+              animation: 'fadeSlideIn 0.3s ease-out',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
               <div>
                 <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>Good question</p>
-                <h2 style={{ color: NAVY, fontSize: '1.15rem', fontWeight: 'bold', margin: 0 }}>What is an AI Blueprint?</h2>
+                <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: 0, fontFamily: SERIF }}>What is an AI Blueprint?</h2>
               </div>
               <button onClick={() => setObjOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '1.3rem', lineHeight: 1, padding: '0.1rem 0.3rem' }}>✕</button>
             </div>
@@ -687,6 +838,7 @@ export default function Interactive() {
             background: 'rgba(0,0,0,0.65)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             padding: '1rem',
+            animation: 'fadeIn 0.2s ease-out',
           }}
         >
           <div
@@ -697,12 +849,13 @@ export default function Interactive() {
               boxShadow: '0 8px 48px rgba(27,42,74,0.18)',
               maxWidth: '480px', width: '100%',
               padding: '2rem 1.75rem',
+              animation: 'fadeSlideIn 0.3s ease-out',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
               <div>
                 <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>What customers say</p>
-                <h2 style={{ color: NAVY, fontSize: '1.15rem', fontWeight: 'bold', margin: 0 }}>Real results from real businesses.</h2>
+                <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: 0, fontFamily: SERIF }}>Real results from real businesses.</h2>
               </div>
               <button onClick={() => setReviewsOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '1.3rem', lineHeight: 1, padding: '0.1rem 0.3rem' }}>✕</button>
             </div>
@@ -745,7 +898,8 @@ export default function Interactive() {
             position:'fixed', inset:0, zIndex:99998,
             background:'rgba(0,0,0,0.65)',
             display:'flex', alignItems:'center', justifyContent:'center',
-            padding:'1rem'
+            padding:'1rem',
+            animation: 'fadeIn 0.2s ease-out',
           }}
         >
           <div
@@ -754,7 +908,8 @@ export default function Interactive() {
               background:'#fff', borderRadius:'12px',
               width:'100%', maxWidth:'820px',
               height:'85vh', display:'flex', flexDirection:'column',
-              overflow:'hidden', boxShadow:'0 8px 48px rgba(0,0,0,0.35)'
+              overflow:'hidden', boxShadow:'0 8px 48px rgba(0,0,0,0.35)',
+              animation: 'fadeSlideIn 0.3s ease-out',
             }}
           >
             <div style={{
@@ -790,6 +945,7 @@ export default function Interactive() {
             background: 'rgba(0,0,0,0.65)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             padding: '1rem',
+            animation: 'fadeIn 0.2s ease-out',
           }}
         >
           <div
@@ -800,12 +956,13 @@ export default function Interactive() {
               boxShadow: '0 8px 48px rgba(27,42,74,0.18)',
               maxWidth: '440px', width: '100%',
               padding: '2rem 1.75rem',
+              animation: 'fadeSlideIn 0.3s ease-out',
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
               <div>
                 <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>About this site</p>
-                <h2 style={{ color: NAVY, fontSize: '1.15rem', fontWeight: 'bold', margin: 0 }}>You're on Novo Navis.</h2>
+                <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: 0, fontFamily: SERIF }}>You're on Novo Navis.</h2>
               </div>
               <button onClick={() => setSiteOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '1.3rem', lineHeight: 1, padding: '0.1rem 0.3rem' }}>✕</button>
             </div>
@@ -842,6 +999,7 @@ export default function Interactive() {
             background: 'rgba(0,0,0,0.7)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             padding: '1rem',
+            animation: 'fadeIn 0.2s ease-out',
           }}
         >
           <div
@@ -850,6 +1008,7 @@ export default function Interactive() {
               background: '#0d1221', border: '1px solid #1e2a45',
               borderRadius: '8px', maxWidth: '420px', width: '100%',
               padding: '1.75rem 1.5rem',
+              animation: 'fadeSlideIn 0.3s ease-out',
             }}
           >
             <div style={{ background: '#0d1221', border: '1px solid #1e2a45', borderRadius: '8px', padding: '1rem 1.25rem', marginBottom: '1.25rem' }}>
@@ -867,7 +1026,7 @@ export default function Interactive() {
               />
               <span style={{ color: '#d0d8e8', fontSize: '0.88rem', lineHeight: '1.6' }}>
                 I agree to the{' '}
-                <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: '#c8a96e' }}>Terms and Conditions</a>.
+                <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: GOLD }}>Terms and Conditions</a>.
               </span>
             </label>
 
@@ -890,11 +1049,12 @@ export default function Interactive() {
                 }}
                 style={{
                   flex: 2, padding: '0.75rem',
-                  background: agreedTerms ? 'linear-gradient(to bottom, #FFD814, #FFA41C)' : '#2a3a55',
+                  background: agreedTerms ? GOLD : '#2a3a55',
                   border: 'none', borderRadius: '6px',
-                  color: agreedTerms ? '#111' : '#8a95aa',
+                  color: agreedTerms ? NAVY : '#8a95aa',
                   fontWeight: 'bold', fontSize: '0.95rem',
                   cursor: agreedTerms ? 'pointer' : 'not-allowed',
+                  boxShadow: agreedTerms ? '0 4px 14px rgba(200,169,110,0.35)' : 'none',
                 }}
               >Continue to Checkout</button>
             </div>
