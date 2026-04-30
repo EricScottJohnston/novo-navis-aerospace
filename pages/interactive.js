@@ -357,7 +357,7 @@ export default function Interactive() {
               letterSpacing: '0.16em', textTransform: 'uppercase',
             }}>
               <span style={{ color: GOLD, marginRight: '0.4rem' }}>◆</span>
-              Registered U.S. Defense Contractor
+              Defense-grade AI, built for small business
               <span style={{ color: GOLD, marginLeft: '0.4rem' }}>◆</span>
             </span>
           </div>
