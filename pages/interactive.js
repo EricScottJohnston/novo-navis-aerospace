@@ -266,10 +266,10 @@ export default function Interactive() {
             from { opacity: 0; transform: translateY(8px); }
             to   { opacity: 1; transform: translateY(0); }
           }
-          @keyframes fadeIn {
-            from { opacity: 0; }
-            to   { opacity: 1; }
-          }
+          @keyframes fadeSlideIn {
+  from { opacity: 0.01; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
         `}</style>
       </Head>
 
@@ -390,7 +390,7 @@ export default function Interactive() {
           )}
 
           {/* Animated content container — re-mounts on round change for the dopamine micro-reward */}
-          <div key={round} style={{ padding: '1.75rem 2rem 2.5rem', animation: 'fadeSlideIn 0.35s ease-out' }}>
+          <div key={round} style={{ padding: '1.75rem 2rem 2.5rem', animation: round === 1 ? 'none' : 'fadeSlideIn 0.35s ease-out' }}>
 
           {/* Headline */}
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
