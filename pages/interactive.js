@@ -281,7 +281,7 @@ export default function Interactive() {
             {round === 1 && (
               <>
                 <p style={{ color: '#6b7a99', fontSize: '0.9rem', lineHeight: 1.6, margin: '0 0 0.5rem' }}>
-                  Answer 2 quick questions. We build your report. You review it. You only pay if you love it.
+                  We build your report. You review it. You only pay if you love it.
                 </p>
                 <p style={{ color: '#8a95aa', fontSize: '0.82rem', lineHeight: 1.5, margin: 0, fontStyle: 'italic' }}>
                   Up to 25 pages. Specific to your business. Yours to keep either way.
