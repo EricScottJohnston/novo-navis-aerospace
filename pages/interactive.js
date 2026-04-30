@@ -404,7 +404,7 @@ export default function Interactive() {
                   68% of businesses qualify for our "pay after" promotion.
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '0.95rem', fontWeight: '500', margin: '0 0 1rem', lineHeight: 1.5 }}>
-                  We build the report. You preview it free. Pay only if you approve.
+                  We build the AI blueprint. You preview it free. Pay only if you approve.
                 </p>
               </>
             )}
