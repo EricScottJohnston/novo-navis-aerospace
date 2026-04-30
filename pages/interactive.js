@@ -254,7 +254,7 @@ export default function Interactive() {
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
             {round !== 'final' && round !== 'sample-prompt' && (
               <>
-                <p style={{ color: GOLD, fontSize: '0.72rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.5rem' }}>
+                <p style={{ color: GOLD, fontSize: '1.25rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.5rem' }}>
                   Pay only after your approval
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '1.05rem', fontWeight: '600', margin: '0 0 0.15rem' }}>
