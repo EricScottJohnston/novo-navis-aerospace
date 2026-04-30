@@ -1,5 +1,5 @@
 // pages/interactive.js
-// Interactive AI Blueprint sales funnel — 2 rounds of questions, leads to free personalized report.
+// Interactive AI Blueprint sales funnel — 3 rounds of emotionally-arced questions, leads to free personalized report.
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -44,23 +44,40 @@ const TIERS = [
   { key: 'enterprise', name: 'Enterprise Blueprint',      price: '$999', badge: null },
 ]
 
+// ROUND 1 — ASPIRATION (towards-language, paints the future)
 const ROUND_1 = {
-  tip: 'The average small business owner spends 40+ hours researching AI tools before giving up — and still doesn\'t know what to use. Our blueprint does that research for you, customized to your business, in about 12 minutes.',
-  question: 'Which sounds most like you?',
+  question: 'What would actually change your business right now?',
   options: [
-    'I know I need AI but have no idea where to start',
-    'I\'ve tried some AI tools but they\'re not quite right for my business',
-    'I don'tknow where to start with AI,
+    'Getting hours back every week so I can focus on real work',
+    'Stopping the slow bleed of leads slipping through the cracks',
+    'Finally knowing which AI tools are actually worth the money',
+    'Scaling without hiring more people',
   ],
 }
 
+// ROUND 2 — BEHAVIOR (neutral, how they currently operate)
 const ROUND_2 = {
-  tip: 'Most AI tools are built for enterprise companies — not small businesses. Your AI Blueprint is built around what actually works at your scale and budget.',
-  question: 'What size is your business?',
-  options: ['Solo operator or freelancer', 'Small business with a team', 'Growing business ready to scale', 'Enterprise organization'],
+  question: 'How are you handling AI decisions today?',
+  options: [
+    'I haven\'t started yet — I don\'t know where to begin',
+    'I\'ve tried a few tools but nothing has stuck',
+    'I\'m using AI casually but not strategically',
+    'I have a stack but I\'m not sure I\'m using the right ones',
+  ],
 }
 
-const ENTERPRISE_OPTION = 'Enterprise organization'
+// ROUND 3 — PAIN (problem-ownership, creates buying intent)
+const ROUND_3 = {
+  question: 'What\'s the biggest thing holding you back?',
+  options: [
+    'I don\'t have time to research and test 50 different tools',
+    'I can\'t tell which AI advice is real and which is hype',
+    'I\'m afraid of picking the wrong tool and wasting money',
+    'I\'m running an enterprise — I need this done at scale',
+  ],
+}
+
+const ENTERPRISE_OPTION = 'I\'m running an enterprise — I need this done at scale'
 
 function track(event, params = {}) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -101,8 +118,13 @@ export default function Interactive() {
       setRound(2)
       return
     }
+    if (round === 2) {
+      setCurrent(ROUND_3)
+      setRound(3)
+      return
+    }
 
-    // Round 2 complete — show sample prompt
+    // Round 3 complete — show sample prompt
     const enterprise = option === ENTERPRISE_OPTION
     setIsEnterprise(enterprise)
     setRound('sample-prompt')
@@ -137,6 +159,21 @@ export default function Interactive() {
       alert('Something went wrong. Please try again.')
       setCheckoutLoading(null)
     }
+  }
+
+  // Round-specific sub-headlines for emotional pacing
+  const getSubheadline = () => {
+    if (round === 1) return "Pick the outcome that would matter most to you."
+    if (round === 2) return "There's no wrong answer — just where you actually are right now."
+    if (round === 3) return "One last thing. Be honest — this is what we'll solve."
+    return ""
+  }
+
+  const getMomentumLine = () => {
+    if (round === 1) return "Answer 3 quick questions. We build your report. You review it. You only pay if you love it."
+    if (round === 2) return "Good. We're already learning what you need."
+    if (round === 3) return "Almost there. This is the one that matters."
+    return ""
   }
 
   return (
@@ -236,14 +273,14 @@ export default function Interactive() {
               <div style={{ background: '#e8ecf4', height: '5px', width: '100%' }}>
                 <div style={{
                   height: '100%',
-                  width: `${(round / 2) * 100}%`,
+                  width: `${(round / 3) * 100}%`,
                   background: GOLD,
                   transition: 'width 0.4s ease',
-                  minWidth: '50%',
+                  minWidth: '33%',
                 }} />
               </div>
               <p style={{ textAlign: 'right', fontSize: '0.72rem', color: '#8a95aa', margin: '0.3rem 1rem 0', paddingBottom: '0' }}>
-                Question {round} of 2
+                Question {round} of 3
               </p>
             </>
           )}
@@ -254,44 +291,43 @@ export default function Interactive() {
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
             {round !== 'final' && round !== 'sample-prompt' && (
               <>
-                <p style={{ color: GOLD, fontSize: '1.25rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.5rem' }}>
-                  Pay only after your approval
+                <p style={{ color: GOLD, fontSize: '1.25rem', fontWeight: 'bold', letterSpacing: '0.02em', margin: '0 0 0.4rem', lineHeight: 1.25 }}>
+                  Pay only after your approval.
                 </p>
-                <p style={{ color: '#4a5568', fontSize: '1.05rem', fontWeight: '600', margin: '0 0 0.15rem' }}>
-                  Stop guessing which AI tools to use.
-                </p>
-                <p style={{ color: NAVY, fontSize: '0.92rem', fontWeight: '600', margin: '0 0 0.75rem' }}>
-                  Get a custom blueprint built around <em>your</em> business.
+                <p style={{ color: '#4a5568', fontSize: '0.95rem', fontWeight: '500', margin: '0 0 1rem', lineHeight: 1.5 }}>
+                  We build it. You review it. You decide.
                 </p>
               </>
             )}
             {round !== 'sample-prompt' && (
               <h1 style={{
                 color: NAVY,
-                fontSize: round === 'final' ? '1.45rem' : '1.7rem',
+                fontSize: round === 'final' ? '1.45rem' : '1.5rem',
                 fontWeight: 'bold',
                 margin: '0 0 0.5rem',
-                lineHeight: 1.2,
+                lineHeight: 1.25,
               }}>
                 {round === 'final'
                   ? "We've solved 50% of your problem. Choose an option to solve the other 50%."
                   : current.question}
               </h1>
             )}
-            {round === 1 && (
+            {round !== 'final' && round !== 'sample-prompt' && (
               <>
-                <p style={{ color: '#6b7a99', fontSize: '0.9rem', lineHeight: 1.6, margin: '0 0 0.5rem' }}>
-                  We build your report. You review it. You only pay if you love it.
+                <p style={{ color: '#6b7a99', fontSize: '0.9rem', lineHeight: 1.6, margin: '0 0 0.4rem' }}>
+                  {getSubheadline()}
                 </p>
-                <p style={{ color: '#8a95aa', fontSize: '0.82rem', lineHeight: 1.5, margin: 0, fontStyle: 'italic' }}>
-                  Up to 25 pages. Specific to your business. Yours to keep either way.
-                </p>
+                {round === 1 && (
+                  <p style={{ color: '#8a95aa', fontSize: '0.82rem', lineHeight: 1.5, margin: 0, fontStyle: 'italic' }}>
+                    {getMomentumLine()}
+                  </p>
+                )}
+                {round > 1 && (
+                  <p style={{ color: GOLD, fontSize: '0.82rem', lineHeight: 1.5, margin: 0, fontWeight: '600' }}>
+                    {getMomentumLine()}
+                  </p>
+                )}
               </>
-            )}
-            {round === 2 && (
-              <p style={{ color: '#6b7a99', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
-                Almost there. One more question and we'll build your blueprint.
-              </p>
             )}
           </div>
 
@@ -345,7 +381,7 @@ export default function Interactive() {
             </div>
           ) : round === 'final' ? (
             <>
-              {/* APPROVAL-FIRST BANNER — the dominant message */}
+              {/* APPROVAL-FIRST BANNER */}
               <div style={{
                 background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)',
                 border: `2px solid ${GOLD}`,
@@ -557,11 +593,6 @@ export default function Interactive() {
                   </button>
                 ))}
               </div>
-
-              {/* Nudge */}
-              <p style={{ color: '#8a95aa', fontSize: '0.78rem', textAlign: 'center', margin: 0 }}>
-                Pick whichever feels closest. There's no wrong answer.
-              </p>
 
               {/* Site explainer link */}
               <p style={{ textAlign: 'center', marginTop: '1rem', marginBottom: 0 }}>
@@ -781,7 +812,7 @@ export default function Interactive() {
             </p>
 
             <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-              Answer 2 quick questions and we'll build you a custom AI report. We build it. You preview it. You only pay if you approve.
+              Answer 3 quick questions and we'll build you a custom AI report. We build it. You preview it. You only pay if you approve.
             </p>
 
             <button
@@ -799,7 +830,7 @@ export default function Interactive() {
         </div>
       )}
 
-      {/* Terms modal — lightweight, checkbox upfront */}
+      {/* Terms modal */}
       {showTermsModal && (
         <div
           onClick={() => setShowTermsModal(false)}
