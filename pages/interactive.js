@@ -82,6 +82,7 @@ const ENTERPRISE_OPTION = 'I\'m running an enterprise — I need this done at sc
 
 const REVIEWS = [
   { stars: 5, text: '...These guys definitely cut through the hype. It didn\'t take very long, and I got definitive answers for my business needs. Highly recommend....' },
+  { stars: 5, text: '...I had a lot of fun watching the system build my report. Great tool. I wish I could watch it again....' },
   { stars: 4, text: '...These guys found tools I never would have uncovered on my own. I was a little uncertain about their pricing model, but I can definitely see why they do it now. Try it. It works....' },
   { stars: 5, text: '...I spent weeks trying to find the right tools and ended up getting upsold on a lot of things I didn\'t need for my business. Now I have the exact tools for my workflow at my budget....' },
   { stars: 5, text: '...As a business owner who\'s used business consultants in the past, what Novo Navis gave me for this price would have cost me tens of thousands of dollars at one of the big consulting companies. And it was fast....' },
