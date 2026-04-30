@@ -47,7 +47,7 @@ const TIERS = [
 
 // ROUND 1 — ASPIRATION
 const ROUND_1 = {
-  question: 'What's the first thing you'll make AI do for your business?',
+  question: 'What\'s the first thing you\'ll make AI do for your business?',
   options: [
     'Get hours back every week so I can focus on real work',
     'Stop leads slipping through the cracks',
