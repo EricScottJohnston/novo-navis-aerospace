@@ -1,6 +1,7 @@
 // pages/intake.js — Drop-in replacement.
 // Same payload to David, same endpoints (/api/intake, /api/verify-email, /api/session).
-// Only the UI is changed to reduce friction.
+// Email verification modal added: if user tries to submit without verifying, a modal
+// pops up with a clear "Verify Now" button that focuses the verification field.
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -78,9 +79,12 @@ export default function Intake() {
   const [currentStep,    setCurrentStep]   = useState(1)
   const [stepError,      setStepError]     = useState('')
   const [submitNotice,   setSubmitNotice]  = useState('')
+  const [showVerifyModal, setShowVerifyModal] = useState(false)
   const recognitionRef = useRef(null)
   const topRef         = useRef(null)
   const businessRef    = useRef(null)
+  const emailRef       = useRef(null)
+  const verifyBoxRef   = useRef(null)
   const draftHydrated  = useRef(false)
 
   // Email verification state — now lives inside Step 4 for free flow.
@@ -275,7 +279,7 @@ export default function Intake() {
     if (step === 4) {
       if (!formData.name.trim())                 return 'Please enter your full name.'
       if (!formData.budget)                      return 'Please pick a monthly budget.'
-      if (isFree && !emailVerified)              return 'Please verify your email so we can deliver your preview.'
+      if (isFree && !emailVerified)              return 'NEEDS_EMAIL_VERIFY' // sentinel — handled separately by modal
       if (!agreedTerms)                          return 'Please agree to the Terms and Conditions.'
     }
     return null
@@ -290,11 +294,35 @@ export default function Intake() {
 
   const handleBack = () => { setStepError(''); setCurrentStep(s => s - 1) }
 
+  // ── Verify modal helpers ──────────────────────────────────────────────────
+  const handleModalVerifyNow = () => {
+    setShowVerifyModal(false)
+    // Scroll the verification box into view and focus the email input
+    setTimeout(() => {
+      verifyBoxRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      // Focus email input if not yet entered, or code input if waiting on code
+      if (!formData.email.trim() || !codeSent) {
+        emailRef.current?.focus()
+      } else {
+        const codeEl = document.querySelector('input[data-verify-code="1"]')
+        codeEl?.focus()
+      }
+    }, 80)
+  }
+
   // ── Submit ────────────────────────────────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault()
     const err = validateStep(4)
+
+    // Special handling: missing email verification → show modal instead of inline error
+    if (err === 'NEEDS_EMAIL_VERIFY') {
+      setStepError('')
+      setShowVerifyModal(true)
+      return
+    }
     if (err) { setStepError(err); return }
+
     setSubmitting(true)
     setSubmitNotice('')
 
@@ -509,6 +537,8 @@ export default function Intake() {
   )
 
   // ── Nav buttons ───────────────────────────────────────────────────────────
+  // NOTE: submit button is intentionally NOT disabled when email is unverified —
+  // we want the tap to trigger the verification modal so the user gets a clear message.
   const NavButtons = ({ isSubmit = false }) => (
     <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.75rem' }}>
       {currentStep > 1 && (
@@ -525,7 +555,7 @@ export default function Intake() {
       {isSubmit ? (
         <button type="submit" className="btn-primary"
           style={{ flex: 1, fontSize: '1.05rem', padding: '0.9rem' }}
-          disabled={submitting || !agreedTerms || (isFree && !emailVerified)}>
+          disabled={submitting}>
           {submitting
             ? 'Submitting...'
             : isFree ? 'Submit — Get My Free Preview →' : 'Submit — Build My Blueprint →'}
@@ -562,6 +592,18 @@ export default function Intake() {
           @keyframes stepFadeIn {
             from { opacity: 0; transform: translateY(8px); }
             to   { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+          }
+          @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(12px) scale(0.98); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+          }
+          @keyframes nudgePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(200,169,110,0); }
+            50%      { box-shadow: 0 0 0 4px rgba(200,169,110,0.25); }
           }
           .step-panel { animation: stepFadeIn 0.2s ease both; }
           .report-page { background: #ffffff !important; }
@@ -824,23 +866,44 @@ export default function Intake() {
 
                     {/* Email + verification (free flow only) */}
                     {isFree && (
-                      <div className="form-group">
+                      <div
+                        ref={verifyBoxRef}
+                        className="form-group"
+                        style={{
+                          padding: emailVerified ? '0.85rem 1rem' : '1rem 1.1rem',
+                          border: emailVerified
+                            ? '1px solid #c4e2cf'
+                            : `2px solid ${GOLD}`,
+                          background: emailVerified ? '#f4fbf6' : '#fffbf4',
+                          borderRadius: '10px',
+                          boxShadow: emailVerified ? 'none' : '0 2px 12px rgba(200,169,110,0.18)',
+                          transition: 'all 0.2s ease',
+                        }}>
                         <label>
-                          Email Address *
-                          {emailVerified && (
-                            <span style={{ color: '#1a8a4e', fontSize: '0.85rem', marginLeft: '0.5rem', fontWeight: '600' }}>
-                              ✓ Verified
-                            </span>
+                          {emailVerified ? (
+                            <>
+                              Email Address *
+                              <span style={{ color: '#1a8a4e', fontSize: '0.85rem', marginLeft: '0.5rem', fontWeight: '700' }}>
+                                ✓ Verified
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <span style={{ color: GOLD, fontSize: '0.7rem', fontWeight: '700', letterSpacing: '0.12em', textTransform: 'uppercase', display: 'block', marginBottom: '0.2rem' }}>
+                                Required to receive your blueprint
+                              </span>
+                              Email Address *
+                            </>
                           )}
                         </label>
-                        <p style={{ color: '#6b7a99', fontSize: '0.82rem', margin: '-0.25rem 0 0.5rem' }}>
+                        <p style={{ color: '#6b7a99', fontSize: '0.82rem', margin: '-0.15rem 0 0.6rem' }}>
                           We'll send a 6-digit code to confirm. We never sell or share your info.
                         </p>
 
                         {!emailVerified && (
                           <>
                             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
-                              <input type="email" name="email"
+                              <input ref={emailRef} type="email" name="email"
                                 value={formData.email}
                                 onChange={e => { handleChange(e); if (codeSent) { setCodeSent(false); setCodeInput('') } }}
                                 placeholder="you@yourbusiness.com"
@@ -849,10 +912,11 @@ export default function Intake() {
                               {!codeSent && (
                                 <button type="button" onClick={handleSendCode} disabled={verifyLoading}
                                   style={{
-                                    background: NAVY, color: '#fff', border: 'none', borderRadius: '6px',
-                                    padding: '0.65rem 1.1rem', fontWeight: '700', fontSize: '0.9rem',
+                                    background: GOLD, color: '#111', border: 'none', borderRadius: '6px',
+                                    padding: '0.7rem 1.2rem', fontWeight: '700', fontSize: '0.92rem',
                                     cursor: verifyLoading ? 'not-allowed' : 'pointer',
                                     opacity: verifyLoading ? 0.6 : 1,
+                                    boxShadow: '0 2px 8px rgba(200,169,110,0.3)',
                                   }}>
                                   {verifyLoading ? 'Sending...' : 'Send Code'}
                                 </button>
@@ -861,7 +925,7 @@ export default function Intake() {
 
                             {codeSent && (
                               <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap', marginTop: '0.6rem' }}>
-                                <input type="text" inputMode="numeric"
+                                <input type="text" inputMode="numeric" data-verify-code="1"
                                   value={codeInput} onChange={e => setCodeInput(e.target.value)}
                                   placeholder="6-digit code" maxLength={6}
                                   style={{
@@ -871,9 +935,10 @@ export default function Intake() {
                                 <button type="button" onClick={handleVerifyCode} disabled={verifyLoading}
                                   style={{
                                     background: GOLD, color: '#111', border: 'none', borderRadius: '6px',
-                                    padding: '0.65rem 1.1rem', fontWeight: '700', fontSize: '0.9rem',
+                                    padding: '0.7rem 1.2rem', fontWeight: '700', fontSize: '0.92rem',
                                     cursor: verifyLoading ? 'not-allowed' : 'pointer',
                                     opacity: verifyLoading ? 0.6 : 1,
+                                    boxShadow: '0 2px 8px rgba(200,169,110,0.3)',
                                   }}>
                                   {verifyLoading ? 'Verifying...' : 'Verify'}
                                 </button>
@@ -931,8 +996,85 @@ export default function Intake() {
         )}
       </div>
 
+      {/* ────────────────────────────────────────────────────────────────────
+          EMAIL VERIFICATION MODAL
+          Triggered when user taps Submit without verifying their email.
+      ──────────────────────────────────────────────────────────────────── */}
+      {showVerifyModal && (
+        <div
+          onClick={() => setShowVerifyModal(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 99999,
+            background: 'rgba(0,0,0,0.65)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1rem',
+            animation: 'modalFadeIn 0.2s ease-out',
+          }}>
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: '#ffffff', borderRadius: '14px',
+              border: `2px solid ${GOLD}`,
+              boxShadow: '0 12px 48px rgba(27,42,74,0.28)',
+              maxWidth: '420px', width: '100%',
+              padding: '1.75rem 1.6rem',
+              animation: 'modalSlideIn 0.25s ease-out',
+            }}>
+            <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+              <div style={{
+                width: '52px', height: '52px', borderRadius: '50%',
+                background: '#fffbf4', border: `2px solid ${GOLD}`,
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: '1.6rem', marginBottom: '0.75rem',
+              }}>
+                ✉️
+              </div>
+              <h2 style={{
+                color: NAVY, fontSize: '1.2rem', fontWeight: '700',
+                margin: '0 0 0.4rem',
+              }}>
+                One more thing — verify your email
+              </h2>
+              <p style={{ color: '#4a5568', fontSize: '0.92rem', lineHeight: 1.55, margin: 0 }}>
+                {!formData.email.trim()
+                  ? "We need a verified email so we can deliver your blueprint preview. It takes about 30 seconds."
+                  : codeSent
+                    ? "We've sent a 6-digit code to your inbox. Enter it to confirm — then we'll build your blueprint."
+                    : "Tap 'Send Code' to receive a 6-digit code. Enter it to confirm your email — then we'll build your blueprint."}
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleModalVerifyNow}
+              style={{
+                width: '100%', padding: '0.9rem',
+                background: GOLD, color: '#111',
+                border: 'none', borderRadius: '8px',
+                fontWeight: '700', fontSize: '1rem',
+                cursor: 'pointer',
+                boxShadow: '0 4px 14px rgba(200,169,110,0.4)',
+                marginBottom: '0.5rem',
+              }}>
+              Verify My Email Now →
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowVerifyModal(false)}
+              style={{
+                width: '100%', padding: '0.6rem',
+                background: 'none', border: 'none',
+                color: '#8a95aa', fontSize: '0.85rem',
+                cursor: 'pointer', textDecoration: 'underline',
+              }}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
       <footer>
-        <p>© {new Date().getFullYear()} Novo Navis, LLC · Fidelis Diligentia</p>
+        <p>© {new Date().getFullYear()} Novo Navis, LLC · Registered U.S. Defense Contractor · Fidelis Diligentia</p>
         <p style={{ marginTop: '0.5rem' }}>
           <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
           <Link href="/terms">Terms and Conditions</Link>
