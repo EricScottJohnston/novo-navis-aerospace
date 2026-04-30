@@ -170,7 +170,7 @@ export default function Interactive() {
   }
 
   const getMomentumLine = () => {
-    if (round === 1) return "Answer 3 quick questions. We build your report. You review it. You only pay if you love it."
+    if (round === 1) return "Answer 3 quick questions. We build your report. You preview it free. You only pay if you approve."
     if (round === 2) return "Good. We're already learning what you need."
     if (round === 3) return "Almost there. This is the one that matters."
     return ""
@@ -180,11 +180,11 @@ export default function Interactive() {
     <>
       <Head>
         <title>Find Your AI Blueprint | Novo Navis</title>
-        <meta name="description" content="Get a custom AI Blueprint built for your specific business — you only pay after your approval. Delivered in about 12 minutes." />
+        <meta name="description" content="Find the AI tools that actually fit your business — in about 12 minutes. We build a custom AI Blueprint, you preview it free, and only pay if you approve." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
-        <meta property="og:description" content="Get a custom AI Blueprint built for your specific business — you only pay after your approval." />
+        <meta property="og:description" content="Find the AI tools that actually fit your business — in about 12 minutes. Pay only if you approve." />
         <style>{`html, body { background: #f8f9fc !important; }`}</style>
       </Head>
 
@@ -292,10 +292,10 @@ export default function Interactive() {
             {round !== 'final' && round !== 'sample-prompt' && (
               <>
                 <p style={{ color: GOLD, fontSize: '1.25rem', fontWeight: 'bold', letterSpacing: '0.02em', margin: '0 0 0.4rem', lineHeight: 1.25 }}>
-                  Pay only after your approval.
+                  Custom AI tools matched to your business — in 12 minutes.
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '0.95rem', fontWeight: '500', margin: '0 0 1rem', lineHeight: 1.5 }}>
-                  We build it. You review it. You decide.
+                  We build the report. You preview it free. Pay only if you approve.
                 </p>
               </>
             )}
@@ -308,7 +308,7 @@ export default function Interactive() {
                 lineHeight: 1.25,
               }}>
                 {round === 'final'
-                  ? "We've solved 50% of your problem. Choose an option to solve the other 50%."
+                  ? "You named the problem. Pick the blueprint that fits."
                   : current.question}
               </h1>
             )}
@@ -381,7 +381,7 @@ export default function Interactive() {
             </div>
           ) : round === 'final' ? (
             <>
-              {/* APPROVAL-FIRST BANNER */}
+              {/* APPROVAL-FIRST BANNER — now explains the gating mechanic clearly */}
               <div style={{
                 background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)',
                 border: `2px solid ${GOLD}`,
@@ -392,21 +392,24 @@ export default function Interactive() {
                 boxShadow: '0 4px 16px rgba(200,169,110,0.18)',
               }}>
                 <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>
-                  Here's how this works
+                  How this works
                 </p>
                 <p style={{ color: NAVY, fontSize: '1.15rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3 }}>
-                  You only pay after your approval.
+                  Read your full strategy free. Pay only to unlock the tools.
                 </p>
                 <p style={{ color: '#4a5568', fontSize: '0.88rem', lineHeight: 1.55, margin: 0 }}>
-                  We build your full report. You preview it. If you love it, unlock the tool names. If not, walk away — no charges, no follow-up.
+                  We build your complete blueprint and send you the entire strategy. The specific AI tools we recommend stay redacted in the preview. Like what you see? Approve and unlock. If not, walk away — no charges, no follow-up.
                 </p>
               </div>
 
-              {/* Pricing header */}
+              {/* Pricing header with anchor */}
               <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-                <h2 style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: 0 }}>
+                <h2 style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 0.4rem' }}>
                   Pick your blueprint depth
                 </h2>
+                <p style={{ color: '#6b7a99', fontSize: '0.83rem', margin: 0, fontStyle: 'italic' }}>
+                  Most consultants charge $5,000+ for this depth. We start at $99.
+                </p>
               </div>
 
               {/* Tier cards */}
@@ -470,11 +473,11 @@ export default function Interactive() {
                 </div>
               ))}
 
-              {/* Trust badges */}
+              {/* Trust badges — defense contractor surfaced */}
               <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', margin: '1rem 0', flexWrap: 'wrap' }}>
                 {(isEnterprise
-                  ? [['🔒', 'Stripe Secure'], ['🔐', 'Information Encrypted']]
-                  : [['✓', 'No Charge Until Approved'], ['🔐', 'Information Encrypted'], ['💳', 'No Card Required']]
+                  ? [['🔒', 'Stripe Secure'], ['🛡️', 'U.S. Defense Contractor']]
+                  : [['✓', 'No Charge Until Approved'], ['🛡️', 'U.S. Defense Contractor'], ['🔐', 'Information Encrypted'], ['💳', 'No Card Required']]
                 ).map(([icon, label]) => (
                   <div key={label} style={{
                     display: 'flex', alignItems: 'center', gap: '0.3rem',
@@ -657,7 +660,7 @@ export default function Interactive() {
             </p>
 
             <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
-              Built by David — a proprietary AI system developed under defense-grade standards — and delivered in about <strong>12 minutes</strong>. Up to 25 pages, built around your specific business.
+              Built by David — our proprietary AI system, developed under defense-grade standards — and delivered in about <strong>12 minutes</strong>. Up to 25 pages, built around your specific business.
             </p>
 
             <button
