@@ -378,7 +378,7 @@ export default function Interactive() {
           )}
 
           {/* Animated content container */}
-          <div key={round} style={{ padding: '1.75rem 2rem 2.5rem', animation: 'fadeSlideIn 0.35s ease-out' }}>
+          <div key={round} style={{ padding: '1.75rem 2rem 2.5rem' }}>
 
           {/* Headline area */}
           <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
