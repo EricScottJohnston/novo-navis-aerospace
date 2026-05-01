@@ -83,7 +83,6 @@ const ENTERPRISE_OPTION = 'I\'m running an enterprise — I need this done at sc
 
 // 16-combination personalized headline map — key: "round1answer|round3answer"
 const HEADLINE_MAP = {
-  // R1: Get hours back
   'Get hours back every week so I can focus on real work|I don\'t have time to research and test 50 different tools':
     'You want your time back — but researching 50 tools is a full-time job in itself. Let\'s get you dialed in.',
   'Get hours back every week so I can focus on real work|I can\'t tell which AI advice is real and which is hype':
@@ -92,8 +91,6 @@ const HEADLINE_MAP = {
     'You want your time back — but one wrong tool and you\'ve just wasted more of it. Let\'s get you dialed in.',
   'Get hours back every week so I can focus on real work|I\'m running an enterprise — I need this done at scale':
     'You want hours back across an entire organization — that takes more than guesswork. Let\'s get you dialed in.',
-
-  // R1: Stop leads slipping
   'Stop leads slipping through the cracks|I don\'t have time to research and test 50 different tools':
     'You\'re losing leads right now — and you don\'t have time to test tools while it\'s happening. Let\'s get you dialed in.',
   'Stop leads slipping through the cracks|I can\'t tell which AI advice is real and which is hype':
@@ -102,8 +99,6 @@ const HEADLINE_MAP = {
     'You\'re losing leads — and betting on the wrong fix could make it worse. Let\'s get you dialed in.',
   'Stop leads slipping through the cracks|I\'m running an enterprise — I need this done at scale':
     'Leads are slipping across your whole operation — that\'s not a one-tool problem. Let\'s get you dialed in.',
-
-  // R1: Automate the grunt work
   'Automate the grunt work|I don\'t have time to research and test 50 different tools':
     'You\'re ready to automate — you just don\'t have time to figure out what actually works. Let\'s get you dialed in.',
   'Automate the grunt work|I can\'t tell which AI advice is real and which is hype':
@@ -112,8 +107,6 @@ const HEADLINE_MAP = {
     'You\'re ready to automate — you just can\'t afford to pick the tool that automates the wrong things. Let\'s get you dialed in.',
   'Automate the grunt work|I\'m running an enterprise — I need this done at scale':
     'Automating grunt work at enterprise scale isn\'t a plug-in — it\'s a system. Let\'s get you dialed in.',
-
-  // R1: Scale without hiring
   'Scale without hiring more people|I don\'t have time to research and test 50 different tools':
     'You want to scale without adding headcount — but finding the right AI to make that happen takes a team of researchers. Let\'s get you dialed in.',
   'Scale without hiring more people|I can\'t tell which AI advice is real and which is hype':
@@ -125,6 +118,8 @@ const HEADLINE_MAP = {
 }
 
 const DEFAULT_HEADLINE = 'You named the problem. Pick the blueprint that fits.'
+
+const BBB_URL = 'https://www.bbb.org/us/az/glendale/profile/aerospace-industry/novo-navis-aerospace-1126-1000076608'
 
 const REVIEWS = [
   { stars: 5, text: '...These guys definitely cut through the hype. It didn\'t take very long, and I got definitive answers for my business needs. Highly recommend....' },
@@ -523,18 +518,49 @@ export default function Interactive() {
                   padding: '0.85rem 1rem',
                   marginBottom: '1rem',
                   display: 'flex',
-                  alignItems: 'flex-start',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
                   gap: '0.65rem',
                 }}>
-                  <span style={{ fontSize: '1.1rem', flexShrink: 0, marginTop: '1px' }}>🏛️</span>
-                  <div>
-                    <p style={{ color: GOLD, fontSize: '0.68rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>
-                      A+ Rated · Better Business Bureau
-                    </p>
-                    <p style={{ color: '#d0d8e8', fontSize: '0.78rem', lineHeight: 1.55, margin: 0 }}>
-                      Novo Navis Interactive is a division of Novo Navis Aerospace. We're engineers applying rigor — not marketers applying hype.
-                    </p>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.65rem', flex: 1 }}>
+                    <span style={{ fontSize: '1.1rem', flexShrink: 0, marginTop: '1px' }}>🏛️</span>
+                    <div>
+                      <p style={{ color: GOLD, fontSize: '0.68rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>
+                        A+ Rated · Better Business Bureau
+                      </p>
+                      <p style={{ color: '#d0d8e8', fontSize: '0.78rem', lineHeight: 1.55, margin: 0 }}>
+                        Novo Navis Interactive is a division of Novo Navis Aerospace. We're engineers applying rigor — not marketers applying hype.
+                      </p>
+                    </div>
                   </div>
+                  <a
+                    href={BBB_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => track('bbb_verify_clicked')}
+                    style={{
+                      flexShrink: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.3rem',
+                      background: 'transparent',
+                      border: `1px solid ${GOLD}60`,
+                      borderRadius: '6px',
+                      padding: '0.35rem 0.65rem',
+                      color: GOLD,
+                      fontSize: '0.68rem',
+                      fontWeight: 'bold',
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      textDecoration: 'none',
+                      whiteSpace: 'nowrap',
+                      transition: 'background 0.15s',
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = `${GOLD}18`}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    <span style={{ fontSize: '0.75rem' }}>✓</span> Verify
+                  </a>
                 </div>
 
                 {/* What is this site link */}
