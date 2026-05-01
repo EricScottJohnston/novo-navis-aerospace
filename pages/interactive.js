@@ -3,6 +3,7 @@
 
 import Head from 'next/head'
 import Link from 'next/link'
+import Script from 'next/script'
 import { useState, useEffect } from 'react'
 
 const NAVY  = '#1B2A4A'
@@ -284,6 +285,15 @@ export default function Interactive() {
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
         <meta property="og:description" content="95% of businesses pick the wrong AI tools. We make sure you're not one of them." />
+        {/* Meta Pixel noscript fallback */}
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            src="https://www.facebook.com/tr?id=1238388328412220&ev=PageView&noscript=1"
+          />
+        </noscript>
         <style>{`
           html, body { background: #f4f7fc !important; }
           @keyframes fadeSlideIn {
@@ -297,6 +307,26 @@ export default function Interactive() {
           .reviews-scroll::-webkit-scrollbar { display: none; }
         `}</style>
       </Head>
+
+      {/* Meta Pixel */}
+      <Script
+        id="meta-pixel"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1238388328412220');
+            fbq('track', 'PageView');
+          `,
+        }}
+      />
 
       <nav>
         <span className="nav-logo" style={{ cursor: 'default' }}>NOVO NAVIS</span>
