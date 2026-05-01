@@ -216,7 +216,6 @@ export default function Interactive() {
       setRound(3)
       return
     }
-    // Round 3 complete — go to final pricing screen
     track('round_3_complete', { answer: option })
     const enterprise = option === ENTERPRISE_OPTION
     setIsEnterprise(enterprise)
@@ -265,7 +264,6 @@ export default function Interactive() {
     track(type === 'law' ? 'sample_picker_law' : 'sample_picker_mold')
   }
 
-  // Build personalized headline from Round 1 + Round 3 answers
   const getPersonalizedHeadline = () => {
     const round1 = answers[0]?.answer
     const round3 = answers[2]?.answer
@@ -285,14 +283,8 @@ export default function Interactive() {
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
         <meta property="og:description" content="95% of businesses pick the wrong AI tools. We make sure you're not one of them." />
-        {/* Meta Pixel noscript fallback */}
         <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: 'none' }}
-            src="https://www.facebook.com/tr?id=1238388328412220&ev=PageView&noscript=1"
-          />
+          <img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=1238388328412220&ev=PageView&noscript=1" />
         </noscript>
         <style>{`
           html, body { background: #f4f7fc !important; }
@@ -495,6 +487,7 @@ export default function Interactive() {
               </>
             ) : (
               <>
+                {/* Answer option buttons */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.25rem' }}>
                   {current.options.map((opt, i) => (
                     <button
@@ -521,6 +514,30 @@ export default function Interactive() {
                   </div>
                 </div>
 
+                {/* BBB Trust Badge */}
+                <div style={{
+                  background: NAVY,
+                  border: `1px solid ${GOLD}40`,
+                  borderLeft: `3px solid ${GOLD}`,
+                  borderRadius: '8px',
+                  padding: '0.85rem 1rem',
+                  marginBottom: '1rem',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.65rem',
+                }}>
+                  <span style={{ fontSize: '1.1rem', flexShrink: 0, marginTop: '1px' }}>🏛️</span>
+                  <div>
+                    <p style={{ color: GOLD, fontSize: '0.68rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>
+                      A+ Rated · Better Business Bureau
+                    </p>
+                    <p style={{ color: '#d0d8e8', fontSize: '0.78rem', lineHeight: 1.55, margin: 0 }}>
+                      Novo Navis Interactive is a division of Novo Navis Aerospace. We're engineers applying rigor — not marketers applying hype.
+                    </p>
+                  </div>
+                </div>
+
+                {/* What is this site link */}
                 <p style={{ textAlign: 'center', marginTop: '0', marginBottom: 0 }}>
                   <button onClick={() => { setSiteOpen(true); track('modal_opened', { modal: 'what_is_this_site', round }) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.78rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
                     Wait, what is this site?
