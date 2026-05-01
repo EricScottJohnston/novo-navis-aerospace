@@ -190,16 +190,19 @@ export default function Interactive() {
     const newAnswers = [...answers, { question: current.question, answer: option }]
     setAnswers(newAnswers)
     if (round === 1) {
+      track('round_1_complete', { answer: option })
       setCurrent(ROUND_2)
       setRound(2)
       return
     }
     if (round === 2) {
+      track('round_2_complete', { answer: option })
       setCurrent(ROUND_3)
       setRound(3)
       return
     }
     // Round 3 complete — go DIRECTLY to final pricing screen
+    track('round_3_complete', { answer: option })
     const enterprise = option === ENTERPRISE_OPTION
     setIsEnterprise(enterprise)
     setRound('final')
@@ -390,15 +393,8 @@ export default function Interactive() {
             </>
           )}
 
-          {/*
-            ── STATIC HEADLINE BLOCK ──────────────────────────────────────────────
-            Lives OUTSIDE key={round} so React never unmounts/remounts this node.
-            The browser paints the SSR'd H1 immediately; hydration only updates
-            text content, preserving it as the LCP element throughout.
-            ────────────────────────────────────────────────────────────────────── */}
           <div style={{ textAlign: 'center', padding: '1.75rem 2rem 0' }}>
 
-            {/* Round 3 eyebrow — conditionally rendered but H1 itself stays mounted */}
             {round === 3 && (
               <>
                 <p style={{
@@ -426,12 +422,6 @@ export default function Interactive() {
             </h1>
           </div>
 
-          {/*
-            ── ANIMATED CONTENT ───────────────────────────────────────────────────
-            key={round} only wraps the options / pricing cards below the H1.
-            React tears down and recreates only this subtree between rounds,
-            leaving the H1 above untouched.
-            ────────────────────────────────────────────────────────────────────── */}
           <div key={round} style={{ padding: '1rem 2rem 2.5rem' }}>
 
             {round === 'final' ? (
