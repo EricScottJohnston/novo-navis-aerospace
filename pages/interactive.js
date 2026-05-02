@@ -72,7 +72,6 @@ const ENTERPRISE_OPTION = 'My competitors are using it and I\'m already behind'
 
 // 16-combination personalized headline map — key: "round1answer|round2answer"
 const HEADLINE_MAP = {
-  // R1: Competitors pulling ahead
   'My competitors are pulling ahead and I\'m losing ground|Haven\'t started — don\'t want to waste money on the wrong thing':
     'Your competitors are already using AI — and you\'re one wrong tool purchase away from falling further behind. Let\'s get you dialed in.',
   'My competitors are pulling ahead and I\'m losing ground|Tried some tools — nothing stuck':
@@ -81,8 +80,6 @@ const HEADLINE_MAP = {
     'Your competitors are moving fast — and if you picked the wrong tools, you\'re spending money to stay in place. Let\'s get you dialed in.',
   'My competitors are pulling ahead and I\'m losing ground|My competitors are using it and I\'m already behind':
     'You already know your competitors are ahead. Every day without the right AI widens that gap. Let\'s close it.',
-
-  // R1: Bleeding time
   'I\'m bleeding time on tasks that should run themselves|Haven\'t started — don\'t want to waste money on the wrong thing':
     'You\'re losing hours every day to work that should run itself — and you don\'t want to buy the wrong tool and lose money too. Let\'s fix both.',
   'I\'m bleeding time on tasks that should run themselves|Tried some tools — nothing stuck':
@@ -91,8 +88,6 @@ const HEADLINE_MAP = {
     'You\'re using AI but still buried in tasks. That means you probably have the wrong tool for your workflow. Let\'s get you dialed in.',
   'I\'m bleeding time on tasks that should run themselves|My competitors are using it and I\'m already behind':
     'You\'re still doing manually what your competitors automated months ago. Let\'s get you caught up fast.',
-
-  // R1: Losing customers
   'I\'m losing customers because I can\'t keep up|Haven\'t started — don\'t want to waste money on the wrong thing':
     'Customers are slipping away and you haven\'t pulled the trigger on AI yet — because you don\'t want to bet on the wrong solution. Let\'s get you the right one.',
   'I\'m losing customers because I can\'t keep up|Tried some tools — nothing stuck':
@@ -101,8 +96,6 @@ const HEADLINE_MAP = {
     'You\'re using AI and still losing customers — that\'s a sign you have the wrong tool for the job. Let\'s fix that.',
   'I\'m losing customers because I can\'t keep up|My competitors are using it and I\'m already behind':
     'Your competitors are responding faster, following up smarter, and winning the customers you\'re losing. Let\'s get you dialed in.',
-
-  // R1: Costs rising
   'My costs keep rising but revenue isn\'t following|Haven\'t started — don\'t want to waste money on the wrong thing':
     'Your costs are climbing and you haven\'t started with AI yet — because the last thing you need is another expense that doesn\'t pay off. Let\'s make sure it does.',
   'My costs keep rising but revenue isn\'t following|Tried some tools — nothing stuck':
@@ -213,7 +206,6 @@ export default function Interactive() {
       setRound(2)
       return
     }
-    // Round 2 complete — go to final pricing screen
     track('round_2_complete', { answer: option })
     const enterprise = option === ENTERPRISE_OPTION
     setIsEnterprise(enterprise)
@@ -262,7 +254,6 @@ export default function Interactive() {
     track(type === 'law' ? 'sample_picker_law' : 'sample_picker_mold')
   }
 
-  // Build personalized headline from Round 1 + Round 2 answers
   const getPersonalizedHeadline = () => {
     const round1 = answers[0]?.answer
     const round2 = answers[1]?.answer
@@ -350,9 +341,9 @@ export default function Interactive() {
       <div style={{ background: 'linear-gradient(to bottom, #eef2f9 0px, #f4f7fc 280px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 1rem', minHeight: '100vh' }}>
         <div style={{ background: '#ffffff', border: '1px solid #e0e4ef', borderRadius: '14px', boxShadow: '0 8px 40px rgba(27,42,74,0.12)', maxWidth: '520px', width: '100%', overflow: 'hidden' }}>
 
-          {/* Credential bar */}
+          {/* Credential bar — no whiteSpace nowrap, wraps cleanly on small screens */}
           <div style={{ background: '#fafbfd', borderBottom: '1px solid #e8ecf4', padding: '0.55rem 1rem', textAlign: 'center' }}>
-            <span style={{ color: NAVY, fontSize: '0.66rem', fontWeight: '700', letterSpacing: '0.14em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+            <span style={{ color: NAVY, fontSize: '0.66rem', fontWeight: '700', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
               <span style={{ color: GOLD, marginRight: '0.4rem' }}>◆</span>
               Founders Special — Limited Free Available
               <span style={{ color: GOLD, marginLeft: '0.4rem' }}>◆</span>
@@ -362,8 +353,6 @@ export default function Interactive() {
           {/* ── SPLASH SCREEN ─────────────────────────────────────────── */}
           {showSplash ? (
             <div style={{ position: 'relative', animation: 'fadeSlideIn 0.3s ease-out' }}>
-
-              {/* Background image */}
               <div style={{
                 width: '100%',
                 aspectRatio: '1 / 1',
@@ -372,30 +361,14 @@ export default function Interactive() {
                 backgroundPosition: 'center top',
                 position: 'relative',
               }}>
-                {/* Dark gradient overlay */}
                 <div style={{
-                  position: 'absolute',
-                  bottom: 0, left: 0, right: 0,
-                  height: '55%',
+                  position: 'absolute', bottom: 0, left: 0, right: 0, height: '55%',
                   background: 'linear-gradient(to bottom, transparent, rgba(10,15,30,0.92))',
                 }} />
-
-                {/* Button + clarifier */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: 0, left: 0, right: 0,
-                  padding: '1.5rem 1.75rem 1.75rem',
-                }}>
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1.5rem 1.75rem 1.75rem' }}>
                   <button
                     onClick={handleSplashStart}
-                    style={{
-                      width: '100%', padding: '1rem',
-                      background: GOLD, border: 'none', borderRadius: '10px',
-                      color: NAVY, fontWeight: 'bold', fontSize: '1.05rem',
-                      cursor: 'pointer', letterSpacing: '0.02em',
-                      boxShadow: '0 4px 20px rgba(200,169,110,0.5)',
-                      transition: 'box-shadow 0.18s ease, transform 0.18s ease',
-                    }}
+                    style={{ width: '100%', padding: '1rem', background: GOLD, border: 'none', borderRadius: '10px', color: NAVY, fontWeight: 'bold', fontSize: '1.05rem', cursor: 'pointer', letterSpacing: '0.02em', boxShadow: '0 4px 20px rgba(200,169,110,0.5)', transition: 'box-shadow 0.18s ease, transform 0.18s ease' }}
                     onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 6px 24px rgba(200,169,110,0.65)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
                     onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(200,169,110,0.5)'; e.currentTarget.style.transform = 'translateY(0)' }}
                   >
@@ -406,8 +379,6 @@ export default function Interactive() {
                   </p>
                 </div>
               </div>
-
-              {/* Trust line */}
               <div style={{ padding: '0.85rem 1rem', textAlign: 'center', borderTop: '1px solid #e8ecf4' }}>
                 <p style={{ color: '#8a95aa', fontSize: '0.74rem', margin: 0, lineHeight: 1.5 }}>
                   Novo Navis Interactive · Division of{' '}
@@ -417,12 +388,10 @@ export default function Interactive() {
                   {' '}· A+ Rated, Better Business Bureau
                 </p>
               </div>
-
             </div>
 
           ) : (
             <>
-              {/* Progress bar */}
               {round !== 'final' && (
                 <>
                   <div style={{ background: '#e8ecf4', height: '5px', width: '100%' }}>
@@ -448,7 +417,6 @@ export default function Interactive() {
                       <p style={{ color: '#8a95aa', fontSize: '0.78rem', margin: '0 0 1.25rem', fontStyle: 'italic' }}>↑ Tap to see a real blueprint we built</p>
                     </div>
 
-                    {/* APPROVAL BANNER */}
                     <div style={{ background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)', border: `2px solid ${GOLD}`, borderRadius: '12px', padding: '1.1rem 1.25rem', marginBottom: '1.5rem', textAlign: 'center', boxShadow: '0 4px 16px rgba(200,169,110,0.18)' }}>
                       <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>How this works</p>
                       <p style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3, fontFamily: SERIF }}>Read your full strategy free. Pay to unlock the complete recommendation.</p>
@@ -495,7 +463,6 @@ export default function Interactive() {
                       </div>
                     ))}
 
-                    {/* Call us */}
                     <div style={{ textAlign: 'center', marginBottom: '1rem', marginTop: '1rem', padding: '0.85rem 1rem', background: LIGHT, border: '1px solid #e0e4ef', borderRadius: '8px' }}>
                       <p style={{ color: NAVY, fontSize: '0.88rem', fontWeight: '600', margin: '0 0 0.2rem' }}>Want to talk to a real person first?</p>
                       <a href="tel:6234289308" style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.05rem', textDecoration: 'none', fontFamily: SERIF }}>(623) 428-9308</a>
@@ -539,16 +506,12 @@ export default function Interactive() {
                   </>
                 ) : (
                   <>
-                    {/* Anchored featured testimonial */}
                     <div style={{ background: LIGHT, border: '1px solid #e0e4ef', borderLeft: `3px solid ${GOLD}`, borderRadius: '8px', padding: '0.85rem 1rem', marginBottom: '1.1rem' }}>
                       <p style={{ color: GOLD, fontSize: '0.75rem', fontWeight: 'bold', margin: '0 0 0.25rem' }}>★★★★★</p>
-                      <p style={{ color: NAVY, fontSize: '0.82rem', lineHeight: 1.6, margin: '0 0 0.25rem', fontStyle: 'italic' }}>
-                        {FEATURED_REVIEW.text}
-                      </p>
+                      <p style={{ color: NAVY, fontSize: '0.82rem', lineHeight: 1.6, margin: '0 0 0.25rem', fontStyle: 'italic' }}>{FEATURED_REVIEW.text}</p>
                       <p style={{ color: '#8a95aa', fontSize: '0.72rem', margin: 0 }}>— {FEATURED_REVIEW.author}</p>
                     </div>
 
-                    {/* Answer option buttons */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.25rem' }}>
                       {current.options.map((opt, i) => (
                         <button
@@ -563,7 +526,6 @@ export default function Interactive() {
                       ))}
                     </div>
 
-                    {/* Scrollable reviews strip */}
                     <div className="reviews-scroll" style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none', margin: '0 -2rem 1rem', padding: '0 2rem' }}>
                       <div style={{ display: 'flex', gap: '0.75rem', width: 'max-content' }}>
                         {REVIEWS.map((r, i) => (
@@ -575,7 +537,6 @@ export default function Interactive() {
                       </div>
                     </div>
 
-                    {/* BBB Trust Badge */}
                     <div style={{ background: NAVY, border: `1px solid ${GOLD}40`, borderLeft: `3px solid ${GOLD}`, borderRadius: '8px', padding: '0.85rem 1rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.65rem' }}>
                       <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.65rem', flex: 1 }}>
                         <span style={{ fontSize: '1.1rem', flexShrink: 0, marginTop: '1px' }}>🏛️</span>
