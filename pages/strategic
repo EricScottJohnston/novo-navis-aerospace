@@ -20,7 +20,7 @@ export default function StrategicLanding() {
       <nav>
         <Link href="/" className="nav-logo">NOVO NAVIS</Link>
         <ul className="nav-links">
-          <li><Link href="/strategic">David/Strategic</Link></li>
+          <li><Link href="/strategic">David/strategicintake</Link></li>
           <li><Link href="/faq">FAQ</Link></li>
           <li><Link href="/about">About</Link></li>
         </ul>
