@@ -14,7 +14,7 @@ export default function About() {
     <>
       <Head>
         <title>About | Novo Navis</title>
-        <meta name="description" content="Novo Navis delivers enterprise-level AI consulting at a fraction of the price. The same rigor Fortune 500 companies pay consulting firms tens of thousands for — built for your business." />
+        <meta name="description" content="Novo Navis Interactive is a division of Novo Navis Aerospace — a registered U.S. Defense Contractor. We deliver enterprise-level AI consulting at a fraction of the price. Preview your custom AI Blueprint free before you pay." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {embed && <style>{`html, body { background: #fff !important; color: #1a1a2e !important; } .report-page, .article-page { background: #fff !important; } nav { display: none !important; }`}</style>}
         <Script id="embed-bg" strategy="beforeInteractive">{`if(location.search.includes('embed=1'))document.documentElement.style.background='#fff'`}</Script>
@@ -41,7 +41,7 @@ export default function About() {
 
         <h1 style={{marginBottom: '0.5rem'}}>Enterprise-level AI consulting. Without the enterprise price tag.</h1>
         <p style={{color: '#6b7a99', fontSize: '1rem', lineHeight: '1.7', marginBottom: '2rem'}}>
-          Large companies pay consulting firms tens of thousands of dollars to answer the same questions you have about AI. We deliver that same quality of analysis — built around your specific business, your workflows, your budget — starting at $49.
+          Large companies pay consulting firms tens of thousands of dollars to answer the same questions you have about AI. We deliver that same quality of analysis — built around your specific business, your workflows, your budget — starting at $99. And you read the full strategy before you pay a cent.
         </p>
 
         <div className="article-body">
@@ -101,6 +101,10 @@ export default function About() {
             The system that builds your blueprint is called David. David doesn't search Google. It reasons through your specific situation, identifies what's actually causing your inefficiencies, and recommends the tools that fit your workflows and budget — not the ones with the loudest marketing.
           </p>
 
+          <p>
+            Novo Navis Interactive is a division of Novo Navis Aerospace. We believe you should see exactly what we recommend before you commit to anything — which is why every blueprint is delivered as a free preview first. Read the full strategy. If it's what you need, unlock it. If it's not, you owe nothing.
+          </p>
+
           {/* CONTACT */}
           <div style={{
             background: '#0d1221',
@@ -136,10 +140,16 @@ export default function About() {
             </p>
             <p style={{color: '#b0b8cc', fontSize: '0.85rem', margin: '0 0 0.3rem'}}>Legal Name: Novo Navis Aerospace Operations LLC</p>
             <p style={{color: '#b0b8cc', fontSize: '0.85rem', margin: '0 0 0.3rem'}}>Location: Phoenix, Arizona Area</p>
-            <p style={{color: '#b0b8cc', fontSize: '0.85rem', margin: 0}}>
+            <p style={{color: '#b0b8cc', fontSize: '0.85rem', margin: '0 0 0.3rem'}}>
               CAGE Code:{' '}
               <a href="https://www.dla.mil/LandandMaritime/Business/Selling/Vendor-Registration/CAGE-Code-Look-up/" target="_blank" rel="noopener noreferrer" style={{color: GOLD}}>
                 8GN22 — verify here →
+              </a>
+            </p>
+            <p style={{color: '#b0b8cc', fontSize: '0.85rem', margin: 0}}>
+              Better Business Bureau:{' '}
+              <a href="https://www.bbb.org/us/az/glendale/profile/aerospace-industry/novo-navis-aerospace-1126-1000076608" target="_blank" rel="noopener noreferrer" style={{color: GOLD}}>
+                A+ Rating — verify here →
               </a>
             </p>
           </div>
@@ -194,9 +204,9 @@ export default function About() {
             <div style={{textAlign: 'center', padding: '2rem 0'}}>
               <div className="section-title" style={{marginBottom: '0.8rem'}}>Ready to See What AI Can Do for Your Business?</div>
               <p style={{color: '#8a95aa', marginBottom: '1.5rem'}}>
-                One custom report. Built for your business. Delivered in real time.
+                Answer 3 questions. We build your custom blueprint. Preview it free — pay only if you approve.
               </p>
-              <Link href="/#order-form" className="btn-primary">Get Your AI Blueprint — $199 →</Link>
+              <Link href="/interactive" className="btn-primary">Get My AI Blueprint — Preview Free →</Link>
             </div>
           </>
         )}
@@ -208,7 +218,7 @@ export default function About() {
           <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
           <p style={{marginTop: '0.5rem'}}>
             <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-            <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
+            <Link href="/interactive">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
             <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
             <Link href="/about">About</Link>
           </p>
