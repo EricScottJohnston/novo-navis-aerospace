@@ -50,8 +50,9 @@ const ENTERPRISE_TIER_MAP = {
 
 // Unlock price (cents) for each free-flow tier
 const UNLOCK_PRICE = {
-  starter:   9900,  // $99
-  blueprint: 29900, // $299
+  starter:   9900,   // $99
+  blueprint: 29900,  // $299
+  strategic: 99900,  // $999 — David/Strategic for boutique consultants
 }
 
 export default async function handler(req, res) {
