@@ -2,14 +2,70 @@
 // Called by the /unlock-confirmed page after Stripe redirects back.
 // Verifies payment, pulls the full PDF from S3, emails it to the customer,
 // and marks the order as unlocked.
+//
+// Tier-aware: starter/blueprint get the AI Blueprint treatment.
+// Strategic gets the Strategic Analysis treatment.
 
 import { S3Client, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
 import { Resend } from 'resend'
 
-const stripe  = require('stripe')(process.env.STRIPE_SECRET_KEY)
-const resend  = new Resend(process.env.RESEND_API_KEY)
-const s3      = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
-const BUCKET  = process.env.S3_BUCKET
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const resend = new Resend(process.env.RESEND_API_KEY)
+const s3     = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
+const BUCKET = process.env.S3_BUCKET
+
+// ── Per-tier copy and branding ─────────────────────────────────────────────
+const TIER_LABELS = {
+  starter:   'Single Workflow Blueprint',
+  blueprint: 'AI Blueprint',
+  strategic: 'Strategic Analysis',
+}
+
+const TIER_FROM = {
+  starter:   'Novo Navis <reports@novonavis.com>',
+  blueprint: 'Novo Navis <reports@novonavis.com>',
+  strategic: 'Novo Navis Strategic <reports@novonavis.com>',
+}
+
+const TIER_FILENAME_PREFIX = {
+  starter:   'workflow_blueprint',
+  blueprint: 'ai_blueprint',
+  strategic: 'strategic_analysis',
+}
+
+const TIER_SUBJECTS = {
+  starter:   'Your Full Workflow Blueprint — Unlocked',
+  blueprint: 'Your Full AI Blueprint — Unlocked',
+  strategic: 'Your Full Strategic Analysis — Unlocked',
+}
+
+function tierEmailBody(tier, label) {
+  if (tier === 'strategic') {
+    return `
+      <p>You're all set.</p>
+      <p>Your full <strong>${label}</strong> is attached. This is the unredacted
+      report — including the strategic recommendation, the alternative paths
+      considered, the decision framework, the sensitivity analysis, and the
+      action plan.</p>
+      <p>Every substantive finding carries a confidence label (CAUSAL, MECHANISM,
+      or THRESHOLD) and a documented evidence provenance. The Decision Log
+      appendix records every override, every gap, and every assumption — the
+      audit trail you can defend in front of your client or their board.</p>
+      <p>Questions or follow-on engagements? Reply to this email.</p>
+      <p>Fidelis Diligentia<br/>Novo Navis, LLC<br/>
+      <span style="color:#6b7a99;font-size:12px;">Registered U.S. Defense Contractor</span></p>
+    `
+  }
+  // Default — starter / blueprint (Interactive product)
+  return `
+    <p>You're all set.</p>
+    <p>Your full <strong>${label}</strong> is attached — with the specific tool
+    names, pricing, and vendor links that were redacted in the preview.</p>
+    <p>If you have any questions, reply to this email or call
+    <a href="tel:6234289308">(623) 428-9308</a>.</p>
+    <p>Fidelis Diligentia<br/>Novo Navis, LLC</p>
+  `
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
@@ -39,7 +95,7 @@ export default async function handler(req, res) {
   try {
     const obj = await s3.send(new GetObjectCommand({
       Bucket: BUCKET,
-      Key: `orders/${orderId}.json`,
+      Key:    `orders/${orderId}.json`,
     }))
     orderMeta = JSON.parse(await obj.Body.transformToString())
   } catch (err) {
@@ -57,7 +113,7 @@ export default async function handler(req, res) {
   try {
     const obj = await s3.send(new GetObjectCommand({
       Bucket: BUCKET,
-      Key: `reports/${orderId}.pdf`,
+      Key:    `reports/${orderId}.pdf`,
     }))
     const chunks = []
     for await (const chunk of obj.Body) chunks.push(chunk)
@@ -67,29 +123,27 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Failed to retrieve report' })
   }
 
-  const customerEmail = orderMeta.email
-  const tierLabel = orderMeta.tier === 'starter' ? 'Single Workflow Blueprint' : 'AI Blueprint'
+  const customerEmail   = orderMeta.email
+  const tier            = orderMeta.tier || 'blueprint'
+  const tierLabel       = TIER_LABELS[tier]            || TIER_LABELS.blueprint
+  const fromAddress     = TIER_FROM[tier]              || TIER_FROM.blueprint
+  const filenamePrefix  = TIER_FILENAME_PREFIX[tier]   || TIER_FILENAME_PREFIX.blueprint
+  const subject         = TIER_SUBJECTS[tier]          || TIER_SUBJECTS.blueprint
+  const htmlBody        = tierEmailBody(tier, tierLabel)
 
   // Email the full report
   try {
     await resend.emails.send({
-      from: 'Novo Navis <reports@novonavis.com>',
-      to:   [customerEmail],
-      subject: `Your Full AI Blueprint — Unlocked`,
-      html: `
-        <p>You're all set.</p>
-        <p>Your full <strong>${tierLabel}</strong> is attached — with the specific tool
-        names, pricing, and vendor links that were redacted in the preview.</p>
-        <p>If you have any questions, reply to this email or call
-        <a href="tel:6234289308">(623) 428-9308</a>.</p>
-        <p>Fidelis Diligentia<br/>Novo Navis, LLC</p>
-      `,
+      from:    fromAddress,
+      to:      [customerEmail],
+      subject: subject,
+      html:    htmlBody,
       attachments: [{
-        filename: `ai_blueprint_${orderId}.pdf`,
+        filename: `${filenamePrefix}_${orderId}.pdf`,
         content:  Array.from(pdfBuffer),
       }],
     })
-    console.log(`[unlock-confirmed] Full report emailed to ${customerEmail}`)
+    console.log(`[unlock-confirmed] Full ${tierLabel} emailed to ${customerEmail}`)
   } catch (err) {
     console.error('[unlock-confirmed] Email error:', err)
     // Non-fatal — update status and return success; Eric's notification handles fallback
