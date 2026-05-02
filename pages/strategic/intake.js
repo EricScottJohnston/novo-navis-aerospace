@@ -2,6 +2,8 @@
 // Submits to existing /api/intake with tier: 'strategic'.
 // Free preview model: consultant submits, David builds, redacted preview is emailed,
 // unlock link in email leads to $999 checkout.
+//
+// v1.2 — Added Compliance multi-select chips on Step 3.
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -27,6 +29,21 @@ const ANALYTICAL_LENSES = [
   'Scenario Analysis',
   'Causal Chain Modeling',
   'Other (describe below)',
+]
+
+// Compliance frameworks — multi-select. "None" is mutually exclusive
+// with the others: selecting it clears the others; selecting any other
+// clears "None".
+const COMPLIANCE_FRAMEWORKS = [
+  'None',
+  'NIST AI RMF',
+  'ISO 42001',
+  'EU AI Act',
+  'GDPR',
+  'SOX',
+  'HIPAA',
+  'PCI DSS',
+  'Other (specify)',
 ]
 
 const DRAFT_KEY = 'novonavis_strategic_intake_draft_v1'
@@ -72,6 +89,11 @@ export default function StrategicIntake() {
     // How they want it framed
     lens: 'Let David choose',
     lensOther: '',
+
+    // Compliance — array of selected framework strings
+    compliance: ['None'],
+    complianceOther: '',
+
     additional: '',         // anything else David should know
   })
 
@@ -114,6 +136,36 @@ export default function StrategicIntake() {
   const setField = (name, value) => {
     setFormData(prev => ({ ...prev, [name]: value }))
     setStepError('')
+  }
+
+  // ── Compliance toggle — handles None mutual exclusivity ───────────────────
+  const toggleCompliance = (framework) => {
+    setStepError('')
+    setFormData(prev => {
+      const current = prev.compliance || []
+
+      // Selecting "None" clears all others
+      if (framework === 'None') {
+        return { ...prev, compliance: ['None'], complianceOther: '' }
+      }
+
+      // Selecting any other framework clears "None"
+      const withoutNone = current.filter(f => f !== 'None')
+
+      if (withoutNone.includes(framework)) {
+        // Deselect
+        const next = withoutNone.filter(f => f !== framework)
+        // If nothing left, default back to None
+        return {
+          ...prev,
+          compliance: next.length === 0 ? ['None'] : next,
+          complianceOther: framework === 'Other (specify)' ? '' : prev.complianceOther,
+        }
+      } else {
+        // Select
+        return { ...prev, compliance: [...withoutNone, framework] }
+      }
+    })
   }
 
   // ── Email verification ────────────────────────────────────────────────────
@@ -163,6 +215,10 @@ export default function StrategicIntake() {
     }
     if (step === 3) {
       if (!formData.knownContext.trim()) return 'Please describe what you already know about the situation.'
+      // If "Other (specify)" is picked but nothing was typed
+      if (formData.compliance.includes('Other (specify)') && !formData.complianceOther.trim()) {
+        return 'Please specify the other compliance framework, or deselect it.'
+      }
     }
     if (step === 4) {
       if (!emailVerified) return 'NEEDS_EMAIL_VERIFY'
@@ -217,6 +273,19 @@ export default function StrategicIntake() {
       ? formData.lensOther.trim()
       : formData.lens
 
+    // Compose the Compliance string for david_strategic_v1.py.
+    // ComplianceMapper.should_run() returns False on "None", "", "n/a", etc.,
+    // so we pass "None" verbatim when nothing is selected.
+    let complianceValue = 'None'
+    if (formData.compliance.length > 0 && !formData.compliance.includes('None')) {
+      const expanded = formData.compliance.map(f =>
+        f === 'Other (specify)' && formData.complianceOther.trim()
+          ? formData.complianceOther.trim()
+          : f
+      ).filter(f => f !== 'Other (specify)')  // drop placeholder if Other was empty
+      complianceValue = expanded.join(', ')
+    }
+
     const additionalNotes = formData.additional.trim()
       ? `\n\nAdditional notes: ${formData.additional.trim()}`
       : ''
@@ -231,6 +300,7 @@ export default function StrategicIntake() {
       budget:     'N/A',
       businessDescription: formData.situation + additionalNotes,
       currentTools:        '',
+      compliance: complianceValue,
       process1: `THE DECISION: ${formData.decision}`,
       process2: `CLIENT SITUATION: ${formData.situation}`,
       process3: `WHAT THE CONSULTANT ALREADY KNOWS: ${formData.knownContext}`,
@@ -305,7 +375,7 @@ export default function StrategicIntake() {
     </div>
   )
 
-  // ── Lens picker (Step 3) ──────────────────────────────────────────────────
+  // ── Lens picker ───────────────────────────────────────────────────────────
   const LensPicker = () => (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
       {ANALYTICAL_LENSES.map(opt => {
@@ -322,6 +392,33 @@ export default function StrategicIntake() {
               cursor: 'pointer', transition: 'all 0.15s',
             }}>
             {opt}
+          </button>
+        )
+      })}
+    </div>
+  )
+
+  // ── Compliance multi-select chips ─────────────────────────────────────────
+  const CompliancePicker = () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+      {COMPLIANCE_FRAMEWORKS.map(opt => {
+        const selected = formData.compliance.includes(opt)
+        const isNone   = opt === 'None'
+        return (
+          <button key={opt} type="button" onClick={() => toggleCompliance(opt)}
+            style={{
+              padding: '0.55rem 0.9rem',
+              background: selected ? NAVY : '#fff',
+              color:      selected ? '#fff' : NAVY,
+              border:     selected ? `2px solid ${NAVY}` : '2px solid #d8dee9',
+              borderRadius: '20px',
+              fontSize: '0.85rem',
+              fontWeight: selected ? '700' : '500',
+              cursor: 'pointer',
+              transition: 'all 0.15s',
+              fontStyle: isNone ? 'italic' : 'normal',
+            }}>
+            {selected ? '✓ ' : ''}{opt}
           </button>
         )
       })}
@@ -528,6 +625,20 @@ export default function StrategicIntake() {
                 {formData.lens === 'Other (describe below)' && (
                   <input type="text" name="lensOther" value={formData.lensOther} onChange={handleChange}
                     placeholder="Describe the framework you want applied"
+                    style={{ marginTop: '0.6rem', width: '100%' }} />
+                )}
+              </div>
+
+              {/* Compliance multi-select chips */}
+              <div className="form-group">
+                <label>Compliance frameworks (optional)</label>
+                <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.6rem' }}>
+                  Pick any frameworks the client cares about. David will produce a Compliance Traceability section mapping the analysis to relevant requirements (clauses, articles, controls). Select multiple if needed. Leave as "None" to skip compliance mapping entirely.
+                </p>
+                <CompliancePicker />
+                {formData.compliance.includes('Other (specify)') && (
+                  <input type="text" name="complianceOther" value={formData.complianceOther} onChange={handleChange}
+                    placeholder="Specify the framework(s) — e.g., 'CCPA', 'FedRAMP', 'CMMC Level 2'"
                     style={{ marginTop: '0.6rem', width: '100%' }} />
                 )}
               </div>
