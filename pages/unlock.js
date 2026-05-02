@@ -7,29 +7,80 @@ const NAVY = '#1B2A4A'
 const GOLD = '#c8a96e'
 const LIGHT = '#f4f6fb'
 
+// ── Tier-keyed copy ──────────────────────────────────────────────────────────
+// Adding a new tier means adding one entry per map below. Nothing else changes.
+
 const TIER_LABELS = {
   starter:   'Single Workflow Blueprint',
   blueprint: 'AI Blueprint',
+  strategic: 'Strategic Analysis',
 }
 
 const TIER_PRICE = {
   starter:   '$99',
   blueprint: '$299',
+  strategic: '$999',
 }
 
-const FULL_FEATURES = [
-  'Specific AI tool names — exactly which tools to use',
-  'Pricing for each tool — monthly cost, free tiers, what to budget',
-  'Vendor links — where to sign up and get started',
-  'Full implementation roadmap with named tools at each step',
-]
+// Eyebrow shown above the H1 ("Your blueprint is ready" etc.)
+const TIER_EYEBROW = {
+  starter:   'Your blueprint is ready',
+  blueprint: 'Your blueprint is ready',
+  strategic: 'Your strategic analysis is ready',
+}
 
-const PREVIEW_FEATURES = [
-  'Complete workflow analysis',
-  'What to automate and why',
-  'Implementation strategy and timeline',
-  'ROI framework and risk assessment',
-]
+// One-line subhead under the H1
+const TIER_SUBHEAD = {
+  starter:   'Your preview is in your inbox. The full report is one step away.',
+  blueprint: 'Your preview is in your inbox. The full report is one step away.',
+  strategic: 'Your redacted preview is in your inbox. The full unredacted report is one step away.',
+}
+
+// What the redacted preview already gives them.
+const PREVIEW_FEATURES = {
+  starter: [
+    'Complete workflow analysis',
+    'What to automate and why',
+    'Implementation strategy and timeline',
+    'ROI framework and risk assessment',
+  ],
+  blueprint: [
+    'Complete workflow analysis',
+    'What to automate and why',
+    'Implementation strategy and timeline',
+    'ROI framework and risk assessment',
+  ],
+  strategic: [
+    'Full situation assessment and analytical framework',
+    'Causal analysis of every key driver, with confidence labels',
+    'Risk register, open gaps, and the full audit trail',
+    'Bibliography of every external source cited',
+  ],
+}
+
+// What unlocking adds (the redacted material).
+const FULL_FEATURES = {
+  starter: [
+    'Specific AI tool names — exactly which tools to use',
+    'Pricing for each tool — monthly cost, free tiers, what to budget',
+    'Vendor links — where to sign up and get started',
+    'Full implementation roadmap with named tools at each step',
+  ],
+  blueprint: [
+    'Specific AI tool names — exactly which tools to use',
+    'Pricing for each tool — monthly cost, free tiers, what to budget',
+    'Vendor links — where to sign up and get started',
+    'Full implementation roadmap with named tools at each step',
+  ],
+  strategic: [
+    'The strategic recommendation — what to advise your client',
+    'The alternative paths considered — and why they ranked below',
+    'The decision gate framework — what must be verified before acting',
+    'The action plan and the named fragile assumptions',
+  ],
+}
+
+const TIER_DEFAULT = 'blueprint'  // fallback when the tier is unknown
 
 function track(event, params = {}) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -82,9 +133,14 @@ export default function Unlock() {
     }
   }
 
-  const tier       = orderData?.tier
-  const tierLabel  = TIER_LABELS[tier] || 'AI Blueprint'
-  const price      = orderData ? `$${(orderData.unlockPrice / 100).toFixed(0)}` : TIER_PRICE[tier] || ''
+  // Resolve tier — fallback to default if unknown
+  const tier         = (orderData?.tier && TIER_LABELS[orderData.tier]) ? orderData.tier : TIER_DEFAULT
+  const tierLabel    = TIER_LABELS[tier]
+  const eyebrow      = TIER_EYEBROW[tier]
+  const subhead      = TIER_SUBHEAD[tier]
+  const previewFeats = PREVIEW_FEATURES[tier]
+  const fullFeats    = FULL_FEATURES[tier]
+  const price        = orderData ? `$${(orderData.unlockPrice / 100).toFixed(0)}` : TIER_PRICE[tier] || ''
 
   return (
     <>
@@ -145,13 +201,13 @@ export default function Unlock() {
                 {/* Header */}
                 <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
                   <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>
-                    Your blueprint is ready
+                    {eyebrow}
                   </p>
                   <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.2 }}>
                     Unlock Your Full {tierLabel}
                   </h1>
                   <p style={{ color: '#6b7a99', fontSize: '0.9rem', margin: 0 }}>
-                    Your preview is in your inbox. The full report is one step away.
+                    {subhead}
                   </p>
                 </div>
 
@@ -165,7 +221,7 @@ export default function Unlock() {
                     <p style={{ color: '#8a95aa', fontSize: '0.72rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 0.5rem' }}>
                       Your preview includes
                     </p>
-                    {PREVIEW_FEATURES.map(f => (
+                    {previewFeats.map(f => (
                       <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.3rem' }}>
                         <span style={{ color: '#8a95aa', fontSize: '0.85rem', flexShrink: 0 }}>✓</span>
                         <p style={{ color: '#6b7a99', fontSize: '0.85rem', margin: 0 }}>{f}</p>
@@ -180,7 +236,7 @@ export default function Unlock() {
                     <p style={{ color: GOLD, fontSize: '0.72rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 0.5rem' }}>
                       The full report adds
                     </p>
-                    {FULL_FEATURES.map(f => (
+                    {fullFeats.map(f => (
                       <div key={f} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.3rem' }}>
                         <span style={{ color: GOLD, fontSize: '0.85rem', flexShrink: 0 }}>✓</span>
                         <p style={{ color: NAVY, fontSize: '0.85rem', margin: 0, fontWeight: '500' }}>{f}</p>
