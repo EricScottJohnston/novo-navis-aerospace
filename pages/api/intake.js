@@ -14,6 +14,10 @@ const s3  = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
 
 const RATE_LIMIT_WINDOW_MS = 24 * 60 * 60 * 1000 // 24 hours
 
+// Tiers exempt from the 24hr submission rate limit.
+// Strategic is exempted while we're recording demos / running test runs.
+const RATE_LIMIT_EXEMPT_TIERS = new Set(['strategic'])
+
 async function checkRateLimit(email) {
   const key = `ratelimit/${email.toLowerCase().replace(/[^a-z0-9@._-]/g, '_')}.json`
   try {
@@ -125,10 +129,13 @@ export default async function handler(req, res) {
     }
   }
 
-  // Rate limit — one submission per email per 24 hours
-  const allowed = await checkRateLimit(customerEmail)
-  if (!allowed) {
-    return res.status(429).json({ error: 'rate_limited' })
+  // Rate limit — one submission per email per 24 hours.
+  // Strategic tier is exempt while we record demos.
+  if (!RATE_LIMIT_EXEMPT_TIERS.has(tier)) {
+    const allowed = await checkRateLimit(customerEmail)
+    if (!allowed) {
+      return res.status(429).json({ error: 'rate_limited' })
+    }
   }
 
   // Generate order ID
@@ -182,8 +189,10 @@ export default async function handler(req, res) {
     }
   }
 
-  // Record submission for rate limiting
-  await writeRateLimit(customerEmail)
+  // Record submission for rate limiting (skip for exempt tiers).
+  if (!RATE_LIMIT_EXEMPT_TIERS.has(tier)) {
+    await writeRateLimit(customerEmail)
+  }
 
   // Email Eric (notification + manual fallback)
   try {
