@@ -5,12 +5,20 @@ import { useRouter } from 'next/router'
 
 const faqs = [
   {
+    q: "How does this work?",
+    a: "You answer 3 quick questions about your business — what you want AI to do, where you are today, and what's holding you back. We use your answers to build a custom AI Blueprint tailored to your situation. You get a free preview of the full strategy before you pay a cent. If you like what we recommend, you unlock the complete report. If not, walk away — no charge, no follow-up."
+  },
+  {
     q: "Why wouldn't I just research AI tools myself?",
     a: "You can — but here's what you'll run into. The AI tools that show up first in your search results are there because they have the largest marketing budgets, not because they're the best fit for your business. There are incredibly well-built AI tools made by talented teams that simply can't compete on the marketing scene. They get buried. We know about them. When we build your blueprint, we're looking across the full landscape — the household names and the hidden ones — and recommending what actually fits your workflows and budget. That's the difference between a consultant and a Google search."
   },
   {
+    q: "What's the difference between the three tiers?",
+    a: "The Single Workflow Blueprint ($99) focuses on one workflow — fast to implement, great for businesses that know exactly what they want to fix first. The AI Blueprint ($299) covers 3–5 workflows prioritized by impact, with a full implementation plan and ROI estimates — this is the most popular option. The Enterprise Blueprint ($999) goes up to 10 workflows with a department-by-department rollout plan, IT integration architecture, compliance and security assessment, a 12-month roadmap, and a 2-hour hands-on Zoom with one of our AI experts. All three tiers include a free preview before you pay."
+  },
+  {
     q: "Who is Novo Navis?",
-    a: <>Novo Navis is a registered U.S. federal contractor. We research and develop trusted AI systems that got its start building AI systems for government and defense — and made that same rigor available to small businesses. You can read what we&apos;re talking about in the AI for Small Business community on Reddit:{' '}
+    a: <>Novo Navis Interactive is a division of Novo Navis Aerospace — a registered U.S. federal contractor with an A+ rating from the Better Business Bureau. We got our start building AI systems for government and defense and made that same rigor available to small businesses. You can read what we&apos;re talking about in the AI for Small Business community on Reddit:{' '}
       <a href="https://www.reddit.com/r/AiForSmallBusiness/comments/1snruki/i_built_a_causal_ai_system_for_small_businesses/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e'}}>I built a causal AI system for small businesses →</a>
       {' '}and{' '}
       <a href="https://www.reddit.com/r/AiForSmallBusiness/comments/1shq87i/ai_got_gimmecky_real_fast/" target="_blank" rel="noopener noreferrer" style={{color: '#c8a96e'}}>AI got gimmicky real fast →</a>
@@ -22,7 +30,11 @@ const faqs = [
   },
   {
     q: "What exactly is in the AI Blueprint?",
-    a: "You receive a up to 25-page document built around your specific business. It covers your top 3–5 automatable workflows ranked by estimated time savings, specific AI tools matched to each workflow and your budget, a fast action implementation plan, an honest ROI estimate for your business size and industry, and a risks section that tells you what can go wrong and how to prevent it. The entire report is built and delivered automatically — no human delay."
+    a: "Depending on your tier, you receive up to a 50-page document built around your specific business. It covers your top automatable workflows ranked by estimated time savings, specific AI tools matched to each workflow and your budget, a full implementation plan, an honest ROI estimate for your business size and industry, and a risks section that tells you what can go wrong and how to prevent it. The entire report is built and delivered automatically — no human delay."
+  },
+  {
+    q: "What does the free preview include?",
+    a: "The free preview is the complete blueprint — the full analysis, your prioritized workflows, tool recommendations, ROI framework, and implementation strategy. We don't hold back a teaser and ask you to pay to see the rest. You read the whole thing first. If you approve what we recommend, you unlock it. If it's not what you were looking for, you owe nothing."
   },
   {
     q: "Do I need to be tech-savvy to use the tools you recommend?",
@@ -37,8 +49,8 @@ const faqs = [
     a: "The Small Psychological Model is trained on automation profiles across trades (HVAC, plumbing, electrical, landscaping), professional services (legal, accounting, consulting), healthcare (dental, chiropractic), real estate and property management, retail, e-commerce, restaurant and hospitality, and construction. If your industry isn't listed, select 'Other' in the intake form and describe your business — the model handles it."
   },
   {
-    q: "How does the real-time delivery work?",
-    a: "After checkout, you'll complete a short intake form with details about your business and workflows. Your intake is immediately processed by our Small Psychological Model — David — which researches your industry, analyzes your workflows, and assembles your report automatically. You'll be taken to a live tracking page where you can watch David build your report in real time — many customers find it fascinating to see the model reason through their business step by step. Your finished report is emailed to you as soon as it's built, typically within the hour. You're also free to close the tracking page at any time — the report will arrive in your inbox regardless."
+    q: "How does the delivery work?",
+    a: "After you answer the 3 questions, you'll select your tier and complete a short intake form with details about your business and workflows. Your intake is immediately processed by our Small Psychological Model — David — which researches your industry, analyzes your workflows, and assembles your report automatically. You'll be taken to a live tracking page where you can watch David build your report in real time. Your finished report is emailed to you as soon as it's built, typically within the hour. You're free to close the tracking page at any time — the report will arrive in your inbox regardless."
   },
   {
     q: "What if I'm not satisfied with the AI Blueprint?",
@@ -65,7 +77,7 @@ export default function FAQ() {
     <>
       <Head>
         <title>Frequently Asked Questions | Novo Navis</title>
-        <meta name="description" content="Common questions about the Novo Navis custom AI integration report — what's in it, how it's built, who it's for, and what happens if you're not satisfied." />
+        <meta name="description" content="Common questions about the Novo Navis custom AI Blueprint — what's in it, how it's built, who it's for, and what happens if you're not satisfied." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {embed && <style>{`html, body { background: #fff !important; color: #1a1a2e !important; } .report-page, .article-page { background: #fff !important; } nav { display: none !important; }`}</style>}
         <Script id="embed-bg" strategy="beforeInteractive">{`if(location.search.includes('embed=1'))document.documentElement.style.background='#fff'`}</Script>
@@ -77,7 +89,7 @@ export default function FAQ() {
           <ul className="nav-links">
             <li><Link href="/">Home</Link></li>
             <li><Link href="/blog">Blog</Link></li>
-            <li><Link href="/#order-form">Get Your AI Blueprint</Link></li>
+            <li><Link href="/interactive">Get Your AI Blueprint</Link></li>
             <li><Link href="/about">About</Link></li>
           </ul>
         </nav>
@@ -125,8 +137,8 @@ export default function FAQ() {
           <p style={{marginBottom: '1.25rem'}}>
             <a href="mailto:support@novonavis.com" style={{color: '#c8a96e'}}>support@novonavis.com</a>
           </p>
-          <Link href="/#order-form" className="btn-primary">
-            Get My AI Blueprint — $199 →
+          <Link href="/interactive" className="btn-primary">
+            Get My AI Blueprint — Preview Free →
           </Link>
         </div>
 
@@ -137,7 +149,7 @@ export default function FAQ() {
           <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
           <p style={{marginTop: '0.5rem'}}>
             <Link href="/blog">Blog</Link> &nbsp;·&nbsp;
-            <Link href="/#order-form">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
+            <Link href="/interactive">Get Your AI Blueprint</Link> &nbsp;·&nbsp;
             <Link href="/faq">FAQ</Link> &nbsp;·&nbsp;
             <Link href="/about">About</Link> &nbsp;·&nbsp;
             <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
