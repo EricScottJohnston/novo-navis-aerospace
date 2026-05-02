@@ -1,5 +1,5 @@
 // pages/interactive.js
-// Interactive AI Blueprint sales funnel — 3 rounds of emotionally-arced questions, leads to free personalized report.
+// Interactive AI Blueprint sales funnel — 2 rounds of business-survival questions, leads to free personalized report.
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -46,78 +46,74 @@ const TIERS = [
   { key: 'enterprise', name: 'Enterprise Blueprint',      price: '$999', badge: null },
 ]
 
-// ROUND 1 — ASPIRATION
+// ROUND 1 — THE THREAT
 const ROUND_1 = {
-  question: 'What\'s the first thing you\'ll make AI do for your business?',
+  question: 'What\'s hurting your business most right now?',
   options: [
-    'Get hours back every week so I can focus on real work',
-    'Stop leads slipping through the cracks',
-    'Automate the grunt work',
-    'Scale without hiring more people',
+    'My competitors are pulling ahead and I\'m losing ground',
+    'I\'m bleeding time on tasks that should run themselves',
+    'I\'m losing customers because I can\'t keep up',
+    'My costs keep rising but revenue isn\'t following',
   ],
 }
 
-// ROUND 2 — BEHAVIOR
+// ROUND 2 — THEIR SITUATION
 const ROUND_2 = {
-  question: 'How are you handling AI decisions today?',
+  question: 'Where are you with AI right now?',
   options: [
-    'I haven\'t started yet — I don\'t know where to begin',
-    'I\'ve tried a few tools but nothing has stuck',
-    'I\'m using AI casually but not strategically',
-    'I have a stack but I\'m not sure I\'m using the right ones',
+    'Haven\'t started — don\'t want to waste money on the wrong thing',
+    'Tried some tools — nothing stuck',
+    'Using AI casually — not sure I picked the right ones',
+    'My competitors are using it and I\'m already behind',
   ],
 }
 
-// ROUND 3 — PAIN
-const ROUND_3 = {
-  question: 'What\'s the biggest thing holding you back?',
-  options: [
-    'I don\'t have time to research and test 50 different tools',
-    'I can\'t tell which AI advice is real and which is hype',
-    'I\'m afraid of picking the wrong tool and wasting money',
-    'I\'m running an enterprise — I need this done at scale',
-  ],
-}
+const ENTERPRISE_OPTION = 'My competitors are using it and I\'m already behind'
 
-const ENTERPRISE_OPTION = 'I\'m running an enterprise — I need this done at scale'
-
-// 16-combination personalized headline map — key: "round1answer|round3answer"
+// 16-combination personalized headline map — key: "round1answer|round2answer"
 const HEADLINE_MAP = {
-  'Get hours back every week so I can focus on real work|I don\'t have time to research and test 50 different tools':
-    'You want your time back — but researching 50 tools is a full-time job in itself. Let\'s get you dialed in.',
-  'Get hours back every week so I can focus on real work|I can\'t tell which AI advice is real and which is hype':
-    'You want your hours back — but you can\'t trust which AI advice will actually save them. Let\'s get you dialed in.',
-  'Get hours back every week so I can focus on real work|I\'m afraid of picking the wrong tool and wasting money':
-    'You want your time back — but one wrong tool and you\'ve just wasted more of it. Let\'s get you dialed in.',
-  'Get hours back every week so I can focus on real work|I\'m running an enterprise — I need this done at scale':
-    'You want hours back across an entire organization — that takes more than guesswork. Let\'s get you dialed in.',
-  'Stop leads slipping through the cracks|I don\'t have time to research and test 50 different tools':
-    'You\'re losing leads right now — and you don\'t have time to test tools while it\'s happening. Let\'s get you dialed in.',
-  'Stop leads slipping through the cracks|I can\'t tell which AI advice is real and which is hype':
-    'You\'re losing leads — and you can\'t tell which AI solution will actually fix it versus just promise to. Let\'s get you dialed in.',
-  'Stop leads slipping through the cracks|I\'m afraid of picking the wrong tool and wasting money':
-    'You\'re losing leads — and betting on the wrong fix could make it worse. Let\'s get you dialed in.',
-  'Stop leads slipping through the cracks|I\'m running an enterprise — I need this done at scale':
-    'Leads are slipping across your whole operation — that\'s not a one-tool problem. Let\'s get you dialed in.',
-  'Automate the grunt work|I don\'t have time to research and test 50 different tools':
-    'You\'re ready to automate — you just don\'t have time to figure out what actually works. Let\'s get you dialed in.',
-  'Automate the grunt work|I can\'t tell which AI advice is real and which is hype':
-    'You want to automate the grunt work — but most tools promise that and deliver noise. Let\'s get you dialed in.',
-  'Automate the grunt work|I\'m afraid of picking the wrong tool and wasting money':
-    'You\'re ready to automate — you just can\'t afford to pick the tool that automates the wrong things. Let\'s get you dialed in.',
-  'Automate the grunt work|I\'m running an enterprise — I need this done at scale':
-    'Automating grunt work at enterprise scale isn\'t a plug-in — it\'s a system. Let\'s get you dialed in.',
-  'Scale without hiring more people|I don\'t have time to research and test 50 different tools':
-    'You want to scale without adding headcount — but finding the right AI to make that happen takes a team of researchers. Let\'s get you dialed in.',
-  'Scale without hiring more people|I can\'t tell which AI advice is real and which is hype':
-    'You want to scale without hiring — but half the AI tools claiming they can do that are selling hype. Let\'s get you dialed in.',
-  'Scale without hiring more people|I\'m afraid of picking the wrong tool and wasting money':
-    'You want to scale without hiring — but the wrong AI just means expensive mistakes at scale. Let\'s get you dialed in.',
-  'Scale without hiring more people|I\'m running an enterprise — I need this done at scale':
-    'You need to scale a full enterprise without adding headcount — that\'s exactly what this was built for. Let\'s get you dialed in.',
+  // R1: Competitors pulling ahead
+  'My competitors are pulling ahead and I\'m losing ground|Haven\'t started — don\'t want to waste money on the wrong thing':
+    'Your competitors are already using AI — and you\'re one wrong tool purchase away from falling further behind. Let\'s get you dialed in.',
+  'My competitors are pulling ahead and I\'m losing ground|Tried some tools — nothing stuck':
+    'Your competitors are pulling ahead and the tools you tried didn\'t help. Let\'s find what actually works for your business.',
+  'My competitors are pulling ahead and I\'m losing ground|Using AI casually — not sure I picked the right ones':
+    'Your competitors are moving fast — and if you picked the wrong tools, you\'re spending money to stay in place. Let\'s get you dialed in.',
+  'My competitors are pulling ahead and I\'m losing ground|My competitors are using it and I\'m already behind':
+    'You already know your competitors are ahead. Every day without the right AI widens that gap. Let\'s close it.',
+
+  // R1: Bleeding time
+  'I\'m bleeding time on tasks that should run themselves|Haven\'t started — don\'t want to waste money on the wrong thing':
+    'You\'re losing hours every day to work that should run itself — and you don\'t want to buy the wrong tool and lose money too. Let\'s fix both.',
+  'I\'m bleeding time on tasks that should run themselves|Tried some tools — nothing stuck':
+    'You tried to automate and it didn\'t stick. The right tools exist — they\'re just not the ones that showed up first in your search. Let\'s find them.',
+  'I\'m bleeding time on tasks that should run themselves|Using AI casually — not sure I picked the right ones':
+    'You\'re using AI but still buried in tasks. That means you probably have the wrong tool for your workflow. Let\'s get you dialed in.',
+  'I\'m bleeding time on tasks that should run themselves|My competitors are using it and I\'m already behind':
+    'You\'re still doing manually what your competitors automated months ago. Let\'s get you caught up fast.',
+
+  // R1: Losing customers
+  'I\'m losing customers because I can\'t keep up|Haven\'t started — don\'t want to waste money on the wrong thing':
+    'Customers are slipping away and you haven\'t pulled the trigger on AI yet — because you don\'t want to bet on the wrong solution. Let\'s get you the right one.',
+  'I\'m losing customers because I can\'t keep up|Tried some tools — nothing stuck':
+    'You\'re losing customers and the tools you tried didn\'t solve it. Let\'s find what actually fits your business.',
+  'I\'m losing customers because I can\'t keep up|Using AI casually — not sure I picked the right ones':
+    'You\'re using AI and still losing customers — that\'s a sign you have the wrong tool for the job. Let\'s fix that.',
+  'I\'m losing customers because I can\'t keep up|My competitors are using it and I\'m already behind':
+    'Your competitors are responding faster, following up smarter, and winning the customers you\'re losing. Let\'s get you dialed in.',
+
+  // R1: Costs rising
+  'My costs keep rising but revenue isn\'t following|Haven\'t started — don\'t want to waste money on the wrong thing':
+    'Your costs are climbing and you haven\'t started with AI yet — because the last thing you need is another expense that doesn\'t pay off. Let\'s make sure it does.',
+  'My costs keep rising but revenue isn\'t following|Tried some tools — nothing stuck':
+    'Your costs are up and the AI tools you tried didn\'t move the needle. The right ones will. Let\'s find them.',
+  'My costs keep rising but revenue isn\'t following|Using AI casually — not sure I picked the right ones':
+    'You\'re paying for AI and your margins still aren\'t moving. Wrong tools for your cost structure. Let\'s get you dialed in.',
+  'My costs keep rising but revenue isn\'t following|My competitors are using it and I\'m already behind':
+    'Your competitors are cutting costs with AI while yours keep climbing. That gap compounds fast. Let\'s get you dialed in.',
 }
 
-const DEFAULT_HEADLINE = 'You named the problem. Pick the blueprint that fits.'
+const DEFAULT_HEADLINE = 'You named the problem. Pick the blueprint that fixes it.'
 
 const BBB_URL = 'https://www.bbb.org/us/az/glendale/profile/aerospace-industry/novo-navis-aerospace-1126-1000076608'
 
@@ -217,13 +213,8 @@ export default function Interactive() {
       setRound(2)
       return
     }
-    if (round === 2) {
-      track('round_2_complete', { answer: option })
-      setCurrent(ROUND_3)
-      setRound(3)
-      return
-    }
-    track('round_3_complete', { answer: option })
+    // Round 2 complete — go to final pricing screen
+    track('round_2_complete', { answer: option })
     const enterprise = option === ENTERPRISE_OPTION
     setIsEnterprise(enterprise)
     setRound('final')
@@ -271,11 +262,12 @@ export default function Interactive() {
     track(type === 'law' ? 'sample_picker_law' : 'sample_picker_mold')
   }
 
+  // Build personalized headline from Round 1 + Round 2 answers
   const getPersonalizedHeadline = () => {
     const round1 = answers[0]?.answer
-    const round3 = answers[2]?.answer
-    if (!round1 || !round3) return DEFAULT_HEADLINE
-    const key = `${round1}|${round3}`
+    const round2 = answers[1]?.answer
+    if (!round1 || !round2) return DEFAULT_HEADLINE
+    const key = `${round1}|${round2}`
     return HEADLINE_MAP[key] || DEFAULT_HEADLINE
   }
 
@@ -285,7 +277,7 @@ export default function Interactive() {
     <>
       <Head>
         <title>Find Your AI Blueprint | Novo Navis</title>
-        <meta name="description" content="95% of businesses pick the wrong AI automation tools. We make sure you're not one of them. Answer 3 questions and get a custom AI Blueprint for your business — free to read, pay only if you approve." />
+        <meta name="description" content="95% of businesses pick the wrong AI automation tools. We make sure you're not one of them. Answer 2 questions and get a custom AI Blueprint for your business — free to read, pay only if you approve." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
@@ -380,7 +372,7 @@ export default function Interactive() {
                 backgroundPosition: 'center top',
                 position: 'relative',
               }}>
-                {/* Dark gradient overlay at bottom so button is readable */}
+                {/* Dark gradient overlay */}
                 <div style={{
                   position: 'absolute',
                   bottom: 0, left: 0, right: 0,
@@ -388,7 +380,7 @@ export default function Interactive() {
                   background: 'linear-gradient(to bottom, transparent, rgba(10,15,30,0.92))',
                 }} />
 
-                {/* Button + clarifier pinned to bottom of image */}
+                {/* Button + clarifier */}
                 <div style={{
                   position: 'absolute',
                   bottom: 0, left: 0, right: 0,
@@ -397,16 +389,10 @@ export default function Interactive() {
                   <button
                     onClick={handleSplashStart}
                     style={{
-                      width: '100%',
-                      padding: '1rem',
-                      background: GOLD,
-                      border: 'none',
-                      borderRadius: '10px',
-                      color: NAVY,
-                      fontWeight: 'bold',
-                      fontSize: '1.05rem',
-                      cursor: 'pointer',
-                      letterSpacing: '0.02em',
+                      width: '100%', padding: '1rem',
+                      background: GOLD, border: 'none', borderRadius: '10px',
+                      color: NAVY, fontWeight: 'bold', fontSize: '1.05rem',
+                      cursor: 'pointer', letterSpacing: '0.02em',
                       boxShadow: '0 4px 20px rgba(200,169,110,0.5)',
                       transition: 'box-shadow 0.18s ease, transform 0.18s ease',
                     }}
@@ -421,7 +407,7 @@ export default function Interactive() {
                 </div>
               </div>
 
-              {/* Trust line below image */}
+              {/* Trust line */}
               <div style={{ padding: '0.85rem 1rem', textAlign: 'center', borderTop: '1px solid #e8ecf4' }}>
                 <p style={{ color: '#8a95aa', fontSize: '0.74rem', margin: 0, lineHeight: 1.5 }}>
                   Novo Navis Interactive · Division of{' '}
@@ -440,25 +426,15 @@ export default function Interactive() {
               {round !== 'final' && (
                 <>
                   <div style={{ background: '#e8ecf4', height: '5px', width: '100%' }}>
-                    <div style={{ height: '100%', width: `${(round / 3) * 100}%`, background: GOLD, transition: 'width 0.4s ease', minWidth: '33%' }} />
+                    <div style={{ height: '100%', width: `${(round / 2) * 100}%`, background: GOLD, transition: 'width 0.4s ease', minWidth: '50%' }} />
                   </div>
                   <p style={{ textAlign: 'right', fontSize: '0.72rem', color: '#8a95aa', margin: '0.3rem 1rem 0', paddingBottom: '0' }}>
-                    Question {round} of 3
+                    Question {round} of 2
                   </p>
                 </>
               )}
 
               <div style={{ textAlign: 'center', padding: '1.75rem 2rem 0' }}>
-                {round === 3 && (
-                  <>
-                    <p style={{ color: GOLD, fontSize: '1.4rem', fontWeight: '700', letterSpacing: '0', margin: '0 0 0.5rem', lineHeight: 1.2, fontFamily: SERIF }}>
-                      95% of businesses pick the wrong AI tools.
-                    </p>
-                    <p style={{ color: '#4a5568', fontSize: '0.95rem', fontWeight: '500', margin: '0 0 1rem', lineHeight: 1.5 }}>
-                      We make sure you're not one of them. Let's find out which group you're in.
-                    </p>
-                  </>
-                )}
                 <h1 style={{ color: NAVY, fontSize: round === 'final' ? '1.25rem' : '1.5rem', fontWeight: 'bold', margin: '0 0 0.5rem', lineHeight: 1.35, fontFamily: round === 'final' ? SERIF : 'inherit' }}>
                   {headlineText}
                 </h1>
@@ -472,6 +448,7 @@ export default function Interactive() {
                       <p style={{ color: '#8a95aa', fontSize: '0.78rem', margin: '0 0 1.25rem', fontStyle: 'italic' }}>↑ Tap to see a real blueprint we built</p>
                     </div>
 
+                    {/* APPROVAL BANNER */}
                     <div style={{ background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)', border: `2px solid ${GOLD}`, borderRadius: '12px', padding: '1.1rem 1.25rem', marginBottom: '1.5rem', textAlign: 'center', boxShadow: '0 4px 16px rgba(200,169,110,0.18)' }}>
                       <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>How this works</p>
                       <p style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3, fontFamily: SERIF }}>Read your full strategy free. Pay to unlock the complete recommendation.</p>
@@ -518,6 +495,7 @@ export default function Interactive() {
                       </div>
                     ))}
 
+                    {/* Call us */}
                     <div style={{ textAlign: 'center', marginBottom: '1rem', marginTop: '1rem', padding: '0.85rem 1rem', background: LIGHT, border: '1px solid #e0e4ef', borderRadius: '8px' }}>
                       <p style={{ color: NAVY, fontSize: '0.88rem', fontWeight: '600', margin: '0 0 0.2rem' }}>Want to talk to a real person first?</p>
                       <a href="tel:6234289308" style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.05rem', textDecoration: 'none', fontFamily: SERIF }}>(623) 428-9308</a>
@@ -729,7 +707,7 @@ export default function Interactive() {
               <button onClick={() => setSiteOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '1.3rem', lineHeight: 1, padding: '0.1rem 0.3rem' }}>✕</button>
             </div>
             <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1rem' }}>Novo Navis is a registered U.S. Defense Contractor that builds custom AI Blueprints for small businesses — the same rigor we apply to defense-grade AI, applied to your workflows and budget.</p>
-            <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>Answer 3 quick questions and we'll build you a custom AI report. We build it. You preview it. You only pay if you approve.</p>
+            <p style={{ color: NAVY, fontSize: '0.92rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>Answer 2 quick questions and we'll build you a custom AI report. We build it. You preview it. You only pay if you approve.</p>
             <button onClick={() => setSiteOpen(false)} style={{ width: '100%', padding: '0.85rem', background: NAVY, border: 'none', borderRadius: '8px', color: '#ffffff', fontWeight: 'bold', fontSize: '0.95rem', cursor: 'pointer' }}>Got it — let's do this</button>
           </div>
         </div>
