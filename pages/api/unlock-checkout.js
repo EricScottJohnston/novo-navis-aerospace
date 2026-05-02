@@ -10,6 +10,13 @@ const s3 = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
 const TIER_NAMES = {
   starter:   'Single Workflow Blueprint — Full Report',
   blueprint: 'AI Blueprint — Full Report',
+  strategic: 'Strategic Analysis — Full Report',
+}
+
+const TIER_DESCRIPTIONS = {
+  starter:   'Unlock the full report with specific tool recommendations and pricing.',
+  blueprint: 'Unlock the full report with specific tool recommendations and pricing.',
+  strategic: 'Unlock the full strategic analysis with the recommendation, alternative paths, decision framework, and action plan.',
 }
 
 export default async function handler(req, res) {
@@ -39,6 +46,9 @@ export default async function handler(req, res) {
 
   const origin = req.headers.origin || 'https://www.novonavis.com'
 
+  const productName = TIER_NAMES[metadata.tier]        || 'AI Blueprint — Full Report'
+  const productDesc = TIER_DESCRIPTIONS[metadata.tier] || 'Unlock the full report.'
+
   try {
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
@@ -47,8 +57,8 @@ export default async function handler(req, res) {
         price_data: {
           currency: 'usd',
           product_data: {
-            name: TIER_NAMES[metadata.tier] || 'AI Blueprint — Full Report',
-            description: 'Unlock the full report with specific tool recommendations and pricing.',
+            name:        productName,
+            description: productDesc,
           },
           unit_amount: metadata.unlockPrice,
         },
