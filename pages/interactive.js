@@ -122,12 +122,19 @@ const DEFAULT_HEADLINE = 'You named the problem. Pick the blueprint that fits.'
 const BBB_URL = 'https://www.bbb.org/us/az/glendale/profile/aerospace-industry/novo-navis-aerospace-1126-1000076608'
 
 const REVIEWS = [
-  { stars: 5, text: '...These guys definitely cut through the hype. It didn\'t take very long, and I got definitive answers for my business needs. Highly recommend....' },
-  { stars: 5, text: '...I had a lot of fun watching the system build my report. Great tool. I wish I could watch it again....' },
-  { stars: 4, text: '...These guys found tools I never would have uncovered on my own. I was a little uncertain about their pricing model, but I can definitely see why they do it now. Try it. It works....' },
-  { stars: 5, text: '...I spent weeks trying to find the right tools and ended up getting upsold on a lot of things I didn\'t need for my business. Now I have the exact tools for my workflow at my budget....' },
-  { stars: 5, text: '...As a business owner who\'s used business consultants in the past, what Novo Navis gave me for this price would have cost me tens of thousands of dollars at one of the big consulting companies. And it was fast....' },
+  { stars: 5, text: '...These guys definitely cut through the hype. It didn\'t take very long, and I got definitive answers for my business needs. Highly recommend....', author: 'Brian T.' },
+  { stars: 5, text: '...I had a lot of fun watching the system build my report. Great tool. I wish I could watch it again....', author: 'James R.' },
+  { stars: 4, text: '...These guys found tools I never would have uncovered on my own. I was a little uncertain about their pricing model, but I can definitely see why they do it now. Try it. It works....', author: 'Michelle K.' },
+  { stars: 5, text: '...I spent weeks trying to find the right tools and ended up getting upsold on a lot of things I didn\'t need for my business. Now I have the exact tools for my workflow at my budget....', author: 'David P.' },
+  { stars: 5, text: '...As a business owner who\'s used business consultants in the past, what Novo Navis gave me for this price would have cost me tens of thousands of dollars at one of the big consulting companies. And it was fast....', author: 'Sandra M.' },
 ]
+
+// Anchored featured testimonial — shown above fold during quiz rounds
+const FEATURED_REVIEW = {
+  stars: 5,
+  text: '"I literally scoured the internet for weeks and never came close to getting the answer my company needed. Novo Navis gave us the entire answer."',
+  author: 'Brian T., Business Owner',
+}
 
 function track(event, params = {}) {
   if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
@@ -171,6 +178,7 @@ function BlueprintMockup({ onClick }) {
 }
 
 export default function Interactive() {
+  const [showSplash,         setShowSplash]         = useState(true)
   const [round,              setRound]              = useState(1)
   const [answers,            setAnswers]            = useState([])
   const [current,            setCurrent]            = useState(ROUND_1)
@@ -195,6 +203,11 @@ export default function Interactive() {
     window.addEventListener('message', handler)
     return () => window.removeEventListener('message', handler)
   }, [])
+
+  const handleSplashStart = () => {
+    track('splash_started')
+    setShowSplash(false)
+  }
 
   const handleChoice = (option) => {
     const newAnswers = [...answers, { question: current.question, answer: option }]
@@ -273,7 +286,7 @@ export default function Interactive() {
     <>
       <Head>
         <title>Find Your AI Blueprint | Novo Navis</title>
-        <meta name="description" content="95% of businesses pick the wrong AI tools. We make sure you're not one of them. Take 3 quick questions and we'll build a custom AI Blueprint for your business — preview free, pay only if you approve." />
+        <meta name="description" content="95% of businesses pick the wrong AI automation tools. We make sure you're not one of them. Answer 3 questions and get a custom AI Blueprint for your business — free to read, pay only if you approve." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Find Your AI Blueprint | Novo Navis" />
@@ -346,232 +359,274 @@ export default function Interactive() {
       <div style={{ background: 'linear-gradient(to bottom, #eef2f9 0px, #f4f7fc 280px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 1rem', minHeight: '100vh' }}>
         <div style={{ background: '#ffffff', border: '1px solid #e0e4ef', borderRadius: '14px', boxShadow: '0 8px 40px rgba(27,42,74,0.12)', maxWidth: '520px', width: '100%', overflow: 'hidden' }}>
 
-          {/* Defense contractor credential bar */}
+          {/* Credential bar — updated to speak to small business owners */}
           <div style={{ background: '#fafbfd', borderBottom: '1px solid #e8ecf4', padding: '0.55rem 1rem', textAlign: 'center' }}>
             <span style={{ color: NAVY, fontSize: '0.66rem', fontWeight: '700', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
               <span style={{ color: GOLD, marginRight: '0.4rem' }}>◆</span>
-              Defense-grade AI for business
+              Find the right AI tools for your business — free to read before you pay
               <span style={{ color: GOLD, marginLeft: '0.4rem' }}>◆</span>
             </span>
           </div>
 
-          {/* Progress bar */}
-          {round !== 'final' && (
-            <>
-              <div style={{ background: '#e8ecf4', height: '5px', width: '100%' }}>
-                <div style={{ height: '100%', width: `${(round / 3) * 100}%`, background: GOLD, transition: 'width 0.4s ease', minWidth: '33%' }} />
-              </div>
-              <p style={{ textAlign: 'right', fontSize: '0.72rem', color: '#8a95aa', margin: '0.3rem 1rem 0', paddingBottom: '0' }}>
-                Question {round} of 3
+          {/* ── SPLASH SCREEN ─────────────────────────────────────────── */}
+          {showSplash ? (
+            <div style={{ padding: '2.25rem 2rem 2.5rem', animation: 'fadeSlideIn 0.3s ease-out' }}>
+
+              {/* Headline */}
+              <h1 style={{ color: NAVY, fontSize: '1.55rem', fontWeight: 'bold', lineHeight: 1.25, margin: '0 0 0.75rem', fontFamily: SERIF, textAlign: 'center' }}>
+                Stop guessing which AI tools will actually work for your business.
+              </h1>
+
+              {/* Subheadline */}
+              <p style={{ color: '#4a5568', fontSize: '0.97rem', lineHeight: 1.65, margin: '0 0 1.5rem', textAlign: 'center' }}>
+                Answer 3 quick questions. We'll build you a custom AI automation Blueprint — matched to your workflows and budget.{' '}
+                <strong style={{ color: NAVY }}>Read the full strategy free. Pay only if you approve it.</strong>
               </p>
+
+              {/* Featured testimonial */}
+              <div style={{ background: LIGHT, border: '1px solid #e0e4ef', borderLeft: `3px solid ${GOLD}`, borderRadius: '8px', padding: '0.9rem 1rem', marginBottom: '1.5rem' }}>
+                <p style={{ color: GOLD, fontSize: '0.78rem', fontWeight: 'bold', margin: '0 0 0.3rem' }}>★★★★★</p>
+                <p style={{ color: NAVY, fontSize: '0.85rem', lineHeight: 1.6, margin: '0 0 0.3rem', fontStyle: 'italic' }}>
+                  {FEATURED_REVIEW.text}
+                </p>
+                <p style={{ color: '#8a95aa', fontSize: '0.75rem', margin: 0 }}>— {FEATURED_REVIEW.author}</p>
+              </div>
+
+              {/* How it works — 3 quick bullets */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.75rem' }}>
+                {[
+                  ['1', 'Answer 3 questions about your business — takes under 2 minutes.'],
+                  ['2', 'We build your custom AI Blueprint and send it to you free.'],
+                  ['3', 'Read it. Like what we recommend? Unlock it. If not, walk away — no charge.'],
+                ].map(([n, text]) => (
+                  <div key={n} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.65rem' }}>
+                    <span style={{ background: GOLD, color: NAVY, fontWeight: 'bold', fontSize: '0.7rem', borderRadius: '50%', width: '20px', height: '20px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{n}</span>
+                    <p style={{ color: '#4a5568', fontSize: '0.85rem', lineHeight: 1.55, margin: 0 }}>{text}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTA button */}
+              <button
+                onClick={handleSplashStart}
+                style={{ width: '100%', padding: '1rem', background: GOLD, border: 'none', borderRadius: '10px', color: NAVY, fontWeight: 'bold', fontSize: '1.05rem', cursor: 'pointer', letterSpacing: '0.02em', boxShadow: '0 4px 16px rgba(200,169,110,0.4)', transition: 'box-shadow 0.18s ease, transform 0.18s ease' }}
+                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 6px 22px rgba(200,169,110,0.55)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 16px rgba(200,169,110,0.4)'; e.currentTarget.style.transform = 'translateY(0)' }}
+              >
+                Find My AI Tools →
+              </button>
+
+              {/* Trust line */}
+              <p style={{ textAlign: 'center', color: '#8a95aa', fontSize: '0.74rem', margin: '1rem 0 0', lineHeight: 1.5 }}>
+                Novo Navis Interactive · Division of{' '}
+                <a href={BBB_URL} target="_blank" rel="noopener noreferrer" style={{ color: '#8a95aa', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+                  Novo Navis Aerospace
+                </a>
+                {' '}· A+ Rated, Better Business Bureau
+              </p>
+
+            </div>
+
+          ) : (
+            /* ── QUIZ + FINAL SCREEN ──────────────────────────────────── */
+            <>
+              {/* Progress bar */}
+              {round !== 'final' && (
+                <>
+                  <div style={{ background: '#e8ecf4', height: '5px', width: '100%' }}>
+                    <div style={{ height: '100%', width: `${(round / 3) * 100}%`, background: GOLD, transition: 'width 0.4s ease', minWidth: '33%' }} />
+                  </div>
+                  <p style={{ textAlign: 'right', fontSize: '0.72rem', color: '#8a95aa', margin: '0.3rem 1rem 0', paddingBottom: '0' }}>
+                    Question {round} of 3
+                  </p>
+                </>
+              )}
+
+              <div style={{ textAlign: 'center', padding: '1.75rem 2rem 0' }}>
+                {round === 3 && (
+                  <>
+                    <p style={{ color: GOLD, fontSize: '1.4rem', fontWeight: '700', letterSpacing: '0', margin: '0 0 0.5rem', lineHeight: 1.2, fontFamily: SERIF }}>
+                      95% of businesses pick the wrong AI tools.
+                    </p>
+                    <p style={{ color: '#4a5568', fontSize: '0.95rem', fontWeight: '500', margin: '0 0 1rem', lineHeight: 1.5 }}>
+                      We make sure you're not one of them. Let's find out which group you're in.
+                    </p>
+                  </>
+                )}
+                <h1 style={{ color: NAVY, fontSize: round === 'final' ? '1.25rem' : '1.5rem', fontWeight: 'bold', margin: '0 0 0.5rem', lineHeight: 1.35, fontFamily: round === 'final' ? SERIF : 'inherit' }}>
+                  {headlineText}
+                </h1>
+              </div>
+
+              <div key={round} style={{ padding: '1rem 2rem 2.5rem' }}>
+                {round === 'final' ? (
+                  <>
+                    <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
+                      <BlueprintMockup onClick={openIndustryPicker} />
+                      <p style={{ color: '#8a95aa', fontSize: '0.78rem', margin: '0 0 1.25rem', fontStyle: 'italic' }}>↑ Tap to see a real blueprint we built</p>
+                    </div>
+
+                    {/* APPROVAL BANNER */}
+                    <div style={{ background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)', border: `2px solid ${GOLD}`, borderRadius: '12px', padding: '1.1rem 1.25rem', marginBottom: '1.5rem', textAlign: 'center', boxShadow: '0 4px 16px rgba(200,169,110,0.18)' }}>
+                      <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>How this works</p>
+                      <p style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3, fontFamily: SERIF }}>Read your full strategy free. Pay to unlock the complete recommendation.</p>
+                      <p style={{ color: '#4a5568', fontSize: '0.88rem', lineHeight: 1.55, margin: 0 }}>We build your complete blueprint and send you the entire strategy. Read it. Like what we recommend? Approve and unlock the full report. If not, walk away — no charges, no follow-up.</p>
+                    </div>
+
+                    <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
+                      <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: 0, fontFamily: SERIF }}>Pick your blueprint depth</h2>
+                    </div>
+
+                    {TIERS.filter(t => isEnterprise ? t.key === 'enterprise' : t.key !== 'enterprise').map(({ key, name, price, badge }) => (
+                      <div key={key} style={{ border: key === 'blueprint' ? `2px solid ${GOLD}` : '1px solid #e0e4ef', borderRadius: '10px', padding: '1.1rem 1.25rem', marginBottom: '0.75rem', background: key === 'blueprint' ? '#fffbf4' : '#ffffff', position: 'relative' }}>
+                        {badge && (
+                          <div style={{ position: 'absolute', top: '-11px', left: '50%', transform: 'translateX(-50%)', background: GOLD, color: NAVY, fontSize: '0.68rem', fontWeight: 'bold', padding: '0.18rem 0.85rem', borderRadius: '20px', whiteSpace: 'nowrap', letterSpacing: '0.08em', boxShadow: '0 2px 8px rgba(200,169,110,0.35)' }}>
+                            {badge}
+                          </div>
+                        )}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
+                          <p style={{ color: NAVY, fontWeight: 'bold', fontSize: '1rem', margin: 0 }}>{name}</p>
+                          <div style={{ textAlign: 'right' }}>
+                            <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.3rem', margin: 0, fontFamily: SERIF }}>{price}</p>
+                            {key !== 'enterprise' && <p style={{ color: '#8a95aa', fontSize: '0.7rem', margin: '0.1rem 0 0', fontStyle: 'italic' }}>only after approval</p>}
+                          </div>
+                        </div>
+                        <ul style={{ margin: '0 0 0.85rem', paddingLeft: '1.1rem' }}>
+                          {TIER_DETAILS[key].map((item, i) => (
+                            <li key={i} style={{ color: '#4a5568', fontSize: '0.83rem', lineHeight: 1.7 }}>{item}</li>
+                          ))}
+                        </ul>
+                        <button
+                          onClick={() => handleCheckout(key)}
+                          disabled={checkoutLoading === key}
+                          onMouseEnter={e => { if (!checkoutLoading && key === 'blueprint') { e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,169,110,0.5)'; e.currentTarget.style.transform = 'translateY(-1px)' } }}
+                          onMouseLeave={e => { if (key === 'blueprint') { e.currentTarget.style.boxShadow = '0 4px 14px rgba(200,169,110,0.35)'; e.currentTarget.style.transform = 'translateY(0)' } }}
+                          style={{ width: '100%', padding: '0.85rem', background: checkoutLoading === key ? '#dde2ef' : key === 'blueprint' ? GOLD : NAVY, border: key === 'blueprint' ? `1px solid ${GOLD}` : 'none', borderRadius: '8px', color: checkoutLoading === key ? '#8a95aa' : key === 'blueprint' ? NAVY : '#fff', fontWeight: 'bold', fontSize: '0.97rem', letterSpacing: '0.02em', cursor: checkoutLoading === key ? 'not-allowed' : 'pointer', boxShadow: key === 'blueprint' ? '0 4px 14px rgba(200,169,110,0.35)' : 'none', transition: 'box-shadow 0.18s ease, transform 0.18s ease' }}
+                        >
+                          {checkoutLoading === key ? (key === 'enterprise' ? 'Redirecting...' : 'Taking you there...') : key === 'enterprise' ? `Get ${name} — ${price}` : `Build My Blueprint →`}
+                        </button>
+                        {key !== 'enterprise' && (
+                          <p style={{ textAlign: 'center', color: '#6b7a99', fontSize: '0.78rem', margin: '0.5rem 0 0' }}>
+                            Build & preview is <strong style={{ color: NAVY }}>free</strong>. Pay <strong style={{ color: NAVY }}>{price}</strong> only when you approve.
+                          </p>
+                        )}
+                      </div>
+                    ))}
+
+                    {/* Call us */}
+                    <div style={{ textAlign: 'center', marginBottom: '1rem', marginTop: '1rem', padding: '0.85rem 1rem', background: LIGHT, border: '1px solid #e0e4ef', borderRadius: '8px' }}>
+                      <p style={{ color: NAVY, fontSize: '0.88rem', fontWeight: '600', margin: '0 0 0.2rem' }}>Want to talk to a real person first?</p>
+                      <a href="tel:6234289308" style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.05rem', textDecoration: 'none', fontFamily: SERIF }}>(623) 428-9308</a>
+                    </div>
+
+                    <p style={{ textAlign: 'center', color: '#8a95aa', fontSize: '0.82rem', margin: '0 0 1rem' }}>
+                      Questions?{' '}
+                      <button onClick={() => { setObjOpen(true); track('modal_opened', { modal: 'what_is_blueprint', round }) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.82rem', textDecoration: 'underline', textUnderlineOffset: '3px', padding: 0 }}>
+                        See what an AI Blueprint is
+                      </button>
+                      {' '}or{' '}
+                      <button onClick={() => { setReviewsOpen(true); track('modal_opened', { modal: 'reviews', round }) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.82rem', textDecoration: 'underline', textUnderlineOffset: '3px', padding: 0 }}>
+                        read what others say
+                      </button>
+                      .
+                    </p>
+
+                    <div style={{ background: '#f4f6fb', border: '1px solid #e0e4ef', borderRadius: '8px', padding: '1rem 1.1rem' }}>
+                      <p style={{ color: NAVY, fontSize: '0.82rem', fontWeight: 'bold', margin: '0 0 0.6rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>What happens next</p>
+                      {(isEnterprise ? [
+                        ['1', 'Stripe takes your payment — secure, takes about 30 seconds.'],
+                        ['2', 'We bring you back for a short intake form — 2 to 3 minutes.'],
+                        ['3', 'We build your custom blueprint — delivered to your inbox in about 12 minutes.'],
+                      ] : [
+                        ['1', 'Quick intake form — 2 to 3 minutes. Tell us about your business.'],
+                        ['2', 'We build your custom blueprint — about 12 minutes. Up to 25 pages, all yours.'],
+                        ['3', 'Read the full preview. If you approve it, unlock the complete recommendation. If not, walk away — no charge.'],
+                      ]).map(([n, text]) => (
+                        <div key={n} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.5rem' }}>
+                          <span style={{ background: GOLD, color: NAVY, fontWeight: 'bold', fontSize: '0.7rem', borderRadius: '50%', width: '18px', height: '18px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{n}</span>
+                          <p style={{ color: '#4a5568', fontSize: '0.83rem', lineHeight: 1.6, margin: 0 }}>{text}</p>
+                        </div>
+                      ))}
+                    </div>
+
+                    <p style={{ textAlign: 'center', marginTop: '1.25rem', marginBottom: 0 }}>
+                      <button onClick={() => { setShowSplash(true); setRound(1); setAnswers([]); setCurrent(ROUND_1); setIsEnterprise(false) }} style={{ background: 'none', border: 'none', color: '#8a95aa', fontSize: '0.82rem', cursor: 'pointer', textDecoration: 'underline' }}>
+                        Start over
+                      </button>
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    {/* Anchored featured testimonial — above the fold on every round */}
+                    <div style={{ background: LIGHT, border: '1px solid #e0e4ef', borderLeft: `3px solid ${GOLD}`, borderRadius: '8px', padding: '0.85rem 1rem', marginBottom: '1.1rem' }}>
+                      <p style={{ color: GOLD, fontSize: '0.75rem', fontWeight: 'bold', margin: '0 0 0.25rem' }}>★★★★★</p>
+                      <p style={{ color: NAVY, fontSize: '0.82rem', lineHeight: 1.6, margin: '0 0 0.25rem', fontStyle: 'italic' }}>
+                        {FEATURED_REVIEW.text}
+                      </p>
+                      <p style={{ color: '#8a95aa', fontSize: '0.72rem', margin: 0 }}>— {FEATURED_REVIEW.author}</p>
+                    </div>
+
+                    {/* Answer option buttons */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                      {current.options.map((opt, i) => (
+                        <button
+                          key={i}
+                          onClick={() => handleChoice(opt)}
+                          style={{ width: '100%', padding: '0.95rem 1.25rem', background: '#ffffff', border: `1px solid #e8ecf4`, borderRadius: '10px', boxShadow: '0 2px 8px rgba(27,42,74,0.07)', color: NAVY, fontWeight: '600', fontSize: '0.97rem', cursor: 'pointer', textAlign: 'left', transition: 'border-color 0.15s, background 0.15s, box-shadow 0.15s, transform 0.15s' }}
+                          onMouseEnter={e => { e.currentTarget.style.borderColor = GOLD; e.currentTarget.style.background = '#fffbf4'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(200,169,110,0.18)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                          onMouseLeave={e => { e.currentTarget.style.borderColor = '#e8ecf4'; e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(27,42,74,0.07)'; e.currentTarget.style.transform = 'translateY(0)' }}
+                        >
+                          {opt}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Scrollable reviews strip */}
+                    <div className="reviews-scroll" style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none', margin: '0 -2rem 1rem', padding: '0 2rem' }}>
+                      <div style={{ display: 'flex', gap: '0.75rem', width: 'max-content' }}>
+                        {REVIEWS.map((r, i) => (
+                          <div key={i} style={{ background: '#f4f6fb', border: '1px solid #e0e4ef', borderRadius: '10px', padding: '0.85rem 1rem', width: '230px', flexShrink: 0 }}>
+                            <p style={{ color: GOLD, fontSize: '0.8rem', fontWeight: 'bold', margin: '0 0 0.4rem' }}>{'★'.repeat(r.stars)}{'☆'.repeat(5 - r.stars)}</p>
+                            <p style={{ color: NAVY, fontSize: '0.8rem', lineHeight: 1.6, margin: 0 }}>{r.text}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* BBB Trust Badge */}
+                    <div style={{ background: NAVY, border: `1px solid ${GOLD}40`, borderLeft: `3px solid ${GOLD}`, borderRadius: '8px', padding: '0.85rem 1rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.65rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.65rem', flex: 1 }}>
+                        <span style={{ fontSize: '1.1rem', flexShrink: 0, marginTop: '1px' }}>🏛️</span>
+                        <div>
+                          <p style={{ color: GOLD, fontSize: '0.68rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>A+ Rated · Better Business Bureau</p>
+                          <p style={{ color: '#d0d8e8', fontSize: '0.78rem', lineHeight: 1.55, margin: 0 }}>Novo Navis Interactive is a division of Novo Navis Aerospace. We're engineers applying rigor — not marketers applying hype.</p>
+                        </div>
+                      </div>
+                      <a
+                        href={BBB_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => track('bbb_verify_clicked')}
+                        style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: '0.3rem', background: 'transparent', border: `1px solid ${GOLD}60`, borderRadius: '6px', padding: '0.35rem 0.65rem', color: GOLD, fontSize: '0.68rem', fontWeight: 'bold', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', whiteSpace: 'nowrap', transition: 'background 0.15s' }}
+                        onMouseEnter={e => e.currentTarget.style.background = `${GOLD}18`}
+                        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                      >
+                        <span style={{ fontSize: '0.75rem' }}>✓</span> Verify
+                      </a>
+                    </div>
+
+                    {/* What is this site link */}
+                    <p style={{ textAlign: 'center', marginTop: '0', marginBottom: 0 }}>
+                      <button onClick={() => { setSiteOpen(true); track('modal_opened', { modal: 'what_is_this_site', round }) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.78rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+                        Wait, what is this site?
+                      </button>
+                    </p>
+                  </>
+                )}
+              </div>
             </>
           )}
 
-          <div style={{ textAlign: 'center', padding: '1.75rem 2rem 0' }}>
-            {round === 3 && (
-              <>
-                <p style={{ color: GOLD, fontSize: '1.4rem', fontWeight: '700', letterSpacing: '0', margin: '0 0 0.5rem', lineHeight: 1.2, fontFamily: SERIF }}>
-                  95% of businesses pick the wrong AI tools.
-                </p>
-                <p style={{ color: '#4a5568', fontSize: '0.95rem', fontWeight: '500', margin: '0 0 1rem', lineHeight: 1.5 }}>
-                  We make sure you're not one of them. Let's find out which group you're in.
-                </p>
-              </>
-            )}
-            <h1 style={{ color: NAVY, fontSize: round === 'final' ? '1.25rem' : '1.5rem', fontWeight: 'bold', margin: '0 0 0.5rem', lineHeight: 1.35, fontFamily: round === 'final' ? SERIF : 'inherit' }}>
-              {headlineText}
-            </h1>
-          </div>
-
-          <div key={round} style={{ padding: '1rem 2rem 2.5rem' }}>
-            {round === 'final' ? (
-              <>
-                <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
-                  <BlueprintMockup onClick={openIndustryPicker} />
-                  <p style={{ color: '#8a95aa', fontSize: '0.78rem', margin: '0 0 1.25rem', fontStyle: 'italic' }}>↑ Tap to see a real blueprint we built</p>
-                </div>
-
-                {/* APPROVAL BANNER */}
-                <div style={{ background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)', border: `2px solid ${GOLD}`, borderRadius: '12px', padding: '1.1rem 1.25rem', marginBottom: '1.5rem', textAlign: 'center', boxShadow: '0 4px 16px rgba(200,169,110,0.18)' }}>
-                  <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>How this works</p>
-                  <p style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3, fontFamily: SERIF }}>Read your full strategy free. Pay to unlock the complete recommendation.</p>
-                  <p style={{ color: '#4a5568', fontSize: '0.88rem', lineHeight: 1.55, margin: 0 }}>We build your complete blueprint and send you the entire strategy. Read it. Like what we recommend? Approve and unlock the full report. If not, walk away — no charges, no follow-up.</p>
-                </div>
-
-                <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
-                  <h2 style={{ color: NAVY, fontSize: '1.25rem', fontWeight: 'bold', margin: 0, fontFamily: SERIF }}>Pick your blueprint depth</h2>
-                </div>
-
-                {TIERS.filter(t => isEnterprise ? t.key === 'enterprise' : t.key !== 'enterprise').map(({ key, name, price, badge }) => (
-                  <div key={key} style={{ border: key === 'blueprint' ? `2px solid ${GOLD}` : '1px solid #e0e4ef', borderRadius: '10px', padding: '1.1rem 1.25rem', marginBottom: '0.75rem', background: key === 'blueprint' ? '#fffbf4' : '#ffffff', position: 'relative' }}>
-                    {badge && (
-                      <div style={{ position: 'absolute', top: '-11px', left: '50%', transform: 'translateX(-50%)', background: GOLD, color: NAVY, fontSize: '0.68rem', fontWeight: 'bold', padding: '0.18rem 0.85rem', borderRadius: '20px', whiteSpace: 'nowrap', letterSpacing: '0.08em', boxShadow: '0 2px 8px rgba(200,169,110,0.35)' }}>
-                        {badge}
-                      </div>
-                    )}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.6rem' }}>
-                      <p style={{ color: NAVY, fontWeight: 'bold', fontSize: '1rem', margin: 0 }}>{name}</p>
-                      <div style={{ textAlign: 'right' }}>
-                        <p style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.3rem', margin: 0, fontFamily: SERIF }}>{price}</p>
-                        {key !== 'enterprise' && <p style={{ color: '#8a95aa', fontSize: '0.7rem', margin: '0.1rem 0 0', fontStyle: 'italic' }}>only after approval</p>}
-                      </div>
-                    </div>
-                    <ul style={{ margin: '0 0 0.85rem', paddingLeft: '1.1rem' }}>
-                      {TIER_DETAILS[key].map((item, i) => (
-                        <li key={i} style={{ color: '#4a5568', fontSize: '0.83rem', lineHeight: 1.7 }}>{item}</li>
-                      ))}
-                    </ul>
-                    <button
-                      onClick={() => handleCheckout(key)}
-                      disabled={checkoutLoading === key}
-                      onMouseEnter={e => { if (!checkoutLoading && key === 'blueprint') { e.currentTarget.style.boxShadow = '0 6px 20px rgba(200,169,110,0.5)'; e.currentTarget.style.transform = 'translateY(-1px)' } }}
-                      onMouseLeave={e => { if (key === 'blueprint') { e.currentTarget.style.boxShadow = '0 4px 14px rgba(200,169,110,0.35)'; e.currentTarget.style.transform = 'translateY(0)' } }}
-                      style={{ width: '100%', padding: '0.85rem', background: checkoutLoading === key ? '#dde2ef' : key === 'blueprint' ? GOLD : NAVY, border: key === 'blueprint' ? `1px solid ${GOLD}` : 'none', borderRadius: '8px', color: checkoutLoading === key ? '#8a95aa' : key === 'blueprint' ? NAVY : '#fff', fontWeight: 'bold', fontSize: '0.97rem', letterSpacing: '0.02em', cursor: checkoutLoading === key ? 'not-allowed' : 'pointer', boxShadow: key === 'blueprint' ? '0 4px 14px rgba(200,169,110,0.35)' : 'none', transition: 'box-shadow 0.18s ease, transform 0.18s ease' }}
-                    >
-                      {checkoutLoading === key ? (key === 'enterprise' ? 'Redirecting...' : 'Taking you there...') : key === 'enterprise' ? `Get ${name} — ${price}` : `Build My Blueprint →`}
-                    </button>
-                    {key !== 'enterprise' && (
-                      <p style={{ textAlign: 'center', color: '#6b7a99', fontSize: '0.78rem', margin: '0.5rem 0 0' }}>
-                        Build & preview is <strong style={{ color: NAVY }}>free</strong>. Pay <strong style={{ color: NAVY }}>{price}</strong> only when you approve.
-                      </p>
-                    )}
-                  </div>
-                ))}
-
-                {/* Call us */}
-                <div style={{ textAlign: 'center', marginBottom: '1rem', marginTop: '1rem', padding: '0.85rem 1rem', background: LIGHT, border: '1px solid #e0e4ef', borderRadius: '8px' }}>
-                  <p style={{ color: NAVY, fontSize: '0.88rem', fontWeight: '600', margin: '0 0 0.2rem' }}>Want to talk to a real person first?</p>
-                  <a href="tel:6234289308" style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.05rem', textDecoration: 'none', fontFamily: SERIF }}>(623) 428-9308</a>
-                </div>
-
-                <p style={{ textAlign: 'center', color: '#8a95aa', fontSize: '0.82rem', margin: '0 0 1rem' }}>
-                  Questions?{' '}
-                  <button onClick={() => { setObjOpen(true); track('modal_opened', { modal: 'what_is_blueprint', round }) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.82rem', textDecoration: 'underline', textUnderlineOffset: '3px', padding: 0 }}>
-                    See what an AI Blueprint is
-                  </button>
-                  {' '}or{' '}
-                  <button onClick={() => { setReviewsOpen(true); track('modal_opened', { modal: 'reviews', round }) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.82rem', textDecoration: 'underline', textUnderlineOffset: '3px', padding: 0 }}>
-                    read what others say
-                  </button>
-                  .
-                </p>
-
-                <div style={{ background: '#f4f6fb', border: '1px solid #e0e4ef', borderRadius: '8px', padding: '1rem 1.1rem' }}>
-                  <p style={{ color: NAVY, fontSize: '0.82rem', fontWeight: 'bold', margin: '0 0 0.6rem', textTransform: 'uppercase', letterSpacing: '0.08em' }}>What happens next</p>
-                  {(isEnterprise ? [
-                    ['1', 'Stripe takes your payment — secure, takes about 30 seconds.'],
-                    ['2', 'We bring you back for a short intake form — 2 to 3 minutes.'],
-                    ['3', 'We build your custom blueprint — delivered to your inbox in about 12 minutes.'],
-                  ] : [
-                    ['1', 'Quick intake form — 2 to 3 minutes. Tell us about your business.'],
-                    ['2', 'We build your custom blueprint — about 12 minutes. Up to 25 pages, all yours.'],
-                    ['3', 'Read the full preview. If you approve it, unlock the complete recommendation. If not, walk away — no charge.'],
-                  ]).map(([n, text]) => (
-                    <div key={n} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.5rem' }}>
-                      <span style={{ background: GOLD, color: NAVY, fontWeight: 'bold', fontSize: '0.7rem', borderRadius: '50%', width: '18px', height: '18px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{n}</span>
-                      <p style={{ color: '#4a5568', fontSize: '0.83rem', lineHeight: 1.6, margin: 0 }}>{text}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <p style={{ textAlign: 'center', marginTop: '1.25rem', marginBottom: 0 }}>
-                  <button onClick={() => { setRound(1); setAnswers([]); setCurrent(ROUND_1); setIsEnterprise(false) }} style={{ background: 'none', border: 'none', color: '#8a95aa', fontSize: '0.82rem', cursor: 'pointer', textDecoration: 'underline' }}>
-                    Start over
-                  </button>
-                </p>
-              </>
-            ) : (
-              <>
-                {/* Answer option buttons */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.25rem' }}>
-                  {current.options.map((opt, i) => (
-                    <button
-                      key={i}
-                      onClick={() => handleChoice(opt)}
-                      style={{ width: '100%', padding: '0.95rem 1.25rem', background: '#ffffff', border: `1px solid #e8ecf4`, borderRadius: '10px', boxShadow: '0 2px 8px rgba(27,42,74,0.07)', color: NAVY, fontWeight: '600', fontSize: '0.97rem', cursor: 'pointer', textAlign: 'left', transition: 'border-color 0.15s, background 0.15s, box-shadow 0.15s, transform 0.15s' }}
-                      onMouseEnter={e => { e.currentTarget.style.borderColor = GOLD; e.currentTarget.style.background = '#fffbf4'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(200,169,110,0.18)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-                      onMouseLeave={e => { e.currentTarget.style.borderColor = '#e8ecf4'; e.currentTarget.style.background = '#ffffff'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(27,42,74,0.07)'; e.currentTarget.style.transform = 'translateY(0)' }}
-                    >
-                      {opt}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Scrollable reviews strip */}
-                <div className="reviews-scroll" style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none', margin: '0 -2rem 1rem', padding: '0 2rem' }}>
-                  <div style={{ display: 'flex', gap: '0.75rem', width: 'max-content' }}>
-                    {REVIEWS.map((r, i) => (
-                      <div key={i} style={{ background: '#f4f6fb', border: '1px solid #e0e4ef', borderRadius: '10px', padding: '0.85rem 1rem', width: '230px', flexShrink: 0 }}>
-                        <p style={{ color: GOLD, fontSize: '0.8rem', fontWeight: 'bold', margin: '0 0 0.4rem' }}>{'★'.repeat(r.stars)}{'☆'.repeat(5 - r.stars)}</p>
-                        <p style={{ color: NAVY, fontSize: '0.8rem', lineHeight: 1.6, margin: 0 }}>{r.text}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* BBB Trust Badge */}
-                <div style={{
-                  background: NAVY,
-                  border: `1px solid ${GOLD}40`,
-                  borderLeft: `3px solid ${GOLD}`,
-                  borderRadius: '8px',
-                  padding: '0.85rem 1rem',
-                  marginBottom: '1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '0.65rem',
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.65rem', flex: 1 }}>
-                    <span style={{ fontSize: '1.1rem', flexShrink: 0, marginTop: '1px' }}>🏛️</span>
-                    <div>
-                      <p style={{ color: GOLD, fontSize: '0.68rem', fontWeight: 'bold', letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 0.2rem' }}>
-                        A+ Rated · Better Business Bureau
-                      </p>
-                      <p style={{ color: '#d0d8e8', fontSize: '0.78rem', lineHeight: 1.55, margin: 0 }}>
-                        Novo Navis Interactive is a division of Novo Navis Aerospace. We're engineers applying rigor — not marketers applying hype.
-                      </p>
-                    </div>
-                  </div>
-                  <a
-                    href={BBB_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => track('bbb_verify_clicked')}
-                    style={{
-                      flexShrink: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.3rem',
-                      background: 'transparent',
-                      border: `1px solid ${GOLD}60`,
-                      borderRadius: '6px',
-                      padding: '0.35rem 0.65rem',
-                      color: GOLD,
-                      fontSize: '0.68rem',
-                      fontWeight: 'bold',
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
-                      textDecoration: 'none',
-                      whiteSpace: 'nowrap',
-                      transition: 'background 0.15s',
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.background = `${GOLD}18`}
-                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                  >
-                    <span style={{ fontSize: '0.75rem' }}>✓</span> Verify
-                  </a>
-                </div>
-
-                {/* What is this site link */}
-                <p style={{ textAlign: 'center', marginTop: '0', marginBottom: 0 }}>
-                  <button onClick={() => { setSiteOpen(true); track('modal_opened', { modal: 'what_is_this_site', round }) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.78rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
-                    Wait, what is this site?
-                  </button>
-                </p>
-              </>
-            )}
-          </div>
         </div>
       </div>
 
