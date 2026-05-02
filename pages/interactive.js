@@ -369,61 +369,68 @@ export default function Interactive() {
 
           {/* ── SPLASH SCREEN ─────────────────────────────────────────── */}
           {showSplash ? (
-            <div style={{ padding: '2.25rem 2rem 2.5rem', animation: 'fadeSlideIn 0.3s ease-out' }}>
+            <div style={{ position: 'relative', animation: 'fadeSlideIn 0.3s ease-out' }}>
 
-              <h1 style={{ color: NAVY, fontSize: '1.55rem', fontWeight: 'bold', lineHeight: 1.25, margin: '0 0 0.75rem', fontFamily: SERIF, textAlign: 'center' }}>
-                Stop guessing which AI tools will actually work for your business.
-              </h1>
+              {/* Background image */}
+              <div style={{
+                width: '100%',
+                aspectRatio: '1 / 1',
+                backgroundImage: 'url(/95.jpg)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center top',
+                position: 'relative',
+              }}>
+                {/* Dark gradient overlay at bottom so button is readable */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: 0, left: 0, right: 0,
+                  height: '55%',
+                  background: 'linear-gradient(to bottom, transparent, rgba(10,15,30,0.92))',
+                }} />
 
-              <p style={{ color: '#4a5568', fontSize: '0.97rem', lineHeight: 1.65, margin: '0 0 1.5rem', textAlign: 'center' }}>
-                Answer 3 quick questions. We'll build you a custom AI automation Blueprint — matched to your workflows and budget.{' '}
-                <strong style={{ color: NAVY }}>Read the full strategy free. Pay only if you approve it.</strong>
-              </p>
+                {/* Button + clarifier pinned to bottom of image */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: 0, left: 0, right: 0,
+                  padding: '1.5rem 1.75rem 1.75rem',
+                }}>
+                  <button
+                    onClick={handleSplashStart}
+                    style={{
+                      width: '100%',
+                      padding: '1rem',
+                      background: GOLD,
+                      border: 'none',
+                      borderRadius: '10px',
+                      color: NAVY,
+                      fontWeight: 'bold',
+                      fontSize: '1.05rem',
+                      cursor: 'pointer',
+                      letterSpacing: '0.02em',
+                      boxShadow: '0 4px 20px rgba(200,169,110,0.5)',
+                      transition: 'box-shadow 0.18s ease, transform 0.18s ease',
+                    }}
+                    onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 6px 24px rgba(200,169,110,0.65)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                    onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 20px rgba(200,169,110,0.5)'; e.currentTarget.style.transform = 'translateY(0)' }}
+                  >
+                    I Want to Get the Right AI Tools →
+                  </button>
+                  <p style={{ textAlign: 'center', color: 'rgba(255,255,255,0.7)', fontSize: '0.74rem', margin: '0.5rem 0 0' }}>
+                    Takes 2 minutes. Limited availability.
+                  </p>
+                </div>
+              </div>
 
-              {/* Featured testimonial */}
-              <div style={{ background: LIGHT, border: '1px solid #e0e4ef', borderLeft: `3px solid ${GOLD}`, borderRadius: '8px', padding: '0.9rem 1rem', marginBottom: '1.5rem' }}>
-                <p style={{ color: GOLD, fontSize: '0.78rem', fontWeight: 'bold', margin: '0 0 0.3rem' }}>★★★★★</p>
-                <p style={{ color: NAVY, fontSize: '0.85rem', lineHeight: 1.6, margin: '0 0 0.3rem', fontStyle: 'italic' }}>
-                  {FEATURED_REVIEW.text}
+              {/* Trust line below image */}
+              <div style={{ padding: '0.85rem 1rem', textAlign: 'center', borderTop: '1px solid #e8ecf4' }}>
+                <p style={{ color: '#8a95aa', fontSize: '0.74rem', margin: 0, lineHeight: 1.5 }}>
+                  Novo Navis Interactive · Division of{' '}
+                  <a href={BBB_URL} target="_blank" rel="noopener noreferrer" style={{ color: '#8a95aa', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+                    Novo Navis Aerospace
+                  </a>
+                  {' '}· A+ Rated, Better Business Bureau
                 </p>
-                <p style={{ color: '#8a95aa', fontSize: '0.75rem', margin: 0 }}>— {FEATURED_REVIEW.author}</p>
               </div>
-
-              {/* How it works */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.75rem' }}>
-                {[
-                  ['1', 'Answer 3 questions about your business — takes under 2 minutes.'],
-                  ['2', 'We build your custom AI Blueprint and send it to you free.'],
-                  ['3', 'Read it. Like what we recommend? Unlock it. If not, walk away — no charge.'],
-                ].map(([n, text]) => (
-                  <div key={n} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.65rem' }}>
-                    <span style={{ background: GOLD, color: NAVY, fontWeight: 'bold', fontSize: '0.7rem', borderRadius: '50%', width: '20px', height: '20px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{n}</span>
-                    <p style={{ color: '#4a5568', fontSize: '0.85rem', lineHeight: 1.55, margin: 0 }}>{text}</p>
-                  </div>
-                ))}
-              </div>
-
-              {/* CTA button + clarifier */}
-              <button
-                onClick={handleSplashStart}
-                style={{ width: '100%', padding: '1rem', background: GOLD, border: 'none', borderRadius: '10px', color: NAVY, fontWeight: 'bold', fontSize: '1.05rem', cursor: 'pointer', letterSpacing: '0.02em', boxShadow: '0 4px 16px rgba(200,169,110,0.4)', transition: 'box-shadow 0.18s ease, transform 0.18s ease' }}
-                onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 6px 22px rgba(200,169,110,0.55)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-                onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 16px rgba(200,169,110,0.4)'; e.currentTarget.style.transform = 'translateY(0)' }}
-              >
-                Find My AI Tools →
-              </button>
-              <p style={{ textAlign: 'center', color: '#8a95aa', fontSize: '0.74rem', margin: '0.5rem 0 0' }}>
-                Takes 2 minutes. Limited availability.
-              </p>
-
-              {/* Trust line */}
-              <p style={{ textAlign: 'center', color: '#8a95aa', fontSize: '0.74rem', margin: '1rem 0 0', lineHeight: 1.5 }}>
-                Novo Navis Interactive · Division of{' '}
-                <a href={BBB_URL} target="_blank" rel="noopener noreferrer" style={{ color: '#8a95aa', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
-                  Novo Navis Aerospace
-                </a>
-                {' '}· A+ Rated, Better Business Bureau
-              </p>
 
             </div>
 
