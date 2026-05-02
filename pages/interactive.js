@@ -129,7 +129,6 @@ const REVIEWS = [
   { stars: 5, text: '...As a business owner who\'s used business consultants in the past, what Novo Navis gave me for this price would have cost me tens of thousands of dollars at one of the big consulting companies. And it was fast....', author: 'Sandra M.' },
 ]
 
-// Anchored featured testimonial — shown above fold during quiz rounds
 const FEATURED_REVIEW = {
   stars: 5,
   text: '"I literally scoured the internet for weeks and never came close to getting the answer my company needed. Novo Navis gave us the entire answer."',
@@ -359,11 +358,11 @@ export default function Interactive() {
       <div style={{ background: 'linear-gradient(to bottom, #eef2f9 0px, #f4f7fc 280px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 1rem', minHeight: '100vh' }}>
         <div style={{ background: '#ffffff', border: '1px solid #e0e4ef', borderRadius: '14px', boxShadow: '0 8px 40px rgba(27,42,74,0.12)', maxWidth: '520px', width: '100%', overflow: 'hidden' }}>
 
-          {/* Credential bar — updated to speak to small business owners */}
+          {/* Credential bar */}
           <div style={{ background: '#fafbfd', borderBottom: '1px solid #e8ecf4', padding: '0.55rem 1rem', textAlign: 'center' }}>
-            <span style={{ color: NAVY, fontSize: '0.66rem', fontWeight: '700', letterSpacing: '0.16em', textTransform: 'uppercase' }}>
+            <span style={{ color: NAVY, fontSize: '0.66rem', fontWeight: '700', letterSpacing: '0.14em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
               <span style={{ color: GOLD, marginRight: '0.4rem' }}>◆</span>
-              Find the right AI tools for your business — free to read before you pay
+              Founders Special — Limited Free Available
               <span style={{ color: GOLD, marginLeft: '0.4rem' }}>◆</span>
             </span>
           </div>
@@ -372,12 +371,10 @@ export default function Interactive() {
           {showSplash ? (
             <div style={{ padding: '2.25rem 2rem 2.5rem', animation: 'fadeSlideIn 0.3s ease-out' }}>
 
-              {/* Headline */}
               <h1 style={{ color: NAVY, fontSize: '1.55rem', fontWeight: 'bold', lineHeight: 1.25, margin: '0 0 0.75rem', fontFamily: SERIF, textAlign: 'center' }}>
                 Stop guessing which AI tools will actually work for your business.
               </h1>
 
-              {/* Subheadline */}
               <p style={{ color: '#4a5568', fontSize: '0.97rem', lineHeight: 1.65, margin: '0 0 1.5rem', textAlign: 'center' }}>
                 Answer 3 quick questions. We'll build you a custom AI automation Blueprint — matched to your workflows and budget.{' '}
                 <strong style={{ color: NAVY }}>Read the full strategy free. Pay only if you approve it.</strong>
@@ -392,7 +389,7 @@ export default function Interactive() {
                 <p style={{ color: '#8a95aa', fontSize: '0.75rem', margin: 0 }}>— {FEATURED_REVIEW.author}</p>
               </div>
 
-              {/* How it works — 3 quick bullets */}
+              {/* How it works */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.75rem' }}>
                 {[
                   ['1', 'Answer 3 questions about your business — takes under 2 minutes.'],
@@ -406,7 +403,7 @@ export default function Interactive() {
                 ))}
               </div>
 
-              {/* CTA button */}
+              {/* CTA button + clarifier */}
               <button
                 onClick={handleSplashStart}
                 style={{ width: '100%', padding: '1rem', background: GOLD, border: 'none', borderRadius: '10px', color: NAVY, fontWeight: 'bold', fontSize: '1.05rem', cursor: 'pointer', letterSpacing: '0.02em', boxShadow: '0 4px 16px rgba(200,169,110,0.4)', transition: 'box-shadow 0.18s ease, transform 0.18s ease' }}
@@ -415,6 +412,9 @@ export default function Interactive() {
               >
                 Find My AI Tools →
               </button>
+              <p style={{ textAlign: 'center', color: '#8a95aa', fontSize: '0.74rem', margin: '0.5rem 0 0' }}>
+                Takes 2 minutes. Limited availability.
+              </p>
 
               {/* Trust line */}
               <p style={{ textAlign: 'center', color: '#8a95aa', fontSize: '0.74rem', margin: '1rem 0 0', lineHeight: 1.5 }}>
@@ -428,7 +428,6 @@ export default function Interactive() {
             </div>
 
           ) : (
-            /* ── QUIZ + FINAL SCREEN ──────────────────────────────────── */
             <>
               {/* Progress bar */}
               {round !== 'final' && (
@@ -466,7 +465,6 @@ export default function Interactive() {
                       <p style={{ color: '#8a95aa', fontSize: '0.78rem', margin: '0 0 1.25rem', fontStyle: 'italic' }}>↑ Tap to see a real blueprint we built</p>
                     </div>
 
-                    {/* APPROVAL BANNER */}
                     <div style={{ background: 'linear-gradient(135deg, #fffbf4 0%, #fff8ee 100%)', border: `2px solid ${GOLD}`, borderRadius: '12px', padding: '1.1rem 1.25rem', marginBottom: '1.5rem', textAlign: 'center', boxShadow: '0 4px 16px rgba(200,169,110,0.18)' }}>
                       <p style={{ color: GOLD, fontSize: '0.7rem', fontWeight: 'bold', letterSpacing: '0.18em', textTransform: 'uppercase', margin: '0 0 0.4rem' }}>How this works</p>
                       <p style={{ color: NAVY, fontSize: '1.2rem', fontWeight: 'bold', margin: '0 0 0.4rem', lineHeight: 1.3, fontFamily: SERIF }}>Read your full strategy free. Pay to unlock the complete recommendation.</p>
@@ -513,7 +511,6 @@ export default function Interactive() {
                       </div>
                     ))}
 
-                    {/* Call us */}
                     <div style={{ textAlign: 'center', marginBottom: '1rem', marginTop: '1rem', padding: '0.85rem 1rem', background: LIGHT, border: '1px solid #e0e4ef', borderRadius: '8px' }}>
                       <p style={{ color: NAVY, fontSize: '0.88rem', fontWeight: '600', margin: '0 0 0.2rem' }}>Want to talk to a real person first?</p>
                       <a href="tel:6234289308" style={{ color: GOLD, fontWeight: 'bold', fontSize: '1.05rem', textDecoration: 'none', fontFamily: SERIF }}>(623) 428-9308</a>
@@ -557,7 +554,7 @@ export default function Interactive() {
                   </>
                 ) : (
                   <>
-                    {/* Anchored featured testimonial — above the fold on every round */}
+                    {/* Anchored featured testimonial */}
                     <div style={{ background: LIGHT, border: '1px solid #e0e4ef', borderLeft: `3px solid ${GOLD}`, borderRadius: '8px', padding: '0.85rem 1rem', marginBottom: '1.1rem' }}>
                       <p style={{ color: GOLD, fontSize: '0.75rem', fontWeight: 'bold', margin: '0 0 0.25rem' }}>★★★★★</p>
                       <p style={{ color: NAVY, fontSize: '0.82rem', lineHeight: 1.6, margin: '0 0 0.25rem', fontStyle: 'italic' }}>
@@ -615,7 +612,6 @@ export default function Interactive() {
                       </a>
                     </div>
 
-                    {/* What is this site link */}
                     <p style={{ textAlign: 'center', marginTop: '0', marginBottom: 0 }}>
                       <button onClick={() => { setSiteOpen(true); track('modal_opened', { modal: 'what_is_this_site', round }) }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8a95aa', fontSize: '0.78rem', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
                         Wait, what is this site?
