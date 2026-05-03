@@ -295,7 +295,6 @@ export default function HomePage() {
         {/* ── HERO ── */}
         <section className="hero">
           <div className="container" style={{ textAlign: 'center' }}>
-            <p className="hero-eyebrow">Novo Navis Aerospace Operations LLC</p>
             <h1 className="hero-title">
               AI that thinks<br />before it acts.
             </h1>
@@ -407,7 +406,7 @@ export default function HomePage() {
         <section className="pedigree">
           <div className="container">
             <p>
-              <strong style={{ color: GOLD }}>Novo Navis Aerospace Operations LLC</strong>
+              
               {' '}· Registered U.S. Defense Contractor ·{' '}
               <a href={BBB_URL} target="_blank" rel="noopener noreferrer">
                 A+ Rated, Better Business Bureau
