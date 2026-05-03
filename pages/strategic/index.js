@@ -8,10 +8,14 @@ import Link from 'next/link'
 const NAVY = '#1B2A4A'
 const GOLD = '#c8a96e'
 const INK  = '#0c1322'   // near-black for section titles — high contrast
-const BODY = '#2d3748'   // darker body color than #4a5568, easier to read
+const BODY = '#2d3748'
 
 const VIDEO_URL  = 'https://res.cloudinary.com/dqv9va6ta/video/upload/v1777770174/Untitled_design_x0d45n.mp4'
 const SAMPLE_PDF = '/samples/strategic-preview-novo-navis.pdf'
+
+// Inline style applied directly to h2 elements as a final override —
+// guarantees the color wins regardless of any global site CSS.
+const FORCE_TITLE = { color: INK, fontWeight: 800 }
 
 export default function StrategicLanding() {
   return (
@@ -29,6 +33,30 @@ export default function StrategicLanding() {
             color: ${INK};
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
             line-height: 1.6;
+          }
+
+          /* HARD OVERRIDES — beat any global site CSS that targets h2/h3/p */
+          .strategic-page h1.hero-title { color: #ffffff !important; }
+          .strategic-page h2.section-title {
+            color: ${INK} !important;
+            font-weight: 800 !important;
+            opacity: 1 !important;
+            -webkit-text-fill-color: ${INK} !important;
+          }
+          .strategic-page h2.pricing-headline { color: #ffffff !important; }
+          .strategic-page h3.feature-title,
+          .strategic-page h3.step-title,
+          .strategic-page h3.sample-headline {
+            color: ${INK} !important;
+            opacity: 1 !important;
+          }
+          .strategic-page p.section-lead {
+            color: ${BODY} !important;
+            opacity: 1 !important;
+          }
+          .strategic-page p.feature-body,
+          .strategic-page p.step-body {
+            color: ${BODY} !important;
           }
 
           .container {
@@ -58,7 +86,6 @@ export default function StrategicLanding() {
             font-weight: 700;
             line-height: 1.18;
             margin: 0 0 1rem;
-            color: #ffffff;
           }
           .hero-subtitle {
             font-size: 1.08rem;
@@ -76,11 +103,6 @@ export default function StrategicLanding() {
             border-radius: 8px;
             text-decoration: none;
             box-shadow: 0 4px 16px rgba(200,169,110,0.35);
-            transition: transform 0.15s, box-shadow 0.15s;
-          }
-          .hero-cta:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(200,169,110,0.45);
           }
           .hero-pedigree {
             display: inline-block;
@@ -92,10 +114,7 @@ export default function StrategicLanding() {
           @media (max-width: 700px) {
             .hero-title { font-size: 1.85rem; }
             .hero-subtitle { font-size: 1rem; }
-            .hero-pedigree {
-              display: block;
-              margin: 1rem 0 0;
-            }
+            .hero-pedigree { display: block; margin: 1rem 0 0; }
           }
 
           /* ── Video ────────────────────────────────── */
@@ -114,11 +133,7 @@ export default function StrategicLanding() {
             overflow: hidden;
             box-shadow: 0 6px 30px rgba(0,0,0,0.4);
           }
-          .video-frame video {
-            display: block;
-            width: 100%;
-            height: auto;
-          }
+          .video-frame video { display: block; width: 100%; height: auto; }
           .video-caption {
             text-align: center;
             color: #a8b2c5;
@@ -128,14 +143,10 @@ export default function StrategicLanding() {
           }
 
           /* ── Section common ───────────────────────── */
-          .section {
-            padding: 3.5rem 0;
-          }
-          .section-light {
-            background: #f3f6fb;
-          }
+          .section { padding: 3.5rem 0; }
+          .section-light { background: #f3f6fb; }
           .section-eyebrow {
-            color: #9a7b3f;            /* darker gold for contrast on white */
+            color: #9a7b3f;
             font-size: 0.74rem;
             font-weight: 700;
             letter-spacing: 0.16em;
@@ -144,15 +155,12 @@ export default function StrategicLanding() {
           }
           .section-title {
             font-size: 1.95rem;
-            font-weight: 800;
-            color: ${INK};
             margin: 0 0 1rem;
             line-height: 1.22;
             letter-spacing: -0.01em;
           }
           .section-lead {
             font-size: 1.06rem;
-            color: ${BODY};
             max-width: 760px;
             margin: 0 0 2rem;
             line-height: 1.65;
@@ -173,18 +181,8 @@ export default function StrategicLanding() {
             padding: 1.4rem 1.4rem 1.5rem;
             box-shadow: 0 2px 8px rgba(27,42,74,0.05);
           }
-          .feature-title {
-            color: ${INK};
-            font-size: 1.08rem;
-            font-weight: 700;
-            margin: 0 0 0.55rem;
-          }
-          .feature-body {
-            color: ${BODY};
-            font-size: 0.95rem;
-            margin: 0;
-            line-height: 1.6;
-          }
+          .feature-title { font-size: 1.08rem; font-weight: 700; margin: 0 0 0.55rem; }
+          .feature-body { font-size: 0.95rem; margin: 0; line-height: 1.6; }
 
           /* ── Sample download ──────────────────────── */
           .sample-card {
@@ -199,8 +197,7 @@ export default function StrategicLanding() {
           }
           .sample-icon {
             flex: 0 0 auto;
-            width: 64px;
-            height: 64px;
+            width: 64px; height: 64px;
             border-radius: 12px;
             background: ${NAVY};
             color: ${GOLD};
@@ -211,25 +208,14 @@ export default function StrategicLanding() {
             font-size: 1.3rem;
             letter-spacing: 0.05em;
           }
-          .sample-text {
-            flex: 1;
-          }
-          .sample-headline {
-            color: ${INK};
-            font-size: 1.18rem;
-            font-weight: 700;
-            margin: 0 0 0.35rem;
-          }
-          .sample-sub {
-            color: #5a6478;
-            font-size: 0.94rem;
-            margin: 0;
-          }
+          .sample-text { flex: 1; }
+          .sample-headline { font-size: 1.18rem; font-weight: 700; margin: 0 0 0.35rem; }
+          .sample-sub { color: #5a6478; font-size: 0.94rem; margin: 0; }
           .sample-button {
             flex: 0 0 auto;
             display: inline-block;
             background: ${NAVY};
-            color: #ffffff;
+            color: #ffffff !important;
             font-weight: 600;
             font-size: 0.96rem;
             padding: 0.78rem 1.3rem;
@@ -238,12 +224,7 @@ export default function StrategicLanding() {
             white-space: nowrap;
           }
           @media (max-width: 700px) {
-            .sample-card {
-              flex-direction: column;
-              text-align: center;
-              padding: 1.5rem;
-              gap: 1rem;
-            }
+            .sample-card { flex-direction: column; text-align: center; padding: 1.5rem; gap: 1rem; }
             .sample-text { text-align: center; }
           }
 
@@ -264,12 +245,10 @@ export default function StrategicLanding() {
           }
           .step-num {
             position: absolute;
-            top: -14px;
-            left: 1.4rem;
+            top: -14px; left: 1.4rem;
             background: ${GOLD};
             color: #111;
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -278,18 +257,8 @@ export default function StrategicLanding() {
             font-size: 0.95rem;
             box-shadow: 0 2px 6px rgba(200,169,110,0.4);
           }
-          .step-title {
-            color: ${INK};
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin: 0.5rem 0 0.55rem;
-          }
-          .step-body {
-            color: ${BODY};
-            font-size: 0.94rem;
-            margin: 0;
-            line-height: 1.6;
-          }
+          .step-title { font-size: 1.05rem; font-weight: 700; margin: 0.5rem 0 0.55rem; }
+          .step-body { font-size: 0.94rem; margin: 0; line-height: 1.6; }
 
           /* ── Pricing strip ────────────────────────── */
           .pricing {
@@ -306,11 +275,7 @@ export default function StrategicLanding() {
             text-transform: uppercase;
             margin-bottom: 0.7rem;
           }
-          .pricing-headline {
-            font-size: 1.7rem;
-            font-weight: 700;
-            margin: 0 0 0.6rem;
-          }
+          .pricing-headline { font-size: 1.7rem; margin: 0 0 0.6rem; }
           .pricing-detail {
             color: #d6dde8;
             font-size: 1.04rem;
@@ -320,7 +285,7 @@ export default function StrategicLanding() {
           .pricing-cta {
             display: inline-block;
             background: ${GOLD};
-            color: #111;
+            color: #111 !important;
             font-weight: 700;
             font-size: 1.05rem;
             padding: 0.95rem 1.9rem;
@@ -328,11 +293,7 @@ export default function StrategicLanding() {
             text-decoration: none;
             box-shadow: 0 4px 16px rgba(200,169,110,0.4);
           }
-          .pricing-fineprint {
-            margin-top: 1.1rem;
-            color: #a8b2c5;
-            font-size: 0.9rem;
-          }
+          .pricing-fineprint { margin-top: 1.1rem; color: #a8b2c5; font-size: 0.9rem; }
 
           /* ── Footer ───────────────────────────────── */
           .strategic-footer {
@@ -352,7 +313,7 @@ export default function StrategicLanding() {
         <section className="hero">
           <div className="container">
             <div className="hero-eyebrow">David / Strategic</div>
-            <h1 className="hero-title">
+            <h1 className="hero-title" style={{ color: '#ffffff' }}>
               Defense-grade strategic analysis<br/>for the consulting industry.
             </h1>
             <p className="hero-subtitle">
@@ -390,10 +351,10 @@ export default function StrategicLanding() {
         <section className="section">
           <div className="container">
             <div className="section-eyebrow">Why this exists</div>
-            <h2 className="section-title">
+            <h2 className="section-title" style={FORCE_TITLE}>
               The Deloitte problem made every consulting partner cautious.
             </h2>
-            <p className="section-lead">
+            <p className="section-lead" style={{ color: BODY }}>
               Hallucinated AI output that ends up in a client deliverable is a career
               risk no boutique can absorb. David is built so the output is defensible
               by construction: every factual claim is cited, every finding carries a
@@ -407,55 +368,57 @@ export default function StrategicLanding() {
         <section className="section section-light">
           <div className="container">
             <div className="section-eyebrow">What you get</div>
-            <h2 className="section-title">The audit trail is the product.</h2>
-            <p className="section-lead">
+            <h2 className="section-title" style={FORCE_TITLE}>
+              The audit trail is the product.
+            </h2>
+            <p className="section-lead" style={{ color: BODY }}>
               Most AI consulting output looks confident. David's looks accountable.
               That difference is what your client's general counsel cares about.
             </p>
             <div className="features">
               <div className="feature">
-                <h3 className="feature-title">Confidence ratings inline</h3>
-                <p className="feature-body">
+                <h3 className="feature-title" style={{ color: INK }}>Confidence ratings inline</h3>
+                <p className="feature-body" style={{ color: BODY }}>
                   Every substantive finding is labeled CAUSAL, MECHANISM, THRESHOLD,
                   or CORRELATED — and the labels appear in the body, not buried in
                   an appendix. You and your client know exactly what's load-bearing.
                 </p>
               </div>
               <div className="feature">
-                <h3 className="feature-title">Inline citations + bibliography</h3>
-                <p className="feature-body">
+                <h3 className="feature-title" style={{ color: INK }}>Inline citations + bibliography</h3>
+                <p className="feature-body" style={{ color: BODY }}>
                   Every external claim carries a numbered marker linking to a real,
                   verifiable source. The bibliography lists every URL, search query,
                   and access date. No phantom citations.
                 </p>
               </div>
               <div className="feature">
-                <h3 className="feature-title">Compliance framework mapping</h3>
-                <p className="feature-body">
+                <h3 className="feature-title" style={{ color: INK }}>Compliance framework mapping</h3>
+                <p className="feature-body" style={{ color: BODY }}>
                   Optional alignment to NIST AI RMF, ISO 42001, EU AI Act, GDPR
                   Article 22, or SOX general controls — David maps each requirement
                   to the section that satisfies it, with confidence ratings and gaps.
                 </p>
               </div>
               <div className="feature">
-                <h3 className="feature-title">Documented gaps</h3>
-                <p className="feature-body">
+                <h3 className="feature-title" style={{ color: INK }}>Documented gaps</h3>
+                <p className="feature-body" style={{ color: BODY }}>
                   Where evidence is missing, David names it explicitly and tells you
                   what would close the gap. Honest uncertainty is more defensible
                   than confident-sounding generalities.
                 </p>
               </div>
               <div className="feature">
-                <h3 className="feature-title">Adversarial verification</h3>
-                <p className="feature-body">
+                <h3 className="feature-title" style={{ color: INK }}>Adversarial verification</h3>
+                <p className="feature-body" style={{ color: BODY }}>
                   An adversarial instance challenges every causal claim. SPM-level
                   verification overrides instance ratings where reasoning is weak.
                   Agreements and overrides are logged in the Decision Log.
                 </p>
               </div>
               <div className="feature">
-                <h3 className="feature-title">Decision log appendix</h3>
-                <p className="feature-body">
+                <h3 className="feature-title" style={{ color: INK }}>Decision log appendix</h3>
+                <p className="feature-body" style={{ color: BODY }}>
                   Every report ends with a complete audit log: causal filter counts,
                   override counts, extrapolations applied, every open gap. The
                   artifact your compliance officer wants to see.
@@ -469,8 +432,10 @@ export default function StrategicLanding() {
         <section className="section">
           <div className="container">
             <div className="section-eyebrow">See it for yourself</div>
-            <h2 className="section-title">A sample David report.</h2>
-            <p className="section-lead">
+            <h2 className="section-title" style={FORCE_TITLE}>
+              A sample David report.
+            </h2>
+            <p className="section-lead" style={{ color: BODY }}>
               The Disney–ESPN spinoff question, run through David. Confidence ratings,
               eight cited sources, full Decision Log. Recommendation and action plan
               redacted — that's what an unlocked report adds — but the analysis quality
@@ -479,7 +444,9 @@ export default function StrategicLanding() {
             <div className="sample-card">
               <div className="sample-icon">PDF</div>
               <div className="sample-text">
-                <h3 className="sample-headline">Disney / ESPN Strategic Analysis — Sample Preview</h3>
+                <h3 className="sample-headline" style={{ color: INK }}>
+                  Disney / ESPN Strategic Analysis — Sample Preview
+                </h3>
                 <p className="sample-sub">19 pages · 8 cited sources · auditable causal analysis</p>
               </div>
               <a href={SAMPLE_PDF} className="sample-button" target="_blank" rel="noopener noreferrer">
@@ -493,36 +460,38 @@ export default function StrategicLanding() {
         <section className="section section-light">
           <div className="container">
             <div className="section-eyebrow">How it works</div>
-            <h2 className="section-title">Five minutes in. About 18 minutes to a full report.</h2>
+            <h2 className="section-title" style={FORCE_TITLE}>
+              Five minutes in. About 18 minutes to a full report.
+            </h2>
             <div className="steps">
               <div className="step">
                 <div className="step-num">1</div>
-                <h3 className="step-title">Submit the decision</h3>
-                <p className="step-body">
+                <h3 className="step-title" style={{ color: INK }}>Submit the decision</h3>
+                <p className="step-body" style={{ color: BODY }}>
                   Tell David the strategic decision your client faces, the situation,
                   what you already know, and which compliance frameworks apply if any.
                 </p>
               </div>
               <div className="step">
                 <div className="step-num">2</div>
-                <h3 className="step-title">Watch David build it</h3>
-                <p className="step-body">
+                <h3 className="step-title" style={{ color: INK }}>Watch David build it</h3>
+                <p className="step-body" style={{ color: BODY }}>
                   Real-time research, causal filter, adversarial review, SPM
                   verification, compliance mapping, citation tracking. Every step visible.
                 </p>
               </div>
               <div className="step">
                 <div className="step-num">3</div>
-                <h3 className="step-title">Read the preview free</h3>
-                <p className="step-body">
+                <h3 className="step-title" style={{ color: INK }}>Read the preview free</h3>
+                <p className="step-body" style={{ color: BODY }}>
                   A redacted preview lands in your inbox. Full analysis, full audit
                   trail, full bibliography. Recommendation and action plan held back.
                 </p>
               </div>
               <div className="step">
                 <div className="step-num">4</div>
-                <h3 className="step-title">Unlock if it holds up</h3>
-                <p className="step-body">
+                <h3 className="step-title" style={{ color: INK }}>Unlock if it holds up</h3>
+                <p className="step-body" style={{ color: BODY }}>
                   $999 unlocks the full report — recommendation, alternatives,
                   decision framework, sensitivity analysis, action plan, compliance
                   mapping detail. Pay only if you'd put your firm's name on it.
@@ -536,7 +505,9 @@ export default function StrategicLanding() {
         <section className="pricing">
           <div className="container">
             <div className="pricing-eyebrow">Pricing</div>
-            <h2 className="pricing-headline">$999 per analysis. Free preview, every time.</h2>
+            <h2 className="pricing-headline" style={{ color: '#ffffff' }}>
+              $999 per analysis. Free preview, every time.
+            </h2>
             <p className="pricing-detail">
               Submit, read the preview, and only pay if the analysis quality holds up
               to the standard you'd put your name on. No subscription, no commitment,
