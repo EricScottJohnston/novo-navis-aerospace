@@ -7,6 +7,8 @@ import Link from 'next/link'
 
 const NAVY = '#1B2A4A'
 const GOLD = '#c8a96e'
+const INK  = '#0c1322'   // near-black for section titles — high contrast
+const BODY = '#2d3748'   // darker body color than #4a5568, easier to read
 
 const VIDEO_URL  = 'https://res.cloudinary.com/dqv9va6ta/video/upload/v1777770174/Untitled_design_x0d45n.mp4'
 const SAMPLE_PDF = '/samples/strategic-preview-novo-navis.pdf'
@@ -24,7 +26,7 @@ export default function StrategicLanding() {
 
           .strategic-page {
             background: #ffffff;
-            color: #1a1a2e;
+            color: ${INK};
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
             line-height: 1.6;
           }
@@ -60,7 +62,7 @@ export default function StrategicLanding() {
           }
           .hero-subtitle {
             font-size: 1.08rem;
-            color: #c8d0e0;
+            color: #d6dde8;
             max-width: 680px;
             margin: 0 0 2rem;
           }
@@ -83,7 +85,7 @@ export default function StrategicLanding() {
           .hero-pedigree {
             display: inline-block;
             margin-left: 1.25rem;
-            color: #8a95aa;
+            color: #a8b2c5;
             font-size: 0.9rem;
             vertical-align: middle;
           }
@@ -119,8 +121,8 @@ export default function StrategicLanding() {
           }
           .video-caption {
             text-align: center;
-            color: #8a95aa;
-            font-size: 0.85rem;
+            color: #a8b2c5;
+            font-size: 0.9rem;
             margin-top: 0.85rem;
             font-style: italic;
           }
@@ -130,28 +132,30 @@ export default function StrategicLanding() {
             padding: 3.5rem 0;
           }
           .section-light {
-            background: #f7f9fc;
+            background: #f3f6fb;
           }
           .section-eyebrow {
-            color: ${GOLD};
-            font-size: 0.72rem;
+            color: #9a7b3f;            /* darker gold for contrast on white */
+            font-size: 0.74rem;
             font-weight: 700;
-            letter-spacing: 0.15em;
+            letter-spacing: 0.16em;
             text-transform: uppercase;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.7rem;
           }
           .section-title {
-            font-size: 1.85rem;
-            font-weight: 700;
-            color: ${NAVY};
+            font-size: 1.95rem;
+            font-weight: 800;
+            color: ${INK};
             margin: 0 0 1rem;
-            line-height: 1.25;
+            line-height: 1.22;
+            letter-spacing: -0.01em;
           }
           .section-lead {
-            font-size: 1.05rem;
-            color: #4a5568;
+            font-size: 1.06rem;
+            color: ${BODY};
             max-width: 760px;
             margin: 0 0 2rem;
+            line-height: 1.65;
           }
 
           /* ── Audit trail features ─────────────────── */
@@ -163,33 +167,35 @@ export default function StrategicLanding() {
           }
           .feature {
             background: #ffffff;
-            border: 1px solid #e0e4ef;
+            border: 1px solid #d8dee9;
             border-left: 3px solid ${GOLD};
             border-radius: 8px;
             padding: 1.4rem 1.4rem 1.5rem;
+            box-shadow: 0 2px 8px rgba(27,42,74,0.05);
           }
           .feature-title {
-            color: ${NAVY};
-            font-size: 1.05rem;
+            color: ${INK};
+            font-size: 1.08rem;
             font-weight: 700;
-            margin: 0 0 0.5rem;
+            margin: 0 0 0.55rem;
           }
           .feature-body {
-            color: #4a5568;
-            font-size: 0.93rem;
+            color: ${BODY};
+            font-size: 0.95rem;
             margin: 0;
+            line-height: 1.6;
           }
 
           /* ── Sample download ──────────────────────── */
           .sample-card {
             background: #ffffff;
-            border: 1px solid #e0e4ef;
+            border: 1px solid #d8dee9;
             border-radius: 12px;
             padding: 2rem 2rem 2.2rem;
             display: flex;
             align-items: center;
             gap: 1.75rem;
-            box-shadow: 0 4px 20px rgba(27,42,74,0.06);
+            box-shadow: 0 4px 20px rgba(27,42,74,0.08);
           }
           .sample-icon {
             flex: 0 0 auto;
@@ -209,14 +215,14 @@ export default function StrategicLanding() {
             flex: 1;
           }
           .sample-headline {
-            color: ${NAVY};
-            font-size: 1.15rem;
+            color: ${INK};
+            font-size: 1.18rem;
             font-weight: 700;
             margin: 0 0 0.35rem;
           }
           .sample-sub {
-            color: #6b7a99;
-            font-size: 0.92rem;
+            color: #5a6478;
+            font-size: 0.94rem;
             margin: 0;
           }
           .sample-button {
@@ -225,8 +231,8 @@ export default function StrategicLanding() {
             background: ${NAVY};
             color: #ffffff;
             font-weight: 600;
-            font-size: 0.95rem;
-            padding: 0.75rem 1.25rem;
+            font-size: 0.96rem;
+            padding: 0.78rem 1.3rem;
             border-radius: 8px;
             text-decoration: none;
             white-space: nowrap;
@@ -246,14 +252,15 @@ export default function StrategicLanding() {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
-            margin-top: 1.75rem;
+            margin-top: 1.85rem;
           }
           .step {
             background: #ffffff;
-            border: 1px solid #e0e4ef;
+            border: 1px solid #d8dee9;
             border-radius: 8px;
-            padding: 1.5rem 1.4rem 1.6rem;
+            padding: 1.6rem 1.4rem 1.6rem;
             position: relative;
+            box-shadow: 0 2px 8px rgba(27,42,74,0.05);
           }
           .step-num {
             position: absolute;
@@ -269,17 +276,19 @@ export default function StrategicLanding() {
             justify-content: center;
             font-weight: 700;
             font-size: 0.95rem;
+            box-shadow: 0 2px 6px rgba(200,169,110,0.4);
           }
           .step-title {
-            color: ${NAVY};
-            font-size: 1rem;
+            color: ${INK};
+            font-size: 1.05rem;
             font-weight: 700;
-            margin: 0.5rem 0 0.5rem;
+            margin: 0.5rem 0 0.55rem;
           }
           .step-body {
-            color: #4a5568;
-            font-size: 0.92rem;
+            color: ${BODY};
+            font-size: 0.94rem;
             margin: 0;
+            line-height: 1.6;
           }
 
           /* ── Pricing strip ────────────────────────── */
@@ -303,8 +312,8 @@ export default function StrategicLanding() {
             margin: 0 0 0.6rem;
           }
           .pricing-detail {
-            color: #c8d0e0;
-            font-size: 1.02rem;
+            color: #d6dde8;
+            font-size: 1.04rem;
             max-width: 640px;
             margin: 0 auto 1.6rem;
           }
@@ -321,17 +330,17 @@ export default function StrategicLanding() {
           }
           .pricing-fineprint {
             margin-top: 1.1rem;
-            color: #8a95aa;
-            font-size: 0.85rem;
+            color: #a8b2c5;
+            font-size: 0.9rem;
           }
 
           /* ── Footer ───────────────────────────────── */
           .strategic-footer {
             background: #0a0e1a;
-            color: #8a95aa;
+            color: #a8b2c5;
             text-align: center;
             padding: 2rem 0;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
           }
           .strategic-footer a { color: ${GOLD}; text-decoration: none; }
         `}</style>
