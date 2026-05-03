@@ -40,15 +40,48 @@ export default function HomePage() {
             padding: 0 1.25rem;
           }
 
+          /* ── Nav ── */
+          nav {
+            background: ${NAVY};
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.1rem 1.5rem;
+          }
+          .nav-logo {
+            color: ${GOLD};
+            font-size: 1.55rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-family: Georgia, serif;
+            line-height: 1.15;
+          }
+          .nav-links {
+            display: flex;
+            gap: 1.75rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+          }
+          .nav-links a {
+            color: #ffffff;
+            font-size: 1.05rem;
+            text-decoration: none;
+            font-weight: 400;
+          }
+
           /* ── Hero ── */
           .hero {
             background: ${NAVY};
             color: #ffffff;
             padding: 3.5rem 0 4rem;
+            text-align: center;
           }
           .hero-eyebrow {
             color: ${GOLD};
-            font-size: 0.78rem;
+            font-size: 0.74rem;
             font-weight: 700;
             letter-spacing: 0.18em;
             text-transform: uppercase;
@@ -64,8 +97,8 @@ export default function HomePage() {
           .hero-subtitle {
             font-size: 1.08rem;
             color: #d6dde8;
-            max-width: 640px;
-            margin: 0;
+            max-width: 560px;
+            margin: 0 auto;
             line-height: 1.65;
           }
           @media (max-width: 700px) {
@@ -251,32 +284,17 @@ export default function HomePage() {
       <div className="home-page">
 
         {/* ── NAV ── */}
-        <nav style={{
-          background: NAVY,
-          borderBottom: '1px solid #1e2a45',
-          padding: '0 1.25rem',
-          height: '56px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-        }}>
-          <span style={{ color: GOLD, fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
-            NOVO NAVIS
-          </span>
-          <ul style={{ display: 'flex', gap: '2rem', listStyle: 'none', margin: 0, padding: 0 }}>
-            {[['AI Blueprint', '/interactive'], ['Strategic', '/strategic'], ['FAQ', '/faq'], ['About', '/about']].map(([label, href]) => (
-              <li key={href}>
-                <Link href={href} style={{ color: '#a8b2c5', fontSize: '0.85rem', textDecoration: 'none', letterSpacing: '0.04em' }}>
-                  {label}
-                </Link>
-              </li>
-            ))}
+        <nav>
+          <span className="nav-logo">NOVO NAVIS</span>
+          <ul className="nav-links">
+            <li><Link href="/faq">FAQ</Link></li>
+            <li><Link href="/about">About</Link></li>
           </ul>
         </nav>
 
         {/* ── HERO ── */}
         <section className="hero">
-          <div className="container">
+          <div className="container" style={{ textAlign: 'center' }}>
             <p className="hero-eyebrow">Novo Navis Aerospace Operations LLC</p>
             <h1 className="hero-title">
               AI that thinks<br />before it acts.
@@ -285,6 +303,28 @@ export default function HomePage() {
               We build AI systems grounded in causal reasoning — not confident-sounding outputs.
               Two products. One standard of rigor.
             </p>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.85rem', marginTop: '2.5rem' }}>
+              <Link href="/strategic" style={{
+                display: 'block', width: '100%', maxWidth: '400px',
+                background: GOLD, color: '#111', fontWeight: 700,
+                fontSize: '1.05rem', padding: '1rem 1.8rem',
+                borderRadius: '8px', textDecoration: 'none',
+                boxShadow: '0 4px 16px rgba(200,169,110,0.35)',
+                textAlign: 'center',
+              }}>
+                Strategic →
+              </Link>
+              <Link href="/interactive" style={{
+                display: 'block', width: '100%', maxWidth: '400px',
+                background: GOLD, color: '#111', fontWeight: 700,
+                fontSize: '1.05rem', padding: '1rem 1.8rem',
+                borderRadius: '8px', textDecoration: 'none',
+                boxShadow: '0 4px 16px rgba(200,169,110,0.35)',
+                textAlign: 'center',
+              }}>
+                Small Business Services →
+              </Link>
+            </div>
           </div>
         </section>
 
