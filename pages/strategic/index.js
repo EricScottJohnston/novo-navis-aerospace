@@ -1,6 +1,6 @@
-// pages/strategic/index.js — Placeholder David/Strategic landing page.
-// Will be replaced with full sales page (description + autoplay video + sample report).
-// For now: minimal page with a CTA to the intake form.
+// pages/strategic/index.js — Novo Navis Strategic sales page
+// Hero video (autoplay, muted, looped) → defense pedigree pitch →
+// audit trail breakdown → sample report download → CTA to intake.
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -8,83 +8,555 @@ import Link from 'next/link'
 const NAVY = '#1B2A4A'
 const GOLD = '#c8a96e'
 
+const VIDEO_URL  = 'https://res.cloudinary.com/dqv9va6ta/video/upload/v1777770174/Untitled_design_x0d45n.mp4'
+const SAMPLE_PDF = '/samples/strategic-preview-novo-navis.pdf'
+
 export default function StrategicLanding() {
   return (
     <>
       <Head>
-        <title>David / Strategic | Novo Navis</title>
+        <title>David / Strategic — Defense-grade Strategic Analysis | Novo Navis</title>
+        <meta name="description" content="Auditable strategic analysis for boutique consultants. Confidence ratings, inline citations, documented gaps, framework mapping. From a registered U.S. defense contractor." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Auditable strategic analysis for boutique consulting firms. Defense-grade reasoning, applied to your client's hardest decisions." />
+        <style>{`
+          * { box-sizing: border-box; }
+          body { margin: 0; }
+
+          .strategic-page {
+            background: #ffffff;
+            color: #1a1a2e;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+          }
+
+          .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+          }
+
+          /* ── Hero ─────────────────────────────────── */
+          .hero {
+            background: ${NAVY};
+            color: #ffffff;
+            padding: 3.5rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+          }
+          .hero-eyebrow {
+            color: ${GOLD};
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 0.9rem;
+          }
+          .hero-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            line-height: 1.18;
+            margin: 0 0 1rem;
+            color: #ffffff;
+          }
+          .hero-subtitle {
+            font-size: 1.08rem;
+            color: #c8d0e0;
+            max-width: 680px;
+            margin: 0 0 2rem;
+          }
+          .hero-cta {
+            display: inline-block;
+            background: ${GOLD};
+            color: #111;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 0.95rem 1.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 16px rgba(200,169,110,0.35);
+            transition: transform 0.15s, box-shadow 0.15s;
+          }
+          .hero-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(200,169,110,0.45);
+          }
+          .hero-pedigree {
+            display: inline-block;
+            margin-left: 1.25rem;
+            color: #8a95aa;
+            font-size: 0.9rem;
+            vertical-align: middle;
+          }
+          @media (max-width: 700px) {
+            .hero-title { font-size: 1.85rem; }
+            .hero-subtitle { font-size: 1rem; }
+            .hero-pedigree {
+              display: block;
+              margin: 1rem 0 0;
+            }
+          }
+
+          /* ── Video ────────────────────────────────── */
+          .video-wrap {
+            background: #0a0e1a;
+            padding: 2rem 0 2.5rem;
+            border-top: 1px solid #2a3550;
+            border-bottom: 1px solid #2a3550;
+          }
+          .video-frame {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #000;
+            border: 1px solid #1e2a45;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 30px rgba(0,0,0,0.4);
+          }
+          .video-frame video {
+            display: block;
+            width: 100%;
+            height: auto;
+          }
+          .video-caption {
+            text-align: center;
+            color: #8a95aa;
+            font-size: 0.85rem;
+            margin-top: 0.85rem;
+            font-style: italic;
+          }
+
+          /* ── Section common ───────────────────────── */
+          .section {
+            padding: 3.5rem 0;
+          }
+          .section-light {
+            background: #f7f9fc;
+          }
+          .section-eyebrow {
+            color: ${GOLD};
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+          }
+          .section-title {
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: ${NAVY};
+            margin: 0 0 1rem;
+            line-height: 1.25;
+          }
+          .section-lead {
+            font-size: 1.05rem;
+            color: #4a5568;
+            max-width: 760px;
+            margin: 0 0 2rem;
+          }
+
+          /* ── Audit trail features ─────────────────── */
+          .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+          }
+          .feature {
+            background: #ffffff;
+            border: 1px solid #e0e4ef;
+            border-left: 3px solid ${GOLD};
+            border-radius: 8px;
+            padding: 1.4rem 1.4rem 1.5rem;
+          }
+          .feature-title {
+            color: ${NAVY};
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem;
+          }
+          .feature-body {
+            color: #4a5568;
+            font-size: 0.93rem;
+            margin: 0;
+          }
+
+          /* ── Sample download ──────────────────────── */
+          .sample-card {
+            background: #ffffff;
+            border: 1px solid #e0e4ef;
+            border-radius: 12px;
+            padding: 2rem 2rem 2.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.75rem;
+            box-shadow: 0 4px 20px rgba(27,42,74,0.06);
+          }
+          .sample-icon {
+            flex: 0 0 auto;
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            background: ${NAVY};
+            color: ${GOLD};
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 0.05em;
+          }
+          .sample-text {
+            flex: 1;
+          }
+          .sample-headline {
+            color: ${NAVY};
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0 0 0.35rem;
+          }
+          .sample-sub {
+            color: #6b7a99;
+            font-size: 0.92rem;
+            margin: 0;
+          }
+          .sample-button {
+            flex: 0 0 auto;
+            display: inline-block;
+            background: ${NAVY};
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            text-decoration: none;
+            white-space: nowrap;
+          }
+          @media (max-width: 700px) {
+            .sample-card {
+              flex-direction: column;
+              text-align: center;
+              padding: 1.5rem;
+              gap: 1rem;
+            }
+            .sample-text { text-align: center; }
+          }
+
+          /* ── How it works ─────────────────────────── */
+          .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.75rem;
+          }
+          .step {
+            background: #ffffff;
+            border: 1px solid #e0e4ef;
+            border-radius: 8px;
+            padding: 1.5rem 1.4rem 1.6rem;
+            position: relative;
+          }
+          .step-num {
+            position: absolute;
+            top: -14px;
+            left: 1.4rem;
+            background: ${GOLD};
+            color: #111;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95rem;
+          }
+          .step-title {
+            color: ${NAVY};
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0.5rem 0 0.5rem;
+          }
+          .step-body {
+            color: #4a5568;
+            font-size: 0.92rem;
+            margin: 0;
+          }
+
+          /* ── Pricing strip ────────────────────────── */
+          .pricing {
+            background: ${NAVY};
+            color: #ffffff;
+            padding: 3rem 0 3.5rem;
+            text-align: center;
+          }
+          .pricing-eyebrow {
+            color: ${GOLD};
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            margin-bottom: 0.7rem;
+          }
+          .pricing-headline {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin: 0 0 0.6rem;
+          }
+          .pricing-detail {
+            color: #c8d0e0;
+            font-size: 1.02rem;
+            max-width: 640px;
+            margin: 0 auto 1.6rem;
+          }
+          .pricing-cta {
+            display: inline-block;
+            background: ${GOLD};
+            color: #111;
+            font-weight: 700;
+            font-size: 1.05rem;
+            padding: 0.95rem 1.9rem;
+            border-radius: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 16px rgba(200,169,110,0.4);
+          }
+          .pricing-fineprint {
+            margin-top: 1.1rem;
+            color: #8a95aa;
+            font-size: 0.85rem;
+          }
+
+          /* ── Footer ───────────────────────────────── */
+          .strategic-footer {
+            background: #0a0e1a;
+            color: #8a95aa;
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 0.85rem;
+          }
+          .strategic-footer a { color: ${GOLD}; text-decoration: none; }
+        `}</style>
       </Head>
 
-      <nav>
-        <Link href="/" className="nav-logo">NOVO NAVIS</Link>
-        <ul className="nav-links">
-          <li><Link href="/strategic">David/Strategic</Link></li>
-          <li><Link href="/faq">FAQ</Link></li>
-          <li><Link href="/about">About</Link></li>
-        </ul>
-      </nav>
+      <div className="strategic-page">
 
-      <div style={{
-        minHeight: '70vh',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        padding: '3rem 1.5rem',
-      }}>
-        <div style={{ maxWidth: '640px', width: '100%', textAlign: 'center' }}>
+        {/* ── HERO ─────────────────────────────────── */}
+        <section className="hero">
+          <div className="container">
+            <div className="hero-eyebrow">David / Strategic</div>
+            <h1 className="hero-title">
+              Defense-grade strategic analysis<br/>for the consulting industry.
+            </h1>
+            <p className="hero-subtitle">
+              Submit a strategic decision. David builds an auditable analysis with
+              confidence ratings, inline citations, documented gaps, and a complete
+              audit trail you can defend in front of a client or their board.
+            </p>
+            <Link href="/strategic/intake" className="hero-cta">
+              Submit a Decision — See It Built →
+            </Link>
+            <span className="hero-pedigree">From a registered U.S. defense contractor.</span>
+          </div>
+        </section>
 
-          <p style={{
-            color: GOLD, fontSize: '0.78rem', fontWeight: 'bold',
-            letterSpacing: '0.18em', textTransform: 'uppercase',
-            marginBottom: '1rem',
-          }}>
-            David / Strategic
-          </p>
+        {/* ── VIDEO ────────────────────────────────── */}
+        <section className="video-wrap">
+          <div className="container">
+            <div className="video-frame">
+              <video
+                src={VIDEO_URL}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+              />
+            </div>
+            <p className="video-caption">
+              Watch David build a strategic analysis end-to-end.
+            </p>
+          </div>
+        </section>
 
-          <h1 style={{
-            color: NAVY, fontSize: '2.1rem', fontWeight: '700',
-            lineHeight: 1.2, marginBottom: '1.25rem',
-          }}>
-            Defense-grade strategic analysis for the consulting industry.
-          </h1>
+        {/* ── WHY THIS MATTERS ─────────────────────── */}
+        <section className="section">
+          <div className="container">
+            <div className="section-eyebrow">Why this exists</div>
+            <h2 className="section-title">
+              The Deloitte problem made every consulting partner cautious.
+            </h2>
+            <p className="section-lead">
+              Hallucinated AI output that ends up in a client deliverable is a career
+              risk no boutique can absorb. David is built so the output is defensible
+              by construction: every factual claim is cited, every finding carries a
+              confidence label, every gap is documented, and the reasoning chain is
+              visible — not hidden behind a confident-sounding paragraph.
+            </p>
+          </div>
+        </section>
 
-          <p style={{
-            color: '#4a5568', fontSize: '1.05rem', lineHeight: 1.65,
-            marginBottom: '2rem',
-          }}>
-            Submit your client's strategic question. David produces a 50-page auditable analysis with confidence ratings, evidence provenance, and a full audit trail. Read the redacted preview free. Pay $999 only if you'd put your firm's name on it.
-          </p>
+        {/* ── AUDIT TRAIL FEATURES ─────────────────── */}
+        <section className="section section-light">
+          <div className="container">
+            <div className="section-eyebrow">What you get</div>
+            <h2 className="section-title">The audit trail is the product.</h2>
+            <p className="section-lead">
+              Most AI consulting output looks confident. David's looks accountable.
+              That difference is what your client's general counsel cares about.
+            </p>
+            <div className="features">
+              <div className="feature">
+                <h3 className="feature-title">Confidence ratings inline</h3>
+                <p className="feature-body">
+                  Every substantive finding is labeled CAUSAL, MECHANISM, THRESHOLD,
+                  or CORRELATED — and the labels appear in the body, not buried in
+                  an appendix. You and your client know exactly what's load-bearing.
+                </p>
+              </div>
+              <div className="feature">
+                <h3 className="feature-title">Inline citations + bibliography</h3>
+                <p className="feature-body">
+                  Every external claim carries a numbered marker linking to a real,
+                  verifiable source. The bibliography lists every URL, search query,
+                  and access date. No phantom citations.
+                </p>
+              </div>
+              <div className="feature">
+                <h3 className="feature-title">Compliance framework mapping</h3>
+                <p className="feature-body">
+                  Optional alignment to NIST AI RMF, ISO 42001, EU AI Act, GDPR
+                  Article 22, or SOX general controls — David maps each requirement
+                  to the section that satisfies it, with confidence ratings and gaps.
+                </p>
+              </div>
+              <div className="feature">
+                <h3 className="feature-title">Documented gaps</h3>
+                <p className="feature-body">
+                  Where evidence is missing, David names it explicitly and tells you
+                  what would close the gap. Honest uncertainty is more defensible
+                  than confident-sounding generalities.
+                </p>
+              </div>
+              <div className="feature">
+                <h3 className="feature-title">Adversarial verification</h3>
+                <p className="feature-body">
+                  An adversarial instance challenges every causal claim. SPM-level
+                  verification overrides instance ratings where reasoning is weak.
+                  Agreements and overrides are logged in the Decision Log.
+                </p>
+              </div>
+              <div className="feature">
+                <h3 className="feature-title">Decision log appendix</h3>
+                <p className="feature-body">
+                  Every report ends with a complete audit log: causal filter counts,
+                  override counts, extrapolations applied, every open gap. The
+                  artifact your compliance officer wants to see.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-          <Link href="/strategic/intake" style={{
-            display: 'inline-block',
-            padding: '1rem 2.25rem',
-            background: GOLD, color: NAVY,
-            border: 'none', borderRadius: '8px',
-            fontWeight: '700', fontSize: '1.05rem',
-            textDecoration: 'none', letterSpacing: '0.02em',
-            boxShadow: '0 4px 14px rgba(200,169,110,0.35)',
-            transition: 'box-shadow 0.18s ease, transform 0.18s ease',
-          }}>
-            Submit Your First Analysis →
-          </Link>
+        {/* ── SAMPLE DOWNLOAD ──────────────────────── */}
+        <section className="section">
+          <div className="container">
+            <div className="section-eyebrow">See it for yourself</div>
+            <h2 className="section-title">A sample David report.</h2>
+            <p className="section-lead">
+              The Disney–ESPN spinoff question, run through David. Confidence ratings,
+              eight cited sources, full Decision Log. Recommendation and action plan
+              redacted — that's what an unlocked report adds — but the analysis quality
+              is fully visible.
+            </p>
+            <div className="sample-card">
+              <div className="sample-icon">PDF</div>
+              <div className="sample-text">
+                <h3 className="sample-headline">Disney / ESPN Strategic Analysis — Sample Preview</h3>
+                <p className="sample-sub">19 pages · 8 cited sources · auditable causal analysis</p>
+              </div>
+              <a href={SAMPLE_PDF} className="sample-button" target="_blank" rel="noopener noreferrer">
+                Download Sample →
+              </a>
+            </div>
+          </div>
+        </section>
 
-          <p style={{
-            color: '#8a95aa', fontSize: '0.85rem',
-            marginTop: '1.25rem', fontStyle: 'italic',
-          }}>
-            About 5 minutes. Free preview. No payment until you approve.
-          </p>
+        {/* ── HOW IT WORKS ─────────────────────────── */}
+        <section className="section section-light">
+          <div className="container">
+            <div className="section-eyebrow">How it works</div>
+            <h2 className="section-title">Five minutes in. About 18 minutes to a full report.</h2>
+            <div className="steps">
+              <div className="step">
+                <div className="step-num">1</div>
+                <h3 className="step-title">Submit the decision</h3>
+                <p className="step-body">
+                  Tell David the strategic decision your client faces, the situation,
+                  what you already know, and which compliance frameworks apply if any.
+                </p>
+              </div>
+              <div className="step">
+                <div className="step-num">2</div>
+                <h3 className="step-title">Watch David build it</h3>
+                <p className="step-body">
+                  Real-time research, causal filter, adversarial review, SPM
+                  verification, compliance mapping, citation tracking. Every step visible.
+                </p>
+              </div>
+              <div className="step">
+                <div className="step-num">3</div>
+                <h3 className="step-title">Read the preview free</h3>
+                <p className="step-body">
+                  A redacted preview lands in your inbox. Full analysis, full audit
+                  trail, full bibliography. Recommendation and action plan held back.
+                </p>
+              </div>
+              <div className="step">
+                <div className="step-num">4</div>
+                <h3 className="step-title">Unlock if it holds up</h3>
+                <p className="step-body">
+                  $999 unlocks the full report — recommendation, alternatives,
+                  decision framework, sensitivity analysis, action plan, compliance
+                  mapping detail. Pay only if you'd put your firm's name on it.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        </div>
+        {/* ── PRICING / CTA ────────────────────────── */}
+        <section className="pricing">
+          <div className="container">
+            <div className="pricing-eyebrow">Pricing</div>
+            <h2 className="pricing-headline">$999 per analysis. Free preview, every time.</h2>
+            <p className="pricing-detail">
+              Submit, read the preview, and only pay if the analysis quality holds up
+              to the standard you'd put your name on. No subscription, no commitment,
+              no procurement cycle.
+            </p>
+            <Link href="/strategic/intake" className="pricing-cta">
+              Submit a Decision →
+            </Link>
+            <p className="pricing-fineprint">
+              About 5 minutes to submit. About 18 minutes for David to build.
+            </p>
+          </div>
+        </section>
+
+        {/* ── FOOTER ───────────────────────────────── */}
+        <footer className="strategic-footer">
+          <div className="container">
+            <p>
+              © {new Date().getFullYear()} Novo Navis, LLC · Registered U.S. Defense Contractor · Fidelis Diligentia
+            </p>
+            <p style={{ marginTop: '0.5rem' }}>
+              <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
+              <Link href="/terms">Terms and Conditions</Link> &nbsp;·&nbsp;
+              <Link href="/">Home</Link>
+            </p>
+          </div>
+        </footer>
+
       </div>
-
-      <footer>
-        <p>© {new Date().getFullYear()} Novo Navis, LLC · Registered U.S. Defense Contractor · Fidelis Diligentia</p>
-        <p style={{ marginTop: '0.5rem' }}>
-          <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
-          <Link href="/terms">Terms and Conditions</Link>
-        </p>
-      </footer>
     </>
   )
 }
