@@ -352,7 +352,7 @@ export default function StrategicLanding() {
           <div className="container">
             <div className="section-eyebrow">Why this exists</div>
             <h2 className="section-title" style={FORCE_TITLE}>
-              The Deloitte problem made every consulting partner cautious.
+              Hallucinated AI in client deliverables is the new career risk.
             </h2>
             <p className="section-lead" style={{ color: BODY }}>
               Hallucinated AI output that ends up in a client deliverable is a career
