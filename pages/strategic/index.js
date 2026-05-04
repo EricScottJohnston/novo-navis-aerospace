@@ -305,6 +305,39 @@ export default function StrategicLanding() {
           }
           .strategic-footer a { color: ${GOLD}; text-decoration: none; }
         `}</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Corporation",
+  "name": "Novo Navis Strategic",
+  "url": "https://www.novonavis.com",
+  "logo": "https://www.novonavis.com/logo.png",
+  "description": "Strategic Intelligence and Tier 3 AI Orchestration for high-stakes decision support.",
+  "knowsAbout": ["AI Orchestration", "Causal Reasoning", "Defense Contracting", "Strategic Auditing"],
+  "sameAs": [
+    "https://www.linkedin.com/company/novonavis",
+    "https://your-defense-registry-link-here.gov"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Forensic AI Strategic Audit",
+  "provider": {
+    "@type": "Corporation",
+    "name": "Novo Navis Strategic"
+  },
+  "description": "A Tier 3 AI orchestration engine that provides 18-minute forensic audits with causal verification.",
+  "offers": {
+    "@type": "Offer",
+    "price": "999.00",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+
       </Head>
 
       <div className="strategic-page">
