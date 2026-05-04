@@ -3,7 +3,9 @@
 // Free preview model: consultant submits, David builds, redacted preview is emailed,
 // unlock link in email leads to $999 checkout.
 //
-// v1.2 — Added Compliance multi-select chips on Step 3.
+// v1.3 — Compliance chips excluded from localStorage draft persistence.
+//         Compliance always starts fresh so returning users don't get
+//         a stale framework pre-selected from a previous session.
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -31,9 +33,6 @@ const ANALYTICAL_LENSES = [
   'Other (describe below)',
 ]
 
-// Compliance frameworks — multi-select. "None" is mutually exclusive
-// with the others: selecting it clears the others; selecting any other
-// clears "None".
 const COMPLIANCE_FRAMEWORKS = [
   'None',
   'NIST AI RMF',
@@ -63,7 +62,6 @@ export default function StrategicIntake() {
   const verifyBoxRef  = useRef(null)
   const draftHydrated = useRef(false)
 
-  // Email verification state
   const [codeSent,      setCodeSent]      = useState(false)
   const [codeInput,     setCodeInput]     = useState('')
   const [emailVerified, setEmailVerified] = useState(false)
@@ -71,40 +69,37 @@ export default function StrategicIntake() {
   const [verifyError,   setVerifyError]   = useState('')
 
   const [formData, setFormData] = useState({
-    // About you
     name: '',
     email: '',
     firm: '',
-    practice: '',           // what kind of consulting they do (one line)
-
-    // The engagement
-    decision: '',           // the decision being made (1-3 sentences)
-    deadline: '',           // when does the client need to act
-    situation: '',          // client situation / background (rich text)
-
-    // What you already know
-    knownContext: '',       // hypotheses, what the client has told you (rich text)
-    constraints: '',        // budget, timeline, off-the-table options
-
-    // How they want it framed
+    practice: '',
+    decision: '',
+    deadline: '',
+    situation: '',
+    knownContext: '',
+    constraints: '',
     lens: 'Let David choose',
     lensOther: '',
-
-    // Compliance — array of selected framework strings
+    // Compliance is intentionally NOT in the draft — always starts fresh
     compliance: ['None'],
     complianceOther: '',
-
-    additional: '',         // anything else David should know
+    additional: '',
   })
 
   // ── Hydrate draft from localStorage ───────────────────────────────────────
+  // NOTE: compliance and complianceOther are deliberately excluded from
+  // hydration. They should always start fresh so a returning user doesn't
+  // get a stale framework pre-selected from a previous session.
   useEffect(() => {
     if (typeof window === 'undefined') return
     try {
       const raw = window.localStorage.getItem(DRAFT_KEY)
       if (raw) {
         const d = JSON.parse(raw)
-        if (d.formData)      setFormData(prev => ({ ...prev, ...d.formData }))
+        if (d.formData) {
+          const { compliance, complianceOther, ...restFormData } = d.formData
+          setFormData(prev => ({ ...prev, ...restFormData }))
+        }
         if (d.currentStep)   setCurrentStep(d.currentStep)
         if (d.agreedTerms)   setAgreedTerms(d.agreedTerms)
         if (d.emailVerified) setEmailVerified(d.emailVerified)
@@ -113,17 +108,18 @@ export default function StrategicIntake() {
     draftHydrated.current = true
   }, [])
 
-  // ── Persist draft ─────────────────────────────────────────────────────────
+  // ── Persist draft — exclude compliance from saved state ───────────────────
   useEffect(() => {
     if (typeof window === 'undefined' || !draftHydrated.current) return
     try {
+      const { compliance, complianceOther, ...restFormData } = formData
       window.localStorage.setItem(DRAFT_KEY, JSON.stringify({
-        formData, currentStep, agreedTerms, emailVerified,
+        formData: restFormData,
+        currentStep, agreedTerms, emailVerified,
       }))
     } catch {}
   }, [formData, currentStep, agreedTerms, emailVerified])
 
-  // Scroll to top on step change
   useEffect(() => {
     topRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [currentStep])
@@ -138,37 +134,27 @@ export default function StrategicIntake() {
     setStepError('')
   }
 
-  // ── Compliance toggle — handles None mutual exclusivity ───────────────────
   const toggleCompliance = (framework) => {
     setStepError('')
     setFormData(prev => {
       const current = prev.compliance || []
-
-      // Selecting "None" clears all others
       if (framework === 'None') {
         return { ...prev, compliance: ['None'], complianceOther: '' }
       }
-
-      // Selecting any other framework clears "None"
       const withoutNone = current.filter(f => f !== 'None')
-
       if (withoutNone.includes(framework)) {
-        // Deselect
         const next = withoutNone.filter(f => f !== framework)
-        // If nothing left, default back to None
         return {
           ...prev,
           compliance: next.length === 0 ? ['None'] : next,
           complianceOther: framework === 'Other (specify)' ? '' : prev.complianceOther,
         }
       } else {
-        // Select
         return { ...prev, compliance: [...withoutNone, framework] }
       }
     })
   }
 
-  // ── Email verification ────────────────────────────────────────────────────
   const handleSendCode = async () => {
     const email = formData.email.trim()
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -202,7 +188,6 @@ export default function StrategicIntake() {
     setVerifyLoading(false)
   }
 
-  // ── Step validation ───────────────────────────────────────────────────────
   const validateStep = (step) => {
     if (step === 1) {
       if (!formData.name.trim())     return 'Please enter your full name.'
@@ -215,7 +200,6 @@ export default function StrategicIntake() {
     }
     if (step === 3) {
       if (!formData.knownContext.trim()) return 'Please describe what you already know about the situation.'
-      // If "Other (specify)" is picked but nothing was typed
       if (formData.compliance.includes('Other (specify)') && !formData.complianceOther.trim()) {
         return 'Please specify the other compliance framework, or deselect it.'
       }
@@ -236,7 +220,6 @@ export default function StrategicIntake() {
 
   const handleBack = () => { setStepError(''); setCurrentStep(s => s - 1) }
 
-  // ── Verify modal ──────────────────────────────────────────────────────────
   const handleModalVerifyNow = () => {
     setShowVerifyModal(false)
     setTimeout(() => {
@@ -250,7 +233,6 @@ export default function StrategicIntake() {
     }, 80)
   }
 
-  // ── Submit ────────────────────────────────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault()
     const err = validateStep(4)
@@ -265,24 +247,17 @@ export default function StrategicIntake() {
     setSubmitting(true)
     setSubmitNotice('')
 
-    // Map strategic intake fields onto the existing parse_order field labels
-    // so david_worker.py and the existing parse_order function handle this
-    // submission without modification. The strategic David variant knows
-    // how to interpret these fields semantically.
     const lensValue = formData.lens === 'Other (describe below)' && formData.lensOther.trim()
       ? formData.lensOther.trim()
       : formData.lens
 
-    // Compose the Compliance string for david_strategic_v1.py.
-    // ComplianceMapper.should_run() returns False on "None", "", "n/a", etc.,
-    // so we pass "None" verbatim when nothing is selected.
     let complianceValue = 'None'
     if (formData.compliance.length > 0 && !formData.compliance.includes('None')) {
       const expanded = formData.compliance.map(f =>
         f === 'Other (specify)' && formData.complianceOther.trim()
           ? formData.complianceOther.trim()
           : f
-      ).filter(f => f !== 'Other (specify)')  // drop placeholder if Other was empty
+      ).filter(f => f !== 'Other (specify)')
       complianceValue = expanded.join(', ')
     }
 
@@ -334,7 +309,6 @@ export default function StrategicIntake() {
     }
   }
 
-  // ── Step indicator ────────────────────────────────────────────────────────
   const StepIndicator = () => (
     <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '1.75rem' }}>
       {STEPS.map((step, i) => {
@@ -375,7 +349,6 @@ export default function StrategicIntake() {
     </div>
   )
 
-  // ── Lens picker ───────────────────────────────────────────────────────────
   const LensPicker = () => (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
       {ANALYTICAL_LENSES.map(opt => {
@@ -398,7 +371,6 @@ export default function StrategicIntake() {
     </div>
   )
 
-  // ── Compliance multi-select chips ─────────────────────────────────────────
   const CompliancePicker = () => (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
       {COMPLIANCE_FRAMEWORKS.map(opt => {
@@ -425,7 +397,6 @@ export default function StrategicIntake() {
     </div>
   )
 
-  // ── Nav buttons ───────────────────────────────────────────────────────────
   const NavButtons = ({ isSubmit = false }) => (
     <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.75rem' }}>
       {currentStep > 1 && (
@@ -507,7 +478,6 @@ export default function StrategicIntake() {
 
       <div className="report-page" ref={topRef}>
 
-        {/* Header */}
         <div style={{ marginBottom: '1.5rem' }}>
           <p style={{ color: GOLD, fontSize: '0.72rem', fontWeight: 'bold', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
             David / Strategic
@@ -527,7 +497,6 @@ export default function StrategicIntake() {
 
           <StepIndicator />
 
-          {/* ─── STEP 1 — About You ─────────────────────────────────────── */}
           {currentStep === 1 && (
             <div className="step-panel">
               <div className="form-group">
@@ -535,13 +504,11 @@ export default function StrategicIntake() {
                 <input type="text" name="name" value={formData.name} onChange={handleChange}
                   placeholder="Sarah Chen" autoComplete="name" />
               </div>
-
               <div className="form-group">
                 <label>Your Firm *</label>
                 <input type="text" name="firm" value={formData.firm} onChange={handleChange}
                   placeholder="Chen Advisory Group" autoComplete="organization" />
               </div>
-
               <div className="form-group">
                 <label>Your Practice *</label>
                 <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.5rem' }}>
@@ -550,25 +517,22 @@ export default function StrategicIntake() {
                 <input type="text" name="practice" value={formData.practice} onChange={handleChange}
                   placeholder="Growth strategy for mid-market fintech" />
               </div>
-
               {stepError && <p style={{ color: '#c0392b', fontSize: '0.88rem', marginTop: '0.5rem' }}>{stepError}</p>}
               <NavButtons />
             </div>
           )}
 
-          {/* ─── STEP 2 — The Decision ──────────────────────────────────── */}
           {currentStep === 2 && (
             <div className="step-panel">
               <div className="form-group">
                 <label>The decision your client is trying to make *</label>
                 <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.5rem' }}>
-                  1–3 sentences. The specific decision, framed precisely. Not "growth strategy" — "Should we acquire X by Q3 or build internally?"
+                  1–3 sentences. The specific decision, framed precisely.
                 </p>
                 <textarea name="decision" value={formData.decision} onChange={handleChange}
                   placeholder="Example: My client is deciding whether to expand their B2B SaaS product into the European market in Q4, or double down on their existing North American base. They have capital for one bet, not both."
                   rows={4} />
               </div>
-
               <div className="form-group">
                 <label>Decision deadline (optional)</label>
                 <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.5rem' }}>
@@ -577,45 +541,40 @@ export default function StrategicIntake() {
                 <input type="text" name="deadline" value={formData.deadline} onChange={handleChange}
                   placeholder="Board meeting June 15 — needs answer by then" />
               </div>
-
               <div className="form-group">
                 <label>Client situation *</label>
                 <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.5rem' }}>
-                  Who is the client, what do they do, what's been happening that brought them to this question. Be specific — this is what David grounds the analysis in.
+                  Who is the client, what do they do, what's been happening that brought them to this question.
                 </p>
                 <textarea name="situation" value={formData.situation} onChange={handleChange}
-                  placeholder="Example: Series B SaaS company, $18M ARR, 65 employees, sells workflow software to mid-market law firms. Growth slowed from 80% YoY to 35% YoY over the last 18 months. Two of their top three accounts are signaling renewal risk. Founder-CEO is split between board pressure to expand internationally and an inside salesperson telling them the NA market still has runway. They want a third opinion."
+                  placeholder="Example: Series B SaaS company, $18M ARR, 65 employees..."
                   rows={7} />
               </div>
-
               {stepError && <p style={{ color: '#c0392b', fontSize: '0.88rem', marginTop: '0.5rem' }}>{stepError}</p>}
               <NavButtons />
             </div>
           )}
 
-          {/* ─── STEP 3 — What You Know ─────────────────────────────────── */}
           {currentStep === 3 && (
             <div className="step-panel">
               <div className="form-group">
                 <label>What you already know *</label>
                 <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.5rem' }}>
-                  Your hypotheses, data the client has shared, things you've already concluded. David tags this as consultant-provided in the audit log so the reasoning chain is transparent.
+                  Your hypotheses, data the client has shared, things you've already concluded.
                 </p>
                 <textarea name="knownContext" value={formData.knownContext} onChange={handleChange}
-                  placeholder="Example: I've reviewed their churn data — the renewal risk is concentrated in firms that haven't adopted their second product line. NA market research from the client's own data suggests roughly $40M in addressable accounts they haven't touched yet. CEO is risk-averse but doesn't yet realize how that bias is affecting framing. I'm leaning toward NA-first, but want a defensible case before I tell the board that."
+                  placeholder="Example: I've reviewed their churn data..."
                   rows={6} />
               </div>
-
               <div className="form-group">
                 <label>Constraints (optional)</label>
                 <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.5rem' }}>
                   Budget caps, timeline limits, things that are off the table, regulatory or political factors.
                 </p>
                 <textarea name="constraints" value={formData.constraints} onChange={handleChange}
-                  placeholder="Example: Client is unwilling to raise additional capital in the next 12 months. Founder will not consider divesting product line B. Board has explicitly ruled out an acquisition path."
+                  placeholder="Example: Client is unwilling to raise additional capital in the next 12 months."
                   rows={4} />
               </div>
-
               <div className="form-group">
                 <label>Preferred analytical lens (optional)</label>
                 <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.6rem' }}>
@@ -628,12 +587,10 @@ export default function StrategicIntake() {
                     style={{ marginTop: '0.6rem', width: '100%' }} />
                 )}
               </div>
-
-              {/* Compliance multi-select chips */}
               <div className="form-group">
                 <label>Compliance frameworks (optional)</label>
                 <p style={{ color: '#6b7a99', fontSize: '0.8rem', margin: '-0.25rem 0 0.6rem' }}>
-                  Pick any frameworks the client cares about. David will produce a Compliance Traceability section mapping the analysis to relevant requirements (clauses, articles, controls). Select multiple if needed. Leave as "None" to skip compliance mapping entirely.
+                  Pick any frameworks the client cares about. David will produce a Compliance Traceability section mapping the analysis to relevant requirements. Leave as "None" to skip.
                 </p>
                 <CompliancePicker />
                 {formData.compliance.includes('Other (specify)') && (
@@ -642,35 +599,28 @@ export default function StrategicIntake() {
                     style={{ marginTop: '0.6rem', width: '100%' }} />
                 )}
               </div>
-
               <div className="form-group">
                 <label>Anything else David should know (optional)</label>
                 <textarea name="additional" value={formData.additional} onChange={handleChange}
                   placeholder="Sensitivities, internal politics, prior consulting work, anything that would change how the analysis should be framed."
                   rows={3} />
               </div>
-
               {stepError && <p style={{ color: '#c0392b', fontSize: '0.88rem', marginTop: '0.5rem' }}>{stepError}</p>}
               <NavButtons />
             </div>
           )}
 
-          {/* ─── STEP 4 — Confirm & Submit ──────────────────────────────── */}
           {currentStep === 4 && (
             <div className="step-panel">
               <p style={{ color: '#4a5568', fontSize: '0.92rem', marginBottom: '1.25rem' }}>
                 Last step. We'll send your free redacted preview to the email you verify below. If you approve the analysis, you'll be able to unlock the full report for $999.
               </p>
-
-              {/* Email + verification */}
               <div
                 ref={verifyBoxRef}
                 className="form-group"
                 style={{
                   padding: emailVerified ? '0.85rem 1rem' : '1rem 1.1rem',
-                  border: emailVerified
-                    ? '1px solid #c4e2cf'
-                    : `2px solid ${GOLD}`,
+                  border: emailVerified ? '1px solid #c4e2cf' : `2px solid ${GOLD}`,
                   background: emailVerified ? '#f4fbf6' : '#fffbf4',
                   borderRadius: '10px',
                   boxShadow: emailVerified ? 'none' : '0 2px 12px rgba(200,169,110,0.18)',
@@ -696,7 +646,6 @@ export default function StrategicIntake() {
                 <p style={{ color: '#6b7a99', fontSize: '0.82rem', margin: '-0.15rem 0 0.6rem' }}>
                   We'll send a 6-digit code to confirm. We never sell or share your info.
                 </p>
-
                 {!emailVerified && (
                   <>
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap' }}>
@@ -719,16 +668,12 @@ export default function StrategicIntake() {
                         </button>
                       )}
                     </div>
-
                     {codeSent && (
                       <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', flexWrap: 'wrap', marginTop: '0.6rem' }}>
                         <input type="text" inputMode="numeric" data-verify-code="1"
                           value={codeInput} onChange={e => setCodeInput(e.target.value)}
                           placeholder="6-digit code" maxLength={6}
-                          style={{
-                            width: '160px', textAlign: 'center',
-                            letterSpacing: '0.2em', fontSize: '1.1rem',
-                          }} />
+                          style={{ width: '160px', textAlign: 'center', letterSpacing: '0.2em', fontSize: '1.1rem' }} />
                         <button type="button" onClick={handleVerifyCode} disabled={verifyLoading}
                           style={{
                             background: GOLD, color: '#111', border: 'none', borderRadius: '6px',
@@ -741,10 +686,7 @@ export default function StrategicIntake() {
                         </button>
                         <button type="button"
                           onClick={() => { setCodeSent(false); setCodeInput(''); setVerifyError('') }}
-                          style={{
-                            background: 'none', border: 'none', color: '#8a95aa',
-                            fontSize: '0.82rem', cursor: 'pointer', textDecoration: 'underline',
-                          }}>
+                          style={{ background: 'none', border: 'none', color: '#8a95aa', fontSize: '0.82rem', cursor: 'pointer', textDecoration: 'underline' }}>
                           Resend / change email
                         </button>
                       </div>
@@ -753,7 +695,6 @@ export default function StrategicIntake() {
                   </>
                 )}
               </div>
-
               <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', cursor: 'pointer', marginBottom: '1rem', marginTop: '0.5rem' }}>
                 <input type="checkbox" checked={agreedTerms}
                   onChange={e => { setAgreedTerms(e.target.checked); setStepError('') }}
@@ -764,7 +705,6 @@ export default function StrategicIntake() {
                   including that all sales of the full unlocked report are final.
                 </span>
               </label>
-
               {stepError && stepError !== 'NEEDS_EMAIL_VERIFY' && (
                 <p style={{ color: '#c0392b', fontSize: '0.88rem', marginBottom: '0.75rem' }}>{stepError}</p>
               )}
@@ -777,9 +717,7 @@ export default function StrategicIntake() {
                   {submitNotice}
                 </div>
               )}
-
               <NavButtons isSubmit />
-
               <p style={{ textAlign: 'center', color: '#6b7a99', fontSize: '0.85rem', marginTop: '1rem' }}>
                 After you submit, you'll watch David build your analysis in real time. The redacted preview lands in your inbox when complete.
               </p>
@@ -789,7 +727,6 @@ export default function StrategicIntake() {
         </form>
       </div>
 
-      {/* Email verification modal */}
       {showVerifyModal && (
         <div
           onClick={() => setShowVerifyModal(false)}
@@ -819,10 +756,7 @@ export default function StrategicIntake() {
               }}>
                 ✉️
               </div>
-              <h2 style={{
-                color: NAVY, fontSize: '1.2rem', fontWeight: '700',
-                margin: '0 0 0.4rem',
-              }}>
+              <h2 style={{ color: NAVY, fontSize: '1.2rem', fontWeight: '700', margin: '0 0 0.4rem' }}>
                 One more thing — verify your email
               </h2>
               <p style={{ color: '#4a5568', fontSize: '0.92rem', lineHeight: 1.55, margin: 0 }}>
@@ -833,10 +767,7 @@ export default function StrategicIntake() {
                     : "Tap 'Send Code' to receive a 6-digit code. Enter it to confirm your email — then we'll build your analysis."}
               </p>
             </div>
-
-            <button
-              type="button"
-              onClick={handleModalVerifyNow}
+            <button type="button" onClick={handleModalVerifyNow}
               style={{
                 width: '100%', padding: '0.9rem',
                 background: GOLD, color: '#111',
@@ -848,9 +779,7 @@ export default function StrategicIntake() {
               }}>
               Verify My Email Now →
             </button>
-            <button
-              type="button"
-              onClick={() => setShowVerifyModal(false)}
+            <button type="button" onClick={() => setShowVerifyModal(false)}
               style={{
                 width: '100%', padding: '0.6rem',
                 background: 'none', border: 'none',
