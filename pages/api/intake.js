@@ -2,6 +2,8 @@
 // Two flows:
 //   Free flow  — `tier` + `email` in body, no Stripe session. David generates redacted report, emails unlock link.
 //   Enterprise — `sessionId` in body, Stripe verified. David generates full report directly.
+//
+// v1.1 — compliance field added to orderText
 
 import { Resend } from 'resend'
 import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
@@ -12,10 +14,8 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const sqs = new SQSClient({ region: process.env.AWS_REGION || 'us-east-1' })
 const s3  = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
 
-const RATE_LIMIT_WINDOW_MS = 24 * 60 * 60 * 1000 // 24 hours
+const RATE_LIMIT_WINDOW_MS = 24 * 60 * 60 * 1000
 
-// Tiers exempt from the 24hr submission rate limit.
-// Strategic is exempted while we're recording demos / running test runs.
 const RATE_LIMIT_EXEMPT_TIERS = new Set(['strategic'])
 
 async function checkRateLimit(email) {
@@ -24,12 +24,12 @@ async function checkRateLimit(email) {
     const obj = await s3.send(new GetObjectCommand({ Bucket: process.env.S3_BUCKET, Key: key }))
     const { submittedAt } = JSON.parse(await obj.Body.transformToString())
     if (Date.now() - new Date(submittedAt).getTime() < RATE_LIMIT_WINDOW_MS) {
-      return false // blocked
+      return false
     }
   } catch (err) {
     if (err.name !== 'NoSuchKey') console.error('[intake] rate-limit check error:', err)
   }
-  return true // allowed
+  return true
 }
 
 async function writeRateLimit(email) {
@@ -46,17 +46,15 @@ async function writeRateLimit(email) {
   }
 }
 
-// Stripe amount → tier for enterprise (paid-upfront) flow
 const ENTERPRISE_TIER_MAP = {
-  100:   'test',       // $1 — smoke test only
-  99900: 'enterprise', // $999
+  100:   'test',
+  99900: 'enterprise',
 }
 
-// Unlock price (cents) for each free-flow tier
 const UNLOCK_PRICE = {
-  starter:   9900,   // $99
-  blueprint: 29900,  // $299
-  strategic: 99900,  // $999 — David/Strategic for boutique consultants
+  starter:   9900,
+  blueprint: 29900,
+  strategic: 99900,
 }
 
 export default async function handler(req, res) {
@@ -90,7 +88,6 @@ export default async function handler(req, res) {
   let tier          = bodyTier     || null
   let amountPaid    = 'Free intake'
 
-  // Enterprise: verify Stripe payment
   if (!isFree) {
     try {
       const session = await stripe.checkout.sessions.retrieve(sessionId)
@@ -109,12 +106,10 @@ export default async function handler(req, res) {
     }
   }
 
-  // Validate free-flow tier
   if (isFree && !UNLOCK_PRICE[tier]) {
     return res.status(400).json({ error: 'Invalid tier' })
   }
 
-  // Email verification check — free flow only
   if (isFree) {
     const verifyKey = `verify/${customerEmail.toLowerCase().replace(/[^a-z0-9@._-]/g, '_')}.json`
     try {
@@ -130,8 +125,6 @@ export default async function handler(req, res) {
     }
   }
 
-  // Rate limit — one submission per email per 24 hours.
-  // Strategic tier is exempt while we record demos.
   if (!RATE_LIMIT_EXEMPT_TIERS.has(tier)) {
     const allowed = await checkRateLimit(customerEmail)
     if (!allowed) {
@@ -139,11 +132,14 @@ export default async function handler(req, res) {
     }
   }
 
-  // Generate order ID
   const safeName = customerName.toLowerCase().replace(/[^a-z0-9]/g, '_').slice(0, 20)
   const orderId  = `${safeName}_${Date.now()}`
 
-  // Build the order text block David reads
+  // Normalize compliance — ensure it's a clean string, never undefined
+  const complianceStr = (compliance && typeof compliance === 'string' && compliance.trim())
+    ? compliance.trim()
+    : 'None'
+
   const orderText = [
     `Name: ${customerName}`,
     `Email: ${customerEmail}`,
@@ -153,7 +149,7 @@ export default async function handler(req, res) {
     `Budget: ${budget || 'Not provided'}`,
     `About: ${businessDescription}`,
     `Current Tools: ${currentTools || 'Not provided'}`,
-    `Compliance: ${compliance || 'None'}`,
+    `Compliance: ${complianceStr}`,
     `Task 1: ${process1}`,
     `Task 2: ${process2 || 'Not provided'}`,
     `Task 3: ${process3 || 'Not provided'}`,
@@ -162,7 +158,6 @@ export default async function handler(req, res) {
     `Problem: ${goal}`,
   ].join('\n')
 
-  // Queue to David via SQS
   let sqsSent = false
   if (tier && process.env.SQS_QUEUE_URL) {
     try {
@@ -185,18 +180,16 @@ export default async function handler(req, res) {
         }
       }))
       sqsSent = true
-      console.log(`[intake] Order ${orderId} queued for David. redacted=${isFree}`)
+      console.log(`[intake] Order ${orderId} queued. redacted=${isFree} compliance=${complianceStr}`)
     } catch (err) {
       console.error('[intake] SQS send failed:', err)
     }
   }
 
-  // Record submission for rate limiting (skip for exempt tiers).
   if (!RATE_LIMIT_EXEMPT_TIERS.has(tier)) {
     await writeRateLimit(customerEmail)
   }
 
-  // Email Eric (notification + manual fallback)
   try {
     await resend.emails.send({
       from:    'Novo Navis <noreply@novonavis.com>',
@@ -217,7 +210,7 @@ export default async function handler(req, res) {
         <p><strong>Industry:</strong> ${industry}</p>
         <p><strong>Employees:</strong> ${employees || 'Not provided'}</p>
         <p><strong>Monthly Software Budget:</strong> ${budget || 'Not provided'}</p>
-        <p><strong>Compliance:</strong> ${compliance || 'None'}</p>
+        <p><strong>Compliance:</strong> ${complianceStr}</p>
         <hr />
         <h3>About Their Business</h3>
         <p>${businessDescription}</p>
@@ -233,13 +226,6 @@ export default async function handler(req, res) {
         <hr />
         <h3 style="color:#333;">order.txt — manual fallback</h3>
         <pre style="background:#f5f5f5;padding:1rem;font-size:13px;line-height:1.6;">${orderText}</pre>
-        <p style="color:#888;font-size:12px;">
-          If David did not auto-run, paste the block above into order.txt and run the appropriate script.
-          ${isFree
-            ? `Redacted mode: run david_redacted.py. Then email redacted PDF + unlock link (${process.env.NEXT_PUBLIC_BASE_URL || 'https://www.novonavis.com'}/unlock?order=${orderId}) to ${customerEmail}.`
-            : `Full mode: run david_199_v1.py. Then email the full report to ${customerEmail}.`
-          }
-        </p>
       `
     })
   } catch (err) {
