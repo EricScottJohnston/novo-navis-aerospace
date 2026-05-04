@@ -73,6 +73,7 @@ export default async function handler(req, res) {
     budget,
     businessDescription,
     currentTools,
+    compliance,
     process1,
     process2,
     process3,
@@ -152,6 +153,7 @@ export default async function handler(req, res) {
     `Budget: ${budget || 'Not provided'}`,
     `About: ${businessDescription}`,
     `Current Tools: ${currentTools || 'Not provided'}`,
+    `Compliance: ${compliance || 'None'}`,
     `Task 1: ${process1}`,
     `Task 2: ${process2 || 'Not provided'}`,
     `Task 3: ${process3 || 'Not provided'}`,
@@ -215,6 +217,7 @@ export default async function handler(req, res) {
         <p><strong>Industry:</strong> ${industry}</p>
         <p><strong>Employees:</strong> ${employees || 'Not provided'}</p>
         <p><strong>Monthly Software Budget:</strong> ${budget || 'Not provided'}</p>
+        <p><strong>Compliance:</strong> ${compliance || 'None'}</p>
         <hr />
         <h3>About Their Business</h3>
         <p>${businessDescription}</p>
