@@ -308,35 +308,31 @@ export default function StrategicLanding() {
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Corporation",
-  "name": "Novo Navis Strategic",
-  "url": "https://www.novonavis.com",
-  "logo": "https://www.novonavis.com/logo.png",
-  "description": "Strategic Intelligence and Tier 3 AI Orchestration for high-stakes decision support.",
-  "knowsAbout": ["AI Orchestration", "Causal Reasoning", "Defense Contracting", "Strategic Auditing"],
-  "sameAs": [
-    "https://www.linkedin.com/company/novonavis",
-    "https://your-defense-registry-link-here.gov"
+  "@graph": [
+    {
+      "@type": "Corporation",
+      "@id": "https://www.novonavis.com/#organization",
+      "name": "Novo Navis Strategic",
+      "url": "https://www.novonavis.com",
+      "logo": "https://www.novonavis.com/logo.png",
+      "description": "Strategic Intelligence and Tier 3 AI Orchestration for high-stakes decision support.",
+      "knowsAbout": ["AI Orchestration", "Causal Reasoning", "Defense Contracting", "Strategic Auditing"]
+    },
+    {
+      "@type": "Service",
+      "name": "David: Tier 3 Forensic AI Audit",
+      "provider": { "@id": "https://www.novonavis.com/#organization" },
+      "description": "A Tier 3 AI orchestration engine that provides 18-minute forensic audits with causal verification and adversarial analysis.",
+      "offers": {
+        "@type": "Offer",
+        "price": "999.00",
+        "priceCurrency": "USD"
+      }
+    }
   ]
 }
 </script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "serviceType": "Forensic AI Strategic Audit",
-  "provider": {
-    "@type": "Corporation",
-    "name": "Novo Navis Strategic"
-  },
-  "description": "A Tier 3 AI orchestration engine that provides 18-minute forensic audits with causal verification.",
-  "offers": {
-    "@type": "Offer",
-    "price": "999.00",
-    "priceCurrency": "USD"
-  }
-}
-</script>
+
 
       </Head>
 
