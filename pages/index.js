@@ -1,4 +1,4 @@
-// pages/index.js — Novo Navis homepage
+// pages/index.js — Novo Navis homepage r
 // Links to /interactive (AI Blueprint) and /strategic (David / Strategic)
 
 import Head from 'next/head'
