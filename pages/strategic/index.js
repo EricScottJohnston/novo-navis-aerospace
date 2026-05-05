@@ -454,7 +454,7 @@ export default function StrategicLanding() {
         </section>
 
         {/* ── SAMPLE DOWNLOADS ─────────────────────── */}
-        <section className="section">
+        <section className="section" id="sample-reports">
           <div className="container">
             <div className="section-eyebrow">See it for yourself</div>
             <h2 className="section-title" style={FORCE_TITLE}>
@@ -465,8 +465,7 @@ export default function StrategicLanding() {
               insurance regulation, and federal energy policy. Same audit trail
               standards, same epistemic honesty, same architecture — applied to
               completely different problems with no domain-specific training.
-              Recommendations and action plans are redacted in the previews;
-              analysis quality and reasoning chain are fully visible.
+              
             </p>
 
             <div className="sample-stack">
