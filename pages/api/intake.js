@@ -1,5 +1,5 @@
 // pages/api/intake.js
-// Two flows and:
+// Two flows:
 //   Free flow  — `tier` + `email` in body, no Stripe session. David generates redacted report, emails unlock link.
 //   Enterprise — `sessionId` in body, Stripe verified. David generates full report directly.
 //
