@@ -1,6 +1,6 @@
 // pages/strategic/index.js — Novo Navis Strategic sales page
-// Hero video (autoplay, muted, looped) → defense pedigree pitch →
-// audit trail breakdown → sample report download → CTA to intake.
+// Hero video (autoplay, muted, looped) → audit trail pitch →
+// audit trail breakdown → four sample report downloads → CTA to intake.
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -11,18 +11,41 @@ const INK  = '#0c1322'   // near-black for section titles — high contrast
 const BODY = '#2d3748'
 
 const VIDEO_URL  = 'https://res.cloudinary.com/dqv9va6ta/video/upload/v1777770174/Untitled_design_x0d45n.mp4'
-const SAMPLE_PDF = '/samples/strategic-preview-novo-navis.pdf'
 
 // Inline style applied directly to h2 elements as a final override —
 // guarantees the color wins regardless of any global site CSS.
 const FORCE_TITLE = { color: INK, fontWeight: 800 }
 
+// Sample reports — four domains, one architecture.
+const SAMPLES = [
+  {
+    href: '/samples/strategic-preview-novo-navis.pdf',
+    title: 'Disney / ESPN Strategic Analysis',
+    sub: '19 pages · 8 cited sources · corporate strategy',
+  },
+  {
+    href: '/samples/Bankruptcyreport.pdf',
+    title: 'Spirit Airlines Bankruptcy Estate Liquidation',
+    sub: '36 pages · 78 sources · 45 cited inline · aviation bankruptcy',
+  },
+  {
+    href: '/samples/CDIreport.pdf',
+    title: 'California Department of Insurance Enforcement Strategy',
+    sub: '30 pages · 52 sources · 30 cited inline · insurance regulation',
+  },
+  {
+    href: '/samples/SMRreport.pdf',
+    title: 'U.S. SMR Federal Deployment Sequencing',
+    sub: '32 pages · 70 cited sources · federal energy policy',
+  },
+]
+
 export default function StrategicLanding() {
   return (
     <>
       <Head>
-        <title>David / Strategic — Defense-grade Strategic Analysis | Novo Navis</title>
-        <meta name="description" content="Auditable strategic analysis for boutique consultants. Confidence ratings, inline citations, documented gaps, framework mapping. From a registered U.S. defense contractor." />
+        <title>David / Strategic — Auditable Strategic Analysis | Novo Navis</title>
+        <meta name="description" content="Auditable strategic analysis for boutique consultants. Confidence ratings, inline citations, documented gaps, framework mapping." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>{`
           * { box-sizing: border-box; }
@@ -104,17 +127,9 @@ export default function StrategicLanding() {
             text-decoration: none;
             box-shadow: 0 4px 16px rgba(200,169,110,0.35);
           }
-          .hero-pedigree {
-            display: inline-block;
-            margin-left: 1.25rem;
-            color: #a8b2c5;
-            font-size: 0.9rem;
-            vertical-align: middle;
-          }
           @media (max-width: 700px) {
             .hero-title { font-size: 1.85rem; }
             .hero-subtitle { font-size: 1rem; }
-            .hero-pedigree { display: block; margin: 1rem 0 0; }
           }
 
           /* ── Video ────────────────────────────────── */
@@ -184,47 +199,57 @@ export default function StrategicLanding() {
           .feature-title { font-size: 1.08rem; font-weight: 700; margin: 0 0 0.55rem; }
           .feature-body { font-size: 0.95rem; margin: 0; line-height: 1.6; }
 
-          /* ── Sample download ──────────────────────── */
+          /* ── Sample downloads ─────────────────────── */
+          .sample-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+          }
           .sample-card {
             background: #ffffff;
             border: 1px solid #d8dee9;
             border-radius: 12px;
-            padding: 2rem 2rem 2.2rem;
+            padding: 1.5rem 1.75rem;
             display: flex;
             align-items: center;
-            gap: 1.75rem;
+            gap: 1.5rem;
             box-shadow: 0 4px 20px rgba(27,42,74,0.08);
           }
           .sample-icon {
             flex: 0 0 auto;
-            width: 64px; height: 64px;
-            border-radius: 12px;
+            width: 56px; height: 56px;
+            border-radius: 10px;
             background: ${NAVY};
             color: ${GOLD};
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             letter-spacing: 0.05em;
           }
-          .sample-text { flex: 1; }
-          .sample-headline { font-size: 1.18rem; font-weight: 700; margin: 0 0 0.35rem; }
-          .sample-sub { color: #5a6478; font-size: 0.94rem; margin: 0; }
+          .sample-text { flex: 1; min-width: 0; }
+          .sample-headline {
+            font-size: 1.08rem;
+            font-weight: 700;
+            margin: 0 0 0.3rem;
+            line-height: 1.3;
+          }
+          .sample-sub { color: #5a6478; font-size: 0.9rem; margin: 0; }
           .sample-button {
             flex: 0 0 auto;
             display: inline-block;
             background: ${NAVY};
             color: #ffffff !important;
             font-weight: 600;
-            font-size: 0.96rem;
-            padding: 0.78rem 1.3rem;
+            font-size: 0.94rem;
+            padding: 0.72rem 1.2rem;
             border-radius: 8px;
             text-decoration: none;
             white-space: nowrap;
           }
           @media (max-width: 700px) {
-            .sample-card { flex-direction: column; text-align: center; padding: 1.5rem; gap: 1rem; }
+            .sample-card { flex-direction: column; text-align: center; padding: 1.4rem; gap: 0.9rem; }
             .sample-text { text-align: center; }
           }
 
@@ -315,7 +340,7 @@ export default function StrategicLanding() {
           <div className="container">
             <div className="hero-eyebrow">David / Strategic</div>
             <h1 className="hero-title" style={{ color: '#ffffff' }}>
-              Defense-grade strategic analysis<br/>for the consulting industry.
+              Auditable strategic analysis<br/>for the consulting industry.
             </h1>
             <p className="hero-subtitle">
               Submit a strategic decision. David builds an auditable analysis with
@@ -325,7 +350,6 @@ export default function StrategicLanding() {
             <Link href="/strategic/intake" className="hero-cta">
               Submit a Decision — See It Built →
             </Link>
-            <span className="hero-pedigree">From a registered U.S. defense contractor.</span>
           </div>
         </section>
 
@@ -429,30 +453,42 @@ export default function StrategicLanding() {
           </div>
         </section>
 
-        {/* ── SAMPLE DOWNLOAD ──────────────────────── */}
+        {/* ── SAMPLE DOWNLOADS ─────────────────────── */}
         <section className="section">
           <div className="container">
             <div className="section-eyebrow">See it for yourself</div>
             <h2 className="section-title" style={FORCE_TITLE}>
-              A sample David report.
+              Four reports. Four domains. One architecture.
             </h2>
             <p className="section-lead" style={{ color: BODY }}>
-              The Disney–ESPN spinoff question, run through David. Confidence ratings,
-              eight cited sources, full Decision Log. Recommendation and action plan
-              redacted — that's what an unlocked report adds — but the analysis quality
-              is fully visible.
+              Sample David reports across corporate strategy, aviation bankruptcy,
+              insurance regulation, and federal energy policy. Same audit trail
+              standards, same epistemic honesty, same architecture — applied to
+              completely different problems with no domain-specific training.
+              Recommendations and action plans are redacted in the previews;
+              analysis quality and reasoning chain are fully visible.
             </p>
-            <div className="sample-card">
-              <div className="sample-icon">PDF</div>
-              <div className="sample-text">
-                <h3 className="sample-headline" style={{ color: INK }}>
-                  Disney / ESPN Strategic Analysis — Sample Preview
-                </h3>
-                <p className="sample-sub">19 pages · 8 cited sources · auditable causal analysis</p>
-              </div>
-              <a href={SAMPLE_PDF} className="sample-button" target="_blank" rel="noopener noreferrer">
-                Download Sample →
-              </a>
+
+            <div className="sample-stack">
+              {SAMPLES.map((s) => (
+                <div key={s.href} className="sample-card">
+                  <div className="sample-icon">PDF</div>
+                  <div className="sample-text">
+                    <h3 className="sample-headline" style={{ color: INK }}>
+                      {s.title} — Sample Preview
+                    </h3>
+                    <p className="sample-sub">{s.sub}</p>
+                  </div>
+                  <a
+                    href={s.href}
+                    className="sample-button"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Download →
+                  </a>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -527,7 +563,7 @@ export default function StrategicLanding() {
         <footer className="strategic-footer">
           <div className="container">
             <p>
-              © {new Date().getFullYear()} Novo Navis, LLC · Registered U.S. Defense Contractor · Fidelis Diligentia
+              © {new Date().getFullYear()} Novo Navis, LLC · Fidelis Diligentia
             </p>
             <p style={{ marginTop: '0.5rem' }}>
               <Link href="/privacy">Privacy Policy</Link> &nbsp;·&nbsp;
