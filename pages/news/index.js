@@ -116,7 +116,7 @@ export default function NewsIndex() {
           .hero-headline {
             font-size: 2.8rem;
             font-weight: 800;
-            color: ${GOLD};
+            color: ${GOLD} !important;
             font-family: Georgia, serif;
             margin: 0 0 0.6rem;
             line-height: 1.15;
@@ -125,7 +125,7 @@ export default function NewsIndex() {
           .hero-sub {
             font-size: 1.3rem;
             font-weight: 700;
-            color: ${GOLD};
+            color: ${GOLD} !important;
             font-family: Georgia, serif;
             margin: 0;
             letter-spacing: 0.04em;
