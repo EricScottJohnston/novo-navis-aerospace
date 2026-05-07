@@ -1,9 +1,16 @@
 // pages/api/webhook.js
-// Listens for successful Stripe payments and emails form data to Eric
+// Listens for successful Stripe payments and routes by payment type.
+//
+// Three payment types:
+//   1. Tool registration    — meta.tool_name present
+//   2. Intelligence report  — orderId starts with 'intel_'
+//   3. Standard report      — all other orders
 
 import { Resend } from 'resend'
+import { SQSClient, SendMessageCommand } from '@aws-sdk/client-sqs'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
+const sqs    = new SQSClient({ region: process.env.AWS_REGION || 'us-east-1' })
 
 export const config = {
   api: {
@@ -43,20 +50,21 @@ export default async function handler(req, res) {
   }
 
   if (event.type === 'checkout.session.completed') {
-    const session = event.data.object
-    const meta = session.metadata || {}
-    const email = session.customer_email || 'Unknown'
+    const session    = event.data.object
+    const meta       = session.metadata || {}
+    const email      = session.customer_email || session.customer_details?.email || 'Unknown'
     const amountPaid = `$${(session.amount_total / 100).toFixed(2)}`
+    const orderId    = meta.orderId || ''
 
-    // Tool registration payment
+    // ── 1. Tool registration payment ─────────────────────────────
     if (meta.tool_name) {
       const developerName = meta.developer_name || 'Unknown'
-      const toolName = meta.tool_name || 'Unknown'
+      const toolName      = meta.tool_name || 'Unknown'
 
       try {
         await resend.emails.send({
-          from: 'Novo Navis <noreply@novonavis.com>',
-          to: 'ericjohnston105@gmail.com',
+          from:    'Novo Navis <noreply@novonavis.com>',
+          to:      'ericjohnston105@gmail.com',
           subject: `Tool Registration Payment — ${toolName} — ${developerName}`,
           html: `
             <h2>New AI Tool Registration</h2>
@@ -76,15 +84,65 @@ export default async function handler(req, res) {
         console.error('Email send error:', emailErr)
       }
 
-    // Report order payment
+    // ── 2. Intelligence report purchase ──────────────────────────
+    } else if (orderId.startsWith('intel_')) {
+      console.log(`[webhook] Intelligence report purchase: ${orderId}`)
+
+      // Push SQS message to EC2 to deliver the full unredacted PDF
+      if (process.env.SQS_QUEUE_URL) {
+        try {
+          const sqsPayload = {
+            orderId,
+            orderText:     `Deliver: ${orderId}`,
+            tier:          'intelligence',
+            redacted:      false,
+            customerEmail: email,
+            action:        'deliver_full',
+          }
+          await sqs.send(new SendMessageCommand({
+            QueueUrl:    process.env.SQS_QUEUE_URL,
+            MessageBody: JSON.stringify(sqsPayload),
+            MessageAttributes: {
+              tier: { DataType: 'String', StringValue: 'intelligence' }
+            }
+          }))
+          console.log(`[webhook] Intelligence delivery queued for: ${orderId}`)
+        } catch (sqsErr) {
+          console.error('[webhook] SQS send failed:', sqsErr)
+        }
+      }
+
+      // Notify Eric
+      try {
+        await resend.emails.send({
+          from:    'Novo Navis <noreply@novonavis.com>',
+          to:      'ericjohnston105@gmail.com',
+          subject: `Intelligence Report Purchased — ${orderId}`,
+          html: `
+            <h2>Intelligence Report Purchase</h2>
+            <p><strong>Amount:</strong> ${amountPaid}</p>
+            <p><strong>Order ID:</strong> ${orderId}</p>
+            <p><strong>Customer Email:</strong> ${email}</p>
+            <hr />
+            <p style="color: #888; font-size: 12px;">
+              Full report delivery has been queued via SQS.
+              David will email the full PDF to the customer automatically.
+            </p>
+          `
+        })
+      } catch (emailErr) {
+        console.error('Email send error:', emailErr)
+      }
+
+    // ── 3. Standard report payment ───────────────────────────────
     } else {
       const customerName = meta.customer_name || 'Unknown'
       const businessName = meta.business_name || 'Unknown'
 
       try {
         await resend.emails.send({
-          from: 'Novo Navis <noreply@novonavis.com>',
-          to: 'ericjohnston105@gmail.com',
+          from:    'Novo Navis <noreply@novonavis.com>',
+          to:      'ericjohnston105@gmail.com',
           subject: `Payment Received — ${businessName} — Awaiting Intake`,
           html: `
             <h2>Payment Received</h2>
