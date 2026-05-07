@@ -2,9 +2,6 @@
 // Submits to existing /api/intake with tier: 'strategic'.
 // Free preview model: consultant submits, David builds, redacted preview is emailed,
 // unlock link in email leads to $999 checkout.
-//
-// v1.4 — Submit button now triggers ITAR access modal instead of API call.
-//         Users must contact Novo Navis for an access code before generating.
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -55,7 +52,6 @@ export default function StrategicIntake() {
   const [stepError,       setStepError]       = useState('')
   const [submitNotice,    setSubmitNotice]    = useState('')
   const [showVerifyModal, setShowVerifyModal] = useState(false)
-  const [showItarModal,   setShowItarModal]   = useState(false)  // ITAR gate modal
 
   const topRef        = useRef(null)
   const emailRef      = useRef(null)
@@ -229,7 +225,7 @@ export default function StrategicIntake() {
     }, 80)
   }
 
-  // ── Submit handler — shows ITAR modal instead of firing API ───────────────
+  // ── Submit handler ─────────────────────────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault()
     const err = validateStep(4)
@@ -241,8 +237,24 @@ export default function StrategicIntake() {
     }
     if (err) { setStepError(err); return }
 
-    // Block the actual API call — show ITAR gate instead
-    setShowItarModal(true)
+    setSubmitting(true)
+    setSubmitNotice('')
+    try {
+      const res  = await fetch('/api/intake', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...formData, tier: 'strategic' }),
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        window.localStorage.removeItem(DRAFT_KEY)
+        router.push(data.redirectUrl || '/strategic/building')
+      } else {
+        setSubmitNotice(data.error || 'Something went wrong. Please try again.')
+      }
+    } catch {
+      setSubmitNotice('Something went wrong. Please check your connection and try again.')
+    }
+    setSubmitting(false)
   }
 
   const StepIndicator = () => (
@@ -724,105 +736,6 @@ export default function StrategicIntake() {
                 cursor: 'pointer', textDecoration: 'underline',
               }}>
               Cancel
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* ── ITAR ACCESS MODAL ──────────────────────────────────────────────── */}
-      {showItarModal && (
-        <div
-          onClick={() => setShowItarModal(false)}
-          style={{
-            position: 'fixed', inset: 0, zIndex: 99999,
-            background: 'rgba(0,0,0,0.75)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            padding: '1rem',
-            animation: 'modalFadeIn 0.2s ease-out',
-          }}>
-          <div
-            onClick={e => e.stopPropagation()}
-            style={{
-              background: '#ffffff', borderRadius: '14px',
-              border: `2px solid ${NAVY}`,
-              boxShadow: '0 16px 56px rgba(27,42,74,0.38)',
-              maxWidth: '460px', width: '100%',
-              padding: '2rem 1.75rem',
-              animation: 'modalSlideIn 0.25s ease-out',
-            }}>
-
-            {/* Header bar */}
-            <div style={{
-              background: NAVY, borderRadius: '8px',
-              padding: '0.65rem 1rem',
-              marginBottom: '1.4rem',
-              display: 'flex', alignItems: 'center', gap: '0.6rem',
-            }}>
-              <span style={{ fontSize: '1.1rem' }}>🔒</span>
-              <span style={{
-                color: GOLD, fontSize: '0.72rem', fontWeight: '800',
-                letterSpacing: '0.18em', textTransform: 'uppercase',
-              }}>
-                ITAR Access Restriction
-              </span>
-            </div>
-
-            <h2 style={{
-              color: NAVY, fontSize: '1.18rem', fontWeight: '800',
-              margin: '0 0 0.75rem', lineHeight: 1.3,
-            }}>
-              An access code is required to generate this report.
-            </h2>
-
-            <p style={{
-              color: '#4a5568', fontSize: '0.94rem',
-              lineHeight: 1.65, margin: '0 0 1.25rem',
-            }}>
-              Due to ITAR restrictions, report generation requires prior authorization from Novo Navis. Please contact us directly to receive your access code before submitting.
-            </p>
-
-            {/* Contact block */}
-            <div style={{
-              background: '#f3f6fb',
-              border: `1px solid #d8dee9`,
-              borderLeft: `3px solid ${GOLD}`,
-              borderRadius: '8px',
-              padding: '1rem 1.1rem',
-              marginBottom: '1.5rem',
-            }}>
-              <p style={{ margin: '0 0 0.6rem', fontSize: '0.82rem', fontWeight: '700', color: '#6b7a99', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                Contact Novo Navis
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
-                <a href="tel:+16234289308" style={{
-                  color: NAVY, fontWeight: '700', fontSize: '1.08rem',
-                  textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem',
-                }}>
-                  <span style={{ fontSize: '1rem' }}>📞</span>
-                  +1 (623) 428-9308
-                </a>
-                <a href="mailto:support@novonavis.com" style={{
-                  color: NAVY, fontWeight: '600', fontSize: '0.96rem',
-                  textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem',
-                }}>
-                  <span style={{ fontSize: '1rem' }}>✉️</span>
-                  support@novonavis.com
-                </a>
-              </div>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setShowItarModal(false)}
-              style={{
-                width: '100%', padding: '0.85rem',
-                background: NAVY, color: '#ffffff',
-                border: 'none', borderRadius: '8px',
-                fontWeight: '700', fontSize: '0.98rem',
-                cursor: 'pointer',
-                boxShadow: '0 4px 14px rgba(27,42,74,0.25)',
-              }}>
-              Close
             </button>
           </div>
         </div>
