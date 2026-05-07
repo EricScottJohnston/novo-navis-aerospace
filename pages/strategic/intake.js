@@ -1,7 +1,11 @@
-// pages/strategic/intake.js — David/Strategic intake form. /* v1.5 */
+// pages/strategic/intake.js — David/Strategic intake form.
 // Submits to existing /api/intake with tier: 'strategic'.
 // Free preview model: consultant submits, David builds, redacted preview is emailed,
 // unlock link in email leads to $999 checkout.
+//
+// v1.3 — Compliance chips excluded from localStorage draft persistence.
+//         Compliance always starts fresh so returning users don't get
+//         a stale framework pre-selected from a previous session.
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -76,12 +80,16 @@ export default function StrategicIntake() {
     constraints: '',
     lens: 'Let David choose',
     lensOther: '',
+    // Compliance is intentionally NOT in the draft — always starts fresh
     compliance: ['None'],
     complianceOther: '',
     additional: '',
   })
 
   // ── Hydrate draft from localStorage ───────────────────────────────────────
+  // NOTE: compliance and complianceOther are deliberately excluded from
+  // hydration. They should always start fresh so a returning user doesn't
+  // get a stale framework pre-selected from a previous session.
   useEffect(() => {
     if (typeof window === 'undefined') return
     try {
@@ -225,7 +233,6 @@ export default function StrategicIntake() {
     }, 80)
   }
 
-  // ── Submit handler ─────────────────────────────────────────────────────────
   const handleSubmit = async (e) => {
     e.preventDefault()
     const err = validateStep(4)
@@ -239,22 +246,67 @@ export default function StrategicIntake() {
 
     setSubmitting(true)
     setSubmitNotice('')
+
+    const lensValue = formData.lens === 'Other (describe below)' && formData.lensOther.trim()
+      ? formData.lensOther.trim()
+      : formData.lens
+
+    let complianceValue = 'None'
+    if (formData.compliance.length > 0 && !formData.compliance.includes('None')) {
+      const expanded = formData.compliance.map(f =>
+        f === 'Other (specify)' && formData.complianceOther.trim()
+          ? formData.complianceOther.trim()
+          : f
+      ).filter(f => f !== 'Other (specify)')
+      complianceValue = expanded.join(', ')
+    }
+
+    const additionalNotes = formData.additional.trim()
+      ? `\n\nAdditional notes: ${formData.additional.trim()}`
+      : ''
+
+    const payload = {
+      tier: 'strategic',
+      name:     formData.name,
+      email:    formData.email,
+      business: formData.firm,
+      industry: `Strategy Consulting — ${formData.practice}`,
+      employees:  'N/A',
+      budget:     'N/A',
+      businessDescription: formData.situation + additionalNotes,
+      currentTools:        '',
+      compliance: complianceValue,
+      process1: `THE DECISION: ${formData.decision}`,
+      process2: `CLIENT SITUATION: ${formData.situation}`,
+      process3: `WHAT THE CONSULTANT ALREADY KNOWS: ${formData.knownContext}`,
+      process4: `CONSTRAINTS: ${formData.constraints || 'None specified'}`,
+      process5: `PREFERRED ANALYTICAL LENS: ${lensValue}`,
+      goal:     `DECISION DEADLINE / URGENCY: ${formData.deadline || 'Not specified'}`,
+    }
+
     try {
       const res  = await fetch('/api/intake', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, tier: 'strategic' }),
+        body: JSON.stringify(payload),
       })
       const data = await res.json()
-      if (res.ok && data.success) {
-        window.localStorage.removeItem(DRAFT_KEY)
-        router.push(data.redirectUrl || '/strategic/building')
+
+      if (data.error === 'rate_limited') {
+        setSubmitNotice('You already submitted an analysis request in the last 24 hours. Check your inbox for your preview, or email support@novonavis.com if you need help.')
+        setSubmitting(false); return
+      }
+      if (data.success) {
+        try { window.localStorage.removeItem(DRAFT_KEY) } catch {}
+        if (typeof window !== 'undefined' && window.gtag) window.gtag('event', 'strategic_intake_submitted')
+        router.push('/track/' + data.orderId)
       } else {
-        setSubmitNotice(data.error || 'Something went wrong. Please try again.')
+        setSubmitNotice('Something went wrong submitting your analysis request. Please email support@novonavis.com.')
+        setSubmitting(false)
       }
     } catch {
-      setSubmitNotice('Something went wrong. Please check your connection and try again.')
+      setSubmitNotice('Something went wrong. Please email support@novonavis.com.')
+      setSubmitting(false)
     }
-    setSubmitting(false)
   }
 
   const StepIndicator = () => (
@@ -675,7 +727,6 @@ export default function StrategicIntake() {
         </form>
       </div>
 
-      {/* ── EMAIL VERIFY MODAL ─────────────────────────────────────────────── */}
       {showVerifyModal && (
         <div
           onClick={() => setShowVerifyModal(false)}
