@@ -1,13 +1,11 @@
-// pages/index.js — news.novonavis.com
+// pages/news/index.js — news.novonavis.com
 // Daily intelligence reports landing page.
 // Update REPORTS array each morning with six new reports.
 
 import Head from 'next/head'
-import Link from 'next/link'
 
 const NAVY  = '#1B2A4A'
 const GOLD  = '#c8a96e'
-const LIGHT = '#f4f6fb'
 const INK   = '#0c1322'
 const BODY  = '#2d3748'
 
@@ -105,6 +103,7 @@ export default function NewsIndex() {
             font-size: 1.05rem;
             text-decoration: none;
             font-weight: 400;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
           }
 
           /* ── Hero ── */
@@ -244,9 +243,8 @@ export default function NewsIndex() {
         <nav>
           <a href="https://www.novonavis.com" className="nav-logo">NOVO NAVIS</a>
           <ul className="nav-links">
-            <li><a href="/archive">Archive</a></li>
-            <li><a href="https://www.novonavis.com/strategic/intake">Custom Report</a></li>
             <li><a href="https://www.novonavis.com/faq">FAQ</a></li>
+            <li><a href="https://www.novonavis.com/about">About</a></li>
           </ul>
         </nav>
 
@@ -263,13 +261,13 @@ export default function NewsIndex() {
           <div className="container">
             <div className="reports-header">
               <div className="reports-eyebrow">Today's Intelligence Reports</div>
-              <a href="/archive" className="archive-link">View Archive →</a>
+              <a href="/news/archive" className="archive-link">View Archive →</a>
             </div>
             <div className="reports-grid">
               {REPORTS.map(report => (
                 <a
                   key={report.id}
-                  href={`/${report.id}`}
+                  href={`/news/${report.id}`}
                   className="report-card"
                 >
                   <div className="report-date">{report.date}</div>
