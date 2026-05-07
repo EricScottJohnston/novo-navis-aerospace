@@ -8,15 +8,17 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const s3 = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
 
 const TIER_NAMES = {
-  starter:   'Single Workflow Blueprint — Full Report',
-  blueprint: 'AI Blueprint — Full Report',
-  strategic: 'Strategic Analysis — Full Report',
+  starter:      'Single Workflow Blueprint — Full Report',
+  blueprint:    'AI Blueprint — Full Report',
+  strategic:    'Strategic Analysis — Full Report',
+  intelligence: 'Intelligence Report — Full Report',
 }
 
 const TIER_DESCRIPTIONS = {
-  starter:   'Unlock the full report with specific tool recommendations and pricing.',
-  blueprint: 'Unlock the full report with specific tool recommendations and pricing.',
-  strategic: 'Unlock the full strategic analysis with the recommendation, alternative paths, decision framework, and action plan.',
+  starter:      'Unlock the full report with specific tool recommendations and pricing.',
+  blueprint:    'Unlock the full report with specific tool recommendations and pricing.',
+  strategic:    'Unlock the full strategic analysis with the recommendation, alternative paths, decision framework, and action plan.',
+  intelligence: 'Unlock the full intelligence report including complete causal analysis, differentiated beneficiary assessment, risk analysis, and actionable intelligence.',
 }
 
 export default async function handler(req, res) {
@@ -46,7 +48,7 @@ export default async function handler(req, res) {
 
   const origin = req.headers.origin || 'https://www.novonavis.com'
 
-  const productName = TIER_NAMES[metadata.tier]        || 'AI Blueprint — Full Report'
+  const productName = TIER_NAMES[metadata.tier]        || 'Full Report'
   const productDesc = TIER_DESCRIPTIONS[metadata.tier] || 'Unlock the full report.'
 
   try {
