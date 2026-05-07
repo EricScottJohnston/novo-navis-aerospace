@@ -1,4 +1,4 @@
-// pages/strategic/intake.js — David/Strategic intake form.
+// pages/strategic/intake.js — David/Strategic intake form. /* v1.5 */
 // Submits to existing /api/intake with tier: 'strategic'.
 // Free preview model: consultant submits, David builds, redacted preview is emailed,
 // unlock link in email leads to $999 checkout.
