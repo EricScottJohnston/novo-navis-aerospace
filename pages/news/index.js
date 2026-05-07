@@ -1,59 +1,21 @@
 // pages/news/index.js — news.novonavis.com
-// Daily intelligence reports landing page.
-// Update REPORTS array each morning with six new reports.
+// Dynamic landing page. Fetches intelligence/index.json from S3 on every
+// request via getServerSideProps. No rebuild needed when reports are added.
 
 import Head from 'next/head'
+import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 
-const NAVY  = '#1B2A4A'
-const GOLD  = '#c8a96e'
-const INK   = '#0c1322'
-const BODY  = '#2d3748'
+const NAVY = '#1B2A4A'
+const GOLD = '#c8a96e'
+const INK  = '#0c1322'
+const BODY = '#2d3748'
 
-const REPORTS = [
-  {
-    id: '070526-0001',
-    date: 'May 7, 2026',
-    title: 'Placeholder Report Title One',
-    teaser: 'A two to three sentence teaser that gives the reader enough context to understand what this report covers and why it matters today, without giving away the core finding.',
-  },
-  {
-    id: '070526-0002',
-    date: 'May 7, 2026',
-    title: 'Placeholder Report Title Two',
-    teaser: 'A two to three sentence teaser that gives the reader enough context to understand what this report covers and why it matters today, without giving away the core finding.',
-  },
-  {
-    id: '070526-0003',
-    date: 'May 7, 2026',
-    title: 'Placeholder Report Title Three',
-    teaser: 'A two to three sentence teaser that gives the reader enough context to understand what this report covers and why it matters today, without giving away the core finding.',
-  },
-  {
-    id: '070526-0004',
-    date: 'May 7, 2026',
-    title: 'Placeholder Report Title Four',
-    teaser: 'A two to three sentence teaser that gives the reader enough context to understand what this report covers and why it matters today, without giving away the core finding.',
-  },
-  {
-    id: '070526-0005',
-    date: 'May 7, 2026',
-    title: 'Placeholder Report Title Five',
-    teaser: 'A two to three sentence teaser that gives the reader enough context to understand what this report covers and why it matters today, without giving away the core finding.',
-  },
-  {
-    id: '070526-0006',
-    date: 'May 7, 2026',
-    title: 'Placeholder Report Title Six',
-    teaser: 'A two to three sentence teaser that gives the reader enough context to understand what this report covers and why it matters today, without giving away the core finding.',
-  },
-]
-
-export default function NewsIndex() {
+export default function NewsIndex({ reports }) {
   return (
     <>
       <Head>
-        <title>Novo Navis — Daily Intelligence Reports</title>
-        <meta name="description" content="Daily auditable intelligence reports from Novo Navis. Causal analysis on the decisions that matter." />
+        <title>Novo Navis Intelligence — Daily Analysis</title>
+        <meta name="description" content="Daily causal intelligence reports from Novo Navis. Rigorous analysis on the decisions and events that matter." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <style>{`
           * { box-sizing: border-box; }
@@ -162,9 +124,7 @@ export default function NewsIndex() {
             text-decoration: none;
             letter-spacing: 0.04em;
           }
-          .archive-link:hover {
-            text-decoration: underline;
-          }
+          .archive-link:hover { text-decoration: underline; }
 
           /* ── Report cards ── */
           .reports-grid {
@@ -222,6 +182,14 @@ export default function NewsIndex() {
             letter-spacing: 0.04em;
           }
 
+          /* ── Empty state ── */
+          .empty-state {
+            text-align: center;
+            padding: 4rem 0;
+            color: #8a95aa;
+            font-size: 0.95rem;
+          }
+
           /* ── Footer ── */
           .news-footer {
             background: #0a0e1a;
@@ -230,10 +198,7 @@ export default function NewsIndex() {
             padding: 2rem 0;
             font-size: 0.88rem;
           }
-          .news-footer a {
-            color: ${GOLD};
-            text-decoration: none;
-          }
+          .news-footer a { color: ${GOLD}; text-decoration: none; }
         `}</style>
       </Head>
 
@@ -263,20 +228,28 @@ export default function NewsIndex() {
               <div className="reports-eyebrow">Today's Intelligence Reports</div>
               <a href="/news/archive" className="archive-link">View Archive →</a>
             </div>
-            <div className="reports-grid">
-              {REPORTS.map(report => (
-                <a
-                  key={report.id}
-                  href={`/news/${report.id}`}
-                  className="report-card"
-                >
-                  <div className="report-date">{report.date}</div>
-                  <h2 className="report-title">{report.title}</h2>
-                  <p className="report-teaser">{report.teaser}</p>
-                  <div className="report-card-footer">Read Report →</div>
-                </a>
-              ))}
-            </div>
+
+            {reports && reports.length > 0 ? (
+              <div className="reports-grid">
+                {reports.map(report => (
+                  <a
+                    key={report.id}
+                    href={`/news/${report.id}`}
+                    className="report-card"
+                  >
+                    <div className="report-date">{report.date}</div>
+                    <h2 className="report-title">{report.title}</h2>
+                    <p className="report-teaser">{report.teaser}</p>
+                    <div className="report-card-footer">Read Report →</div>
+                  </a>
+                ))}
+              </div>
+            ) : (
+              <div className="empty-state">
+                <p>Reports are being prepared. Check back shortly.</p>
+              </div>
+            )}
+
           </div>
         </section>
 
@@ -299,4 +272,20 @@ export default function NewsIndex() {
       </div>
     </>
   )
+}
+
+export async function getServerSideProps() {
+  try {
+    const s3  = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
+    const obj = await s3.send(new GetObjectCommand({
+      Bucket: process.env.S3_BUCKET,
+      Key:    'intelligence/index.json',
+    }))
+    const reports = JSON.parse(await obj.Body.transformToString())
+    return { props: { reports: reports || [] } }
+  } catch (err) {
+    // File doesn't exist yet or S3 error — show empty state
+    console.error('[news index] Failed to fetch index.json:', err.message)
+    return { props: { reports: [] } }
+  }
 }
