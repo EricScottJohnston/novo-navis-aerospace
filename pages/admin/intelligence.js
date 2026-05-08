@@ -5,9 +5,7 @@
 
 import Head from 'next/head'
 import { useState } from 'react'
-export async function getServerSideProps() {
-  return { notFound: true }
-}
+
 
 const NAVY = '#1B2A4A'
 const GOLD = '#c8a96e'
