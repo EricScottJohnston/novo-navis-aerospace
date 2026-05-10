@@ -1,5 +1,5 @@
-// pages/index.js — Novo Navis homepage r
-// Links to /interactive (AI Blueprint) and /strategic (David / Strategic)
+// pages/index.js — Novo Navis homepage
+// Links to /interactive, /strategic, /recovery, and news.novonavis.com
 
 import Head from 'next/head'
 import Link from 'next/link'
@@ -18,11 +18,11 @@ export default function HomePage() {
     <>
       <Head>
         <title>Novo Navis — Fidelis Diligentia</title>
-        <meta name="description" content="Novo Navis builds AI systems that think before they act. AI Blueprints for small business and defense-grade strategic analysis for consultants." />
+        <meta name="description" content="Novo Navis builds AI systems that think before they act. AI Blueprints for small business, defense-grade strategic analysis, distressed asset recovery, and daily intelligence reports." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta property="og:image" content="/logonovo.png" />
         <meta property="og:title" content="Novo Navis — Fidelis Diligentia" />
-        <meta property="og:description" content="AI that thinks before it acts. Two products. One standard of rigor." />
+        <meta property="og:description" content="AI that thinks before it acts. Four solutions. One standard of rigor." />
         <style>{`
           * { box-sizing: border-box; }
           body { margin: 0; background: #ffffff; }
@@ -300,7 +300,7 @@ export default function HomePage() {
             </h1>
             <p className="hero-subtitle">
               We build AI systems grounded in causal reasoning — not confident-sounding outputs.
-              Two products. One standard of rigor.
+              Four products. One standard of rigor.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.85rem', marginTop: '2.5rem' }}>
               <Link href="/strategic" style={{
@@ -311,7 +311,7 @@ export default function HomePage() {
                 boxShadow: '0 4px 16px rgba(200,169,110,0.35)',
                 textAlign: 'center',
               }}>
-                Strategic →
+                Strategic Analysis →
               </Link>
               <Link href="/interactive" style={{
                 display: 'block', width: '100%', maxWidth: '400px',
@@ -323,6 +323,26 @@ export default function HomePage() {
               }}>
                 Small Business Services →
               </Link>
+              <Link href="/recovery" style={{
+                display: 'block', width: '100%', maxWidth: '400px',
+                background: GOLD, color: '#111', fontWeight: 700,
+                fontSize: '1.05rem', padding: '1rem 1.8rem',
+                borderRadius: '8px', textDecoration: 'none',
+                boxShadow: '0 4px 16px rgba(200,169,110,0.35)',
+                textAlign: 'center',
+              }}>
+                Distressed Asset Recovery →
+              </Link>
+              <a href="https://news.novonavis.com" style={{
+                display: 'block', width: '100%', maxWidth: '400px',
+                background: GOLD, color: '#111', fontWeight: 700,
+                fontSize: '1.05rem', padding: '1rem 1.8rem',
+                borderRadius: '8px', textDecoration: 'none',
+                boxShadow: '0 4px 16px rgba(200,169,110,0.35)',
+                textAlign: 'center',
+              }}>
+                Intelligence Reports →
+              </a>
             </div>
           </div>
         </section>
@@ -333,8 +353,9 @@ export default function HomePage() {
             <div className="section-eyebrow">Our products</div>
             <h2 className="section-title">Choose your engagement.</h2>
             <p className="section-lead">
-              Whether you're a small business owner trying to cut through AI hype or a boutique
-              consultant who needs analysis you can put your name on — David is built for rigor.
+              Whether you're a small business owner trying to cut through AI hype, a boutique
+              consultant who needs analysis you can put your name on, a company that needs to
+              recover fast, or an investor who wants the analytical edge — David is built for rigor.
             </p>
 
             <div className="products-grid">
@@ -398,6 +419,62 @@ export default function HomePage() {
                 </div>
               </div>
 
+              {/* ── Distressed Asset Recovery ── */}
+              <div className="product-card">
+                <div className="product-card-header">
+                  <div className="product-badge">David / Recovery</div>
+                  <h2 className="product-name">Distressed Asset Recovery</h2>
+                  <p className="product-tagline">
+                    We replace your C-Suite with an AI system that finds the causal
+                    drivers of underperformance and executes recovery in real time.
+                  </p>
+                </div>
+                <div className="product-card-body">
+                  <ul className="product-features">
+                    <li>AI C-Suite ingests all company data and builds a recovery thesis</li>
+                    <li>Specialized agents for finance, operations, sales, marketing, and HR</li>
+                    <li>Board remains in control — David reports up and takes direction</li>
+                    <li>Two operating modes: full execution or command and control</li>
+                    <li>Ground truth from workers via email and text, integrated in real time</li>
+                  </ul>
+                  <hr className="product-divider" />
+                  <p className="product-price">
+                    <strong>Engagement-based pricing.</strong> Contact us to discuss your situation.
+                  </p>
+                  <Link href="/recovery" className="product-cta">
+                    Learn More →
+                  </Link>
+                </div>
+              </div>
+
+              {/* ── Intelligence Reports ── */}
+              <div className="product-card">
+                <div className="product-card-header">
+                  <div className="product-badge">David / Intelligence</div>
+                  <h2 className="product-name">Intelligence Reports</h2>
+                  <p className="product-tagline">
+                    Daily causal analysis on geopolitical events, macroeconomic signals,
+                    and structural market shifts. The edge, before the market moves.
+                  </p>
+                </div>
+                <div className="product-card-body">
+                  <ul className="product-features">
+                    <li>Published daily on breaking geopolitical and market events</li>
+                    <li>Causal confidence ratings on every finding — CAUSAL, MECHANISM, THRESHOLD</li>
+                    <li>Non-obvious structural beneficiary analysis — beyond the headline</li>
+                    <li>Executive summary and situation analysis free to read</li>
+                    <li>Full report with complete causal analysis delivered as PDF</li>
+                  </ul>
+                  <hr className="product-divider" />
+                  <p className="product-price">
+                    Free executive summary · <strong>$499 to unlock full report</strong>
+                  </p>
+                  <a href="https://news.novonavis.com" className="product-cta">
+                    Read Today's Reports →
+                  </a>
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
@@ -406,7 +483,6 @@ export default function HomePage() {
         <section className="pedigree">
           <div className="container">
             <p>
-              
               {' '}· Registered U.S. Defense Contractor ·{' '}
               <a href={BBB_URL} target="_blank" rel="noopener noreferrer">
                 A+ Rated, Better Business Bureau
