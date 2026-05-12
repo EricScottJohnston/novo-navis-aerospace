@@ -364,8 +364,11 @@ export default function Recovery() {
             underperformance with no clear path forward, let David look at it.
           </p>
           <div className="cta-buttons">
-            <a href="mailto:eric@novonavis.com?subject=Recovery Inquiry" className="btn-primary">
-              Contact Us →
+            <a href="/recovery-intake" className="btn-primary">
+              Run a Recovery Diagnostic — $5,000 →
+            </a>
+            <a href="mailto:eric@novonavis.com?subject=Recovery Inquiry" className="btn-secondary">
+              Talk to Eric First →
             </a>
             <a href="https://news.novonavis.com" className="btn-secondary">
               Read Our Intelligence Reports
