@@ -271,7 +271,7 @@ export default function Recovery() {
         {/* HERO */}
         <div className="hero">
           <div className="hero-eyebrow">Distressed Asset Recovery</div>
-          <h1 className="hero-headline">We replace your C-Suite with one that never sleeps.</h1>
+          <h1 className="hero-headline">We augment your C-Suite with one that never sleeps.</h1>
           <p className="hero-sub">
             Novo Navis deploys an AI C-Suite into distressed companies. David identifies
             the causal drivers of underperformance — not symptoms, not guesses — and
@@ -360,18 +360,16 @@ export default function Recovery() {
         <div className="cta-section">
           <h2>Is your company a candidate?</h2>
           <p>
-            We work with distressed companies and their investors. If you are facing
-            underperformance with no clear path forward, let David look at it.
+            Submit your company's situation and financials. David runs a full causal diagnostic
+            and delivers a free preview. If the analysis is what you need, unlock the complete
+            recovery architecture for $5,000.
           </p>
           <div className="cta-buttons">
             <a href="/recovery-intake" className="btn-primary">
-              Run a Recovery Diagnostic — $5,000 →
+              Request a Recovery Diagnostic →
             </a>
             <a href="mailto:eric@novonavis.com?subject=Recovery Inquiry" className="btn-secondary">
-              Talk to Eric First →
-            </a>
-            <a href="https://news.novonavis.com" className="btn-secondary">
-              Read Our Intelligence Reports
+              Contact Us →
             </a>
           </div>
         </div>
