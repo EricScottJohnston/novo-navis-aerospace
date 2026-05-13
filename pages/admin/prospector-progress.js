@@ -32,7 +32,11 @@ export default function ProspectorProgress() {
     if (!id) return
     try {
       const res = await fetch(`/api/prospector-progress?id=${id}`)
-      if (res.status === 404) { setNotFound(true); return }
+      if (res.status === 404) {
+        // Worker not started yet — keep polling
+        setLoading(false)
+        return
+      }
       if (!res.ok) return
       const data = await res.json()
       setState(data)
@@ -56,16 +60,19 @@ export default function ProspectorProgress() {
 
   if (!id || loading) {
     return (
-      <div style={{ background: NAVY, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#ffffff', fontFamily: 'sans-serif' }}>Loading...</p>
+      <div style={{ background: NAVY, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
+        <p style={{ color: '#c8a96e', fontFamily: 'sans-serif', fontSize: '1rem', fontWeight: 700 }}>David Prospector</p>
+        <p style={{ color: '#8a95aa', fontFamily: 'sans-serif', fontSize: '0.9rem' }}>Connecting to run {id}...</p>
       </div>
     )
   }
 
-  if (notFound) {
+  if (!state) {
     return (
-      <div style={{ background: NAVY, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <p style={{ color: '#ffffff', fontFamily: 'sans-serif' }}>Run not found. Check the ID and try again.</p>
+      <div style={{ background: NAVY, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
+        <p style={{ color: '#c8a96e', fontFamily: 'sans-serif', fontSize: '1rem', fontWeight: 700 }}>David Prospector</p>
+        <p style={{ color: '#8a95aa', fontFamily: 'sans-serif', fontSize: '0.9rem' }}>Waiting for David to start... checking every 3 seconds</p>
+        <p style={{ color: '#4a5568', fontFamily: 'monospace', fontSize: '0.8rem' }}>Run ID: {id}</p>
       </div>
     )
   }
