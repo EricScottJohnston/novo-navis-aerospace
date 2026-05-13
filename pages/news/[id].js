@@ -1,17 +1,18 @@
 // pages/news/[id].js
 // Dynamic route for individual intelligence report pages.
-// Fetches free HTML content from S3 and renders it.
-// Two CTAs at bottom: unlock full report ($499) and custom report link.
+// Checks if report is archived — if so, serves full content free.
+// If current, serves free preview with paywall.
 
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
 
 const NAVY = '#1B2A4A'
 const GOLD = '#c8a96e'
 const INK  = '#0c1322'
 const BODY = '#2d3748'
 
-export default function ReportPage({ orderId, freeHtml, title, date }) {
+export default function ReportPage({ orderId, html, title, date, isArchived }) {
   const [buying,   setBuying]   = useState(false)
   const [buyError, setBuyError] = useState('')
 
@@ -59,7 +60,6 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
             padding: 0 1.25rem;
           }
 
-          /* ── Nav ── */
           nav {
             background: ${NAVY};
             display: flex;
@@ -74,7 +74,6 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
             letter-spacing: 0.08em;
             text-transform: uppercase;
             font-family: Georgia, serif;
-            line-height: 1.15;
             text-decoration: none;
           }
           .nav-links {
@@ -89,10 +88,8 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
             color: #ffffff;
             font-size: 1.05rem;
             text-decoration: none;
-            font-weight: 400;
           }
 
-          /* ── Report header ── */
           .report-header {
             background: ${NAVY};
             padding: 2.5rem 0 3rem;
@@ -116,35 +113,57 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
           .report-meta {
             color: #8a95aa;
             font-size: 0.84rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+          }
+          .archived-badge {
+            display: inline-block;
+            background: rgba(200,169,110,0.15);
+            color: ${GOLD};
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid rgba(200,169,110,0.3);
           }
           @media (max-width: 700px) {
             .report-title { font-size: 1.4rem; }
           }
 
-          /* ── Report body ── */
-          .report-body {
-            padding: 2.5rem 0 1rem;
-          }
+          .report-body { padding: 2.5rem 0 1rem; }
 
-          /* ── Free content HTML styles ── */
-          .free-content .disclaimer {
+          .archived-banner {
+            background: #f8f9fc;
+            border: 1px solid #e0e4ef;
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 2rem;
+            font-size: 0.85rem;
+            color: #6b7a99;
+            line-height: 1.55;
+          }
+          .archived-banner strong { color: ${NAVY}; }
+
+          .report-content .disclaimer {
             background: #f8f9fc;
             border-left: 3px solid #d0d4de;
             border-radius: 6px;
             padding: 1rem 1.1rem;
             margin-bottom: 2rem;
           }
-          .free-content .disclaimer p {
+          .report-content .disclaimer p {
             font-size: 0.78rem;
             color: #8a95aa;
             margin: 0 0 0.4rem;
             line-height: 1.55;
           }
-          .free-content .disclaimer p:last-child { margin-bottom: 0; }
-          .free-content h1.report-title {
-            display: none;
-          }
-          .free-content h2.section-heading {
+          .report-content .disclaimer p:last-child { margin-bottom: 0; }
+          .report-content h1.report-title { display: none; }
+          .report-content h2.section-heading {
             font-size: 1.15rem;
             font-weight: 800;
             color: ${NAVY};
@@ -152,20 +171,36 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
             padding-bottom: 0.4rem;
             border-bottom: 1px solid #e8ecf4;
           }
-          .free-content h3.sub-heading {
+          .report-content h3.sub-heading {
             font-size: 1rem;
             font-weight: 700;
             color: ${INK};
             margin: 1.25rem 0 0.4rem;
           }
-          .free-content p {
+          .report-content p {
             font-size: 0.98rem;
             color: ${BODY};
             line-height: 1.72;
             margin: 0 0 1rem;
           }
+          .report-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 1rem 0;
+          }
+          .chart-block { margin: 1.5rem 0; }
+          .chart-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: ${NAVY};
+            margin-bottom: 0.5rem;
+          }
+          .chart-caption {
+            font-size: 0.78rem;
+            color: #8a95aa;
+            margin-top: 0.4rem;
+          }
 
-          /* ── Paywall divider ── */
           .paywall-divider {
             margin: 2.5rem 0 0;
             text-align: center;
@@ -192,7 +227,6 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
             text-transform: uppercase;
           }
 
-          /* ── Frosted preview ── */
           .frosted-preview {
             margin: 1.5rem 0;
             background: #f3f6fb;
@@ -214,7 +248,6 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
             margin-bottom: 0.6rem;
           }
 
-          /* ── CTA section ── */
           .cta-section {
             padding: 2rem 0 3.5rem;
             border-top: 1px solid #e8ecf4;
@@ -232,11 +265,7 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
             margin: 0 0 1.5rem;
             line-height: 1.55;
           }
-          .cta-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 0.85rem;
-          }
+          .cta-buttons { display: flex; flex-direction: column; gap: 0.85rem; }
           .btn-unlock {
             display: block;
             text-align: center;
@@ -279,7 +308,55 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
             margin-left: 0.4rem;
           }
 
-          /* ── Footer ── */
+          .archive-cta-section {
+            padding: 2rem 0 3.5rem;
+            border-top: 1px solid #e8ecf4;
+            margin-top: 2rem;
+            text-align: center;
+          }
+          .archive-cta-section h2 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: ${NAVY};
+            margin: 0 0 0.5rem;
+          }
+          .archive-cta-section p {
+            font-size: 0.88rem;
+            color: #6b7a99;
+            margin: 0 0 1.25rem;
+          }
+          .archive-cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-width: 400px;
+            margin: 0 auto;
+          }
+          .btn-today {
+            display: block;
+            text-align: center;
+            background: ${NAVY};
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.95rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+          }
+          .btn-custom-report {
+            display: block;
+            text-align: center;
+            background: transparent;
+            color: ${NAVY};
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 0.85rem 1.5rem;
+            border-radius: 8px;
+            border: 2px solid #c8d0e0;
+            text-decoration: none;
+          }
+          .btn-custom-report:hover { border-color: ${GOLD}; }
+
           .report-footer {
             background: #0a0e1a;
             color: #a8b2c5;
@@ -293,7 +370,6 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
 
       <div className="report-page">
 
-        {/* ── NAV ── */}
         <nav>
           <a href="https://news.novonavis.com" className="nav-logo">NOVO NAVIS</a>
           <ul className="nav-links">
@@ -303,78 +379,86 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
           </ul>
         </nav>
 
-        {/* ── REPORT HEADER ── */}
         <div className="report-header">
           <div className="container">
             <div className="report-eyebrow">Novo Navis Intelligence</div>
             <h1 className="report-title">{title || 'Intelligence Report'}</h1>
             <div className="report-meta">
-              {date || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-              &nbsp;·&nbsp;Report ID: {orderId}
+              <span>{date || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+              <span>·</span>
+              <span>Report ID: {orderId}</span>
+              {isArchived && <span className="archived-badge">Archived — Full Report</span>}
             </div>
           </div>
         </div>
 
-        {/* ── REPORT BODY ── */}
         <div className="report-body">
           <div className="container">
 
-            {/* Free content */}
-            {freeHtml ? (
-              <div
-                className="free-content"
-                dangerouslySetInnerHTML={{ __html: freeHtml }}
-              />
-            ) : (
-              <p style={{ color: '#8a95aa', fontSize: '0.92rem' }}>
-                Loading report content...
-              </p>
+            {isArchived && (
+              <div className="archived-banner">
+                <strong>This is an archived report.</strong> The full analysis is available free.
+                By the time it's free, the market has already moved. Don't miss the next one —
+                <a href="https://news.novonavis.com" style={{ color: GOLD, marginLeft: '0.3rem' }}>see today's reports →</a>
+              </div>
             )}
 
-            {/* Paywall divider */}
-            <div className="paywall-divider">
-              <span className="paywall-label">Full report continues below</span>
-            </div>
+            {html ? (
+              <div className="report-content" dangerouslySetInnerHTML={{ __html: html }} />
+            ) : (
+              <p style={{ color: '#8a95aa', fontSize: '0.92rem' }}>Loading report content...</p>
+            )}
 
-            {/* Frosted preview */}
-            <div className="frosted-preview">
-              <div className="frosted-bar" style={{ width: '95%' }} />
-              <div className="frosted-bar" style={{ width: '88%' }} />
-              <div className="frosted-bar" style={{ width: '92%' }} />
-              <div className="frosted-bar" style={{ width: '75%' }} />
-              <p>Causal Analysis, Who Benefits and Why, Key Risks, and What to Watch are available in the full report.</p>
-            </div>
+            {!isArchived && (
+              <>
+                <div className="paywall-divider">
+                  <span className="paywall-label">Full report continues below</span>
+                </div>
+                <div className="frosted-preview">
+                  <div className="frosted-bar" style={{ width: '95%' }} />
+                  <div className="frosted-bar" style={{ width: '88%' }} />
+                  <div className="frosted-bar" style={{ width: '92%' }} />
+                  <div className="frosted-bar" style={{ width: '75%' }} />
+                  <p>Causal Analysis, Who Benefits and Why, Key Risks, and What to Watch are available in the full report.</p>
+                </div>
+                <div className="cta-section">
+                  <h2 className="cta-heading">Get the full analysis.</h2>
+                  <p className="cta-sub">
+                    The full report includes the complete causal analysis with confidence ratings,
+                    differentiated beneficiary assessment, key risks, and specific data points to watch.
+                    Delivered as a PDF immediately after purchase.
+                  </p>
+                  <div className="cta-buttons">
+                    <button className="btn-unlock" onClick={handleUnlock} disabled={buying}>
+                      {buying ? 'Redirecting to checkout...' : <>Unlock Full Report<span className="price-label">— $499</span></>}
+                    </button>
+                    {buyError && <p className="buy-error">{buyError}</p>}
+                    <a href="https://www.novonavis.com/strategic" className="btn-custom">
+                      Get a Custom Report Built for Your Situation →
+                    </a>
+                  </div>
+                </div>
+              </>
+            )}
 
-            {/* CTA section */}
-            <div className="cta-section">
-              <h2 className="cta-heading">Get the full analysis.</h2>
-              <p className="cta-sub">
-                The full report includes the complete causal analysis with confidence ratings,
-                differentiated beneficiary assessment, key risks, and specific data points to watch.
-                Delivered as a PDF immediately after purchase.
-              </p>
-              <div className="cta-buttons">
-                <button
-                  className="btn-unlock"
-                  onClick={handleUnlock}
-                  disabled={buying}
-                >
-                  {buying ? 'Redirecting to checkout...' : <>Unlock Full Report<span className="price-label">— $499</span></>}
-                </button>
-                {buyError && <p className="buy-error">{buyError}</p>}
-                <a
-                  href="https://www.novonavis.com/strategic"
-                  className="btn-custom"
-                >
-                  Get a Custom Report Built for Your Situation →
-                </a>
+            {isArchived && (
+              <div className="archive-cta-section">
+                <h2>Don't miss the next one.</h2>
+                <p>This report was published {date}. Current intelligence reports are available now.</p>
+                <div className="archive-cta-buttons">
+                  <a href="https://news.novonavis.com" className="btn-today">
+                    See Today's Intelligence Reports →
+                  </a>
+                  <a href="https://www.novonavis.com/strategic" className="btn-custom-report">
+                    Get a Custom Report Built for Your Situation →
+                  </a>
+                </div>
               </div>
-            </div>
+            )}
 
           </div>
         </div>
 
-        {/* ── FOOTER ── */}
         <footer className="report-footer">
           <div className="container">
             <p>© {new Date().getFullYear()} Novo Navis, LLC · Fidelis Diligentia</p>
@@ -389,8 +473,7 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
             </p>
             <p style={{ marginTop: '0.75rem', color: '#4a5568', fontSize: '0.78rem', maxWidth: '600px', margin: '0.75rem auto 0' }}>
               This report is published for general informational purposes only and does not
-              constitute financial, investment, or legal advice. Always seek the advice of a
-              qualified professional before making decisions based on this report.
+              constitute financial, investment, or legal advice.
             </p>
           </div>
         </footer>
@@ -402,49 +485,69 @@ export default function ReportPage({ orderId, freeHtml, title, date }) {
 
 export async function getServerSideProps({ params }) {
   const orderId = params.id
+  const s3 = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
 
-  // Fetch free HTML from S3
-  let freeHtml = ''
-  let title    = ''
-  let date     = ''
+  let isArchived  = false
+  let archivePath = null
+
+  // Check archive index
+  try {
+    const archiveObj   = await s3.send(new GetObjectCommand({
+      Bucket: process.env.S3_BUCKET,
+      Key:    'intelligence/archive/index.json',
+    }))
+    const archiveIndex = JSON.parse(await archiveObj.Body.transformToString())
+    const archiveEntry = archiveIndex.find(r => r.id === orderId)
+    if (archiveEntry) {
+      isArchived  = true
+      archivePath = archiveEntry.archive_path
+    }
+  } catch {}
+
+  let html  = ''
+  let title = ''
+  let date  = ''
+
+  if (isArchived && archivePath) {
+    try {
+      const obj = await s3.send(new GetObjectCommand({
+        Bucket: process.env.S3_BUCKET,
+        Key:    archivePath,
+      }))
+      html = await obj.Body.transformToString()
+    } catch (err) {
+      console.error(`[report page] Archive fetch failed for ${orderId}:`, err.message)
+    }
+  } else {
+    try {
+      const obj = await s3.send(new GetObjectCommand({
+        Bucket: process.env.S3_BUCKET,
+        Key:    `intelligence/${orderId}_free.html`,
+      }))
+      html = await obj.Body.transformToString()
+    } catch (err) {
+      console.error(`[report page] Free HTML fetch failed for ${orderId}:`, err.message)
+      if (err.name === 'NoSuchKey') return { notFound: true }
+    }
+  }
+
+  if (html) {
+    const titleMatch = html.match(/<h1[^>]*class="report-title"[^>]*>(.*?)<\/h1>/i)
+    if (titleMatch) title = titleMatch[1].replace(/<[^>]+>/g, '').trim()
+  }
 
   try {
-    const { S3Client, GetObjectCommand } = await import('@aws-sdk/client-s3')
-    const s3  = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
-    const obj = await s3.send(new GetObjectCommand({
-      Bucket: process.env.S3_BUCKET,
-      Key:    `intelligence/${orderId}_free.html`,
-    }))
-    freeHtml = await obj.Body.transformToString()
-
-    // Extract title from the first h1 in the free HTML
-    const titleMatch = freeHtml.match(/<h1[^>]*class="report-title"[^>]*>(.*?)<\/h1>/i)
-    if (titleMatch) title = titleMatch[1].replace(/<[^>]+>/g, '').trim()
-
-    // Format date from order ID — intel_DDMMYY_NNNN
     const datePart = orderId.replace('intel_', '').split('_')[0]
     if (datePart && datePart.length === 6) {
-      const dd   = datePart.slice(0, 2)
-      const mm   = datePart.slice(2, 4)
-      const yy   = datePart.slice(4, 6)
-      const d    = new Date(`20${yy}-${mm}-${dd}`)
+      const dd = datePart.slice(0, 2)
+      const mm = datePart.slice(2, 4)
+      const yy = datePart.slice(4, 6)
+      const d  = new Date(`20${yy}-${mm}-${dd}`)
       date = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
     }
-
-  } catch (err) {
-    console.error(`[report page] Failed to fetch free HTML for ${orderId}:`, err)
-    // Return 404 if report not found
-    if (err.name === 'NoSuchKey') {
-      return { notFound: true }
-    }
-  }
+  } catch {}
 
   return {
-    props: {
-      orderId,
-      freeHtml,
-      title,
-      date,
-    }
+    props: { orderId, html, title, date, isArchived }
   }
-  }
+}
