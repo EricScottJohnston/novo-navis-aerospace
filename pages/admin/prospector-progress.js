@@ -30,7 +30,7 @@ export default function ProspectorProgress() {
 
     const poll = async () => {
       try {
-        const res = await fetch(`/api/prospector-progress?id=${id}`)
+        const res = await fetch(`/api/track/${id}`)
         if (res.status === 404) {
           // Not started yet — keep polling, show waiting state
           return
