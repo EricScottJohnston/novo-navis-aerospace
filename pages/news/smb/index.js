@@ -276,7 +276,6 @@ export default function SMBIndex({ reports }) {
                     <p className="report-teaser">{report.teaser}</p>
                     <div className="report-card-footer">
                       Read Report →
-                      <span className="price-tag">$29</span>
                     </div>
                   </a>
                 ))}
