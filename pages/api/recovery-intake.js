@@ -26,16 +26,12 @@ export default async function handler(req, res) {
     ticker,
     isPublic,
     industry,
-    employees,
     situation,
     currentMetrics,
     targetMetrics,
-    timeline,
-    assets,
-    alreadyTried,
   } = req.body
 
-  if (!email || !companyName || !industry || !situation || !targetMetrics || !timeline) {
+  if (!email || !companyName || !industry || !situation || !targetMetrics) {
     return res.status(400).json({ error: 'Required fields missing.' })
   }
 
@@ -44,15 +40,11 @@ export default async function handler(req, res) {
   const orderText = [
     `Company: ${companyName}`,
     `Ticker: ${ticker || ''}`,
-    `IsPublic: ${isPublic || 'private'}`,
+    `IsPublic: ${isPublic || 'public'}`,
     `Industry: ${industry}`,
-    `Employees: ${employees || ''}`,
     `Situation: ${situation}`,
     `CurrentMetrics: ${currentMetrics || ''}`,
     `TargetMetrics: ${targetMetrics}`,
-    `Timeline: ${timeline}`,
-    `Assets: ${assets || ''}`,
-    `AlreadyTried: ${alreadyTried || ''}`,
     `ContactName: ${contactName || ''}`,
   ].join('\n')
 
