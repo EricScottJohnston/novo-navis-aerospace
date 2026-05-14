@@ -1,6 +1,12 @@
 // pages/news/index.js — news.novonavis.com
-// Dynamic landing page. Fetches intelligence/index.json from S3 on every
-// request via getServerSideProps. No rebuild needed when reports are added.
+// Dynamic landing page. Fetches BOTH intelligence/index.json and smb/index.json
+// from S3 on every request, merges them by date, and renders unified cards.
+//
+// Each card links to the right destination based on report kind:
+//   - "intelligence" cards link to /news/{id}
+//   - "smb" cards link to the hierarchical url_path
+//
+// No rebuild needed when reports are added.
 
 import Head from 'next/head'
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3'
@@ -34,7 +40,6 @@ export default function NewsIndex({ reports }) {
             padding: 0 1.25rem;
           }
 
-          /* ── Nav ── */
           nav {
             background: ${NAVY};
             display: flex;
@@ -65,10 +70,8 @@ export default function NewsIndex({ reports }) {
             font-size: 1.05rem;
             text-decoration: none;
             font-weight: 400;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
           }
 
-          /* ── Hero ── */
           .hero {
             background: ${NAVY};
             color: #ffffff;
@@ -97,7 +100,6 @@ export default function NewsIndex({ reports }) {
             .hero-sub { font-size: 1.05rem; }
           }
 
-          /* ── Reports section ── */
           .reports-section {
             padding: 3rem 0 4rem;
             background: #ffffff;
@@ -126,7 +128,6 @@ export default function NewsIndex({ reports }) {
           }
           .archive-link:hover { text-decoration: underline; }
 
-          /* ── Report cards ── */
           .reports-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -147,10 +148,28 @@ export default function NewsIndex({ reports }) {
             text-decoration: none;
             color: inherit;
             transition: box-shadow 0.18s ease, border-color 0.18s ease;
+            position: relative;
           }
           .report-card:hover {
             box-shadow: 0 6px 24px rgba(27,42,74,0.13);
             border-color: ${GOLD};
+          }
+          .kind-pill {
+            position: absolute;
+            top: 1rem;
+            right: 1.1rem;
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.22rem 0.55rem;
+            border-radius: 4px;
+            background: #f0f3f9;
+            color: ${NAVY};
+          }
+          .kind-pill.smb {
+            background: rgba(200,169,110,0.18);
+            color: #8a6f3e;
           }
           .report-date {
             font-size: 0.72rem;
@@ -166,6 +185,7 @@ export default function NewsIndex({ reports }) {
             color: ${NAVY};
             margin: 0 0 0.7rem;
             line-height: 1.3;
+            padding-right: 4.5rem;
           }
           .report-teaser {
             font-size: 0.9rem;
@@ -180,9 +200,15 @@ export default function NewsIndex({ reports }) {
             font-weight: 700;
             color: ${NAVY};
             letter-spacing: 0.04em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .price-tag {
+            color: ${GOLD};
+            font-weight: 800;
           }
 
-          /* ── Empty state ── */
           .empty-state {
             text-align: center;
             padding: 4rem 0;
@@ -190,7 +216,6 @@ export default function NewsIndex({ reports }) {
             font-size: 0.95rem;
           }
 
-          /* ── Footer ── */
           .news-footer {
             background: #0a0e1a;
             color: #a8b2c5;
@@ -204,16 +229,15 @@ export default function NewsIndex({ reports }) {
 
       <div className="news-page">
 
-        {/* ── NAV ── */}
         <nav>
           <a href="https://www.novonavis.com" className="nav-logo">NOVO NAVIS</a>
           <ul className="nav-links">
+            <li><a href="https://news.novonavis.com/smb">SMB Reports</a></li>
             <li><a href="https://www.novonavis.com/faq">FAQ</a></li>
             <li><a href="https://www.novonavis.com/about">About</a></li>
           </ul>
         </nav>
 
-        {/* ── HERO ── */}
         <section className="hero">
           <div className="container">
             <h1 className="hero-headline">You want the edge, it's here.</h1>
@@ -221,7 +245,6 @@ export default function NewsIndex({ reports }) {
           </div>
         </section>
 
-        {/* ── REPORTS ── */}
         <section className="reports-section">
           <div className="container">
             <div className="reports-header">
@@ -233,14 +256,20 @@ export default function NewsIndex({ reports }) {
               <div className="reports-grid">
                 {reports.map(report => (
                   <a
-                    key={report.id}
-                    href={`/news/${report.id}`}
+                    key={`${report.kind}-${report.id}`}
+                    href={report.href}
                     className="report-card"
                   >
+                    <span className={`kind-pill ${report.kind === 'smb' ? 'smb' : ''}`}>
+                      {report.kind === 'smb' ? 'SMB' : 'Intel'}
+                    </span>
                     <div className="report-date">{report.date}</div>
                     <h2 className="report-title">{report.title}</h2>
                     <p className="report-teaser">{report.teaser}</p>
-                    <div className="report-card-footer">Read Report →</div>
+                    <div className="report-card-footer">
+                      <span>Read Report →</span>
+                      <span className="price-tag">{report.kind === 'smb' ? '$29' : '$499'}</span>
+                    </div>
                   </a>
                 ))}
               </div>
@@ -253,7 +282,6 @@ export default function NewsIndex({ reports }) {
           </div>
         </section>
 
-        {/* ── FOOTER ── */}
         <footer className="news-footer">
           <div className="container">
             <p>© {new Date().getFullYear()} Novo Navis, LLC · Fidelis Diligentia</p>
@@ -274,18 +302,69 @@ export default function NewsIndex({ reports }) {
   )
 }
 
+// ── Helpers to parse the date strings reliably for sorting ────────────────────
+function parseEntryDate(dateStr) {
+  // Date format is like "May 14, 2026" — let Date.parse handle it.
+  // If parse fails, fall back to epoch 0 so the entry sinks to the bottom.
+  if (!dateStr) return 0
+  const ts = Date.parse(dateStr)
+  return isNaN(ts) ? 0 : ts
+}
+
 export async function getServerSideProps() {
-  try {
-    const s3  = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
-    const obj = await s3.send(new GetObjectCommand({
-      Bucket: process.env.S3_BUCKET,
-      Key:    'intelligence/index.json',
-    }))
-    const reports = JSON.parse(await obj.Body.transformToString())
-    return { props: { reports: reports || [] } }
-  } catch (err) {
-    // File doesn't exist yet or S3 error — show empty state
-    console.error('[news index] Failed to fetch index.json:', err.message)
-    return { props: { reports: [] } }
+  const s3 = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
+
+  // Fetch both indexes in parallel. If either fails, fall back to empty array.
+  const fetchIndex = async (key) => {
+    try {
+      const obj = await s3.send(new GetObjectCommand({
+        Bucket: process.env.S3_BUCKET,
+        Key:    key,
+      }))
+      const parsed = JSON.parse(await obj.Body.transformToString())
+      return Array.isArray(parsed) ? parsed : []
+    } catch (err) {
+      console.error(`[news index] Failed to fetch ${key}:`, err.message)
+      return []
+    }
   }
+
+  const [intel, smb] = await Promise.all([
+    fetchIndex('intelligence/index.json'),
+    fetchIndex('smb/index.json'),
+  ])
+
+  const normalized = []
+
+  for (const r of intel) {
+    normalized.push({
+      kind:   'intelligence',
+      id:     r.id || '',
+      date:   r.date || '',
+      title:  r.title || '',
+      teaser: r.teaser || '',
+      href:   `/news/${r.id}`,
+      _ts:    parseEntryDate(r.date),
+    })
+  }
+
+  for (const r of smb) {
+    normalized.push({
+      kind:   'smb',
+      id:     r.id || '',
+      date:   r.date || '',
+      title:  r.title || '',
+      teaser: r.teaser || '',
+      href:   r.url_path || `/smb/${r.id}`,
+      _ts:    parseEntryDate(r.date),
+    })
+  }
+
+  // Sort by date descending (newest first)
+  normalized.sort((a, b) => b._ts - a._ts)
+
+  // Strip internal sort key before sending to client
+  const reports = normalized.map(({ _ts, ...rest }) => rest)
+
+  return { props: { reports } }
 }
