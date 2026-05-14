@@ -15,7 +15,7 @@ export default async function handler(req, res) {
   try {
     const obj = await s3.send(new GetObjectCommand({
       Bucket: process.env.S3_BUCKET,
-      Key:    `prospector/${id}.json`,
+      Key: `progress/${id}.json`,
     }))
     const data = JSON.parse(await obj.Body.transformToString())
     res.setHeader('Cache-Control', 'no-store')
