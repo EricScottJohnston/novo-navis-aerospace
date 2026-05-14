@@ -267,8 +267,7 @@ export default function NewsIndex({ reports }) {
                     <h2 className="report-title">{report.title}</h2>
                     <p className="report-teaser">{report.teaser}</p>
                     <div className="report-card-footer">
-                      <span>Read Report →</span>
-                      <span className="price-tag">{report.kind === 'smb' ? '$29' : '$499'}</span>
+                      Read Report →
                     </div>
                   </a>
                 ))}
