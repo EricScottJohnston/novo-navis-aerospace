@@ -1,409 +1,197 @@
 // pages/admin/prospector-progress.js
-// novonavis.com/admin/prospector-progress?id={runId}
-// Live progress view for David Prospector runs.
-// Polls S3 every 3 seconds and updates in real time.
+// Live prospector progress tracker. Polls /api/prospector-progress every 2 seconds.
+// Built to match the existing pages/track/[orderId].js pattern exactly.
 
 import Head from 'next/head'
-import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
+import { useEffect, useState, useRef } from 'react'
 
-const NAVY  = '#1B2A4A'
-const GOLD  = '#c8a96e'
-const INK   = '#0c1322'
-const MUTED = '#6b7a99'
+const CHECK_INTERVAL = 2000
 
-const STATUS_COLORS = {
-  running:  '#3498db',
-  complete: '#2ecc71',
-  error:    '#e74c3c',
+const LOG_COLORS = {
+  step:   '#c8a96e',
+  search: '#4caf50',
+  info:   '#d0d8e8',
+  detail: '#6a7a8a',
+  warn:   '#e57373',
 }
 
 export default function ProspectorProgress() {
-  const router  = useRouter()
-  const { id }  = router.query
+  const router     = useRouter()
+  const { id }     = router.query
 
-  const [state,    setState]    = useState(null)
-  const [loading,  setLoading]  = useState(true)
-  const [notFound, setNotFound] = useState(false)
-  const intervalRef = useRef(null)
-  const logEndRef   = useRef(null)
-
-  const fetchProgress = async () => {
-    if (!id) return
-    try {
-      const res = await fetch(`/api/prospector-progress?id=${id}`)
-      if (res.status === 404) {
-        // Worker not started yet — keep polling
-        setLoading(false)
-        return
-      }
-      if (!res.ok) return
-      const data = await res.json()
-      setState(data)
-      setLoading(false)
-      if (data.status === 'complete' || data.status === 'error') {
-        clearInterval(intervalRef.current)
-      }
-    } catch {}
-  }
+  const [data,     setData]     = useState(null)
+  const [error,    setError]    = useState(null)
+  const intervalRef  = useRef(null)
+  const logBottomRef = useRef(null)
 
   useEffect(() => {
     if (!id) return
-    fetchProgress()
-    intervalRef.current = setInterval(fetchProgress, 3000)
+
+    const poll = async () => {
+      try {
+        const res = await fetch(`/api/prospector-progress?id=${id}`)
+        if (res.status === 404) {
+          // Not started yet — keep polling, show waiting state
+          return
+        }
+        if (!res.ok) throw new Error('fetch failed')
+        const json = await res.json()
+        setData(json)
+        if (json.status === 'complete' || json.status === 'error') {
+          clearInterval(intervalRef.current)
+        }
+      } catch (e) {
+        setError('Could not load progress. Please wait a moment.')
+      }
+    }
+
+    poll()
+    intervalRef.current = setInterval(poll, CHECK_INTERVAL)
     return () => clearInterval(intervalRef.current)
   }, [id])
 
   useEffect(() => {
-    logEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [state?.log?.length])
+    logBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [data?.log?.length])
 
-  if (!id || loading) {
-    return (
-      <div style={{ background: NAVY, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
-        <p style={{ color: '#c8a96e', fontFamily: 'sans-serif', fontSize: '1rem', fontWeight: 700 }}>David Prospector</p>
-        <p style={{ color: '#8a95aa', fontFamily: 'sans-serif', fontSize: '0.9rem' }}>Connecting to run {id}...</p>
-      </div>
-    )
-  }
-
-  if (!state) {
-    return (
-      <div style={{ background: NAVY, minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: '1rem' }}>
-        <p style={{ color: '#c8a96e', fontFamily: 'sans-serif', fontSize: '1rem', fontWeight: 700 }}>David Prospector</p>
-        <p style={{ color: '#8a95aa', fontFamily: 'sans-serif', fontSize: '0.9rem' }}>Waiting for David to start... checking every 3 seconds</p>
-        <p style={{ color: '#4a5568', fontFamily: 'monospace', fontSize: '0.8rem' }}>Run ID: {id}</p>
-      </div>
-    )
-  }
-
-  const pct       = state?.percent_complete || 0
-  const status    = state?.status || 'running'
-  const prospects = state?.prospects || []
-  const logs      = state?.log || []
+  const isComplete = data?.status === 'complete'
+  const isError    = data?.status === 'error'
+  const isWaiting  = !data
+  const pct        = data?.percent_complete ?? 0
 
   return (
     <>
       <Head>
-        <title>David Prospector — Running</title>
+        <title>David Prospector — Running | Novo Navis</title>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <style>{`
-          * { box-sizing: border-box; margin: 0; padding: 0; }
-          body { background: ${NAVY}; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
-
-          .page {
-            min-height: 100vh;
-            background: ${NAVY};
-            padding: 2rem 1rem 4rem;
-          }
-
-          .container {
-            max-width: 900px;
-            margin: 0 auto;
-          }
-
-          .header {
-            margin-bottom: 1.5rem;
-          }
-
-          .eyebrow {
-            color: ${GOLD};
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            margin-bottom: 0.4rem;
-          }
-
-          h1 {
-            color: #ffffff;
-            font-size: 1.5rem;
-            font-weight: 800;
-            font-family: Georgia, serif;
-            margin: 0 0 0.3rem;
-          }
-
-          .run-id {
-            color: #8a95aa;
-            font-size: 0.8rem;
-            font-family: 'Courier New', monospace;
-          }
-
-          /* ── Progress bar ── */
-          .progress-card {
-            background: #0d1221;
-            border: 1px solid #1e2a45;
-            border-radius: 10px;
-            padding: 1.25rem 1.5rem;
-            margin-bottom: 1.25rem;
-          }
-
-          .progress-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-          }
-
-          .status-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-          }
-
-          .current-step {
-            color: #8a95aa;
-            font-size: 0.85rem;
-          }
-
-          .progress-bar-bg {
-            background: #1e2a45;
-            border-radius: 4px;
-            height: 8px;
-            overflow: hidden;
-          }
-
-          .progress-bar-fill {
-            height: 100%;
-            border-radius: 4px;
-            background: ${GOLD};
-            transition: width 0.5s ease;
-          }
-
-          .pct-label {
-            color: ${GOLD};
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-top: 0.4rem;
-            text-align: right;
-          }
-
-          /* ── Two column layout ── */
-          .two-col {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-          }
-
-          @media (max-width: 700px) {
-            .two-col { grid-template-columns: 1fr; }
-          }
-
-          /* ── Log panel ── */
-          .panel {
-            background: #0d1221;
-            border: 1px solid #1e2a45;
-            border-radius: 10px;
-            padding: 1.25rem;
-            margin-bottom: 1.25rem;
-          }
-
-          .panel-title {
-            color: ${GOLD};
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            margin-bottom: 0.75rem;
-          }
-
-          .log-scroll {
-            max-height: 320px;
-            overflow-y: auto;
-          }
-
-          .log-entry {
-            display: flex;
-            gap: 0.75rem;
-            padding: 0.3rem 0;
-            border-bottom: 1px solid #1a2338;
-            font-size: 0.8rem;
-          }
-
-          .log-time {
-            color: #4a5568;
-            font-family: 'Courier New', monospace;
-            flex-shrink: 0;
-            width: 60px;
-          }
-
-          .log-msg {
-            color: #c8d0e0;
-          }
-
-          /* ── Prospect cards ── */
-          .prospect-card {
-            background: #0d1221;
-            border: 1px solid #1e2a45;
-            border-radius: 8px;
-            padding: 1rem 1.25rem;
-            margin-bottom: 0.75rem;
-          }
-
-          .prospect-name {
-            color: #ffffff;
-            font-size: 0.95rem;
-            font-weight: 700;
-            margin-bottom: 0.2rem;
-          }
-
-          .prospect-meta {
-            color: #8a95aa;
-            font-size: 0.78rem;
-            margin-bottom: 0.5rem;
-          }
-
-          .prospect-score {
-            display: inline-block;
-            background: #1e2a45;
-            color: ${GOLD};
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            margin-bottom: 0.5rem;
-          }
-
-          .trigger-list {
-            list-style: none;
-            padding: 0;
-          }
-
-          .trigger-list li {
-            color: #e74c3c;
-            font-size: 0.78rem;
-            padding: 0.1rem 0;
-          }
-
-          .trigger-list li::before {
-            content: '⚠ ';
-          }
-
-          /* ── Complete state ── */
-          .complete-banner {
-            background: #0d2218;
-            border: 1px solid #2ecc71;
-            border-radius: 10px;
-            padding: 1.25rem 1.5rem;
-            margin-bottom: 1.25rem;
-            text-align: center;
-          }
-
-          .complete-banner p {
-            color: #2ecc71;
-            font-size: 1rem;
-            font-weight: 700;
-          }
-
-          .complete-banner small {
-            color: #8a95aa;
-            font-size: 0.82rem;
-          }
-
-          .back-link {
-            display: inline-block;
-            margin-top: 1rem;
-            color: ${GOLD};
-            font-size: 0.88rem;
-            text-decoration: none;
-          }
-        `}</style>
       </Head>
 
-      <div className="page">
-        <div className="container">
+      <div style={{
+        background: '#0a0e1a', minHeight: '100vh', color: '#ffffff',
+        fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif',
+        padding: '2rem 1rem 4rem',
+      }}>
+        <div style={{ maxWidth: '760px', margin: '0 auto' }}>
 
-          {/* HEADER */}
-          <div className="header">
-            <div className="eyebrow">Novo Navis — Admin</div>
-            <h1>David Prospector</h1>
-            <div className="run-id">Run ID: {id}</div>
-          </div>
-
-          {/* COMPLETE BANNER */}
-          {status === 'complete' && (
-            <div className="complete-banner">
-              <p>✅ Prospector run complete — {prospects.length} prospects found</p>
-              <small>Report has been emailed to you. Check your inbox.</small>
-              <br />
-              <a href="/admin/prospector" className="back-link">← Run another search</a>
-            </div>
-          )}
-
-          {status === 'error' && (
-            <div style={{ background: '#1a0808', border: '1px solid #e74c3c', borderRadius: '10px', padding: '1.25rem', marginBottom: '1.25rem', textAlign: 'center' }}>
-              <p style={{ color: '#e74c3c', fontWeight: 700 }}>Error: {state?.error || 'Unknown error'}</p>
-              <a href="/admin/prospector" className="back-link">← Try again</a>
-            </div>
-          )}
-
-          {/* PROGRESS BAR */}
-          <div className="progress-card">
-            <div className="progress-header">
-              <span
-                className="status-badge"
-                style={{ background: STATUS_COLORS[status] + '22', color: STATUS_COLORS[status] }}
-              >
-                {status}
-              </span>
-              <span className="current-step">{state?.current_step || 'Initializing'}</span>
-            </div>
-            <div className="progress-bar-bg">
-              <div className="progress-bar-fill" style={{ width: `${pct}%` }} />
-            </div>
-            <div className="pct-label">{pct}%</div>
-          </div>
-
-          <div className="two-col">
-
-            {/* LOG PANEL */}
-            <div className="panel">
-              <div className="panel-title">Activity Log</div>
-              <div className="log-scroll">
-                {logs.map((entry, i) => (
-                  <div key={i} className="log-entry">
-                    <span className="log-time">{entry.time}</span>
-                    <span className="log-msg">{entry.message}</span>
-                  </div>
-                ))}
-                <div ref={logEndRef} />
-              </div>
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+            <div style={{ color: '#c8a96e', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+              Novo Navis — Admin
             </div>
 
-            {/* PROSPECTS PANEL */}
-            <div className="panel">
-              <div className="panel-title">
-                Prospects Found ({prospects.length})
-              </div>
-              {prospects.length === 0 ? (
-                <p style={{ color: '#4a5568', fontSize: '0.85rem' }}>
-                  {status === 'running' ? 'Scanning...' : 'No prospects found.'}
+            {isComplete ? (
+              <>
+                <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>✓</div>
+                <h1 style={{ margin: '0 0 0.5rem', color: '#ffffff', fontFamily: 'Georgia, serif' }}>Prospector run complete.</h1>
+                <p style={{ color: '#8a95aa' }}>
+                  {data?.prospects?.length || 0} prospects found. Report emailed to you.
                 </p>
-              ) : (
-                prospects.map((p, i) => (
-                  <div key={i} className="prospect-card">
-                    <div className="prospect-name">{p.name} {p.ticker ? `(${p.ticker})` : ''}</div>
-                    <div className="prospect-meta">{p.industry}</div>
-                    <div className="prospect-score">Distress Score: {p.score}/100</div>
-                    <ul className="trigger-list">
-                      {(p.triggers || []).map((t, j) => (
-                        <li key={j}>{t}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))
-              )}
-            </div>
-
+                <a href="/admin/prospector" style={{ display: 'inline-block', marginTop: '1rem', color: '#c8a96e', fontSize: '0.88rem' }}>
+                  ← Run another search
+                </a>
+              </>
+            ) : isError ? (
+              <>
+                <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>⚠</div>
+                <h1 style={{ margin: '0 0 0.5rem', color: '#ffffff', fontFamily: 'Georgia, serif' }}>Something went wrong.</h1>
+                <p style={{ color: '#8a95aa' }}>{data?.error || 'An error occurred.'}</p>
+                <a href="/admin/prospector" style={{ display: 'inline-block', marginTop: '1rem', color: '#c8a96e', fontSize: '0.88rem' }}>
+                  ← Try again
+                </a>
+              </>
+            ) : isWaiting ? (
+              <>
+                <h1 style={{ margin: '0 0 0.5rem', color: '#ffffff', fontFamily: 'Georgia, serif' }}>David Prospector</h1>
+                <p style={{ color: '#8a95aa' }}>Waiting for David to start... this page updates automatically.</p>
+                <p style={{ color: '#4a5568', fontSize: '0.8rem', fontFamily: 'monospace', marginTop: '0.5rem' }}>Run ID: {id}</p>
+              </>
+            ) : (
+              <>
+                <h1 style={{ margin: '0 0 0.5rem', color: '#ffffff', fontFamily: 'Georgia, serif' }}>David Prospector</h1>
+                <p style={{ color: '#8a95aa' }}>{data?.current_step || 'Running...'}</p>
+              </>
+            )}
           </div>
+
+          {/* Progress bar */}
+          {!isWaiting && (
+            <div style={{ marginBottom: '2rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.85rem', color: '#8a95aa' }}>
+                <span>{data?.current_step || 'Starting...'}</span>
+                <span>{pct}%</span>
+              </div>
+              <div style={{ height: '8px', background: '#1e2a45', borderRadius: '4px', overflow: 'hidden' }}>
+                <div style={{
+                  height: '100%',
+                  width: `${pct}%`,
+                  background: isComplete ? '#4caf50' : '#c8a96e',
+                  borderRadius: '4px',
+                  transition: 'width 0.6s ease',
+                }} />
+              </div>
+            </div>
+          )}
+
+          {/* Live log */}
+          {data?.log && data.log.length > 0 && (
+            <div style={{
+              background: '#060c18', border: '1px solid #1e2a45',
+              borderRadius: '6px', padding: '1rem', marginBottom: '2rem',
+              maxHeight: '450px', overflowY: 'auto', fontFamily: 'monospace',
+            }}>
+              <p style={{ color: '#4a5568', fontSize: '0.75rem', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                Live log
+              </p>
+              {data.log.map((entry, i) => (
+                <div key={i} style={{ fontSize: '0.8rem', marginBottom: '0.2rem', display: 'flex', gap: '0.5rem' }}>
+                  <span style={{ color: '#4a5568', flexShrink: 0 }}>{entry.time}</span>
+                  <span style={{ color: LOG_COLORS[entry.type] || LOG_COLORS.info }}>{entry.message}</span>
+                </div>
+              ))}
+              <div ref={logBottomRef} />
+            </div>
+          )}
+
+          {/* Prospects found so far */}
+          {data?.prospects && data.prospects.length > 0 && (
+            <div style={{ marginBottom: '2rem' }}>
+              <p style={{ color: '#c8a96e', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
+                Prospects Found ({data.prospects.length})
+              </p>
+              {data.prospects.map((p, i) => (
+                <div key={i} style={{
+                  background: '#0d1221', border: '1px solid #1e2a45',
+                  borderRadius: '8px', padding: '1rem 1.25rem', marginBottom: '0.75rem',
+                }}>
+                  <div style={{ color: '#ffffff', fontWeight: 700, marginBottom: '0.2rem' }}>
+                    {p.name} {p.ticker ? `(${p.ticker})` : ''}
+                  </div>
+                  <div style={{ color: '#8a95aa', fontSize: '0.78rem', marginBottom: '0.5rem' }}>
+                    {p.industry} · Distress Score: <span style={{ color: '#e74c3c', fontWeight: 700 }}>{p.score}/100</span>
+                  </div>
+                  {(p.triggers || []).map((t, j) => (
+                    <div key={j} style={{ color: '#e74c3c', fontSize: '0.78rem' }}>⚠ {t}</div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
+
+          {error && (
+            <p style={{ color: '#e57373', textAlign: 'center', fontSize: '0.85rem' }}>{error}</p>
+          )}
 
         </div>
       </div>
+
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.3; }
+        }
+      `}</style>
     </>
   )
 }
