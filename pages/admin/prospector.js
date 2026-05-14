@@ -94,7 +94,7 @@ export default function ProspectorAdmin() {
       })
       const data = await res.json()
       if (res.ok && data.runId) {
-        router.push(`/admin/prospector-progress?id=${data.runId}`)
+        router.push(`/track/${data.runId}`)
       } else {
         setError(data.error || 'Something went wrong.')
         setSubmitting(false)
