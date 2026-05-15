@@ -150,11 +150,6 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
 
           .report-body { padding: 2.5rem 0 1rem; }
 
-          /* The free HTML written by david_intelligence_smb.py already contains
-             the disclaimer block, report content, DAG image, AND the decision-point
-             buttons (unlock $29 + AI Blueprint link). The styles below format
-             everything inside that injected HTML. */
-
           .report-content .disclaimer {
             background: #f8f9fc;
             border-left: 3px solid #d0d4de;
@@ -208,13 +203,6 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
             margin-top: 0.4rem;
           }
 
-          /* The decision-point block (unlock + AI Blueprint) is rendered by
-             the injected HTML — but the button click needs to call our
-             React handler. We add a click listener after mount via a hidden
-             React button overlay, OR we restyle the embedded anchor to look
-             like a button. We chose the cleaner path: the HTML produces
-             real buttons, and we add a top-level click delegate. */
-
           .report-content .decision-point a.btn-unlock,
           .report-content .decision-point .btn-unlock {
             display: inline-block;
@@ -229,8 +217,6 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
             border: none;
           }
 
-          /* React-rendered unlock fallback button (only used if injected HTML
-             does NOT contain a decision-point — defensive fallback). */
           .fallback-cta-section {
             padding: 2rem 0 3.5rem;
             border-top: 1px solid #e8ecf4;
@@ -329,14 +315,26 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
           <div className="container">
 
             {html ? (
-              <div className="report-content" dangerouslySetInnerHTML={{ __html: html }} />
+              <>
+                <div style={{
+                  background: '#f8f9fc',
+                  border: '1px solid #e0e4ef',
+                  borderLeft: `4px solid ${GOLD}`,
+                  borderRadius: '6px',
+                  padding: '0.85rem 1.1rem',
+                  marginBottom: '1.5rem',
+                  fontSize: '0.88rem',
+                  color: '#6b7a99',
+                  lineHeight: '1.55',
+                }}>
+                  Tool names and implementation details have been redacted in this preview. Unlock the full report to see specific recommendations.
+                </div>
+                <div className="report-content" dangerouslySetInnerHTML={{ __html: html }} />
+              </>
             ) : (
               <p style={{ color: '#8a95aa', fontSize: '0.92rem' }}>Loading report content...</p>
             )}
 
-            {/* Fallback CTA — only visible if the injected HTML didn't include
-                its own decision-point block. Keeps the page functional even
-                if david_intelligence_smb.py output is missing the buttons. */}
             {html && !html.includes('decision-point') && (
               <div className="fallback-cta-section">
                 <h2 className="fallback-cta-heading">Get the full analysis.</h2>
@@ -381,10 +379,6 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
 
       </div>
 
-      {/* Wire up the embedded HTML's unlock button (from the decision-point
-          block) to our handleUnlock function. The injected HTML can't
-          access React state directly, so we intercept clicks on any
-          anchor with the unlock URL pattern and route to checkout. */}
       <script
         dangerouslySetInnerHTML={{ __html: `
           (function() {
@@ -398,7 +392,6 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
                 if (unlockBtn) {
                   unlockBtn.click();
                 } else {
-                  // No fallback button — call the API directly
                   fetch('/api/unlock-checkout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -416,13 +409,11 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
 }
 
 export async function getServerSideProps({ params }) {
-  // params.slug is an array — e.g. ['law-firms', 'probate', 'intake-automation']
   const slugParts = params.slug || []
   const requestedPath = '/smb/' + slugParts.join('/')
 
   const s3 = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
 
-  // ── Fetch smb/index.json and find the entry matching this URL path ────────
   let entry = null
   try {
     const indexObj = await s3.send(new GetObjectCommand({
@@ -432,7 +423,6 @@ export async function getServerSideProps({ params }) {
     const index = JSON.parse(await indexObj.Body.transformToString())
     entry = index.find(r => r.url_path === requestedPath)
 
-    // Tolerant match — if exact url_path doesn't match, try without trailing slash
     if (!entry) {
       const stripped = requestedPath.replace(/\/+$/, '')
       entry = index.find(r => (r.url_path || '').replace(/\/+$/, '') === stripped)
@@ -449,7 +439,6 @@ export async function getServerSideProps({ params }) {
   const title   = entry.title || ''
   const date    = entry.date  || ''
 
-  // ── Fetch the free HTML ────────────────────────────────────────────────────
   let html = ''
   try {
     const htmlObj = await s3.send(new GetObjectCommand({
