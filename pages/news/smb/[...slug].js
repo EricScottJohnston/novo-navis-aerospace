@@ -235,6 +235,49 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
             border: none;
           }
 
+          /* Inline reveal-name button — replaces the first mention of each
+             redacted tool in the preview. Tapping scrolls the reader to
+             the unlock decision point, where they can buy or pick the
+             AI Blueprint option. */
+          .reveal-name-btn {
+            display: inline-block;
+            padding: 0.12rem 0.55rem;
+            margin: 0 0.1rem;
+            background: rgba(200, 169, 110, 0.14);
+            color: #8a6f3e;
+            border: 1px solid rgba(200, 169, 110, 0.55);
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            line-height: 1.4;
+            white-space: nowrap;
+            transition: background 0.15s, border-color 0.15s;
+            font-family: inherit;
+          }
+          .reveal-name-btn:hover {
+            background: rgba(200, 169, 110, 0.25);
+            border-color: ${GOLD};
+            color: ${NAVY};
+          }
+          .reveal-name-btn::after {
+            content: ' →';
+            opacity: 0.7;
+            margin-left: 0.1rem;
+          }
+
+          /* Pulse animation on the unlock button when reader arrives via
+             a reveal-name button click. */
+          @keyframes unlock-pulse {
+            0%   { box-shadow: 0 0 0 0   rgba(200,169,110,0.7); transform: scale(1);    }
+            50%  { box-shadow: 0 0 0 18px rgba(200,169,110,0);  transform: scale(1.03); }
+            100% { box-shadow: 0 0 0 0   rgba(200,169,110,0);   transform: scale(1);    }
+          }
+          .reveal-pulse {
+            animation: unlock-pulse 0.9s ease-out 2;
+          }
+
           /* React-rendered unlock fallback button (only used if injected HTML
              does NOT contain a decision-point — defensive fallback). */
           .fallback-cta-section {
@@ -395,9 +438,35 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
         dangerouslySetInnerHTML={{ __html: `
           (function() {
             document.addEventListener('click', function(e) {
-              var target = e.target.closest && e.target.closest('a');
-              if (!target) return;
-              var href = target.getAttribute('href') || '';
+              // ── Reveal-name button click: scroll to decision point + pulse ──
+              var revealBtn = e.target.closest && e.target.closest('.reveal-name-btn');
+              if (revealBtn) {
+                e.preventDefault();
+                var decisionPoint = document.querySelector('.decision-point');
+                var target = decisionPoint || document.querySelector('.btn-unlock')
+                          || document.querySelector('.btn-unlock-react')
+                          || document.querySelector('.fallback-cta-section');
+                if (target) {
+                  target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  // After scroll, pulse the unlock button to draw the eye
+                  setTimeout(function() {
+                    var pulseTarget = document.querySelector('.btn-unlock')
+                                   || document.querySelector('.btn-unlock-react');
+                    if (pulseTarget) {
+                      pulseTarget.classList.remove('reveal-pulse');
+                      // Force reflow so the animation restarts on repeat clicks
+                      void pulseTarget.offsetWidth;
+                      pulseTarget.classList.add('reveal-pulse');
+                    }
+                  }, 600);
+                }
+                return;
+              }
+
+              // ── Embedded unlock anchor click ─────────────────────────────
+              var anchor = e.target.closest && e.target.closest('a');
+              if (!anchor) return;
+              var href = anchor.getAttribute('href') || '';
               if (href.indexOf('/unlock?order=') !== -1) {
                 e.preventDefault();
                 var unlockBtn = document.querySelector('.btn-unlock-react');
@@ -563,6 +632,26 @@ export async function getServerSideProps({ params, req }) {
     /(<a[^>]*class="btn-unlock"[^>]*>[^<]*<\/a>)/,
     '$1' + PDF_DELIVERY_LINE
   )
+
+  // ── Convert first mention of each redacted tool into a reveal-name button ─
+  // The HTML pulled from S3 contains plain text placeholders like "Tool A",
+  // "Tool B", etc. We detect those placeholders, and for the FIRST occurrence
+  // of each unique placeholder we swap it for an inline button that scrolls
+  // the reader to the decision point. Subsequent occurrences stay as plain
+  // text — the reader already has the option, no need to button-spam them.
+  //
+  // The placeholders are letters A-Z. We match "Tool X" where X is a single
+  // uppercase letter, optionally followed by a word boundary.
+  const seenLetters = new Set()
+  html = html.replace(/Tool ([A-Z])\b/g, (match, letter) => {
+    if (seenLetters.has(letter)) {
+      // Subsequent mentions stay as plain text
+      return match
+    }
+    seenLetters.add(letter)
+    // First mention becomes a button
+    return `<button type="button" class="reveal-name-btn" data-tool="${letter}">Tool ${letter}: reveal name</button>`
+  })
 
   // ── Build schema ──────────────────────────────────────────────────────────
   const bucket   = process.env.S3_BUCKET || ''
