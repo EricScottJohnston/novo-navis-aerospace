@@ -23,8 +23,9 @@ const SITE_URL = 'https://news.novonavis.com'
 
 // Static landing pages — these always appear in the sitemap.
 const STATIC_PAGES = [
-  { path: '/',     priority: '1.0', changefreq: 'daily'  },
-  { path: '/smb',  priority: '0.9', changefreq: 'daily'  },
+  { path: '/',         priority: '1.0', changefreq: 'daily'  },
+  { path: '/smb',      priority: '0.9', changefreq: 'daily'  },
+  { path: '/builders', priority: '0.9', changefreq: 'monthly' },
 ]
 
 // Convert a human date string (e.g. "May 14, 2026") to ISO 8601.
