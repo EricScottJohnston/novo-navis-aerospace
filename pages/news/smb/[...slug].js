@@ -603,20 +603,22 @@ export async function getServerSideProps({ params, req }) {
     }
   }
 
-  // ── Inject the redaction explainer after the disclaimer block ─────────────
-  // The disclaimer div is the first element in the free HTML. We close it and
-  // immediately follow with a gold-bordered explainer box that tells the
-  // reader why tool names show as "Tool A, Tool B, etc." in this preview.
-  const REDACTION_EXPLAINER = `
-<div style="background:#fff8ec;border:2px solid #c8a96e;border-radius:8px;padding:1rem 1.25rem;margin:1.5rem 0 2rem;color:#5a4a1f;font-size:0.92rem;line-height:1.55;">
-  <strong style="color:#8a6f3e;display:block;margin-bottom:0.3rem;">A note on this preview</strong>
-  Real tool names in this report appear as <em>Tool A</em>, <em>Tool B</em>, and so on. To see the actual product names along with the rest of the analysis, unlock the full report below — the complete PDF is emailed to you immediately after purchase.
-</div>`
+  // ── Strip the disclaimer block from the injected HTML ─────────────────────
+  // The free HTML produced by david_intelligence_smb.py opens with a
+  // <div class="disclaimer">…</div> block. It's too much fine print at the
+  // top of the page and pushes the actual content below the fold. We remove
+  // it entirely. The footer of the page already carries the necessary
+  // "for general informational purposes" disclaimer language.
+  html = html.replace(
+    /<div[^>]*class="disclaimer"[^>]*>[\s\S]*?<\/div>\s*/i,
+    ''
+  )
 
-  if (html.includes('</div>')) {
-    // Insert after the disclaimer's closing tag (first </div> in the HTML)
-    html = html.replace('</div>', '</div>' + REDACTION_EXPLAINER)
-  }
+  // Note: the gold-bordered "A note on this preview" explainer that used to
+  // live here has been removed. The inline reveal-name pill buttons that
+  // appear next to the first "Tool A / Tool B" placeholder mention in the
+  // report body now carry that signal — readers see them inline, they're
+  // clickable conversion CTAs, no extra box needed at the top of the page.
 
   // ── Inject the PDF-emailed line near the unlock button ────────────────────
   // The decision-point block contains the unlock anchor. We insert a small
