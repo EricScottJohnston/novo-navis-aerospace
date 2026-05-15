@@ -34,6 +34,10 @@ const TIER_SUCCESS_COPY = {
     heading: 'Your full AI Tool Analysis is on its way.',
     body:    'Check your inbox — the full report with specific tool names is attached.',
   },
+  builders: {
+    heading: 'Your full Investment Thesis Edition is on its way.',
+    body:    'Check your inbox — the complete edition with every gap, ROI projection, and confidence rating is attached.',
+  },
 }
 
 const DEFAULT_COPY = TIER_SUCCESS_COPY.blueprint
