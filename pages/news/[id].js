@@ -12,7 +12,7 @@ const GOLD = '#c8a96e'
 const INK  = '#0c1322'
 const BODY = '#2d3748'
 
-export default function ReportPage({ orderId, html, title, date, isArchived }) {
+export default function ReportPage({ orderId, html, title, date, isArchived, schemaJson }) {
   const [buying,   setBuying]   = useState(false)
   const [buyError, setBuyError] = useState('')
 
@@ -43,6 +43,12 @@ export default function ReportPage({ orderId, html, title, date, isArchived }) {
         <title>{title ? `${title} — Novo Navis Intelligence` : 'Intelligence Report — Novo Navis'}</title>
         <meta name="description" content={title ? `${title}. Causal intelligence analysis from Novo Navis.` : 'Causal intelligence analysis from Novo Navis.'} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {schemaJson && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: schemaJson }}
+          />
+        )}
         <style>{`
           * { box-sizing: border-box; }
           body { margin: 0; background: #ffffff; }
@@ -483,7 +489,60 @@ export default function ReportPage({ orderId, html, title, date, isArchived }) {
   )
 }
 
-export async function getServerSideProps({ params }) {
+// ── SCHEMA CONSTANTS ─────────────────────────────────────────────────────────
+const LOGO_URL    = 'https://res.cloudinary.com/dqv9va6ta/image/upload/q_auto/f_auto/v1776042617/logo-3CHVSKdrSORX1atXUpvUTS7tVbt_cz2saz.webp'
+const SITE_URL    = 'https://news.novonavis.com'
+const ORG_NAME    = 'Novo Navis, LLC'
+const ORG_URL     = 'https://www.novonavis.com'
+const AUTHOR_NAME = 'Eric Johnston'
+const SAME_AS = [
+  'https://www.reddit.com/r/AiForSmallBusiness/comments/1snruki/i_built_a_causal_ai_system_for_small_businesses/',
+  'https://news.ycombinator.com/item?id=48075222',
+]
+
+function buildIntelligenceSchema({ orderId, title, date, dagUrl, requestUrl }) {
+  // Convert "May 14, 2026" into ISO 8601 if possible
+  let isoDate = null
+  if (date) {
+    const ts = Date.parse(date)
+    if (!isNaN(ts)) isoDate = new Date(ts).toISOString()
+  }
+
+  const schema = {
+    '@context':       'https://schema.org',
+    '@type':          'NewsArticle',
+    'additionalType': 'https://schema.org/AnalysisNewsArticle',
+    headline:         title || 'Intelligence Report',
+    description:     `${title || 'Intelligence Report'}. Causal intelligence analysis from Novo Navis.`,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id':   requestUrl,
+    },
+    image: dagUrl || LOGO_URL,
+    author: {
+      '@type': 'Person',
+      name:    AUTHOR_NAME,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name:    ORG_NAME,
+      url:     ORG_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url:     LOGO_URL,
+      },
+      sameAs: SAME_AS,
+    },
+    identifier: orderId,
+  }
+  if (isoDate) {
+    schema.datePublished = isoDate
+    schema.dateModified  = isoDate
+  }
+  return JSON.stringify(schema)
+}
+
+export async function getServerSideProps({ params, req }) {
   const orderId = params.id
   const s3 = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
 
@@ -547,7 +606,22 @@ export async function getServerSideProps({ params }) {
     }
   } catch {}
 
+  // Build the DAG image URL — the DAG is generated for most intelligence reports
+  // and stored at intelligence/{orderId}_dag.png in S3.
+  const bucket   = process.env.S3_BUCKET || ''
+  const region   = process.env.AWS_REGION || 'us-east-1'
+  const dagUrl   = bucket
+    ? `https://${bucket}.s3.${region}.amazonaws.com/intelligence/${orderId}_dag.png`
+    : null
+
+  // Build the canonical URL for this request
+  const proto      = (req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim()
+  const host       = (req.headers['x-forwarded-host'] || req.headers.host || 'news.novonavis.com').split(',')[0].trim()
+  const requestUrl = `${proto}://${host}/news/${orderId}`
+
+  const schemaJson = buildIntelligenceSchema({ orderId, title, date, dagUrl, requestUrl })
+
   return {
-    props: { orderId, html, title, date, isArchived }
+    props: { orderId, html, title, date, isArchived, schemaJson }
   }
 }
