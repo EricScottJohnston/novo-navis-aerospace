@@ -1,3 +1,8 @@
+// pages/unlock-confirmed.js
+// Success page after Stripe redirects from a successful unlock payment.
+// Calls /api/unlock-confirmed to trigger PDF delivery, then shows the
+// right success copy based on which tier was purchased.
+
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
@@ -6,11 +11,39 @@ import { useRouter } from 'next/router'
 const NAVY = '#1B2A4A'
 const GOLD = '#c8a96e'
 
+// Per-tier success copy. The API echoes back the tier so we can show the
+// right product name and language.
+const TIER_SUCCESS_COPY = {
+  starter: {
+    heading: 'Your full report is on its way.',
+    body:    'Check your inbox — the full AI Blueprint with specific tool names, pricing, and vendor links is attached.',
+  },
+  blueprint: {
+    heading: 'Your full report is on its way.',
+    body:    'Check your inbox — the full AI Blueprint with specific tool names, pricing, and vendor links is attached.',
+  },
+  strategic: {
+    heading: 'Your full Strategic Analysis is on its way.',
+    body:    'Check your inbox — the full unredacted report with the strategic recommendation, alternative paths, decision framework, and action plan is attached.',
+  },
+  intelligence: {
+    heading: 'Your full Intelligence Report is on its way.',
+    body:    'Check your inbox — the complete report with the full causal analysis, beneficiary assessment, and risk analysis is attached.',
+  },
+  smb: {
+    heading: 'Your full AI Tool Analysis is on its way.',
+    body:    'Check your inbox — the full report with specific tool names is attached.',
+  },
+}
+
+const DEFAULT_COPY = TIER_SUCCESS_COPY.blueprint
+
 export default function UnlockConfirmed() {
   const router = useRouter()
   const { session_id, order } = router.query
 
   const [status, setStatus] = useState('verifying') // verifying | success | error
+  const [tier,   setTier]   = useState(null)
 
   useEffect(() => {
     if (!router.isReady || !session_id || !order) return
@@ -21,17 +54,24 @@ export default function UnlockConfirmed() {
     })
       .then(r => r.json())
       .then(data => {
-        if (data.success) setStatus('success')
-        else setStatus('error')
+        if (data.success) {
+          setStatus('success')
+          if (data.tier) setTier(data.tier)
+        } else {
+          setStatus('error')
+        }
       })
       .catch(() => setStatus('error'))
   }, [router.isReady, session_id, order])
+
+  const copy = (tier && TIER_SUCCESS_COPY[tier]) || DEFAULT_COPY
 
   return (
     <>
       <Head>
         <title>Report Unlocked | Novo Navis</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="noindex, nofollow" />
         <style>{`html, body { background: #f8f9fc !important; }`}</style>
       </Head>
 
@@ -73,11 +113,10 @@ export default function UnlockConfirmed() {
                 ✓
               </div>
               <h1 style={{ color: NAVY, fontSize: '1.5rem', fontWeight: 'bold', margin: '0 0 0.5rem' }}>
-                Your full report is on its way.
+                {copy.heading}
               </h1>
               <p style={{ color: '#6b7a99', fontSize: '0.95rem', lineHeight: 1.6, margin: '0 0 1.75rem' }}>
-                Check your inbox — the full AI Blueprint with specific tool names,
-                pricing, and vendor links is attached.
+                {copy.body}
               </p>
               <div style={{
                 background: '#f4f6fb', border: '1px solid #e0e4ef',
