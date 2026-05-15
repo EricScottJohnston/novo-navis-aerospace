@@ -16,13 +16,19 @@ const GOLD = '#c8a96e'
 const INK  = '#0c1322'
 const BODY = '#2d3748'
 
-export default function NewsIndex({ reports }) {
+export default function NewsIndex({ reports, schemaJson }) {
   return (
     <>
       <Head>
         <title>Novo Navis Intelligence — Daily Analysis</title>
         <meta name="description" content="Daily causal intelligence reports from Novo Navis. Rigorous analysis on the decisions and events that matter." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {schemaJson && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: schemaJson }}
+          />
+        )}
         <style>{`
           * { box-sizing: border-box; }
           body { margin: 0; background: #ffffff; }
@@ -365,5 +371,37 @@ export async function getServerSideProps() {
   // Strip internal sort key before sending to client
   const reports = normalized.map(({ _ts, ...rest }) => rest)
 
-  return { props: { reports } }
+  // ── Build landing-page schema (Organization + WebSite) ────────────────────
+  const schemaJson = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id':   'https://www.novonavis.com/#organization',
+        name:    'Novo Navis, LLC',
+        url:     'https://www.novonavis.com',
+        logo: {
+          '@type': 'ImageObject',
+          url:     'https://res.cloudinary.com/dqv9va6ta/image/upload/q_auto/f_auto/v1776042617/logo-3CHVSKdrSORX1atXUpvUTS7tVbt_cz2saz.webp',
+        },
+        sameAs: [
+          'https://www.reddit.com/r/AiForSmallBusiness/comments/1snruki/i_built_a_causal_ai_system_for_small_businesses/',
+          'https://news.ycombinator.com/item?id=48075222',
+        ],
+        founder: {
+          '@type': 'Person',
+          name:    'Eric Johnston',
+        },
+      },
+      {
+        '@type':   'WebSite',
+        '@id':     'https://news.novonavis.com/#website',
+        url:       'https://news.novonavis.com',
+        name:      'Novo Navis Intelligence',
+        publisher: { '@id': 'https://www.novonavis.com/#organization' },
+      },
+    ],
+  })
+
+  return { props: { reports, schemaJson } }
 }
