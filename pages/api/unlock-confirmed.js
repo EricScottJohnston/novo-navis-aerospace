@@ -24,6 +24,7 @@ const TIER_LABELS = {
   strategic:    'Strategic Analysis',
   intelligence: 'Intelligence Report',
   smb:          'AI Tool Analysis',
+  builders:     'Investment Thesis Edition',
 }
 
 const TIER_FROM = {
@@ -32,6 +33,7 @@ const TIER_FROM = {
   strategic:    'Novo Navis Strategic <reports@novonavis.com>',
   intelligence: 'Novo Navis Intelligence <reports@novonavis.com>',
   smb:          'Novo Navis <reports@novonavis.com>',
+  builders:     'Novo Navis Intelligence <reports@novonavis.com>',
 }
 
 const TIER_FILENAME_PREFIX = {
@@ -40,6 +42,7 @@ const TIER_FILENAME_PREFIX = {
   strategic:    'strategic_analysis',
   intelligence: 'intelligence_report',
   smb:          'ai_tool_analysis',
+  builders:     'investment_thesis_edition',
 }
 
 const TIER_SUBJECTS = {
@@ -48,6 +51,7 @@ const TIER_SUBJECTS = {
   strategic:    'Your Full Strategic Analysis — Unlocked',
   intelligence: 'Your Full Intelligence Report — Unlocked',
   smb:          'Your Full AI Tool Analysis — Unlocked',
+  builders:     'Your Investment Thesis Edition — Unlocked',
 }
 
 // ── PDF S3 key resolution ──────────────────────────────────────────────────
@@ -55,12 +59,28 @@ const TIER_SUBJECTS = {
 function pdfKeyForTier(tier, orderId) {
   if (tier === 'smb')          return `smb/${orderId}.pdf`
   if (tier === 'intelligence') return `intelligence/${orderId}.pdf`
+  if (tier === 'builders')     return `builders/${orderId}.pdf`
   // starter, blueprint, strategic, and anything else default to reports/
   return `reports/${orderId}.pdf`
 }
 
 // ── Email body per tier ────────────────────────────────────────────────────
 function tierEmailBody(tier, label) {
+  if (tier === 'builders') {
+    return `
+      <p>You're all set.</p>
+      <p>Your full <strong>${label}</strong> is attached — every gap named, every capability described,
+      every ROI projection with its confidence rating, and the conditional guidance for builders versus VCs.
+      This is the complete edition.</p>
+      <p>Each edition is a one-off product. When Novo Navis's SMB catalog has substantially deepened,
+      a new edition will publish with fresh gaps and updated thesis. Subscribers are notified when
+      new editions are available.</p>
+      <p>Questions or want to discuss any of the gaps in detail? Reply to this email.</p>
+      <p>Fidelis Diligentia<br/>Novo Navis, LLC<br/>
+      <span style="color:#6b7a99;font-size:12px;">Registered U.S. Defense Contractor</span></p>
+    `
+  }
+
   if (tier === 'smb') {
     return `
       <p>You're all set.</p>
