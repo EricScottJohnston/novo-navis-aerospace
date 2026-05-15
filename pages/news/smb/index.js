@@ -15,13 +15,19 @@ const GOLD = '#c8a96e'
 const INK  = '#0c1322'
 const BODY = '#2d3748'
 
-export default function SMBIndex({ reports }) {
+export default function SMBIndex({ reports, schemaJson }) {
   return (
     <>
       <Head>
         <title>AI Tool Analysis for Small Business — Novo Navis Intelligence</title>
         <meta name="description" content="Causal analysis of AI tool selection for specific small business slices. Rigorous, sourced, and conditional — not a listicle." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {schemaJson && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: schemaJson }}
+          />
+        )}
         <style>{`
           * { box-sizing: border-box; }
           body { margin: 0; background: #ffffff; }
@@ -310,6 +316,40 @@ export default function SMBIndex({ reports }) {
 }
 
 export async function getServerSideProps() {
+  // ── Build landing-page schema (Organization + CollectionPage) ─────────────
+  const schemaJson = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id':   'https://www.novonavis.com/#organization',
+        name:    'Novo Navis, LLC',
+        url:     'https://www.novonavis.com',
+        logo: {
+          '@type': 'ImageObject',
+          url:     'https://res.cloudinary.com/dqv9va6ta/image/upload/q_auto/f_auto/v1776042617/logo-3CHVSKdrSORX1atXUpvUTS7tVbt_cz2saz.webp',
+        },
+        sameAs: [
+          'https://www.reddit.com/r/AiForSmallBusiness/comments/1snruki/i_built_a_causal_ai_system_for_small_businesses/',
+          'https://news.ycombinator.com/item?id=48075222',
+        ],
+        founder: {
+          '@type': 'Person',
+          name:    'Eric Johnston',
+        },
+      },
+      {
+        '@type':      'CollectionPage',
+        '@id':        'https://news.novonavis.com/smb/#collection',
+        url:          'https://news.novonavis.com/smb',
+        name:         'AI Tool Analysis for Small Business',
+        description: 'Causal analysis of AI tool selection for specific small business slices.',
+        isPartOf:     { '@id': 'https://news.novonavis.com/#website' },
+        publisher:    { '@id': 'https://www.novonavis.com/#organization' },
+      },
+    ],
+  })
+
   try {
     const s3  = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
     const obj = await s3.send(new GetObjectCommand({
@@ -317,9 +357,9 @@ export async function getServerSideProps() {
       Key:    'smb/index.json',
     }))
     const reports = JSON.parse(await obj.Body.transformToString())
-    return { props: { reports: reports || [] } }
+    return { props: { reports: reports || [], schemaJson } }
   } catch (err) {
     console.error('[smb index] Failed to fetch smb/index.json:', err.message)
-    return { props: { reports: [] } }
+    return { props: { reports: [], schemaJson } }
   }
 }
