@@ -534,6 +534,36 @@ export async function getServerSideProps({ params, req }) {
     }
   }
 
+  // ── Inject the redaction explainer after the disclaimer block ─────────────
+  // The disclaimer div is the first element in the free HTML. We close it and
+  // immediately follow with a gold-bordered explainer box that tells the
+  // reader why tool names show as "Tool A, Tool B, etc." in this preview.
+  const REDACTION_EXPLAINER = `
+<div style="background:#fff8ec;border:2px solid #c8a96e;border-radius:8px;padding:1rem 1.25rem;margin:1.5rem 0 2rem;color:#5a4a1f;font-size:0.92rem;line-height:1.55;">
+  <strong style="color:#8a6f3e;display:block;margin-bottom:0.3rem;">A note on this preview</strong>
+  Real tool names in this report appear as <em>Tool A</em>, <em>Tool B</em>, and so on. To see the actual product names along with the rest of the analysis, unlock the full report below — the complete PDF is emailed to you immediately after purchase.
+</div>`
+
+  if (html.includes('</div>')) {
+    // Insert after the disclaimer's closing tag (first </div> in the HTML)
+    html = html.replace('</div>', '</div>' + REDACTION_EXPLAINER)
+  }
+
+  // ── Inject the PDF-emailed line near the unlock button ────────────────────
+  // The decision-point block contains the unlock anchor. We insert a small
+  // line above the AI Blueprint secondary option so the reader sees the
+  // delivery promise right at the decision point.
+  const PDF_DELIVERY_LINE = `
+  <p style="margin:0.6rem 0 0;color:#8a95aa;font-size:0.85rem;font-style:italic;">
+    Full report PDF emailed to you immediately after purchase.
+  </p>`
+
+  // Insert the delivery line right after the unlock anchor closes
+  html = html.replace(
+    /(<a[^>]*class="btn-unlock"[^>]*>[^<]*<\/a>)/,
+    '$1' + PDF_DELIVERY_LINE
+  )
+
   // ── Build schema ──────────────────────────────────────────────────────────
   const bucket   = process.env.S3_BUCKET || ''
   const region   = process.env.AWS_REGION || 'us-east-1'
