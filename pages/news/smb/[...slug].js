@@ -19,7 +19,7 @@ const GOLD = '#c8a96e'
 const INK  = '#0c1322'
 const BODY = '#2d3748'
 
-export default function SMBReportPage({ orderId, html, title, date, urlPath, notFound }) {
+export default function SMBReportPage({ orderId, html, title, date, urlPath, notFound, schemaJson }) {
   const [buying,   setBuying]   = useState(false)
   const [buyError, setBuyError] = useState('')
 
@@ -69,6 +69,12 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
         <title>{title ? `${title} — Novo Navis Intelligence` : 'AI Tool Analysis — Novo Navis'}</title>
         <meta name="description" content={title ? `${title}. Causal AI tool-selection analysis from Novo Navis.` : 'Causal AI tool-selection analysis from Novo Navis.'} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        {schemaJson && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: schemaJson }}
+          />
+        )}
         <style>{`
           * { box-sizing: border-box; }
           body { margin: 0; background: #ffffff; }
@@ -150,6 +156,11 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
 
           .report-body { padding: 2.5rem 0 1rem; }
 
+          /* The free HTML written by david_intelligence_smb.py already contains
+             the disclaimer block, report content, DAG image, AND the decision-point
+             buttons (unlock $29 + AI Blueprint link). The styles below format
+             everything inside that injected HTML. */
+
           .report-content .disclaimer {
             background: #f8f9fc;
             border-left: 3px solid #d0d4de;
@@ -203,6 +214,13 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
             margin-top: 0.4rem;
           }
 
+          /* The decision-point block (unlock + AI Blueprint) is rendered by
+             the injected HTML — but the button click needs to call our
+             React handler. We add a click listener after mount via a hidden
+             React button overlay, OR we restyle the embedded anchor to look
+             like a button. We chose the cleaner path: the HTML produces
+             real buttons, and we add a top-level click delegate. */
+
           .report-content .decision-point a.btn-unlock,
           .report-content .decision-point .btn-unlock {
             display: inline-block;
@@ -217,6 +235,8 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
             border: none;
           }
 
+          /* React-rendered unlock fallback button (only used if injected HTML
+             does NOT contain a decision-point — defensive fallback). */
           .fallback-cta-section {
             padding: 2rem 0 3.5rem;
             border-top: 1px solid #e8ecf4;
@@ -315,26 +335,14 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
           <div className="container">
 
             {html ? (
-              <>
-                <div style={{
-                  background: '#f8f9fc',
-                  border: '1px solid #e0e4ef',
-                  borderLeft: `4px solid ${GOLD}`,
-                  borderRadius: '6px',
-                  padding: '0.85rem 1.1rem',
-                  marginBottom: '1.5rem',
-                  fontSize: '0.88rem',
-                  color: '#6b7a99',
-                  lineHeight: '1.55',
-                }}>
-                  Tool names and implementation details have been redacted in this preview. Unlock the full report to see specific recommendations.
-                </div>
-                <div className="report-content" dangerouslySetInnerHTML={{ __html: html }} />
-              </>
+              <div className="report-content" dangerouslySetInnerHTML={{ __html: html }} />
             ) : (
               <p style={{ color: '#8a95aa', fontSize: '0.92rem' }}>Loading report content...</p>
             )}
 
+            {/* Fallback CTA — only visible if the injected HTML didn't include
+                its own decision-point block. Keeps the page functional even
+                if david_intelligence_smb.py output is missing the buttons. */}
             {html && !html.includes('decision-point') && (
               <div className="fallback-cta-section">
                 <h2 className="fallback-cta-heading">Get the full analysis.</h2>
@@ -379,6 +387,10 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
 
       </div>
 
+      {/* Wire up the embedded HTML's unlock button (from the decision-point
+          block) to our handleUnlock function. The injected HTML can't
+          access React state directly, so we intercept clicks on any
+          anchor with the unlock URL pattern and route to checkout. */}
       <script
         dangerouslySetInnerHTML={{ __html: `
           (function() {
@@ -392,6 +404,7 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
                 if (unlockBtn) {
                   unlockBtn.click();
                 } else {
+                  // No fallback button — call the API directly
                   fetch('/api/unlock-checkout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -408,12 +421,75 @@ export default function SMBReportPage({ orderId, html, title, date, urlPath, not
   )
 }
 
-export async function getServerSideProps({ params }) {
+// ── SCHEMA CONSTANTS ─────────────────────────────────────────────────────────
+const LOGO_URL    = 'https://res.cloudinary.com/dqv9va6ta/image/upload/q_auto/f_auto/v1776042617/logo-3CHVSKdrSORX1atXUpvUTS7tVbt_cz2saz.webp'
+const ORG_NAME    = 'Novo Navis, LLC'
+const ORG_URL     = 'https://www.novonavis.com'
+const AUTHOR_NAME = 'Eric Johnston'
+const SAME_AS = [
+  'https://www.reddit.com/r/AiForSmallBusiness/comments/1snruki/i_built_a_causal_ai_system_for_small_businesses/',
+  'https://news.ycombinator.com/item?id=48075222',
+]
+
+function buildSMBSchema({ orderId, title, date, dagUrl, requestUrl, vertical, drill, capability }) {
+  let isoDate = null
+  if (date) {
+    const ts = Date.parse(date)
+    if (!isNaN(ts)) isoDate = new Date(ts).toISOString()
+  }
+
+  // TechArticle signals technical evaluation content. We omit `dependencies`
+  // intentionally — naming the real AI tools there would bypass the paywall.
+  const schema = {
+    '@context':       'https://schema.org',
+    '@type':          'TechArticle',
+    headline:         title || 'AI Tool Analysis',
+    description:     `${title || 'AI Tool Analysis'}. Causal AI tool-selection analysis from Novo Navis.`,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id':   requestUrl,
+    },
+    image: dagUrl || LOGO_URL,
+    author: {
+      '@type': 'Person',
+      name:    AUTHOR_NAME,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name:    ORG_NAME,
+      url:     ORG_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url:     LOGO_URL,
+      },
+      sameAs: SAME_AS,
+    },
+    identifier:       orderId,
+    proficiencyLevel: 'Expert',
+  }
+  if (isoDate) {
+    schema.datePublished = isoDate
+    schema.dateModified  = isoDate
+  }
+  // `about` describes the subject matter — vertical and slice if we have them
+  const aboutParts = [vertical, drill, capability].filter(Boolean)
+  if (aboutParts.length) {
+    schema.about = {
+      '@type': 'Thing',
+      name:    aboutParts.join(' — '),
+    }
+  }
+  return JSON.stringify(schema)
+}
+
+export async function getServerSideProps({ params, req }) {
+  // params.slug is an array — e.g. ['law-firms', 'probate', 'intake-automation']
   const slugParts = params.slug || []
   const requestedPath = '/smb/' + slugParts.join('/')
 
   const s3 = new S3Client({ region: process.env.AWS_REGION || 'us-east-1' })
 
+  // ── Fetch smb/index.json and find the entry matching this URL path ────────
   let entry = null
   try {
     const indexObj = await s3.send(new GetObjectCommand({
@@ -423,6 +499,7 @@ export async function getServerSideProps({ params }) {
     const index = JSON.parse(await indexObj.Body.transformToString())
     entry = index.find(r => r.url_path === requestedPath)
 
+    // Tolerant match — if exact url_path doesn't match, try without trailing slash
     if (!entry) {
       const stripped = requestedPath.replace(/\/+$/, '')
       entry = index.find(r => (r.url_path || '').replace(/\/+$/, '') === stripped)
@@ -432,13 +509,17 @@ export async function getServerSideProps({ params }) {
   }
 
   if (!entry) {
-    return { props: { notFound: true, orderId: '', html: '', title: '', date: '', urlPath: requestedPath } }
+    return { props: { notFound: true, orderId: '', html: '', title: '', date: '', urlPath: requestedPath, schemaJson: '' } }
   }
 
-  const orderId = entry.id
-  const title   = entry.title || ''
-  const date    = entry.date  || ''
+  const orderId    = entry.id
+  const title      = entry.title || ''
+  const date       = entry.date  || ''
+  const vertical   = entry.vertical || ''
+  const drill      = entry.drill || ''
+  const capability = entry.capability || ''
 
+  // ── Fetch the free HTML ────────────────────────────────────────────────────
   let html = ''
   try {
     const htmlObj = await s3.send(new GetObjectCommand({
@@ -449,9 +530,24 @@ export async function getServerSideProps({ params }) {
   } catch (err) {
     console.error(`[smb report] Free HTML fetch failed for ${orderId}:`, err.message)
     if (err.name === 'NoSuchKey') {
-      return { props: { notFound: true, orderId, html: '', title, date, urlPath: requestedPath } }
+      return { props: { notFound: true, orderId, html: '', title, date, urlPath: requestedPath, schemaJson: '' } }
     }
   }
+
+  // ── Build schema ──────────────────────────────────────────────────────────
+  const bucket   = process.env.S3_BUCKET || ''
+  const region   = process.env.AWS_REGION || 'us-east-1'
+  const dagUrl   = bucket
+    ? `https://${bucket}.s3.${region}.amazonaws.com/smb/${orderId}_dag.png`
+    : null
+
+  const proto      = (req.headers['x-forwarded-proto'] || 'https').split(',')[0].trim()
+  const host       = (req.headers['x-forwarded-host'] || req.headers.host || 'news.novonavis.com').split(',')[0].trim()
+  const requestUrl = `${proto}://${host}${requestedPath}`
+
+  const schemaJson = buildSMBSchema({
+    orderId, title, date, dagUrl, requestUrl, vertical, drill, capability,
+  })
 
   return {
     props: {
@@ -461,6 +557,7 @@ export async function getServerSideProps({ params }) {
       date,
       urlPath: requestedPath,
       notFound: false,
+      schemaJson,
     }
   }
 }
