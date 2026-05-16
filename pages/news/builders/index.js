@@ -307,6 +307,85 @@ export default function BuildersPage({ orderId, html, title, date, week, reportC
             color: ${NAVY};
           }
 
+          /* Thesis gap blocks — full and redacted-skeleton variants */
+          .report-content .thesis-gap {
+            margin: 2rem 0 2.5rem;
+            padding: 1.5rem 1.75rem;
+            border-radius: 10px;
+          }
+          .report-content .thesis-gap-revealed {
+            background: #ffffff;
+            border: 1px solid #e0e4ef;
+            box-shadow: 0 2px 8px rgba(27, 42, 74, 0.04);
+          }
+          .report-content .thesis-gap-redacted {
+            background: #f8f9fc;
+            border: 1px dashed #c8d0e0;
+          }
+          .report-content .gap-header {
+            border-bottom: 1px solid #e8ecf4;
+            padding-bottom: 0.7rem;
+            margin-bottom: 1rem;
+          }
+          .report-content .gap-tag {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: ${GOLD};
+            margin-bottom: 0.3rem;
+          }
+          .report-content .gap-tag-redacted {
+            color: #8a95aa;
+          }
+          .report-content .gap-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: ${NAVY};
+            margin: 0;
+            line-height: 1.3;
+          }
+          .report-content .gap-subsection {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: ${NAVY};
+            margin: 1.25rem 0 0.5rem;
+            text-transform: none;
+          }
+
+          /* Redacted skeleton grid — shows structure, hides content */
+          .report-content .redacted-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-top: 0.5rem;
+          }
+          .report-content .redacted-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.6rem 0.9rem;
+            background: #ffffff;
+            border: 1px solid #e8ecf4;
+            border-radius: 6px;
+            flex-wrap: wrap;
+          }
+          .report-content .redacted-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: ${NAVY};
+          }
+
+          /* Intro paragraphs */
+          .report-content .gaps-intro {
+            font-size: 0.95rem;
+            color: ${BODY};
+            line-height: 1.7;
+            margin: 0.5rem 0 1.5rem;
+          }
+
           /* Inline reveal-name pill buttons — identical mechanics to SMB pages */
           .reveal-name-btn {
             display: inline-block;
