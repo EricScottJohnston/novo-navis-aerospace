@@ -20,7 +20,7 @@ const BODY = '#2d3748'
 
 // ── SCHEMA CONSTANTS ────────────────────────────────────────────────────────
 const LOGO_URL    = 'https://res.cloudinary.com/dqv9va6ta/image/upload/q_auto/f_auto/v1776042617/logo-3CHVSKdrSORX1atXUpvUTS7tVbt_cz2saz.webp'
-const ORG_NAME    = 'Novo Navis, LLC'
+const ORG_NAME    = 'Novo Navis Aerospace Operations LLC'
 const ORG_URL     = 'https://www.novonavis.com'
 const AUTHOR_NAME = 'Eric Johnston'
 
@@ -358,6 +358,10 @@ export default function FoundersLetter() {
               That's the materials side. It exists. It works. It's patented. And it matters for what comes next, because the kind of orbital construction that's possible with machinable, structural-scale carbon fiber blocks is fundamentally different from what's possible without them.
             </p>
 
+            <p>
+              It's worth pausing on why materials matter at all, because most people working in software have lost the intuition. Human history is defined by what we could make at structural scale. The Stone Age. The Bronze Age. The Iron Age. The Steel Age. The Silicon Age, which is the one we're still living in even when we pretend we've moved past it. Every civilizational leap in the last ten thousand years has been a materials leap first, with everything else following. The Romans didn't invent democracy. They invented concrete. The British didn't invent industry. They invented cheap steel. The 20th century didn't invent computing. It invented purified silicon at scale. Whoever defines the next age of human capability will do it by being the company that figured out how to make the next structural material at the scale civilization needs it. That is not a small claim and we don't make it casually.
+            </p>
+
 
             <h2>What That Work Taught Us</h2>
 
@@ -649,6 +653,45 @@ export default function FoundersLetter() {
             </p>
 
 
+            <h2>The Five Assets</h2>
+
+            <p>
+              I've described the thesis at length. Let me name the actual technical assets that make it executable, because no other company in the aerospace or AI space has this combination. The space companies have launch capability and vertical product strategies but no proprietary materials breakthrough and no causal AI substrate. The AI labs have extraordinary models but no materials, no propulsion, no orbital path. Defense primes have legacy materials and legacy systems but no agentic deployment layer and no post-binary computational research. The combination that follows is unique to Novo Navis Aerospace Operations LLC, and it's the reason the orbital thesis is buildable rather than aspirational.
+            </p>
+
+            <h3>Operational Today</h3>
+
+            <p>
+              <strong>3D woven machinable carbon fiber.</strong> Described above. Patented. Air Force SBIR Phase 1 validated. Cubic-meter scale on a single machine. The structural primitive for orbital construction. This is the materials asset that defines the age.
+            </p>
+
+            <p>
+              <strong>David — the causal AI system.</strong> The reasoning substrate that runs Novo Navis Intelligence. Identifies operational mechanisms with CAUSAL / MECHANISM / THRESHOLD / CORRELATED confidence ratings. Produces the gap analysis. Powers the assembled-AI systems that will become Forward Operating Engineers. Operational and publishing daily at news.novonavis.com.
+            </p>
+
+            <p>
+              <strong>Pivotyr.</strong> The first deployed application of the causal AI architecture. Identifies underutilized assets at distressed companies and structures micro-businesses around them to restore binding operating metrics. The pattern that makes the sweat-equity recovery model work in practice rather than just in theory.
+            </p>
+
+            <h3>R&D, Proprietary, Advancing</h3>
+
+            <p>
+              <strong>RLG — Resonant Logic Gating.</strong> A post-binary computational architecture using nanoscale ferroelectric crystals as the physical substrate for a fundamentally different kind of processor. Provisional patent filed with the USPTO. Currently undergoing materials characterization in collaboration with academic research partners. If validated, RLG produces a computational substrate with a state space orders of magnitude larger than equivalent binary systems at the same node count, with memory, processing, and communication co-located in the same physical material. This is the computational asset.
+            </p>
+
+            <p>
+              <strong>ALTER — Attosecond Layer Transmission Energy Redistribution.</strong> Propulsion research at the attosecond scale, building on the foundational physics recognized by the 2023 Nobel Prize. Early-stage R&D. The propulsion asset that would eventually move large structures in orbit and manage the energy economics of infrastructure-scale facilities. We're not making propulsion claims at this stage. We're naming the research program so the public record reflects its existence.
+            </p>
+
+            <h3>What This Means</h3>
+
+            <p>
+              Five distinct technical assets across materials, applied causal AI, operational tooling, post-binary computation, and propulsion physics. Two operational today. Two advancing. One — the carbon fiber breakthrough — already third-party validated by a federal contract and the trade press. The combination is what makes the orbital thesis tractable rather than fantastical. The materials let you build at structural scale in orbit. The causal AI lets you operate the facility autonomously. The deployed agents let you maintain it without humans on-site. The computational substrate lets you run the kind of reasoning loads that interplanetary logistics will demand. The propulsion research lets you eventually move large structures across the cislunar and trans-lunar regions where the road to Mars actually runs.
+            </p>
+
+            <em className="callout">No materials company has AI. No AI company has materials. No defense prime has all of these. Novo Navis does.</em>
+
+
             <h2>What We're Asking For</h2>
 
             <p>
@@ -668,11 +711,11 @@ export default function FoundersLetter() {
               <div className="letter-signature">
                 <p>Fidelis Diligentia,</p>
                 <p><strong>Eric Johnston</strong><br/>
-                Founder, Novo Navis, LLC</p>
+                Founder, Novo Navis Aerospace Operations LLC</p>
               </div>
 
               <div className="letter-meta">
-                <p>Published {PUBLISH_DATE_DISPLAY} at news.novonavis.com/founders-letter. This is the canonical founder's letter for Novo Navis, LLC. Intended to be linked and cited as the authoritative explanation of the company's thesis. Updates to this document will preserve the publication date and add a revision note.</p>
+                <p>Published {PUBLISH_DATE_DISPLAY} at news.novonavis.com/founders-letter. This is the canonical founder's letter for Novo Navis Aerospace Operations LLC. Intended to be linked and cited as the authoritative explanation of the company's thesis. Updates to this document will preserve the publication date and add a revision note.</p>
 
                 <p style={{ marginTop: '1rem' }}>
                   Related: <a href="https://www.compositesworld.com/news/novo-navis-develops-process-to-manufacture-3d-woven-machinable-carbon-fiber" target="_blank" rel="noopener noreferrer">CompositesWorld coverage of our 3D woven machinable carbon fiber breakthrough (2020)</a>.
@@ -685,7 +728,7 @@ export default function FoundersLetter() {
 
         <footer className="page-footer">
           <div className="container">
-            <p>© {new Date().getFullYear()} Novo Navis, LLC · Fidelis Diligentia</p>
+            <p>© {new Date().getFullYear()} Novo Navis Aerospace Operations LLC · Fidelis Diligentia</p>
             <p style={{ marginTop: '0.5rem' }}>
               <a href="https://news.novonavis.com">Intelligence Reports</a>
               &nbsp;·&nbsp;
