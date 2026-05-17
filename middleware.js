@@ -25,3 +25,16 @@ export const config = {
     '/((?!_next/static|_next/image|favicon.ico|api/|.*\\.xml|.*\\.txt).*)',
   ],
 }
+
+import { NextResponse, NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  const origin = request.headers.get('origin') || '';
+  const referer = request.headers.get('referer') || '';
+
+  // Reject requests coming from localhost:4200
+  if (origin.includes('localhost:4200') || referer.includes('localhost:4200')) {
+    return new NextResponse('Access Denied: Localhost requests are restricted.', {
+      status: 403,
+    });
+  }
